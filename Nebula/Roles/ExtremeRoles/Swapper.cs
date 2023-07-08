@@ -39,7 +39,7 @@ public static class SwapSystem{
     }
 
     public static void OnMeetingEnd(){
-        if(swapTargetf == Byte.MaxValue && swapTargets == Byte.MaxValue) return;
+        if(!isSwapped) return;
 
         int data = Game.GameData.data.myData.getGlobalData().GetRoleData(swapDataId);
         data--;
