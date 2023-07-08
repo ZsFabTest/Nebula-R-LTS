@@ -107,6 +107,7 @@ class MeetingHudPatch
             }
 
             if(Roles.ComplexRoles.SwapSystem.isSwapped){
+                if(PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.EvilSwapper || PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.NiceSwapper) Roles.ComplexRoles.SwapSystem.OnMeetingEnd();
                 PlayerVoteArea swapped1 = null;
                 PlayerVoteArea swapped2 = null;
                 foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)

@@ -39,8 +39,6 @@ public static class SwapSystem{
     }
 
     public static void OnMeetingEnd(){
-        if(!isSwapped) return;
-
         int data = Game.GameData.data.myData.getGlobalData().GetRoleData(swapDataId);
         data--;
         RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, swapDataId, data);
@@ -145,9 +143,5 @@ public class Swapper : Template.BilateralnessRole
     public override void OnMeetingStart()
     {
         SwapSystem.OnMeetingStart();
-    }
-
-    public override void OnMeetingEnd(){
-        SwapSystem.OnMeetingEnd();
     }
 }
