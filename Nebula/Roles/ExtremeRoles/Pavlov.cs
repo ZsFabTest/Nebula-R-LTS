@@ -14,10 +14,8 @@ public class Pavlov : Role
 
     static public Color RoleColor = new Color(236f / 255f, 182f / 255f, 91f / 255f);
 
-    static public Module.CustomOption createDogsCooldownOption;
-    static public Module.CustomOption dogKillCooldownOption;
-    static public Module.CustomOption dogCanUseVentOption;
-    static public Module.CustomOption dogMaxNumOption;
+    private Module.CustomOption createDogsCooldownOption;
+    private Module.CustomOption dogMaxNumOption;
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.AppointButton.png", 115f);
 
@@ -97,9 +95,6 @@ public class Pavlov : Role
     {
         createDogsCooldownOption = CreateOption(Color.white, "createDogsCooldown", 30f, 15f, 35f, 5f);
         createDogsCooldownOption.suffix = "second";
-        dogKillCooldownOption = CreateOption(Color.white, "dogKillCooldown", 25f, 5f, 60f, 5f);
-        dogKillCooldownOption.suffix = "second";
-        dogCanUseVentOption = CreateOption(Color.white,"dogCanUseVent",true);
         dogMaxNumOption = CreateOption(Color.white,"dogMaxNum",3f,1f,5f,1f);
     }
 
@@ -109,6 +104,11 @@ public class Pavlov : Role
         {
             displayColor = RoleColor;
         }
+    }
+
+    public override IEnumerable<Assignable> GetFollowRoles()
+    {
+        yield return Roles.Dog;
     }
 
     public Pavlov()
@@ -125,9 +125,12 @@ public class Pavlov : Role
 
 public class Dog : Role
 {
+    public Module.CustomOption dogKillCooldownOption;
+    public Module.CustomOption dogCanUseVentOption;
+
     public override bool IsSpawnable()
     {
-        return Roles.Moriarty.IsSpawnable();
+        return Roles.Pavlov.IsSpawnable();
     }
 
     private CustomButton killButton;
@@ -152,9 +155,9 @@ public class Dog : Role
             __instance,
             Module.NebulaInputManager.modKillInput.keyCode
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = Pavlov.dogKillCooldownOption.getFloat();
+        killButton.MaxTimer = dogKillCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
-        VentPermission = Pavlov.dogCanUseVentOption.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
+        VentPermission = dogCanUseVentOption.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
     }
 
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
@@ -191,12 +194,21 @@ public class Dog : Role
         }
     }
 
+    public override void LoadOptionData()
+    {
+        TopOption.AddCustomPrerequisite(() => Roles.Pavlov.IsSpawnable());
+        dogKillCooldownOption = CreateOption(Color.white, "dogKillCooldown", 25f, 5f, 60f, 5f);
+        dogKillCooldownOption.suffix = "second";
+        dogCanUseVentOption = CreateOption(Color.white,"dogCanUseVent",true);
+    }
+
     public Dog()
         : base("Dog", "dog", Pavlov.RoleColor, RoleCategory.Neutral, Side.Pavlov, Side.Pavlov,
              new HashSet<Side>() { Side.Pavlov }, new HashSet<Side>() { Side.Pavlov },
              new HashSet<Patches.EndCondition>() { Patches.EndCondition.PavlovWin },
              true, VentPermission.CanUseUnlimittedVent, true, true, true)
     {
-        IsHideRole = true;
+        Allocation = AllocationType.None;
+        CreateOptionFollowingRelatedRole = true;
     }
 }

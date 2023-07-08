@@ -83,7 +83,7 @@ public class Observer : Role
     public Observer()
         : base("Observer", "observer", RoleColor, RoleCategory.Crewmate, Side.Crewmate, Side.Crewmate,
              Crewmate.crewmateSideSet, Crewmate.crewmateSideSet, Crewmate.crewmateEndSet,
-             true, VentPermission.CanUseUnlimittedVent, false, true, true)
+             false, VentPermission.CanUseUnlimittedVent, false, true, true)
     {
         hideButton = null;
     }

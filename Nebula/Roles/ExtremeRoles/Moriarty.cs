@@ -128,6 +128,11 @@ public class Moriarty : Role, Template.HasWinTrigger{
         }
     }
 
+    public override IEnumerable<Assignable> GetFollowRoles()
+    {
+        yield return Roles.Moran;
+    }
+
     public Moriarty()
         : base("Moriarty", "moriarty", RoleColor, RoleCategory.Neutral, Side.Moriarty, Side.Moriarty,
              new HashSet<Side>() { Side.Moriarty }, new HashSet<Side>() { Side.Moriarty },
@@ -510,7 +515,7 @@ public class Moran : Role{
         : base("Moran", "moran", Moriarty.RoleColor, RoleCategory.Neutral, Side.Moriarty, Side.Moriarty,
              new HashSet<Side>() { Side.Moriarty }, new HashSet<Side>() { Side.Moriarty },
              new HashSet<Patches.EndCondition>() { Patches.EndCondition.MoriartyWin, Patches.EndCondition.MoriartyWinByKillHolmes },
-             true, VentPermission.CanUseLimittedVent, true, false, false){
+             true, VentPermission.CanUseUnlimittedVent, true, false, false){
 
         sniperButton = null;
         killButton = null;
