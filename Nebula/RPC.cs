@@ -1670,6 +1670,7 @@ static class RPCEvents
         Roles.ComplexRoles.SwapSystem.swapTargets = playerId2;
         if(playerId1 != Byte.MaxValue && playerId2 != Byte.MaxValue) Roles.ComplexRoles.SwapSystem.isSwapped = true;
         else Roles.ComplexRoles.SwapSystem.isSwapped = false;
+        Debug.Log(playerId1.ToString()+playerId2.ToString()+Roles.ComplexRoles.SwapSystem.isSwapped.ToString());
     }
 }
 
@@ -2654,5 +2655,6 @@ public class RPCEventInvoker
         writer.Write(id1);
         writer.Write(id2);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetSwapTarget(id1,id2);
     }
 }   

@@ -2,8 +2,8 @@ namespace Nebula.Roles.ComplexRoles;
 
 public static class SwapSystem{
     public static int swapDataId { get; private set; } = (int)Roles.F_Swapper.swapCountOption.getFloat();
-    public static int swapTargetf = Byte.MaxValue;
-    public static int swapTargets = Byte.MaxValue;
+    public static byte swapTargetf = Byte.MaxValue;
+    public static byte swapTargets = Byte.MaxValue;
     public static bool isSwapped = false;
 
     public static void GlobalInitialize(PlayerControl __instance)
@@ -33,13 +33,13 @@ public static class SwapSystem{
             else swapTargetf = target.PlayerId;
         }
 
-        if(swapTargetf is Byte.MaxValue || swapTargets is Byte.MaxValue) isSwapped = false;
-        else isSwapped = true;
+        if(swapTargetf != Byte.MaxValue && swapTargets != Byte.MaxValue) isSwapped = true;
+        else isSwapped = false;
         RPCEventInvoker.SetSwapTarget((byte)swapTargetf,(byte)swapTargets);
     }
 
     public static void OnMeetingEnd(){
-        if(swapTargetf is Byte.MaxValue || swapTargets is Byte.MaxValue) return;
+        if(swapTargetf == Byte.MaxValue && swapTargets == Byte.MaxValue) return;
 
         int data = Game.GameData.data.myData.getGlobalData().GetRoleData(swapDataId);
         data--;

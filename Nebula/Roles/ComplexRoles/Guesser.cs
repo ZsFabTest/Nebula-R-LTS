@@ -420,7 +420,7 @@ static public class GuesserSystem
         if (left <= 0) return;
         meetingInfo.text = Language.Language.GetString("role.guesser.guessesLeft") + ": " + left;
         meetingInfo.gameObject.SetActive(true);
-        if(PlayerControl.LocalPlayer.GetModData().GetRoleData(guessId) >= Roles.F_Guesser.guessCountToWinOption.getFloat()){
+        if(PlayerControl.LocalPlayer.GetModData().GetRoleData(guessId) >= Roles.F_Guesser.guessCountToWinOption.getFloat() && Roles.F_Guesser.canWinAloneOption.getBool()){
             RPCEventInvoker.WinTrigger(Roles.F_Guesser);
         }
     }
