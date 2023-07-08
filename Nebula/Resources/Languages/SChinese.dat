@@ -1709,6 +1709,8 @@
 "role.moran.snipeCoolDown" : "狙击冷却"
 "role.moran.shotSize" : "子弹大小"
 "role.moran.shotEffectiveRange" : "狙击有效射程"
+"role.moran.canBeHeared" : "有无枪声"
+"role.moran.soundEffectiveRange" : "枪声可听范围"
 "role.moran.storeRifleOnFire" : "射击后继续持枪"
 "role.moran.showAimAssist" : "显示辅助瞄准"
 "role.moran.aimAssistDelay" : "辅助瞄准线的延迟"
@@ -1786,6 +1788,8 @@
 "role.marksman.hint" : "急速出刀"
 "role.marksman.info" : "你可以储存击杀冷却"
 "role.marksman.maxShoot" : "最大储存数量"
+"role.marksman.getShootCooldown" : "(局中)获取子弹冷却时间"
+"role.marksman.getShootAfterMeeting" : "(会议后)获取子弹冷却时间"
 
 "role.gambler.name" : "赌徒"
 "role.gambler.short" : "徒"

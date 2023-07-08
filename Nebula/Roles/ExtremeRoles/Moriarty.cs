@@ -144,7 +144,6 @@ public class Moriarty : Role, Template.HasWinTrigger{
 public class Moran : Role{
 
     public override bool IsSpawnable() => Roles.Moriarty.IsSpawnable();
-    public override bool IsUnsuitable { get { return false; } }
 
     private bool equipRifleFlag;
 
@@ -152,12 +151,12 @@ public class Moran : Role{
     private Module.CustomOption snipeCoolDownOption;
     private Module.CustomOption shotSizeOption;
     private Module.CustomOption shotEffectiveRangeOption;
+    public Module.CustomOption noticeRangeOption;
     public Module.CustomOption storeRifleOnFireOption;
     public Module.CustomOption showAimAssistOption;
     public Module.CustomOption aimAssistDelayOption;
     public Module.CustomOption aimAssistDurationOption;
-
-    private CustomMessage? message;
+    public Module.CustomOption canBeNoticedOption;
 
     private Dictionary<byte, SpriteRenderer> Guides = new Dictionary<byte, SpriteRenderer>();
     private float rifleCounter = 0f;
@@ -173,6 +172,10 @@ public class Moran : Role{
         shotEffectiveRangeOption = CreateOption(Color.white, "shotEffectiveRange", 20f, 2f, 40f, 2f);
         shotEffectiveRangeOption.suffix = "cross";
 
+        canBeNoticedOption = CreateOption(Color.white,"canBeHeared",false);
+        noticeRangeOption = CreateOption(Color.white, "soundEffectiveRange", 20f, 2f, 50f, 2f).AddPrerequisite(canBeNoticedOption);
+        noticeRangeOption.suffix = "cross";
+
         storeRifleOnFireOption = CreateOption(Color.white, "storeRifleOnFire", false);
 
         showAimAssistOption = CreateOption(Color.white, "showAimAssist", false);
@@ -184,14 +187,8 @@ public class Moran : Role{
         aimAssistDurationOption.AddPrerequisite(showAimAssistOption);
     }
 
-    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
-    {
-        if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Moriarty)
-        {
-            displayColor = Color;
-        }
-    }
-    private PlayerControl GetShootPlayer(float shotSize, float effectiveRange)
+
+    private PlayerControl GetShootPlayer(float shotSize, float effectiveRange, bool onlyWhiteName = false)
     {
         PlayerControl result = null;
         float num = effectiveRange;
@@ -204,6 +201,10 @@ public class Moran : Role{
 
             if (player.Data.IsDead) continue;
 
+            if (onlyWhiteName)
+            {
+                if (player.GetModData().role.side == Side.Impostor || player.GetModData().role.DeceiveImpostorInNameDisplay) continue;
+            }
 
             pos = player.transform.position - PlayerControl.LocalPlayer.transform.position;
             pos = new Vector3(
@@ -272,13 +273,10 @@ public class Moran : Role{
                 {
                     var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Sniped, false, false);
 
-                    if(target.GetModData().role == Roles.Holmes){
-                        RPCEventInvoker.WinTrigger(Roles.Moriarty);
-                    }
-
                     killButton.Timer = killButton.MaxTimer;
                 }
 
+                if(canBeNoticedOption.getBool()) RPCEventInvoker.SniperShot();
                 killButton.Timer = killButton.MaxTimer;
                 if (storeRifleOnFireOption.getBool())
                 {
@@ -300,8 +298,12 @@ public class Moran : Role{
         killButton.FireOnClicked = true;
         killButton.SetButtonCoolDownOption(true);
 
-        VentCoolDownMaxTimer = 20f;
-        VentDurationMaxTimer = 10f;
+    }
+
+    public override void EditCoolDown(CoolDownType type, float count)
+    {
+        killButton.Timer -= count;
+        killButton.actionButton.ShowButtonText("+" + count + "s");
     }
 
     public byte deadBodyId;
@@ -313,11 +315,18 @@ public class Moran : Role{
     }
 
     /* 画像 */
-    private SpriteLoader snipeButtonSprite = new SpriteLoader("Nebula.Resources.SnipeButton.png", 115f, "ui.button.moran.equip");
+    private SpriteLoader snipeButtonSprite = new SpriteLoader("Nebula.Resources.SnipeButton.png", 115f, "ui.button.sniper.equip");
 
     public override HelpSprite[] helpSprite => new HelpSprite[]
     {
-            new HelpSprite(snipeButtonSprite,"role.moran.help.equip",0.3f)
+            new HelpSprite(snipeButtonSprite,"role.sniper.help.equip",0.3f)
+    };
+
+    public override Tuple<string, Action>[] helpButton => new Tuple<string, Action>[]
+    {
+        new Tuple<string, Action>("role.sniper.help.shotEffective",()=>{ new Objects.EffectCircle(PlayerControl.LocalPlayer.gameObject.transform.position, Palette.ImpostorRed,shotEffectiveRangeOption.getFloat(), 16f); }),
+        new Tuple<string, Action>("role.sniper.help.soundEffective",()=>{ new Objects.EffectCircle(PlayerControl.LocalPlayer.gameObject.transform.position, Palette.ImpostorRed, noticeRangeOption.getFloat(),16f); }),
+        new Tuple<string, Action>("role.sniper.help.shotSize",()=>{new Objects.EffectCircle(PlayerControl.LocalPlayer.gameObject.transform.position, Palette.White, shotSizeOption.getFloat()*0.4f,16f,false,Palette.ImpostorRed);})
     };
 
     private Sprite snipeArrowSprite = null;
@@ -376,22 +385,6 @@ public class Moran : Role{
 
     public override void MyPlayerControlUpdate()
     {
-        if (message == null || !message.isActive)
-        {
-            foreach (var p in PlayerControl.AllPlayerControls)
-            {
-                if (p == PlayerControl.LocalPlayer) continue;
-                if (p.GetModData().isInvisiblePlayer)
-                {
-                    if (p.transform.position.Distance(PlayerControl.LocalPlayer.transform.position) < 5.0f)
-                    {
-                        message = new CustomMessage(new Vector3(0, -1.5f, 0), false, Language.Language.GetString("role.sniper.nearMessage"), GetMessageUpdater(), 1.0f, Palette.ImpostorRed);
-                        break;
-                    }
-                }
-            }
-        }
-
         if (equipRifleFlag)
         {
             RPCEventInvoker.UpdatePlayerControl();
@@ -476,8 +469,6 @@ public class Moran : Role{
             renderer.transform.position = new Vector3(0, 0, -30f);
             Guides[player.id] = renderer;
         }
-
-        message = null;
     }
 
 
@@ -523,5 +514,8 @@ public class Moran : Role{
 
         sniperButton = null;
         killButton = null;
+
+        Allocation = AllocationType.None;
+        CreateOptionFollowingRelatedRole = true;
     }
 }

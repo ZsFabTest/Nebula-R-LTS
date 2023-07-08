@@ -8,13 +8,13 @@ public class SchrodingersCat : Role
     {
         byte murderId;
         Role targetRole;
-        public CatEvent(byte murderId,Role targetRole) : base(0.2f)
+        public CatEvent(byte murderId,Role targetRole) : base(0.05f)
         {
             this.murderId = murderId;
             this.targetRole = targetRole;
         }
 
-        public override void OnActivate()
+        public override void OnTerminal()
         {
             RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
             RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, this.targetRole);

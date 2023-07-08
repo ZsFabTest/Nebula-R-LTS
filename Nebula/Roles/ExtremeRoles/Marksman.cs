@@ -2,6 +2,8 @@ namespace Nebula.Roles.ImpostorRoles;
 
 public class Marksman : Role{
     private Module.CustomOption maxShootOption;
+    private Module.CustomOption getShootOption;
+    private Module.CustomOption getShootAfterMeetingOption;
 
     private CustomButton saveShootButton,getShootButton,killButton;
     private SpriteLoader saveShootButtonSprite = new SpriteLoader("Nebula.Resources.SaveShootButton.png", 115f, "ui.button.marksman.saveShoot");
@@ -13,6 +15,10 @@ public class Marksman : Role{
     {
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
         maxShootOption = CreateOption(Color.white,"maxShoot",3f,1f,10f,1f);
+        getShootOption = CreateOption(Color.white,"getShootCooldown",0f,0f,10f,1f);
+        getShootOption.suffix = "second";
+        getShootAfterMeetingOption = CreateOption(Color.white,"getShootAfterMeeting",0f,0f,10f,1f);
+        getShootAfterMeetingOption.suffix = "second";
     }
 
     public override void GlobalInitialize(PlayerControl __instance)
@@ -76,18 +82,19 @@ public class Marksman : Role{
             {
                 RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,shootId,-1);
                 killButton.Timer = 0;
+                getShootButton.Timer = getShootButton.MaxTimer;
                 getShootButton.UsesText.text = PlayerControl.LocalPlayer.GetModData().GetRoleData(shootId).ToString();
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.GetModData().GetRoleData(shootId) > 0 && killButton.Timer > 0 && PlayerControl.LocalPlayer.CanMove; },
-            () => { getShootButton.Timer = 0; },
+            () => { getShootButton.Timer = getShootAfterMeetingOption.getFloat(); },
             getShootButtonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.secondaryAbilityInput.keyCode,
             "button.label.getShoot"
-        );
-        getShootButton.Timer = getShootButton.MaxTimer = 0;
+        ).SetTimer(getShootAfterMeetingOption.getFloat());
+        getShootButton.MaxTimer = getShootOption.getFloat();
 
         getShootButton.UsesText.text = "0";
     }

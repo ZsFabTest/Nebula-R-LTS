@@ -53,6 +53,7 @@
     <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="$(AmongUsRelease)\" />
     <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="$(AmongUsRelease)\Nebula\BepInEx\plugins\" />
     <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="D:\Nebula-R-LTS-master_2\" />
+    <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="D:\Nebula-R-LTS-master_2\Among Us BepInEx\BepInEx\Plugins\" />
   </Target>
 
 </Project>

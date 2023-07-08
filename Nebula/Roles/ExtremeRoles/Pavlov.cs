@@ -127,7 +127,7 @@ public class Dog : Role
 {
     public override bool IsSpawnable()
     {
-        return false;
+        return Roles.Moriarty.IsSpawnable();
     }
 
     private CustomButton killButton;

@@ -8,6 +8,7 @@ public class Flash : Template.StandardExtraRole
 
     public override void LoadOptionData()
     {
+        base.LoadOptionData();
         CustomSpeed = CreateOption(Color.white, "customSpeed", 2f, 1.25f, 3f, 0.25f);
         CustomSpeed.suffix = "cross";
     }
@@ -35,11 +36,6 @@ public class Flash : Template.StandardExtraRole
     public override void EditSpawnableRoleShower(ref string suffix, Role role)
     {
         if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "©");
-    }
-
-    public override void EditDescriptionString(ref string description)
-    {
-        description += "\n" + Language.Language.GetString("role.flash.description");
     }
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
