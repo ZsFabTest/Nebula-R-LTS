@@ -1955,6 +1955,7 @@
 
 "role.mercenary.name" : "雇佣兵"
 "role.mercenary.short" : "雇"
+"role.mercenary.hint" : "为别人办事"
 "role.mercenary.description" : "见钱眼开"
 "role.mercenary.info" : "你可以和任何阵营获胜。"
 "role.mercenary.killCooldown" : "击杀冷却时间"

@@ -11,7 +11,11 @@ class SoundPlayer
     {
         foreach (var p in players)
         {
-            GameObject.Destroy(p.audioSource.gameObject);
+            try{
+                GameObject.Destroy(p.audioSource.gameObject);
+            }catch(Exception e){
+                Debug.LogError(e.StackTrace);
+            }
         }
         players.Clear();
     }
