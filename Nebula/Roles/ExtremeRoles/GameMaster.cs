@@ -60,7 +60,7 @@ public class GameMaster : Role
     }
 
     public GameMaster()
-        : base("GM", "gm", CrewmateRoles.OnlineCelebrity.RoleColor, RoleCategory.Neutral, Side.ChainShifter, Side.ChainShifter,
+        : base("GM", "gm", ExtraRoles.OnlineCelebrity.RoleColor, RoleCategory.Neutral, Side.ChainShifter, Side.ChainShifter,
              new HashSet<Side>() { Side.ChainShifter }, new HashSet<Side>() { Side.ChainShifter },
              new HashSet<Patches.EndCondition>() { },
              false, VentPermission.CanUseUnlimittedVent, true, true, true)

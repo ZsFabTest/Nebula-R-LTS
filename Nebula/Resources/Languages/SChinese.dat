@@ -771,6 +771,7 @@
 "role.morphing.help.morph" : "化形"
 "role.morphing.morphCoolDown" : "化形冷却"
 "role.morphing.morphDuration" : "化形持续时间"
+"role.morphing.canUseVent" : "可以使用管道"
 
 "role.ninja.name" : "忍者"
 "role.ninja.short" : "忍"
@@ -1035,17 +1036,20 @@
 
 "role.bloody.name" : "血语者"
 "role.bloody.short" :"语"
+"role.bloody.description" : "鲜红的血！"
 "role.bloody.info" : "你的死亡伴随着一道鲜红的血迹"
 "role.bloody.bloodyDuration" : "血迹持续时长"
 
 "role.confused.name" : "幻视者"
 "role.confused.short" : "幻"
+"role.confused.description" : "是我的错觉吗？"
 "role.confused.info" : "每次会议后，在你视野中出现的玩家外貌将会发生改变"
 "role.confused.chanceOfShuffle" : "重置外貌次数"
 "role.confused.numOfShuffledPlayers" : "幻视者眼中被重置外貌的船员数量"
 
 "role.drunk.name" : "醉鬼"
 "role.drunk.short" : "醉"
+"role.drunk.description" : "~~~~~~~"
 "role.drunk.info" : "你昨晚喝醉了，你的操作将与正常方向相反。"
 
 "role.lastImpostor.name" : "绝境者"
@@ -1388,6 +1392,7 @@
 "option.canBeSecondaryJackal" : "可以成为附加豺狼"
 "option.canBeCheater" : "可以成为海王"
 "option.canBeDeputyMayor" : "可以成为副市长"
+"option.canBeOnlineCelebrity" : "可以成为网红"
 "option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
 "option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
 "option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
@@ -1960,6 +1965,18 @@
 "role.mercenary.info" : "你可以和任何阵营获胜。"
 "role.mercenary.killCooldown" : "击杀冷却时间"
 "role.mercenary.canUseVent" : "可以使用管道"
+
+"role.resurrectionist.name" : "反生者"
+"role.resurrectionist.short" : "反"
+"role.resurrectionist.description" : "我死了，我活了"
+"role.resurrectionist.hint" : "做完任务以复活"
+"role.resurrectionist.info" : "反正者做完任务后可以复活一次。"
+
+"role.supporter.name" : "支持者"
+"role.supporter.short" : "支"
+"role.supporter.description" : "我支持你！"
+"role.supporter.hint" : "全力支持你支持的人"
+"role.supporter.info" : "你和一个正义的船员互相知道职业。"
 
 "option.display.random" : "随机"
 

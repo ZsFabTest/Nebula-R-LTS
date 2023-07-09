@@ -86,5 +86,6 @@ public class Observer : Role
              false, VentPermission.CanUseUnlimittedVent, false, true, true)
     {
         hideButton = null;
+        VentColor = RoleColor;
     }
 }

@@ -90,14 +90,12 @@ public class Demagogue : Role
         else if (target == Roles.Splicer) targetRole = Roles.Executioner;
         else if (target == Roles.Spy) targetRole = Roles.Spy;
         else if (target == Roles.Sheriff) targetRole = Roles.SerialKiller; //记得写好嗜血以后替换awa
-        else if (target == Roles.OnlineCelebrity) targetRole = Roles.Morphing;
         else if (target == Roles.Holmes) targetRole = Roles.Painter;
         else if (target == Roles.Sanctifier) targetRole = Roles.Demagogue;
         else if (target == Roles.Doctor) targetRole = Roles.Cleaner;
         else if (target == Roles.Provocateur) targetRole = Roles.Vampire;
         else if (target == Roles.WhiteCat || target == Roles.BlueCat) targetRole = Roles.RedCat;
         else if (target == Roles.Observer) targetRole = Roles.Eraser;
-        else if (target == Roles.OnlineCelebrity) targetRole = Roles.Camouflager;
         else if (target.side == Side.Impostor) targetRole = target;
         return targetRole.IsSpawnable() ? targetRole : Roles.Impostor;
     }

@@ -126,6 +126,7 @@ public class Mover : Template.BilateralnessRole
 
     public override void OnMeetingStart()
     {
+        if(!isMoving) return;
         RPCEventInvoker.SetConsoleStatus(pickUpTarget,true,PlayerControl.LocalPlayer.transform.position);
         isMoving = false;
         move.SetLabel("button.label.mover.move");

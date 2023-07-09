@@ -101,4 +101,9 @@ public class StandardExtraRole : ExtraRole
     {
         detailChanceOption = new List<Tuple<Module.CustomOption, Module.CustomOption>>();
     }
+
+    public override void EditDescriptionString(ref string description)
+    {
+        description += "\n" + Language.Language.GetString("role." + LocalizeName + ".description");
+    }
 }

@@ -15,9 +15,11 @@ public class Agent : Template.ExemptTasks
     private Module.CustomOption maxVentsOption;
     private Module.CustomOption actOverOption;
     private Module.CustomOption madmateKillCoolDownOption;
+    /*
     private Module.CustomOption canKnowImpostorAndJackalByTasksOption;
     private Module.CustomOption LeastTasksNumberOption;
     private Module.CustomOption willBeFoundLeftOption;
+    */
 
     public override void LoadOptionData()
     {
@@ -31,11 +33,13 @@ public class Agent : Template.ExemptTasks
             AddCustomPrerequisite(() => { return CanHaveExtraAssignable(Roles.SecondaryMadmate) && Roles.SecondaryMadmate.IsSpawnable(); });
         madmateKillCoolDownOption.suffix = "second";
 
+/*
         canKnowImpostorAndJackalByTasksOption = CreateOption(Color.white, "canKnowImpostorAndJackal", true);
 
         LeastTasksNumberOption = CreateOption(Color.white, "theLeastCompletedTasks", 10f, 1f, 15f, 1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
 
         willBeFoundLeftOption = CreateOption(Color.white,"willBeFoundLeft",1f,1f,5f,1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
+*/
     }
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.AgentButton.png", 115f);
@@ -148,6 +152,7 @@ public class Agent : Template.ExemptTasks
         return Game.GameData.data.GetPlayerData(playerId).HasExtraRole(Roles.SecondaryMadmate);
     }
 
+/*
     public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
     {
         if (!canKnowImpostorAndJackalByTasksOption.getBool() || PlayerControl.LocalPlayer.GetModData().Tasks.Completed < LeastTasksNumberOption.getFloat()) return;
@@ -171,13 +176,16 @@ public class Agent : Template.ExemptTasks
             displayColor = Roles.ChainShifter.Color;
         }
     }
+*/
 
+/*
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
     {
         if (canKnowImpostorAndJackalByTasksOption.getBool() || PlayerControl.LocalPlayer.GetModData().Tasks.Completed >= LeastTasksNumberOption.getFloat() - willBeFoundLeftOption.getFloat()){
             displayColor = RoleColor;
         }
     }
+*/
 
     public Agent()
         : base("Agent", "agent", RoleColor, RoleCategory.Crewmate, Side.Crewmate, Side.Crewmate,

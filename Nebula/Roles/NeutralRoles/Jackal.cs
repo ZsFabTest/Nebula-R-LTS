@@ -235,5 +235,6 @@ public class Jackal : Role
         jackalDataId = Game.GameData.RegisterRoleDataId("jackal.identifier");
         leftSidekickDataId = Game.GameData.RegisterRoleDataId("jackal.leftSidekick");
         killingDataId = Game.GameData.RegisterRoleDataId("jackal.killing");
+        VentColor = RoleColor;
     }
 }

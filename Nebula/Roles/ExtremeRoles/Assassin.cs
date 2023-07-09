@@ -3,9 +3,11 @@
 public class Assassin : Role
 {
     private Module.CustomOption assassinateCooldownOption;
+    /*
     private Module.CustomOption hasLeavesAfterAssassinOption;
     private Module.CustomOption showMurderColorDuringTimeOption;
     private Module.CustomOption maxExistenceTimeOption;
+    */
 
     private SpriteLoader AssassinMarkButtonSprite = new SpriteLoader("Nebula.Resources.AssassinMarkButton.png", 115f);
     private SpriteLoader AssassinateButtonSprite = new SpriteLoader("Nebula.Resources.AssassinateButton.png", 115f);
@@ -15,23 +17,28 @@ public class Assassin : Role
         assassinateCooldownOption = CreateOption(Color.white, "assassinateCooldown", 25f, 15f, 35f, 5f);
         assassinateCooldownOption.suffix = "second";
 
+        /*
         hasLeavesAfterAssassinOption = CreateOption(Color.white,"hasLeavesAfterAssassin",true);
         showMurderColorDuringTimeOption = CreateOption(Color.white,"colorDuringTime",3f,0f,15f,1f).AddPrerequisite(hasLeavesAfterAssassinOption);
         showMurderColorDuringTimeOption.suffix = "second";
         maxExistenceTimeOption = CreateOption(Color.white,"maxExistenceTime",10f,1f,30f,1f).AddPrerequisite(hasLeavesAfterAssassinOption);
         maxExistenceTimeOption.suffix = "second";
+        */
     }
+
+    private SpriteLoader monitorButtonSprite = new SpriteLoader("Nebula.Resources.DecoyMonitorButton.png", 115f);
 
     public static CustomButton chooseTarget;
     public static CustomButton assassinate;
+    private CustomButton cameraButton;
     public PlayerControl assassinateTarget;
     private Arrow? Arrow = null;
     private long LastTime;
-    CustomObject Objeck;
+    //CustomObject Objeck;
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
-        Objeck = null;
+        //Objeck = null;
         LastTime = long.MaxValue;
     }
 
@@ -73,10 +80,11 @@ public class Assassin : Role
                 var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead, false, true);
                 if (res != Helpers.MurderAttemptResult.SuppressKill)
                     assassinate.Timer = assassinate.MaxTimer;
+                                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
                 assassinateTarget = null;
                 assassinate.Timer = assassinateCooldownOption.getFloat();
-                Objeck = RPCEventInvoker.ObjectInstantiate(CustomObject.Type.Leaves,target.transform.position);
-                LastTime = System.DateTime.Now.ToFileTime();
+                //Objeck = RPCEventInvoker.ObjectInstantiate(CustomObject.Type.Leaves,target.transform.position);/
+                //LastTime = System.DateTime.Now.ToFileTime();
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove && assassinateTarget != null; },
@@ -87,6 +95,27 @@ public class Assassin : Role
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.assassinate"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
+
+        if (cameraButton != null)
+        {
+            cameraButton.Destroy();
+        }
+        cameraButton = new CustomButton(
+            () =>
+            {
+                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);                
+                else HudManager.Instance.PlayerCam.SetTargetWithLight(assassinateTarget);
+            },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
+            () => { return PlayerControl.LocalPlayer.CanMove && assassinateTarget != null; },
+            () => {},
+            monitorButtonSprite.GetSprite(),
+            Expansion.GridArrangeExpansion.GridArrangeParameter.None,
+            __instance,
+            Module.NebulaInputManager.modifierAbilityInput.keyCode,
+            "button.label.monitor"
+        );
+        cameraButton.Timer = cameraButton.MaxTimer = 0f;
     }
 
     public override void CleanUp()
@@ -121,6 +150,7 @@ public class Assassin : Role
             }
             Arrow.Update(assassinateTarget.transform.position);
         }
+        /*
         if(Objeck != null){
             //Debug.Log((System.DateTime.Now.ToFileTime() - LastTime).ToString());
             if((System.DateTime.Now.ToFileTime() - LastTime) / 1e7f >= maxExistenceTimeOption.getFloat()){
@@ -133,6 +163,12 @@ public class Assassin : Role
                 RPCEvents.ObjectUpdate(Objeck.Id,1);
             }else RPCEvents.ObjectUpdate(Objeck.Id,0);
         }
+        */
+    }
+
+    public override void OnMeetingStart()
+    {
+        if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
     }
 
     public override void OnMeetingEnd()
@@ -157,7 +193,7 @@ public class Assassin : Role
         chooseTarget = null;
         assassinate = null;
         Arrow = null;
-        LastTime = long.MaxValue;
-        Objeck = null;
+        //LastTime = long.MaxValue;
+        //Objeck = null;
     }
 }

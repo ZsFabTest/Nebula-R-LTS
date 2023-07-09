@@ -143,7 +143,7 @@ static public class Roles
     public static CrewmateRoles.Kotwal Kotwal = new CrewmateRoles.Kotwal();
     public static CrewmateRoles.Necrophilic Necrophilic = new CrewmateRoles.Necrophilic();
     public static CrewmateRoles.Observer Observer = new CrewmateRoles.Observer();
-    public static CrewmateRoles.OnlineCelebrity OnlineCelebrity = new CrewmateRoles.OnlineCelebrity();
+    public static ExtraRoles.OnlineCelebrity OnlineCelebrity = new ExtraRoles.OnlineCelebrity();
     public static CrewmateRoles.Sanctifier Sanctifier = new CrewmateRoles.Sanctifier();
     //public static CrewmateRoles.Transporter Transporter = new CrewmateRoles.Transporter();
     public static CrewmateRoles.WhiteCat WhiteCat = new CrewmateRoles.WhiteCat();
@@ -179,7 +179,7 @@ static public class Roles
     public static GhostRoles.GhostEngineer GhostEngineer = new GhostRoles.GhostEngineer();
     public static ImpostorRoles.Marksman Marksman = new ImpostorRoles.Marksman();
     public static ImpostorRoles.Gambler Gambler = new ImpostorRoles.Gambler();
-    public static CrewmateRoles.Superstar Superstar = new CrewmateRoles.Superstar();
+    public static ExtraRoles.Superstar Superstar = new ExtraRoles.Superstar();
     public static CrewmateRoles.ChivalrousExpert ChivalrousExpert = new CrewmateRoles.ChivalrousExpert();
     public static CrewmateRoles.Programmer Programmer = new CrewmateRoles.Programmer();
     public static ImpostorRoles.Plumber Plumber = new ImpostorRoles.Plumber();
@@ -203,6 +203,8 @@ static public class Roles
     public static ExtraRoles.DeputyMayor DeputyMayor = new ExtraRoles.DeputyMayor();
     //public static ExtraRoles.Signaller Signaller = new ExtraRoles.Signaller();
     public static NeutralRoles.Mercenary Mercenary = new NeutralRoles.Mercenary();
+    public static CrewmateRoles.Resurrectionist Resurrectionist = new CrewmateRoles.Resurrectionist();
+    public static CrewmateRoles.Supporter Supporter = new CrewmateRoles.Supporter();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -216,7 +218,7 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,Superstar,ChivalrousExpert,Programmer,Minekeeper,Locksmith,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,
             Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,
             JackalMayor,
@@ -235,7 +237,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/
+            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

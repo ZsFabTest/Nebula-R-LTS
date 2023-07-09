@@ -122,6 +122,11 @@ public class SecondaryJackal : ExtraRole{
         return option;
     }
 
+    public override void EditDescriptionString(ref string description)
+    {
+        description += "\n" + Language.Language.GetString("role.secondaryJackal.description");
+    }
+
     public SecondaryJackal() : base("SecondaryJackal","secondaryJackal",NeutralRoles.Jackal.RoleColor,0){
     }
 }

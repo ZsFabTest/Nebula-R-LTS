@@ -142,6 +142,8 @@ public class Sidekick : Role
 
         Allocation = AllocationType.None;
         CreateOptionFollowingRelatedRole = true;
+
+        VentColor = Color;
     }
 }
 

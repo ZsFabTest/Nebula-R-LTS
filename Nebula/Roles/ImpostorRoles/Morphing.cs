@@ -30,6 +30,7 @@ public class Morphing : Role
 
     private Module.CustomOption morphCoolDownOption;
     private Module.CustomOption morphDurationOption;
+    private Module.CustomOption canUseVent;
 
     private PlayerControl? morphTarget;
     private Game.PlayerData.PlayerOutfitData morphOutfit;
@@ -51,6 +52,8 @@ public class Morphing : Role
 
         morphDurationOption = CreateOption(Color.white, "morphDuration", 15f, 5f, 40f, 2.5f);
         morphDurationOption.suffix = "second";
+
+        canUseVent = CreateOption(Color.white,"canUseVent",false);
     }
 
     public override void ButtonInitialize(HudManager __instance)
@@ -142,6 +145,12 @@ public class Morphing : Role
     public override void OnRoleRelationSetting()
     {
         RelatedRoles.Add(Roles.Arsonist);
+    }
+
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
+        VentPermission = canUseVent.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
+        canMoveInVents = canUseVent.getBool();
     }
 
     public Morphing()
