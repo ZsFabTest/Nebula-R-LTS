@@ -165,6 +165,9 @@ class ExileControllerPatch
         Game.GameData.data.UtilityTimer.OnMeetingEnd();
 
         Helpers.RoleAction(Game.GameData.data.myData.getGlobalData(), (r) => r.OnMeetingEnd());
+        foreach(var role in Game.GameData.data.myData.getGlobalData().extraRole){
+            role.OnMeetingEnd();
+        }
 
         //死体はすべて消去される
         foreach (Game.DeadPlayerData deadPlayerData in Game.GameData.data.deadPlayers.Values)

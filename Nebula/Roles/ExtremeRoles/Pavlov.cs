@@ -120,6 +120,7 @@ public class Pavlov : Role
         feed = null;
         myDog = 255;
         leftDogDataId = 3;
+        HideInExclusiveAssignmentOption = true;
     }
 }
 

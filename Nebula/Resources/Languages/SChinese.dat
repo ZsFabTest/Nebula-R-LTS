@@ -1377,6 +1377,8 @@
 "option.searchableDistance" : "船员搜索最大半径"
 
 
+"option.exclusiveAssignment.PavlovAndMoriarty" : "巴普洛夫之主 或 莫里亚蒂"
+
 "option.tab.ghostRoles" : "亡灵<color=#ffffffff>与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
 
 "option.canBeSick" : "可以成为病人"
@@ -1385,6 +1387,7 @@
 "option.canBeSignaller" : "可以成为通讯兵"
 "option.canBeSecondaryJackal" : "可以成为附加豺狼"
 "option.canBeCheater" : "可以成为海王"
+"option.canBeDeputyMayor" : "可以成为副市长"
 "option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
 "option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
 "option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
@@ -1653,7 +1656,7 @@
 "role.dog.description" : "来个鸡腿"
 "role.dog.info" : "来个鸡腿~"
 "role.dog.dogKillCooldown" : "击杀冷却"
-"role.dog.canUseVent" : "可以使用管道"
+"role.dog.dogCanUseVent" : "可以使用管道"
 
 "role.evilBusker.name" : "灵界杀手"
 "role.evilBusker.short" : "邪灵"
@@ -1697,8 +1700,9 @@
 "role.moriarty.short" : "莫"
 "role.moriarty.hint" : "谋篇布局"
 "role.moriarty.description" : "谋篇布局"
-"role.moriarty.info" : "找到福尔摩斯，或者暴力一点——杀光所有人。"
+"role.moriarty.info" : "莫里亚蒂可以招募莫兰上校。当击杀福尔摩斯胜利的设置打开时，莫里亚蒂可以通过找到福尔摩斯并与其共死的方式获取胜利。"
 "role.moriarty.coolDown" : "招募莫兰冷却时间"
+"role.moriarty.canWinByKillHolmes" : "可以通过击杀福尔摩斯胜利"
 
 "role.moran.name" : "莫兰上校"
 "role.moran.short" : "校"
@@ -1937,6 +1941,24 @@
 "role.marker.hint" : "分享你的信息"
 "role.marker.info" : "在会议中可以通过类似赌怪界面标记他人职业。"
 "role.marker.onlyImpCanSee" : "只有伪装者才能看见信息"
+
+"role.deputMayor.name" : "副市长"
+"role.deputMayor.short" : "副"
+"role.deputMayor.description" : "我终将成为真正的统治者"
+"role.deputMayor.info" : "可以根据设置获得附加投票(显示)。"
+"role.deputMayor.extraVoteNum" : "附加票数"
+
+"role.signaller.name" : "通讯兵"
+"role.signaller.short" : "通"
+"role.signaller.description" : "能站着绝对不走"
+"role.signaller.info" : "会议后不会回到紧急按钮附近。"
+
+"role.mercenary.name" : "雇佣兵"
+"role.mercenary.short" : "雇"
+"role.mercenary.description" : "见钱眼开"
+"role.mercenary.info" : "你可以和任何阵营获胜。"
+"role.mercenary.killCooldown" : "击杀冷却时间"
+"role.mercenary.canUseVent" : "可以使用管道"
 
 "option.display.random" : "随机"
 

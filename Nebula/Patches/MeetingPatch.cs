@@ -317,6 +317,9 @@ class MeetingHudPatch
             EmergencyPatch.MeetingUpdate();
 
             Game.GameData.data.myData.getGlobalData().role.OnMeetingStart();
+            foreach(var role in Game.GameData.data.myData.getGlobalData().extraRole){
+                role.OnMeetingStart();
+            }
 
             Helpers.RoleAction(PlayerControl.LocalPlayer, (role) => { role.SetupMeetingButton(MeetingHud.Instance); });
 

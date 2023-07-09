@@ -200,6 +200,9 @@ static public class Roles
     public static NeutralRoles.Yandere Yandere = new NeutralRoles.Yandere();
     public static ExtraRoles.SecretCrush SecretCrush = new ExtraRoles.SecretCrush();
     public static ImpostorRoles.Marker Marker = new ImpostorRoles.Marker();
+    public static ExtraRoles.DeputyMayor DeputyMayor = new ExtraRoles.DeputyMayor();
+    //public static ExtraRoles.Signaller Signaller = new ExtraRoles.Signaller();
+    public static NeutralRoles.Mercenary Mercenary = new NeutralRoles.Mercenary();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -215,7 +218,7 @@ static public class Roles
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
             Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,Superstar,ChivalrousExpert,Programmer,Minekeeper,Locksmith,
             Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
-            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,
+            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
 
@@ -232,7 +235,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush
+            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

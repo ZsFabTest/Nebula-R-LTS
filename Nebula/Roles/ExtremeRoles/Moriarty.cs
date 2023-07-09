@@ -20,6 +20,7 @@ public class Moriarty : Role, Template.HasWinTrigger{
     static public Color RoleColor = new Color(106f / 255f, 252f / 255f, 45f / 255f);
 
     private Module.CustomOption coolDownOption;
+    public static Module.CustomOption canWinByKillHolmes;
 
     private SpriteLoader sidekickButtonSprite = new SpriteLoader("Nebula.Resources.SidekickButton.png", 115f, "ui.button.Moriarty.sidekick");
     private SpriteLoader suicideButtonSprite = new SpriteLoader("Nebula.Resources.SuicideButton.png", 115f, "ui.button.Moriarty.suicide");
@@ -38,6 +39,7 @@ public class Moriarty : Role, Template.HasWinTrigger{
     {
         coolDownOption = CreateOption(Color.white, "coolDown", 15f, 5f, 25f, 2.5f);
         coolDownOption.suffix = "second";
+        canWinByKillHolmes = CreateOption(Color.white,"canWinByKillHolmes",true);
     }
 
     public override void ButtonInitialize(HudManager __instance)
@@ -65,6 +67,8 @@ public class Moriarty : Role, Template.HasWinTrigger{
         ).SetTimer(CustomOptionHolder.InitialForcefulAbilityCoolDownOption.getFloat());
         sidekickButton.MaxTimer = coolDownOption.getFloat();
         sidekickButton.UsesText.text = Game.GameData.data.myData.getGlobalData().GetRoleData(isCreated).ToString();
+
+        if(!canWinByKillHolmes.getBool()) return;
 
         if (suicideButton != null){
             suicideButton.Destroy();
@@ -143,6 +147,7 @@ public class Moriarty : Role, Template.HasWinTrigger{
         suicideButton = null;
 
         Patches.EndCondition.MoriartyWinByKillHolmes.TriggerRole = this;
+        HideInExclusiveAssignmentOption = true;
     }
 }
 
@@ -277,7 +282,7 @@ public class Moran : Role{
                 if (target != null)
                 {
                     var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Sniped, false, false);
-
+                    if(target.GetModData().role == Roles.Holmes && Moriarty.canWinByKillHolmes.getBool()) RPCEventInvoker.WinTrigger(Roles.Moriarty);
                     killButton.Timer = killButton.MaxTimer;
                 }
 
