@@ -664,6 +664,7 @@
 "role.covert.description" : "谁又能笑到最后？"
 "role.covert.hint" : "隐藏身份，静候良机"
 "role.covert.info" : "当你的队友们全部死亡时，你将拥有击杀的能力"
+"role.covert.killCooldown" : "特殊击杀冷却"
 
 "role.damned.name" : "受诅咒者"
 "role.damned.short" : "诅"
@@ -1393,6 +1394,7 @@
 "option.canBeCheater" : "可以成为海王"
 "option.canBeDeputyMayor" : "可以成为副市长"
 "option.canBeOnlineCelebrity" : "可以成为网红"
+"option.canBeSuperstar" : "可以成为明星"
 "option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
 "option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
 "option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
@@ -1996,8 +1998,14 @@
 "role.challenger.challengeCooldown" : "挑战冷却时间"
 "role.challenger.challengerDieIfMeetingStart" : "在挑战期间开会暴毙"
 
+"role.supportee.name" : "受支持者"
+"role.supportee.short" : "受"
+"role.supportee.description" : "你受到了支持"
+"role.supportee.info" : "你收到了支持者的支持。"
+
 "option.display.random" : "随机"
 
+"side.paparazzo.name" : "摄影师"
 "side.pavlov.name" : "巴普洛夫团队"
 "side.schrodingersCat.name" : "薛定谔的猫"
 "side.madman.name" : "疯子"

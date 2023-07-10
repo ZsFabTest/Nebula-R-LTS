@@ -9,11 +9,15 @@ namespace Nebula.Roles.ImpostorRoles
         public int canKillId { get; private set; }
         public override void LoadOptionData()
         {
+            killCooldown = CreateOption(Color.white,"killCooldown",7.5f,0f,25f,2.5f);
+            killCooldown.suffix = "second";
         }
 
         /* ボタン */
         private CustomButton killButton;
         private SpriteRenderer lockedButtonRenderer;
+
+        private Module.CustomOption killCooldown;
 
         public override RelatedRoleData[] RelatedRoleDataInfo
         {
@@ -53,7 +57,7 @@ namespace Nebula.Roles.ImpostorRoles
                 __instance,
                 Module.NebulaInputManager.modKillInput.keyCode
             ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-            killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+            killButton.MaxTimer = killCooldown.getFloat();
             killButton.SetButtonCoolDownOption(true);
 
             lockedButtonRenderer = Game.GameData.data.myData.getGlobalData().GetRoleData(canKillId) == 1 ? null : killButton.AddOverlay(CustomButton.lockedButtonSprite.GetSprite(), 0f);

@@ -4,7 +4,7 @@ namespace Nebula.Roles.CrewmateRoles{
 
         public byte targetId { get; private set; }
 
-        public override void GlobalInitialize(PlayerControl __instance){
+        public override void Initialize(PlayerControl __instance){
             List<byte> crewmates = new();
             foreach(var player in PlayerControl.AllPlayerControls.GetFastEnumerator()){
                 if(player.GetModData().role.category == RoleCategory.Crewmate && player.GetModData().role != Roles.Madmate && !player.GetModData().IsMadmate() && player.PlayerId != PlayerControl.LocalPlayer.PlayerId && !player.GetModData().extraRole.Contains(Roles.SecondaryJackal) && !player.GetModData().IsMadmate() && player.PlayerId != PlayerControl.LocalPlayer.PlayerId && !player.GetModData().extraRole.Contains(Roles.Lover)){
@@ -16,6 +16,7 @@ namespace Nebula.Roles.CrewmateRoles{
                 return;
             }
             RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId,targetId,targetId = crewmates[NebulaPlugin.rnd.Next(0,crewmates.Count)]);
+            RPCEventInvoker.SetExtraRole(Helpers.playerById(targetId),Roles.Supportee,PlayerControl.LocalPlayer.PlayerId);
         }
 
         public override void MyPlayerControlUpdate()
@@ -27,11 +28,6 @@ namespace Nebula.Roles.CrewmateRoles{
         public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
         {
             if(playerId == targetId) displayColor = RoleColor;
-        }
-
-        public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
-        {
-            if(PlayerControl.LocalPlayer.PlayerId == Helpers.playerById(playerId).GetModData().GetRoleData(targetId)) displayColor = RoleColor;
         }
 
         public override void LoadOptionData()

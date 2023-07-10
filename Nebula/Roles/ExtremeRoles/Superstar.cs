@@ -17,7 +17,9 @@ public class Superstar : ExtraRole{
         return option;
     }
 
-    public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag) => EditDisplayRoleNameForcely(playerId,ref displayName);
+    public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag){
+        EditDisplayNameForcely(playerId,ref displayName);
+    }
 
     private void _sub_Assignment(Patches.AssignMap assignMap, List<byte> players, int count)
     {

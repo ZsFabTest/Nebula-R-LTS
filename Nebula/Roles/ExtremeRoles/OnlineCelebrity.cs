@@ -52,7 +52,7 @@ public class OnlineCelebrity : ExtraRole
             }
         }
 
-        _sub_Assignment(assignMap, crewmates, (int)Roles.Superstar.RoleCountOption.getFloat());
+        _sub_Assignment(assignMap, crewmates, (int)Roles.OnlineCelebrity.RoleCountOption.getFloat());
     }
 
     public override void EditDescriptionString(ref string description)

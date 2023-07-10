@@ -207,6 +207,7 @@ static public class Roles
     public static CrewmateRoles.Supporter Supporter = new CrewmateRoles.Supporter();
     public static NeutralRoles.Werewolf Werewolf = new NeutralRoles.Werewolf();
     public static NeutralRoles.Challenger Challenger = new NeutralRoles.Challenger();
+    public static ExtraRoles.Supportee Supportee = new ExtraRoles.Supportee();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -221,7 +222,7 @@ static public class Roles
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
             Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,
-            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
+            Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
@@ -239,7 +240,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar
+            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

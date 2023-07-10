@@ -17,7 +17,8 @@ public class Amnesiac : Role{
                     else RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Opportunist);
                     break;
                 case 2:
-                    RPCEventInvoker.SwapRole(PlayerControl.LocalPlayer,target);
+                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
+                    RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Amnesiac);
                     break;
                 case 3:
                     RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);

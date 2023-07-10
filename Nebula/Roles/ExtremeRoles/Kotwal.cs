@@ -49,7 +49,7 @@ public class Kotwal : Role
 
     public override void LoadOptionData()
     {
-        createSheriffCooldownOption = CreateOption(Color.white, "createSheriffCooldown", 30f, 15f, 45f, 2.5f);
+        createSheriffCooldownOption = CreateOption(Color.white, "createSheriffCooldown", 30f, 0f, 45f, 2.5f);
         createSheriffCooldownOption.suffix = "second";
     }
 
