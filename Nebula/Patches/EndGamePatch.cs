@@ -42,7 +42,8 @@ public class EndCondition
     public static EndCondition CascrubinterWin = new EndCondition(131,Roles.NeutralRoles.Cascrubinter.RoleColor,"cascrubinter",1,Module.CustomGameMode.Standard);
     public static EndCondition GuesserWin = new EndCondition(132,Roles.ComplexRoles.FGuesser.RoleColor,"guesser",0,Module.CustomGameMode.Standard);
     public static EndCondition YandereWin = new EndCondition(133,Roles.NeutralRoles.Yandere.RoleColor,"yandere",1,Module.CustomGameMode.Standard);
-
+    public static EndCondition WerewolfWin = new EndCondition(134,Roles.NeutralRoles.Werewolf.RoleColor,"werewolf",1,Module.CustomGameMode.Standard);
+    public static EndCondition ChallengerWin = new EndCondition(135,Roles.NeutralRoles.Challenger.RoleColor,"challenger",1,Module.CustomGameMode.Standard);
 
 
 
@@ -53,7 +54,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,/*SantaWin,*/
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
@@ -704,6 +705,31 @@ public class PlayerStatistics
     public int AliveYandere;
     public int AliveMadmate;
 
+    public int AliveWerewolf;
+    public int AliveWerewolfCouple;
+    public int AliveWerewolfTrilemma;
+    public int AliveInLoveWerewolf;
+
+    public int AlivePavlovWithSidekick;
+    public int AliveMoriartyWithSidekick;
+    public int AliveWerewolfWithSidekick;
+    public int AliveSecondaryJackal;
+    public int AliveSpectreWithSidekick;
+    public int AliveInLoveImpostorsWithSidekick;
+    public int AliveInLovePavlovWithSidekick;
+    public int AliveInLoveMoriartyWithSidekick;
+    public int AliveInLoveWerewolfWithSidekick;
+    public int AliveJackalsWithMadmate;
+    public int AlivePavlovWithMadmate;
+    public int AliveMoriartyWithMadmate;
+    public int AliveWerewolfWithMadmate;
+    public int AliveInLoveJackalsWithMadmate;
+    public int AliveInLovePavlovWithMadmate;
+    public int AliveInLoveMoriartyWithMadmate;
+    public int AliveInLoveWerewolfWithMadmate;
+
+    public int AliveChallenger;
+
     public bool IsValid;
 
     //
@@ -741,6 +767,26 @@ public class PlayerStatistics
         AliveInLoveMoriarty = 0;
         AliveSpectre = 0;
         AliveMadmate = 0;
+        AliveWerewolf = 0;
+        AliveWerewolfCouple = 0;
+        AliveWerewolfTrilemma = 0;
+        AliveInLoveWerewolf = 0;
+        AliveSecondaryJackal = 0;
+        AliveSpectreWithSidekick = 0;
+        AliveInLoveImpostorsWithSidekick = 0;
+        AliveInLoveMoriartyWithSidekick = 0;
+        AliveInLovePavlovWithSidekick = 0;
+        AliveInLoveWerewolfWithSidekick = 0;
+        AliveJackalsWithMadmate = 0;
+        AlivePavlovWithMadmate = 0;
+        AliveMoriartyWithMadmate = 0;
+        AliveWerewolfWithMadmate = 0;
+        AliveInLoveJackalsWithMadmate = 0;
+        AliveInLovePavlovWithMadmate = 0;
+        AliveInLoveMoriartyWithMadmate = 0;
+        AliveInLoveWerewolfWithMadmate = 0;
+        AliveChallenger = 0;
+        
 
         Roles.Side side;
         
@@ -764,7 +810,9 @@ public class PlayerStatistics
 
                 var data = Game.GameData.data.playersArray[playerInfo.PlayerId];
 
-                if(data.role == Roles.Roles.Madmate || data.HasExtraRole(Roles.Roles.SecondaryMadmate)) AliveMadmate++;
+                if(data.role == Roles.Roles.Madmate || data.HasExtraRole(Roles.Roles.SecondaryMadmate)){
+                    AliveMadmate++;
+                }
 
                 side = data.role.side;
 
@@ -838,6 +886,20 @@ public class PlayerStatistics
                             AliveInLoveMoriarty++;
                             if (!flag) AliveMoriartyCouple++;
                         }
+
+                        flag = false;
+                        if (data.role.side == Roles.Side.Werewolf)
+                        {
+                            AliveInLoveWerewolf++;
+                            AliveWerewolfCouple++;
+                            flag = true;
+                        }
+
+                        if (data.role.side == Roles.Side.Werewolf)
+                        {
+                            AliveInLoveWerewolf++;
+                            if (!flag) AliveWerewolfCouple++;
+                        }
                     }
                 }
 
@@ -848,7 +910,7 @@ public class PlayerStatistics
                     {
                         AliveTrilemma++;
 
-                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false, moriartyFlag = false;
+                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false, moriartyFlag = false,werewolfFlag = false;
 
                         foreach (var d in lData)
                         {
@@ -871,11 +933,16 @@ public class PlayerStatistics
                                 moriartyFlag = true;
                                 AliveInLoveMoriarty++;
                             }
+                            if((d.role.side == Roles.Side.Werewolf)){
+                                werewolfFlag = true;
+                                AliveInLoveWerewolf++;
+                            }
                         }
                         if (jackalFlag) AliveJackalTrilemma++;
                         if (impostorFlag) AliveImpostorTrilemma++;
                         if (pavlovFlag) AlivePavlovTrilemma++;
                         if (moriartyFlag) AliveMoriartyTrilemma++;
+                        if(werewolfFlag) AliveWerewolfTrilemma++;
                     }
                 }
 
@@ -884,25 +951,77 @@ public class PlayerStatistics
                     if (data.HasExtraRole(Roles.Roles.SecondarySidekick) || data.HasExtraRole(Roles.Roles.SecondaryJackal))
                     {
                         AliveImpostorsWithSidekick++;
+                        AliveSecondaryJackal++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveImpostorsWithSidekick++;
+                    }
+                }else if (side == Roles.Side.Jackal)
+                {
+                    if(data.HasExtraRole(Roles.Roles.SecondaryMadmate)){
+                        AliveJackalsWithMadmate++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveJackalsWithMadmate++;
+                    }
+                }else if (side == Roles.Side.Pavlov)
+                {
+                    if (data.HasExtraRole(Roles.Roles.SecondarySidekick) || data.HasExtraRole(Roles.Roles.SecondaryJackal))
+                    {
+                        AlivePavlovWithSidekick++;
+                        AliveSecondaryJackal++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLovePavlovWithSidekick++;
+                    }
+                    if(data.HasExtraRole(Roles.Roles.SecondaryMadmate)){
+                        AlivePavlovWithMadmate++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLovePavlovWithMadmate++;
+                    }
+                }else if (side == Roles.Side.Moriarty)
+                {
+                    if (data.HasExtraRole(Roles.Roles.SecondarySidekick) || data.HasExtraRole(Roles.Roles.SecondaryJackal))
+                    {
+                        AliveMoriartyWithSidekick++;
+                        AliveSecondaryJackal++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveMoriartyWithSidekick++;
+                    }
+                    if(data.HasExtraRole(Roles.Roles.SecondaryMadmate)){
+                        AliveMoriartyWithMadmate++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveMoriartyWithMadmate++;
+                    }
+                }else if (side == Roles.Side.Werewolf)
+                {
+                    if (data.HasExtraRole(Roles.Roles.SecondarySidekick) || data.HasExtraRole(Roles.Roles.SecondaryJackal))
+                    {
+                        AliveWerewolfWithSidekick++;
+                        AliveSecondaryJackal++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveWerewolfWithSidekick++;
+                    }
+                    if(data.HasExtraRole(Roles.Roles.SecondaryMadmate)){
+                        AliveWerewolfWithMadmate++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveWerewolfWithMadmate++;
                     }
                 }
 
-                if (data.role == Roles.Roles.Spectre) AliveSpectre++;
+                if (data.role == Roles.Roles.Spectre){
+                    if(data.extraRole.Contains(Roles.Roles.SecondaryJackal) || data.extraRole.Contains(Roles.Roles.SecondarySidekick)){
+                        AliveSpectreWithSidekick++;
+                        AliveSecondaryJackal++;
+                    }else AliveSpectre++;
+                }
 
                 IsValid = true;
             }
-            catch 
+            catch(Exception e) 
             {
+                Debug.LogError(e.StackTrace);
                 continue;
             }
         }
 
         AliveCrewmates = GetAlivePlayers(Roles.Side.Crewmate);
         AliveImpostors = GetAlivePlayers(Roles.Side.Impostor);
-        AliveJackals = GetAlivePlayers(Roles.Side.Jackal);
+        AliveJackals = GetAlivePlayers(Roles.Side.Jackal) + AliveSecondaryJackal;
         AlivePavlov = GetAlivePlayers(Roles.Side.Pavlov);
         AliveMoriarty = GetAlivePlayers(Roles.Side.Moriarty);
         AliveYandere = GetAlivePlayers(Roles.Side.Yandere);
+        AliveWerewolf = GetAlivePlayers(Roles.Side.Werewolf);
+        AliveChallenger = GetAlivePlayers(Roles.Side.Challenger);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {
@@ -910,6 +1029,7 @@ public class PlayerStatistics
             AliveInLoveJackals = 0;
             AliveInLovePavlov = 0;
             AliveInLoveMoriarty = 0;
+            AliveInLoveWerewolf = 0;
         }
         if(!Roles.Roles.Madmate.IgnoringNumOfMadmateOption.getBool()) AliveMadmate = 0;
     }

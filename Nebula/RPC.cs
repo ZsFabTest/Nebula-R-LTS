@@ -739,7 +739,7 @@ static class RPCEvents
 
                 Events.Schedule.RegisterPostMeetingAction(() =>
                 {
-                    if (!PlayerControl.LocalPlayer.GetModData().IsAlive)
+                    if (!PlayerControl.LocalPlayer.GetModData().IsAlive && (PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.Resurrectionist || Roles.Roles.Resurrectionist.hasRevived))
                         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
                 }, 0);
             }

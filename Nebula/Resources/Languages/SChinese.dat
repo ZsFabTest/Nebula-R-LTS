@@ -1978,6 +1978,24 @@
 "role.supporter.hint" : "全力支持你支持的人"
 "role.supporter.info" : "你和一个正义的船员互相知道职业。"
 
+"role.werewolf.name" : "狼人"
+"role.werewolf.short" : "狼"
+"role.werewolf.description" : "是时候收割了"
+"role.werewolf.hint" : "将所有人杀干净"
+"role.werewolf.info" : "类似TOU的月下。\n在狂暴期间可以跳关和击杀，但狂暴结束如果不从管道出来会卡在管道中。"
+"role.werewolf.killCooldown" : "击杀冷却时间"
+"role.werewolf.deliriumCooldown" : "狂暴冷却时间"
+"role.werewolf.deliriumDuring" : "狂暴持续时间"
+
+"role.challenger.name" : "挑战者"
+"role.challenger.short" : "挑"
+"role.challenger.descripton" : "你过来啊"
+"role.challenger.hint" : "与玩家一对一决斗"
+"role.challenger.info" : "挑战者可以选定一位玩家与其挑战，被挑战的玩家职业转变为挑战者。\n只有其中一名挑战者死亡后，另一名挑战者才能继续挑战。\n死亡后挑战者职业转变为失忆者。\n挑战者只能击杀其他挑战者。"
+"role.challenger.killCooldown" : "挑战开始后的初始击杀冷却"
+"role.challenger.challengeCooldown" : "挑战冷却时间"
+"role.challenger.challengerDieIfMeetingStart" : "在挑战期间开会暴毙"
+
 "option.display.random" : "随机"
 
 "side.pavlov.name" : "巴普洛夫团队"
@@ -2034,6 +2052,8 @@
 "button.label.mover.put" : "放下"
 "button.label.tardiness" : "减速"
 "button.label.madmate" : "策反"
+"button.label.mad" : "狂暴"
+"button.label.challenge" : "挑战"
 
 "meeting.seb" : "特殊会议"
 "meeting.forbid" : "你不能召开紧急会议"

@@ -34,6 +34,11 @@ namespace Nebula.Roles.CrewmateRoles{
             if(PlayerControl.LocalPlayer.PlayerId == Helpers.playerById(playerId).GetModData().GetRoleData(targetId)) displayColor = RoleColor;
         }
 
+        public override void LoadOptionData()
+        {
+            TopOption.tab = Module.CustomOptionTab.GhostRoles;
+        }
+
         public Supporter() : base("Supporter","supporter",RoleColor,RoleCategory.Crewmate,Side.Crewmate,Side.Crewmate,
              Crewmate.crewmateSideSet,Crewmate.crewmateSideSet,Crewmate.crewmateEndSet,
              false,VentPermission.CanNotUse,false,true,true){

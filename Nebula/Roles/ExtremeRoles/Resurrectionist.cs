@@ -3,7 +3,12 @@ namespace Nebula.Roles.CrewmateRoles{
         public static Color RoleColor = new Color(63f / 255f,72f / 255f,204f / 255f);
 
         private bool canRevive = false;
-        private bool hasRevived = false;
+        public bool hasRevived = false;
+
+        public override void LoadOptionData()
+        {
+            TopOption.tab = Module.CustomOptionTab.GhostRoles;
+        }
 
         public override void OnTaskComplete(PlayerTask? task)
         {

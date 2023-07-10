@@ -44,7 +44,7 @@ public class NebulaPlugin : BasePlugin
     public const string PluginVersion = "1.0.2.8";
     public const bool IsSnapshot = false;
 
-    public static string PluginVisualVersion = (IsSnapshot ? "23.07.09" : "") + "-" + PluginVersion;
+    public static string PluginVisualVersion = (IsSnapshot ? "23.07.09-" : "") + PluginVersion;
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
     
     public const string PluginVersionForFetch = "1.0.2.8";
