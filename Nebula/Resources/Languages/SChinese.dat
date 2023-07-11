@@ -2003,6 +2003,15 @@
 "role.supportee.description" : "你受到了支持"
 "role.supportee.info" : "你收到了支持者的支持。"
 
+"role.oracle.name" : "天启"
+"role.oracle.short" : "天"
+"role.oracle.description" : "是时候杀戮了"
+"role.oracle.hint" : "越杀越想杀"
+"role.oracle.info" : "在击杀后击杀冷却将降低。"
+"role.oracle.initKillCooldown" : "初始击杀冷却"
+"role.oracle.reduceKillCooldown" : "每次击杀后的击杀冷却"
+"role.oracle.leastKillCooldown" : "最少击杀冷却"
+
 "option.display.random" : "随机"
 
 "side.paparazzo.name" : "摄影师"
@@ -2013,6 +2022,9 @@
 "side.cascrubinter.name" : "行刑者"
 "side.amnesiac.name" : "失忆者"
 "side.yandere.name" : "病娇"
+"side.werewolf.name" : "狼人"
+"side.challenger.name" : "挑战者"
+"side.oracle.name" : "天启"
 
 "text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
 "text.exile.connection" : " "
@@ -2031,6 +2043,9 @@
 "game.endText.cascrubinter" : "行刑者胜利"
 "game.endText.guesser" : "赌怪们胜利"
 "game.endText.yandere" : "病娇及其暗恋对象胜利"
+"game.endText.werewolf" : "狼人胜利"
+"game.endText.challenger" : "挑战者胜利"
+"game.endText.oracle" : "天启胜利"
 
 "status.hemorrhage" : "失血"
 "status.killed" : "爆炸"

@@ -44,6 +44,7 @@ public class EndCondition
     public static EndCondition YandereWin = new EndCondition(133,Roles.NeutralRoles.Yandere.RoleColor,"yandere",1,Module.CustomGameMode.Standard);
     public static EndCondition WerewolfWin = new EndCondition(134,Roles.NeutralRoles.Werewolf.RoleColor,"werewolf",1,Module.CustomGameMode.Standard);
     public static EndCondition ChallengerWin = new EndCondition(135,Roles.NeutralRoles.Challenger.RoleColor,"challenger",1,Module.CustomGameMode.Standard);
+    public static EndCondition OracleWin = new EndCondition(136,Roles.NeutralRoles.Oracle.RoleColor,"oracle",1,Module.CustomGameMode.Standard);
 
 
 
@@ -54,7 +55,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,/*SantaWin,*/
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
@@ -730,6 +731,15 @@ public class PlayerStatistics
 
     public int AliveChallenger;
 
+    public int AliveOracle;
+    public int AliveInLoveOracle;
+    public int AliveOracleCouple;
+    public int AliveOracleTrilemma;
+    public int AliveOracleWithMadmate;
+    public int AliveInLoveOracleWithMadmate;
+    public int AliveOracleWithSidekick;
+    public int AliveInLoveOracleWithSidekick;
+
     public bool IsValid;
 
     //
@@ -786,6 +796,15 @@ public class PlayerStatistics
         AliveInLoveMoriartyWithMadmate = 0;
         AliveInLoveWerewolfWithMadmate = 0;
         AliveChallenger = 0;
+
+        AliveOracle = 0;
+        AliveInLoveOracle = 0;
+        AliveOracleCouple = 0;
+        AliveOracleTrilemma = 0;
+        AliveOracleWithMadmate = 0;
+        AliveInLoveOracleWithMadmate = 0;
+        AliveOracleWithSidekick = 0;
+        AliveInLoveOracleWithSidekick = 0;
         
 
         Roles.Side side;
@@ -900,6 +919,20 @@ public class PlayerStatistics
                             AliveInLoveWerewolf++;
                             if (!flag) AliveWerewolfCouple++;
                         }
+
+                        flag = false;
+                        if (data.role.side == Roles.Side.Oracle)
+                        {
+                            AliveInLoveOracle++;
+                            AliveOracleCouple++;
+                            flag = true;
+                        }
+
+                        if (data.role.side == Roles.Side.Oracle)
+                        {
+                            AliveInLoveOracle++;
+                            if (!flag) AliveOracleCouple++;
+                        }
                     }
                 }
 
@@ -910,7 +943,7 @@ public class PlayerStatistics
                     {
                         AliveTrilemma++;
 
-                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false, moriartyFlag = false,werewolfFlag = false;
+                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false, moriartyFlag = false,werewolfFlag = false,oracleFlag = false;
 
                         foreach (var d in lData)
                         {
@@ -937,12 +970,17 @@ public class PlayerStatistics
                                 werewolfFlag = true;
                                 AliveInLoveWerewolf++;
                             }
+                            if((d.role.side == Roles.Side.Oracle)){
+                                oracleFlag = true;
+                                AliveInLoveOracle++;
+                            }
                         }
                         if (jackalFlag) AliveJackalTrilemma++;
                         if (impostorFlag) AliveImpostorTrilemma++;
                         if (pavlovFlag) AlivePavlovTrilemma++;
                         if (moriartyFlag) AliveMoriartyTrilemma++;
                         if(werewolfFlag) AliveWerewolfTrilemma++;
+                        if(oracleFlag) AliveOracleTrilemma++;
                     }
                 }
 
@@ -996,6 +1034,18 @@ public class PlayerStatistics
                         AliveWerewolfWithMadmate++;
                         if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveWerewolfWithMadmate++;
                     }
+                }else if (side == Roles.Side.Oracle)
+                {
+                    if (data.HasExtraRole(Roles.Roles.SecondarySidekick) || data.HasExtraRole(Roles.Roles.SecondaryJackal))
+                    {
+                        AliveOracleWithSidekick++;
+                        AliveSecondaryJackal++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveOracleWithSidekick++;
+                    }
+                    if(data.HasExtraRole(Roles.Roles.SecondaryMadmate)){
+                        AliveOracleWithMadmate++;
+                        if(data.HasExtraRole(Roles.Roles.Lover) || data.HasExtraRole(Roles.Roles.Trilemma)) AliveInLoveOracleWithMadmate++;
+                    }
                 }
 
                 if (data.role == Roles.Roles.Spectre){
@@ -1022,6 +1072,7 @@ public class PlayerStatistics
         AliveYandere = GetAlivePlayers(Roles.Side.Yandere);
         AliveWerewolf = GetAlivePlayers(Roles.Side.Werewolf);
         AliveChallenger = GetAlivePlayers(Roles.Side.Challenger);
+        AliveOracle = GetAlivePlayers(Roles.Side.Challenger);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {
@@ -1030,6 +1081,7 @@ public class PlayerStatistics
             AliveInLovePavlov = 0;
             AliveInLoveMoriarty = 0;
             AliveInLoveWerewolf = 0;
+            AliveInLoveOracle = 0;
         }
         if(!Roles.Roles.Madmate.IgnoringNumOfMadmateOption.getBool()) AliveMadmate = 0;
     }

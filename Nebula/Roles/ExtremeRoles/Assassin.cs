@@ -131,6 +131,11 @@ public class Assassin : Role
             assassinate.Destroy();
             assassinate = null;
         }
+        if(cameraButton != null)
+        {
+            cameraButton.Destroy();
+            cameraButton = null;
+        }
         if(Arrow != null){
             UnityEngine.Object.Destroy(Arrow.arrow);
             Arrow = null;

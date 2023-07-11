@@ -35,6 +35,12 @@ namespace Nebula.Roles.CrewmateRoles{
             TopOption.tab = Module.CustomOptionTab.GhostRoles;
         }
 
+        public override void CleanUp()
+        {
+            base.CleanUp();
+            RPCEventInvoker.ImmediatelyUnsetExtraRole(Helpers.playerById(targetId),Roles.Supportee);
+        }
+
         public Supporter() : base("Supporter","supporter",RoleColor,RoleCategory.Crewmate,Side.Crewmate,Side.Crewmate,
              Crewmate.crewmateSideSet,Crewmate.crewmateSideSet,Crewmate.crewmateEndSet,
              false,VentPermission.CanNotUse,false,true,true){

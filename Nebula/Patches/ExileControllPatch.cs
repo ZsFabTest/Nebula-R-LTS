@@ -205,7 +205,14 @@ class ExileControllerPatch
                             p.GetModData().role.side == Roles.Side.Arsonist || 
                             p.GetModData().role.side == Roles.Side.Vulture || 
                             p.GetModData().role.side == Roles.Side.Madman || 
-                            p.GetModData().role.side == Roles.Side.Cascrubinter
+                            p.GetModData().role.side == Roles.Side.Cascrubinter || 
+                            p.GetModData().role.side == Roles.Side.Avenger ||
+                            p.GetModData().role.side == Roles.Side.Challenger || 
+                            p.GetModData().role.side == Roles.Side.Werewolf || 
+                            p.GetModData().role.side == Roles.Side.Yandere || 
+                            p.GetModData().HasExtraRole(Roles.Roles.SecondaryJackal) || 
+                            p.GetModData().HasExtraRole(Roles.Roles.SecondarySidekick) || 
+                            p.GetModData().role.side == Roles.Side.Jester
                             )) sums++;
                             //Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
                         }
@@ -216,7 +223,15 @@ class ExileControllerPatch
                             player.GetModData().role.side == Roles.Side.Arsonist || 
                             player.GetModData().role.side == Roles.Side.Vulture || 
                             player.GetModData().role.side == Roles.Side.Madman || 
-                            player.GetModData().role.side == Roles.Side.Cascrubinter
+                            player.GetModData().role.side == Roles.Side.Cascrubinter ||
+                            player.GetModData().role.side == Roles.Side.Cascrubinter || 
+                            player.GetModData().role.side == Roles.Side.Avenger ||
+                            player.GetModData().role.side == Roles.Side.Challenger || 
+                            player.GetModData().role.side == Roles.Side.Werewolf || 
+                            player.GetModData().role.side == Roles.Side.Yandere || 
+                            player.GetModData().HasExtraRole(Roles.Roles.SecondaryJackal) || 
+                            player.GetModData().HasExtraRole(Roles.Roles.SecondarySidekick) || 
+                            player.GetModData().role.side == Roles.Side.Jester
                         )) sums--;
                         //__result.Remove('.');
                         //__result.Remove('。');

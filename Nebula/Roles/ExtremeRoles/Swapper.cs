@@ -12,7 +12,7 @@ public static class SwapSystem{
         __instance.GetModData().SetRoleData(swapDataId, (int)Roles.F_Swapper.swapCountOption.getFloat());
     }
 
-    public static void OnMeetingStart(){ swapTargetf = Byte.MaxValue; swapTargets = Byte.MaxValue; isSwapped = false; RPCEventInvoker.SetSwapTarget(Byte.MaxValue,Byte.MaxValue); }
+    public static void OnMeetingStart(){ swapTargetf = Byte.MaxValue; swapTargets = Byte.MaxValue; isSwapped = false; }
 
     static void guesserOnClick(int buttonTarget, MeetingHud __instance)
     {

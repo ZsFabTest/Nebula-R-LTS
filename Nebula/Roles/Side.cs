@@ -102,6 +102,7 @@ public class Side
             statistics.AliveWerewolf == 0 &&
             statistics.AliveYandere == 0 &&
             statistics.AliveChallenger == 0 &&
+            statistics.AliveOracle == 0 &&
             (statistics.TotalAlive - statistics.AliveSpectre - statistics.AliveMadmate) <= (statistics.AliveImpostors - statistics.AliveInLoveImpostors - statistics.AliveImpostorsWithSidekick + statistics.AliveInLoveImpostorsWithSidekick) * 2 &&
             (statistics.AliveImpostorCouple + statistics.AliveImpostorTrilemma == 0 ||
             statistics.AliveImpostorCouple * 2 + statistics.AliveImpostorTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
@@ -126,7 +127,7 @@ public class Side
 
     public static Side Jackal = new Side("Jackal", "jackal", IntroDisplayOption.STANDARD, NeutralRoles.Jackal.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if ((statistics.AliveJackals - statistics.AliveInLoveJackals - statistics.AliveJackalsWithMadmate + statistics.AliveInLoveJackalsWithMadmate) * 2 >= (statistics.TotalAlive-statistics.AliveSpectre) && statistics.GetAlivePlayers(Impostor) - statistics.AliveImpostorsWithSidekick <= 0 && statistics.GetAlivePlayers(Pavlov) - statistics.AlivePavlovWithSidekick <= 0 && statistics.AliveMoriarty - statistics.AliveMoriartyWithSidekick <= 0 && statistics.AliveWerewolf - statistics.AliveWerewolfWithSidekick <= 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0 &&
+        if ((statistics.AliveJackals - statistics.AliveInLoveJackals - statistics.AliveJackalsWithMadmate + statistics.AliveInLoveJackalsWithMadmate) * 2 >= (statistics.TotalAlive-statistics.AliveSpectre) && statistics.GetAlivePlayers(Impostor) - statistics.AliveImpostorsWithSidekick <= 0 && statistics.GetAlivePlayers(Pavlov) - statistics.AlivePavlovWithSidekick <= 0 && statistics.AliveMoriarty - statistics.AliveMoriartyWithSidekick <= 0 && statistics.AliveWerewolf - statistics.AliveWerewolfWithSidekick <= 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle - statistics.AliveOracleWithSidekick == 0 &&
         (statistics.AliveJackalCouple + statistics.AliveJackalTrilemma == 0 ||
         statistics.AliveJackalCouple * 2 + statistics.AliveJackalTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
         {
@@ -265,7 +266,7 @@ public class Side
         if ((statistics.AlivePavlov - statistics.AliveInLovePavlov - statistics.AlivePavlovWithSidekick + statistics.AliveInLovePavlovWithSidekick - statistics.AlivePavlovWithMadmate + statistics.AliveInLovePavlovWithMadmate) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre) && statistics.AliveImpostors == 0 &&
         (statistics.AlivePavlovCouple + statistics.AlivePavlovTrilemma == 0 ||
         statistics.AlivePavlovCouple * 2 + statistics.AlivePavlovTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
-        statistics.AliveJackals == 0 && statistics.AliveMoriarty == 0 && statistics.AliveWerewolf == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0)
+        statistics.AliveJackals == 0 && statistics.AliveMoriarty == 0 && statistics.AliveWerewolf == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle == 0)
         {
             return EndCondition.PavlovWin;
         }
@@ -276,7 +277,7 @@ public class Side
         if ((statistics.AliveMoriarty - statistics.AliveInLoveMoriarty - statistics.AliveMoriartyWithSidekick - statistics.AliveInLoveMoriartyWithMadmate + statistics.AliveInLoveMoriartyWithMadmate + statistics.AliveInLoveMoriartyWithSidekick) * 2 >= statistics.TotalAlive && statistics.AliveImpostors == 0 &&
         (statistics.AliveMoriartyCouple + statistics.AliveMoriartyTrilemma == 0 ||
         statistics.AliveMoriartyCouple * 2 + statistics.AliveMoriartyTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
-        statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveWerewolf == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0)
+        statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveWerewolf == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle == 0)
         {
             return EndCondition.MoriartyWin;
         }
@@ -323,7 +324,7 @@ public class Side
 
     public static Side Werewolf = new Side("Werewolf","werewolf",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Werewolf.RoleColor,(PlayerStatistics statistics,ShipStatus status) => 
     {
-        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0 && 
+        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle == 0 &&
         (statistics.AliveWerewolf - statistics.AliveInLoveWerewolf - statistics.AliveWerewolfWithSidekick + statistics.AliveInLoveWerewolfWithSidekick - statistics.AliveWerewolfWithMadmate + statistics.AliveInLoveWerewolfWithMadmate) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre) && 
         (statistics.AliveWerewolfCouple + statistics.AliveWerewolfTrilemma == 0 ||
         statistics.AliveWerewolfCouple * 2 + statistics.AliveWerewolfTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3)){
@@ -334,8 +335,18 @@ public class Side
 
     public static Side Challenger = new Side("Challenger","challenger",IntroDisplayOption.SHOW_ALL,NeutralRoles.Challenger.RoleColor,(PlayerStatistics statistics,ShipStatus status) => 
     {
-        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 1 && statistics.AliveChallenger * 2 >= statistics.TotalAlive){
+        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveYandere == 0 && statistics.AliveOracle == 0 && statistics.AliveChallenger == 1 && statistics.AliveChallenger * 2 >= statistics.TotalAlive){
             return EndCondition.ChallengerWin;
+        }
+        return null;
+    });
+
+    public static Side Oracle = new Side("Oracle","oracle",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Oracle.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveYandere == 0 && statistics.AliveChallenger == 0 && statistics.AliveWerewolf == 0 &&
+        (statistics.AliveOracle - statistics.AliveInLoveOracle - statistics.AliveOracleWithMadmate - statistics.AliveOracleWithSidekick + statistics.AliveInLoveOracleWithMadmate + statistics.AliveInLoveOracleWithSidekick) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre) && 
+        (statistics.AliveOracleCouple + statistics.AliveOracleTrilemma == 0 ||
+        statistics.AliveOracleCouple * 2 + statistics.AliveOracleTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3)){
+            return EndCondition.OracleWin;
         }
         return null;
     });
@@ -426,7 +437,7 @@ public class Side
             GamePlayer,
             Extra,VOID,
             RitualCrewmate,
-            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere
+            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere,Werewolf,Challenger,Oracle
         };
 
     public IntroDisplayOption ShowOption { get; }

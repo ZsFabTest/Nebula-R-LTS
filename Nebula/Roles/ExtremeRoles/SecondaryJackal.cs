@@ -4,6 +4,13 @@ public class SecondaryJackal : ExtraRole{
     private Module.CustomOption impostorCanBeSecondaryJackalOption;
     //public Module.CustomOption IgnoringNumOfJackalOption;
 
+    public override void MyPlayerControlUpdate()
+    {
+        if(PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryMadmate)){
+            RPCEventInvoker.ImmediatelyUnsetExtraRole(PlayerControl.LocalPlayer,Roles.SecondaryMadmate);
+        }
+    }
+
     public override void LoadOptionData(){
         impostorCanBeSecondaryJackalOption = CreateOption(Color.white,"impostorCanBeSecondaryJackal",false);
         //IgnoringNumOfJackalOption = CreateOption(Color.white,"IgnoringJackal",false);

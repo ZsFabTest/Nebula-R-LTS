@@ -433,6 +433,7 @@ class MeetingHudPatch
             }
             if (Roles.ComplexRoles.SwapSystem.isSwapped)
             {
+                Debug.LogWarning("SwapAniBegan");
                 __instance.StartCoroutine(Effects.Slide3D(swapped1.transform, swapped1.transform.localPosition, swapped2.transform.localPosition, 1.5f));
                 __instance.StartCoroutine(Effects.Slide3D(swapped2.transform, swapped2.transform.localPosition, swapped1.transform.localPosition, 1.5f));
             }
