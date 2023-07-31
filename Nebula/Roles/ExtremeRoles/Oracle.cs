@@ -59,6 +59,13 @@ namespace Nebula.Roles.NeutralRoles{
             }
         }
 
+        public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+        {
+            if(PlayerControl.LocalPlayer.GetModData().role.side == Side.Oracle){
+                displayColor = RoleColor;
+            }
+        }
+
         public override void MyPlayerControlUpdate()
         {
             Game.MyPlayerData data = Game.GameData.data.myData;
@@ -66,10 +73,10 @@ namespace Nebula.Roles.NeutralRoles{
             Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
         }
 
-        public Oracle() : base("Oracle","oracle",RoleColor,RoleCategory.Neutral,Side.Oracle,Side.Oracle,
+        public Oracle() : base("OracleN","oracleN",RoleColor,RoleCategory.Neutral,Side.Oracle,Side.Oracle,
          new HashSet<Side>() { Side.Oracle },new HashSet<Side>() { Side.Oracle },new HashSet<Patches.EndCondition>() { Patches.EndCondition.OracleWin },
          true,VentPermission.CanNotUse,false,true,true){
-            killDataId = Game.GameData.RegisterRoleDataId("oracle.killdataid");
+            killDataId = Game.GameData.RegisterRoleDataId("oracleN.killdataid");
         }
     }
 }

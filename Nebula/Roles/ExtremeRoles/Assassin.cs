@@ -55,6 +55,9 @@ public class Assassin : Role
                 assassinateTarget = target;
                 chooseTarget.Timer = 5f;
                 Game.GameData.data.myData.currentTarget.ShowFailedMurder();
+                if(Arrow != null){
+                    UnityEngine.Object.Destroy(Arrow.arrow);
+                }
                 Arrow = new Arrow(Color.black);
                 Arrow.arrow.SetActive(true);
             },

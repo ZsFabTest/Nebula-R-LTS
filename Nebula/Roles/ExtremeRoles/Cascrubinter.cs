@@ -6,7 +6,7 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
     public byte Winner { get; set; } = Byte.MaxValue;
 
     private Module.CustomOption changeRoleAfterTargetDiedOption;
-    public static PlayerControl target;
+    public PlayerControl target;
 
     public override void LoadOptionData(){
         changeRoleAfterTargetDiedOption = CreateOption(Color.white,"changeRoleAfterTargetDied",new string[] { "role.cascrubinter.keep","role.cascrubinter.toOpportunist","role.cascrubinter.toAmnesiac","role.cascrubinter.toJester" });
@@ -45,6 +45,7 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
             return;
         }
         target = players[NebulaPlugin.rnd.Next(0,players.Count)];
+        RPCEventInvoker.SetCascrubinterTarget(target);
     }
 
     /*

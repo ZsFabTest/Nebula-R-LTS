@@ -124,6 +124,7 @@ public class Yandere : Role{
         }
 
         if(myLover.Data.IsDead && !PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Suicide.Id,true);
+        if(!myLover.gameObject.active) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Suicide.Id,true);
 
         int removed = arrows.Count - i;
         for (; i < arrows.Count; i++) if (arrows[i] != null) GameObject.Destroy(arrows[i].arrow);

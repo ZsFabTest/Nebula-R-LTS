@@ -31,7 +31,7 @@ public class ChivalrousExpert : Role{
                 Game.GameData.data.myData.currentTarget = null;
                 killButton.UsesText.text = "0";
             },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.GetModData().GetRoleData(ceId) <= 0; },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.GetModData().GetRoleData(ceId) < 1; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { killButton.Timer = killButton.MaxTimer; },
             __instance.KillButton.graphic.sprite,
@@ -64,5 +64,6 @@ public class ChivalrousExpert : Role{
                 Crewmate.crewmateSideSet,Crewmate.crewmateSideSet,Crewmate.crewmateEndSet,
                 false,VentPermission.CanNotUse,false,false,false){
         killButton = null;
+        ceId = Game.GameData.RegisterRoleDataId("chivalrousexpert.ceid");
     }
 }

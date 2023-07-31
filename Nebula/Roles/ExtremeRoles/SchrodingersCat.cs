@@ -14,7 +14,7 @@ public class SchrodingersCat : Role
             this.targetRole = targetRole;
         }
 
-        public override void OnTerminal()
+        public override void OnActivate()
         {
             RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
             RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, this.targetRole);
@@ -32,6 +32,12 @@ public class SchrodingersCat : Role
     public Module.CustomOption killCooldown;
     public Module.CustomOption killCooldownP;
     public Module.CustomOption canChangeTeam;
+    public Module.CustomOption canBeWerewolf;
+    public Module.CustomOption canUseKillButtonW;
+    public Module.CustomOption killCooldownW;
+    public Module.CustomOption canBeOracle;
+    public Module.CustomOption canUseKillButtonO;
+    public Module.CustomOption killCooldownO;
 
     public override void LoadOptionData()
     {
@@ -40,13 +46,21 @@ public class SchrodingersCat : Role
         canBeImpostor = CreateOption(Palette.ImpostorRed, "canBeImpostor", true);
         canBeJackal = CreateOption(Roles.Jackal.Color, "canBeJackal", true);
         canBePavlovsCat = CreateOption(Roles.Pavlov.Color, "canBePavlovs", true);
+        canBeWerewolf = CreateOption(Roles.Werewolf.Color, "canBeWerewolf", true);
+        canBeOracle = CreateOption(Roles.OracleN.Color, "canBeOracle", true);
         canUseKillButtonI = CreateOption(Palette.ImpostorRed, "canUseKillButtonI", true).AddPrerequisite(canBeImpostor);
         canUseKillButton = CreateOption(Roles.Jackal.Color, "canUseKillButton", false).AddPrerequisite(canBeJackal);
         canUseKillButtonP = CreateOption(Roles.Pavlov.Color, "canUseKillButtonP", false).AddPrerequisite(canBePavlovsCat);
+        canUseKillButtonW = CreateOption(Roles.Werewolf.Color, "canUseKillButtonW", false).AddPrerequisite(canBeWerewolf);
+        canUseKillButtonO = CreateOption(Roles.OracleN.Color, "canUseKillButtonO", false).AddPrerequisite(canBeOracle);
         killCooldown = CreateOption(Roles.Jackal.Color, "killCooldown", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButton);
         killCooldown.suffix = "second";
         killCooldownP = CreateOption(Roles.Pavlov.Color, "killCooldownP", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonP);
         killCooldownP.suffix = "second";
+        killCooldownW = CreateOption(Roles.Werewolf.Color, "killCooldownW", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonW);
+        killCooldownW.suffix = "second";
+        killCooldownO = CreateOption(Roles.OracleN.Color, "killCooldownO", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonO);
+        killCooldownO.suffix = "second";
         canChangeTeam = CreateOption(Color.white, "canAlwaysChangeTeam", true);
     }
 
@@ -55,6 +69,7 @@ public class SchrodingersCat : Role
     public override void OnMurdered(byte murderId)
     {
         Role checkrole = Helpers.playerById(murderId).GetModData().role;
+        if(PlayerControl.LocalPlayer.GetModData().role != Roles.SchrodingersCat && !canChangeTeam.getBool()) return;
         if (checkrole.side == Side.Crewmate && canBeCrewmate.getBool())
         {
             Events.LocalEvent.Activate(new CatEvent(murderId,Roles.WhiteCat));
@@ -70,6 +85,14 @@ public class SchrodingersCat : Role
         else if (checkrole.side == Side.Pavlov && Roles.SchrodingersCat.canBePavlovsCat.getBool())
         {
             Events.LocalEvent.Activate(new CatEvent(murderId, Roles.PavlovsCat));
+        }
+        else if (checkrole.side == Side.Werewolf && Roles.SchrodingersCat.canBeWerewolf.getBool())
+        {
+            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.WerewolfsCat));
+        }
+        else if (checkrole.side == Side.Oracle && Roles.SchrodingersCat.canBeOracle.getBool())
+        {
+            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.OraclesCat));
         }
     }
 

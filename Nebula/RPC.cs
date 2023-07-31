@@ -102,6 +102,9 @@ public enum CustomRPC
     SetRoleInfo,
     AfterTeleportEvent,
     SetSwapTarget,
+    Teleport,
+    SendInfo,
+    SetCascrubinterTarget,
 }
 
 //RPCを受け取ったときのイベント
@@ -395,6 +398,15 @@ class RPCHandlerPatch
                 break;
             case (byte)CustomRPC.SetSwapTarget:
                 RPCEvents.SetSwapTarget(reader.ReadByte(),reader.ReadByte());
+                break;
+            case (byte)CustomRPC.Teleport:
+                RPCEvents.Teleport(reader.ReadByte());
+                break;
+            case (byte)CustomRPC.SendInfo:
+                RPCEvents.SendInfo(reader.ReadByte(),reader.ReadString());
+                break;
+            case (byte)CustomRPC.SetCascrubinterTarget:
+                RPCEvents.SetCascrubinterTarget(reader.ReadByte());
                 break;
         }
     }
@@ -762,7 +774,7 @@ static class RPCEvents
             {
                 Helpers.RoleAction(player.PlayerId, (role) => role.OnDied());
 
-                Game.GameData.data.myData.CanSeeEveryoneInfo = true;
+                if (!PlayerControl.LocalPlayer.GetModData().IsAlive && (PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.Resurrectionist || Roles.Roles.Resurrectionist.hasRevived)) Game.GameData.data.myData.CanSeeEveryoneInfo = true;
             }
 
             if (MeetingHud.Instance != null)
@@ -1671,6 +1683,19 @@ static class RPCEvents
         if(playerId1 != Byte.MaxValue && playerId2 != Byte.MaxValue) Roles.ComplexRoles.SwapSystem.isSwapped = true;
         else Roles.ComplexRoles.SwapSystem.isSwapped = false;
         Debug.Log(playerId1.ToString()+playerId2.ToString()+Roles.ComplexRoles.SwapSystem.isSwapped.ToString());
+    }
+
+    public static void Teleport(byte targetId){
+        PlayerControl.LocalPlayer.transform.position = Helpers.playerById(targetId).transform.position;
+    }
+
+    public static void SendInfo(byte targetId,string info){
+        if(PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.Marker) return;
+        if(Helpers.playerById(targetId).GetModData().RoleInfo == "") Helpers.playerById(targetId).GetModData().RoleInfo = info;
+    }
+
+    public static void SetCascrubinterTarget(byte targetId){
+        Roles.Roles.Cascrubinter.target = Helpers.playerById(targetId);
     }
 }
 
@@ -2656,5 +2681,27 @@ public class RPCEventInvoker
         writer.Write(id2);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SetSwapTarget(id1,id2);
+    }
+
+    public static void Teleport(PlayerControl target){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.Teleport,Hazel.SendOption.Reliable,-1);
+        writer.Write(target.PlayerId);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.Teleport(target.PlayerId);
+    }
+
+    public static void SendInfo(byte targetId,string info){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SendInfo,Hazel.SendOption.Reliable,-1);
+        writer.Write(targetId);
+        writer.Write(info);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SendInfo(targetId,info);
+    }
+
+    public static void SetCascrubinterTarget(PlayerControl target){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetCascrubinterTarget,Hazel.SendOption.Reliable,-1);
+        writer.Write(target.PlayerId);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetCascrubinterTarget(target.PlayerId);
     }
 }   

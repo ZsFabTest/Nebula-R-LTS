@@ -103,6 +103,7 @@ public class Oracle : Role
                     index++;
                 }
                 target.GetModData().RoleInfo = roles.Replace("\n", "");
+                RPCEventInvoker.SendInfo(target.PlayerId,target.GetModData().RoleInfo);
                 message = message.Replace("%ROLES%", roles);
                 message = message.Replace("%PLAYER%", target.name);
                 CustomMessage customMessage = CustomMessage.Create(target.transform.position, true, message, 5f, 0.5f, 2f, rate, Color.white);

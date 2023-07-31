@@ -721,10 +721,13 @@ public class Spectre : Role
         removed = sheriffArrows.Count - i4;
         for (; i4 < sheriffArrows.Count; i4++) if (sheriffArrows[i4] != null) GameObject.Destroy(sheriffArrows[i4].arrow);
         sheriffArrows.RemoveRange(sheriffArrows.Count - removed, removed);
+        removed = sheriffArrows.Count - i5;
         for (; i5 < werewolfArrows.Count; i5++) if (werewolfArrows[i5] != null) GameObject.Destroy(werewolfArrows[i5].arrow);
         werewolfArrows.RemoveRange(werewolfArrows.Count - removed, removed);
+        removed = sheriffArrows.Count - i6;
         for (; i6 < challengerArrows.Count; i6++) if (challengerArrows[i6] != null) GameObject.Destroy(challengerArrows[i6].arrow);
         challengerArrows.RemoveRange(challengerArrows.Count - removed, removed);
+        removed = sheriffArrows.Count - i7;
         for (; i7 < oracleArrows.Count; i7++) if (oracleArrows[i7] != null) GameObject.Destroy(oracleArrows[i7].arrow);
         oracleArrows.RemoveRange(oracleArrows.Count - removed, removed);
     }

@@ -5,7 +5,7 @@ namespace Nebula.Roles.NeutralRoles{
         private SpriteLoader sprite = new SpriteLoader("Nebula.Resources.TrackEvilButton.png",115f);
 
         private Module.CustomOption killCooldown;
-        private Module.CustomOption ChallengerDieIfMeetingStart;
+        public Module.CustomOption ChallengerDieIfMeetingStart;
         private Module.CustomOption challengeCooldown;
         private bool canChallenge;
 
@@ -93,7 +93,7 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
         {
-            if(Helpers.playerById(playerId).GetModData().role == Roles.Challenger) displayColor = RoleColor;
+            if(PlayerControl.LocalPlayer.GetModData().role == Roles.Challenger) displayColor = RoleColor;
         }
 
         public override void OnMeetingStart()

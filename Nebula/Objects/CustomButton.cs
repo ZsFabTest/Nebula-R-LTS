@@ -469,7 +469,7 @@ public class CustomButton
 
         if (Timer >= 0)
         {
-            if ((HasEffect && isEffectActive) || timeInVent)
+            if ((HasEffect && isEffectActive) || (timeInVent && !MeetingHud.Instance))
                 Timer -= Time.deltaTime;
             else if (Helpers.ProceedTimer(isImpostorKillButton))
                 Timer -= Time.deltaTime;

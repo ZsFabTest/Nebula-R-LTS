@@ -148,6 +148,8 @@ public class Moriarty : Role, Template.HasWinTrigger{
 
         Patches.EndCondition.MoriartyWinByKillHolmes.TriggerRole = this;
         HideInExclusiveAssignmentOption = true;
+
+        isCreated = Game.GameData.RegisterRoleDataId("moriarty.iscreated");
     }
 }
 
@@ -171,6 +173,10 @@ public class Moran : Role{
     private Dictionary<byte, SpriteRenderer> Guides = new Dictionary<byte, SpriteRenderer>();
     private float rifleCounter = 0f;
 
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        Roles.Moriarty.EditDisplayNameColor(playerId, ref displayColor);
+    }
 
     public override void LoadOptionData()
     {

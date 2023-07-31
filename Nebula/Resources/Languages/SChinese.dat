@@ -1282,7 +1282,7 @@
 "button.label.infect" : "感染"
 "button.label.involve" : "卷入"
 "button.label.kill" : "击杀"
-"button.label.monitor" : "查看木偶"
+"button.label.monitor" : "监视"
 "button.label.morph" : "化形"
 "button.label.ninja" : "躲藏"
 "button.label.oracle" : "占卜"
@@ -1382,7 +1382,9 @@
 "option.searchableDistance" : "船员搜索最大半径"
 
 
-"option.exclusiveAssignment.PavlovAndMoriarty" : "巴普洛夫之主 或 莫里亚蒂"
+"option.exclusiveAssignment.JackalAndPavlovAndMoriarty" : "豺狼 或 巴普洛夫之主 或 莫里亚蒂"
+"option.exclusiveAssignment.EvilAceAndCovert" : "密命王牌 或 潜伏者"
+"option.exclusiveAssignment.ExecutionerAndAssassin" : "处刑者 或 刺客"
 
 "option.tab.ghostRoles" : "亡灵<color=#ffffffff>与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
 
@@ -1395,6 +1397,7 @@
 "option.canBeDeputyMayor" : "可以成为副市长"
 "option.canBeOnlineCelebrity" : "可以成为网红"
 "option.canBeSuperstar" : "可以成为明星"
+"option.canBeSinger" : "可以成为歌姬"
 "option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
 "option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
 "option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
@@ -1416,6 +1419,8 @@
 "role.sheriff.madmateCanKillEveryone" : "叛徒警长可以任意击杀"
 "role.sheriff.jackalCanKillEveryone" : "豺狼警长可以任意击杀"
 
+"role.spy.isGuessable" : "是否可以被猜测"
+
 "role.bountyHunter.canChangeTarget" : "可以手动更换目标"
 "role.bountyHunter.changeTargetCoolDown" : "手动更换目标冷却"
 
@@ -1428,6 +1433,8 @@
 "role.chainShifter.cleanTasks" : "(实验性)交换后清除任务"
 "role.chainShifter.canShiftEvenDied" : "在交换前死亡仍可以交换"
 
+"role.lover.hasPrivateChat" : "(实验性)拥有私聊频道"
+
 "role.lastImpostor.canSpawn" : "是否可以生成"
 "role.lastImpostor.guessCount" : "最多猜测次数"
 
@@ -1437,7 +1444,7 @@
 "role.holmes.short" : "福"
 "role.holmes.hint" : "拨开迷雾 看清真相"
 "role.holmes.description" : "让我看看"
-"role.holmes.info" : "获得玩家职业。"
+"role.holmes.info" : "获得玩家职业。\n当你调查莫里亚蒂阵营时，获得的职业会变为一个随机船员职业（截至到Nebula2.3.1的原版Nebula职业）。"
 "role.holmes.isGuessable" : "是否可以被猜测"
 "role.holmes.surveyCooldown" : "调查技能冷却"
 "role.holmes.maxSurveyNumber" : "最大调查次数"
@@ -1464,6 +1471,10 @@
 "role.blueCat.short" : "猫"
 "role.pavlovsCat.name" : "巴浦洛夫的猫"
 "role.pavlovsCat.short" : "猫"
+"role.werewolfsCat.name" : "狼猫"
+"role.werewolfsCat.short" : "猫"
+"role.oraclesCat.name" : "圣猫"
+"role.oraclesCat.short" : "猫"
 "role.schrodingersCat.hint" : "打不过就加入"
 "role.schrodingersCat.description" : "打不过就加入"
 "role.whiteCat.hint" : "打不过就加入"
@@ -1474,11 +1485,17 @@
 "role.blueCat.description" : "打不过就加入"
 "role.pavlovsCat.hint" : "打不过就加入"
 "role.pavlovsCat.description" : "打不过就加入"
+"role.werewolfsCat.hint" : "打不过就加入"
+"role.werewolfsCat.description" : "打不过就加入"
+"role.oraclesCat.hint" : "打不过就加入"
+"role.oraclesCat.description" : "打不过就加入"
 "role.schrodingersCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.whiteCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.redCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.blueCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.pavlovsCat.info" : "通过被击杀加入凶手所在的阵营。"
+"role.werewolfsCat.info" : "通过被击杀加入凶手所在的阵营。"
+"role.oraclesCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.schrodingersCat.isGuessable" : "是否可以被猜测"
 "role.schrodingersCat.canBeCrewmate" : "可以加入船员阵营"
 "role.schrodingersCat.canBeImpostor" : "可以加入伪装者阵营"
@@ -1490,6 +1507,12 @@
 "role.schrodingersCat.killCooldown" : "（豺狼）击杀冷却"
 "role.schrodingersCat.killCooldownP" : "（巴浦洛夫）击杀冷却"
 "role.schrodingersCat.canAlwaysChangeTeam" : "猫可以连续更换阵营"
+"role.schrodingersCat.canBeWerewolf" : "可以加入狼人阵营"
+"role.schrodingersCat.canUseKillButtonW" : "（狼人）可以使用击杀键"
+"role.schrodingersCat.killCooldownW" : "（狼人）击杀冷却"
+"role.schrodingersCat.canBeOracle" : "可以加入天启阵营"
+"role.schrodingersCat.canUseKillButtonO" : "（天启）击杀冷却"
+"role.schrodingersCat.killCooldownO" : "（天启）击杀冷却时间"
 
 "role.madman.name" : "疯子"
 "role.madman.short" : "疯"
@@ -1946,7 +1969,7 @@
 "role.marker.short" : "报"
 "role.marker.description" : "让我告诉你"
 "role.marker.hint" : "分享你的信息"
-"role.marker.info" : "在会议中可以通过类似赌怪界面标记他人职业。"
+"role.marker.info" : "在会议中可以通过类似赌怪界面标记他人职业。\n你可以看到占卜师和福尔摩斯获得的职业信息。\n"
 "role.marker.onlyImpCanSee" : "只有伪装者才能看见信息"
 
 "role.deputMayor.name" : "副市长"
@@ -1991,7 +2014,7 @@
 
 "role.challenger.name" : "挑战者"
 "role.challenger.short" : "挑"
-"role.challenger.descripton" : "你过来啊"
+"role.challenger.description" : "你过来啊"
 "role.challenger.hint" : "与玩家一对一决斗"
 "role.challenger.info" : "挑战者可以选定一位玩家与其挑战，被挑战的玩家职业转变为挑战者。\n只有其中一名挑战者死亡后，另一名挑战者才能继续挑战。\n死亡后挑战者职业转变为失忆者。\n挑战者只能击杀其他挑战者。"
 "role.challenger.killCooldown" : "挑战开始后的初始击杀冷却"
@@ -2003,14 +2026,21 @@
 "role.supportee.description" : "你受到了支持"
 "role.supportee.info" : "你收到了支持者的支持。"
 
-"role.oracle.name" : "天启"
-"role.oracle.short" : "天"
-"role.oracle.description" : "是时候杀戮了"
-"role.oracle.hint" : "越杀越想杀"
-"role.oracle.info" : "在击杀后击杀冷却将降低。"
-"role.oracle.initKillCooldown" : "初始击杀冷却"
-"role.oracle.reduceKillCooldown" : "每次击杀后的击杀冷却"
-"role.oracle.leastKillCooldown" : "最少击杀冷却"
+"role.oracleN.name" : "天启"
+"role.oracleN.short" : "天"
+"role.oracleN.description" : "是时候杀戮了"
+"role.oracleN.hint" : "越杀越想杀"
+"role.oracleN.info" : "在击杀后击杀冷却将降低。"
+"role.oracleN.initKillCooldown" : "初始击杀冷却"
+"role.oracleN.reduceKillCooldown" : "每次击杀后的击杀冷却"
+"role.oracleN.leastKillCooldown" : "最少击杀冷却"
+
+"role.singer.name" : "歌姬"
+"role.singer.short" : "歌"
+"role.singer.description" : "你就是歌姬吧"
+"role.singer.info" : "杀马特团长，..."
+"role.singer.showRoleNum" : "显示职业需要的最多人数"
+"role.singer.jibaiAlwaysBeSinger" : "击败永远拥有该附加"
 
 "option.display.random" : "随机"
 

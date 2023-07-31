@@ -181,4 +181,13 @@ public static class EmergencyPatch
             }
         }
     }
+
+    [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.CmdReportDeadBody))]
+    public class PlayerReportPatch{
+        private static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo info)
+        {
+            Game.GameData.data.Reporter = __instance;
+            Game.GameData.data.Dead = Helpers.playerById(info.PlayerId);
+        }
+    }
 }

@@ -108,7 +108,7 @@ public class SecondaryBait : ExtraRole
 
     public override void Assignment(Patches.AssignMap assignMap)
     {
-        if (!Roles.Bait.canBeExtraRole.getBool()) return;
+        if (!Roles.Bait.canBeExtraRole.getBool() || !Roles.Bait.TopOption.enabled) return;
 
         List<byte> crewmates = new List<byte>();
 

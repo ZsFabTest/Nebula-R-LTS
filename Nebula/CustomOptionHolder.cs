@@ -217,7 +217,9 @@ public class CustomOptionHolder
     public static CustomOption exclusiveAssignmentAlienAndNavvy;
     public static CustomOption exclusiveAssignmentBaitAndProvocateur;
     public static CustomOption exclusiveAssignmentPsychicAndSeer;
-    public static CustomOption exclusiveAssignmentPavlovAndMoriarty;
+    public static CustomOption exclusiveAssignmentJackalAndPavlovAndMoriarty;
+    public static CustomOption exclusiveAssignmentEvilAceAndCovert;
+    public static CustomOption exclusiveAssignmentExecutionerAndAssassin;
     public static List<Tuple<CustomOption, List<CustomOption>>> exclusiveAssignmentList;
     public static List<Roles.Role> exclusiveAssignmentRoles;
 
@@ -266,8 +268,12 @@ public class CustomOptionHolder
             exclusiveAssignments.Add(new ExclusiveAssignment(Roles.Roles.Bait, Roles.Roles.Provocateur));
         if (exclusiveAssignmentPsychicAndSeer.getBool())
             exclusiveAssignments.Add(new ExclusiveAssignment(Roles.Roles.Psychic, Roles.Roles.Seer));
-        if(exclusiveAssignmentParent.getBool())
-            exclusiveAssignments.Add(new ExclusiveAssignment(Roles.Roles.Pavlov,Roles.Roles.Moriarty));
+        if(exclusiveAssignmentJackalAndPavlovAndMoriarty.getBool())
+            exclusiveAssignments.Add(new ExclusiveAssignment(Roles.Roles.Jackal,Roles.Roles.Pavlov,Roles.Roles.Moriarty));
+        if(exclusiveAssignmentEvilAceAndCovert.getBool())
+            exclusiveAssignments.Add(new ExclusiveAssignment(Roles.Roles.EvilAce,Roles.Roles.Covert));
+        if(exclusiveAssignmentExecutionerAndAssassin.getBool())
+            exclusiveAssignments.Add(new ExclusiveAssignment(Roles.Roles.Executioner,Roles.Roles.Assassin));
 
         foreach (var tuple in exclusiveAssignmentList)
         {
@@ -761,7 +767,9 @@ public class CustomOptionHolder
         exclusiveAssignmentAlienAndNavvy = CustomOption.Create(Color.white, "option.exclusiveAssignment.AlienAndNavvy", true, exclusiveAssignmentParent);
         exclusiveAssignmentBaitAndProvocateur = CustomOption.Create(Color.white, "option.exclusiveAssignment.BaitAndProvocateur", true, exclusiveAssignmentParent);
         exclusiveAssignmentPsychicAndSeer = CustomOption.Create(Color.white, "option.exclusiveAssignment.PsychicAndSeer", false, exclusiveAssignmentParent);
-        exclusiveAssignmentPavlovAndMoriarty = CustomOption.Create(Color.white, "option.exclusiveAssignment.PavlovAndMoriarty", true, exclusiveAssignmentParent);
+        exclusiveAssignmentJackalAndPavlovAndMoriarty = CustomOption.Create(Color.white, "option.exclusiveAssignment.JackalAndPavlovAndMoriarty", true, exclusiveAssignmentParent);
+        exclusiveAssignmentEvilAceAndCovert = CustomOption.Create(Color.white, "option.exclusiveAssignment.EvilAceAndCovert", true, exclusiveAssignmentParent);
+        exclusiveAssignmentExecutionerAndAssassin = CustomOption.Create(Color.white, "option.exclusiveAssignment.ExecutionerAndAssassin", true, exclusiveAssignmentParent);
         exclusiveAssignmentRoles = new List<Roles.Role>();
         foreach (Roles.Role role in Roles.Roles.AllRoles)
         {

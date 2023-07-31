@@ -1299,6 +1299,9 @@ public class GameData
 {
     public static GameData? data = null;
 
+    public PlayerControl Reporter;
+    public PlayerControl Dead;
+
     private static Dictionary<string, int> RoleDataIdMap = new Dictionary<string, int>();
 
     public Dictionary<byte, PlayerData> AllPlayers;
@@ -1374,6 +1377,9 @@ public class GameData
         Timer = 300f;
 
         IsCanceled = false;
+
+        Reporter = null;
+        Dead = null;
 
         Roles.Perk.PerkHolder.PerkData.InitializePerkData();
     }

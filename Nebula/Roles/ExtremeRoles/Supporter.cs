@@ -22,7 +22,8 @@ namespace Nebula.Roles.CrewmateRoles{
         public override void MyPlayerControlUpdate()
         {
             //Debug.Log(Language.Language.GetString("role." + target.GetModData().role.LocalizeName + ".name"));
-            RPCEventInvoker.SetRoleInfo(Helpers.playerById(targetId),Language.Language.GetString("role." + Helpers.playerById(targetId).GetModData().role.LocalizeName + ".name"),false);
+            //RPCEventInvoker.SetRoleInfo(Helpers.playerById(targetId),Language.Language.GetString("role." + Helpers.playerById(targetId).GetModData().role.LocalizeName + ".name"),false);
+            Helpers.playerById(targetId).GetModData().RoleInfo = Language.Language.GetString("role." + Helpers.playerById(targetId).GetModData().role.LocalizeName + ".name");
         }
 
         public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
@@ -43,7 +44,7 @@ namespace Nebula.Roles.CrewmateRoles{
 
         public Supporter() : base("Supporter","supporter",RoleColor,RoleCategory.Crewmate,Side.Crewmate,Side.Crewmate,
              Crewmate.crewmateSideSet,Crewmate.crewmateSideSet,Crewmate.crewmateEndSet,
-             false,VentPermission.CanNotUse,false,true,true){
+             false,VentPermission.CanNotUse,false,false,true){
             targetId = (byte)Game.GameData.RegisterRoleDataId("supporter.targetid");
         }
     }

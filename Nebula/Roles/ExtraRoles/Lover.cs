@@ -13,6 +13,7 @@ public class Lover : ExtraRole
     public Module.CustomOption canChangeTrilemmaOption;
     public Module.CustomOption loversAsIndependentSideOption;
     public Module.CustomOption allowExtraWinningOption;
+    public Module.CustomOption hasPrivateChatOption;
 
     private PlayerControl trilemmaTarget = null;
 
@@ -210,6 +211,7 @@ public class Lover : ExtraRole
         canChangeTrilemmaOption = CreateOption(Color.white, "canChangeTrilemma", true);
         canChangeTrilemmaOption.AddCustomPrerequisite(() => loversModeOption.getSelection() == 0);
 
+        hasPrivateChatOption = CreateOption(Color.white,"hasPrivateChat",false);
     }
 
     public override IEnumerable<Assignable> GetFollowRoles()

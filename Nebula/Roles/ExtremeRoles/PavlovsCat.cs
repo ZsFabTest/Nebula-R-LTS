@@ -1,5 +1,3 @@
-using static Nebula.Roles.NeutralRoles.SchrodingersCat;
-
 namespace Nebula.Roles.NeutralRoles;
 
 public class PavlovsCat : Role
@@ -53,26 +51,7 @@ public class PavlovsCat : Role
 
     public override void OnMurdered(byte murderId)
     {
-        if (!Roles.SchrodingersCat.canChangeTeam.getBool()) return;
-        Role checkrole = Helpers.playerById(murderId).GetModData().role;
-        if (checkrole.side == Side.Crewmate && Roles.SchrodingersCat.canBeCrewmate.getBool())
-        {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.WhiteCat));
-        }
-        else if (checkrole.side == Side.Impostor && Roles.SchrodingersCat.canBeImpostor.getBool())
-        {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.RedCat));
-        }
-        else if (checkrole.side == Side.Jackal && Roles.SchrodingersCat.canBeJackal.getBool())
-        {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.BlueCat));
-        }
-        /*
-        else if (checkrole.side == Side.Pavlov && Roles.SchrodingersCat.canBePavlovsCat.getBool())
-        {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.PavlovsCat));
-        }
-        */
+        Roles.SchrodingersCat.OnMurdered(murderId);
     }
 
     public override void CleanUp()

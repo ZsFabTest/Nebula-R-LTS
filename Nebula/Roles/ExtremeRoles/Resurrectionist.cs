@@ -25,9 +25,9 @@ namespace Nebula.Roles.CrewmateRoles{
             hasRevived = false;
         }
 
-        public override void MyPlayerControlUpdate()
+        public override void OnMeetingEnd()
         {
-            if(canRevive && !hasRevived && PlayerControl.LocalPlayer.Data.IsDead){
+            if(PlayerControl.LocalPlayer.Data.IsDead && canRevive && !hasRevived){
                 RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
                 hasRevived = true;
             }

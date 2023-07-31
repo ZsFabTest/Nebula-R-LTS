@@ -819,7 +819,7 @@ public class PlayerStatistics
                     IsValid = true;
                     continue;
                 }
-                if (playerInfo.IsDead)
+                if (playerInfo.IsDead && !(playerInfo.GetModData().role == Roles.Roles.EvilBusker && Roles.Roles.EvilBusker.pseudocideFlag) && !(playerInfo.GetModData().role == Roles.Roles.Busker && Roles.Roles.Busker.pseudocideFlag))
                 {
                     IsValid = true;
                     continue;
@@ -1072,7 +1072,7 @@ public class PlayerStatistics
         AliveYandere = GetAlivePlayers(Roles.Side.Yandere);
         AliveWerewolf = GetAlivePlayers(Roles.Side.Werewolf);
         AliveChallenger = GetAlivePlayers(Roles.Side.Challenger);
-        AliveOracle = GetAlivePlayers(Roles.Side.Challenger);
+        AliveOracle = GetAlivePlayers(Roles.Side.Oracle);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {

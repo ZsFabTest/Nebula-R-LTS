@@ -372,7 +372,7 @@ public abstract class Role : Assignable
 
         this.DeceiveImpostorInNameDisplay = false;
         this.IsGuessableRole = true;
-        this.VentColor = Palette.ImpostorRed;
+        this.VentColor = this.Color;
 
         this.winReasons = winReasons;
 

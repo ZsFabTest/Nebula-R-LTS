@@ -26,6 +26,11 @@ namespace Nebula.Roles.NeutralRoles{
             isMad = false;
         }
 
+        public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+        {
+            if(PlayerControl.LocalPlayer.GetModData().role.side == Side.Werewolf) displayColor = RoleColor;
+        }
+
         public override void ButtonInitialize(HudManager __instance)
         {
             if(Mad != null){

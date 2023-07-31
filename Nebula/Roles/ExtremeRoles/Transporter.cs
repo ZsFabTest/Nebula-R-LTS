@@ -60,12 +60,9 @@ public class Transporter : Template.BilateralnessRole{
                 }
                 else
                 {
-                    foreach (PlayerControl player in PlayerControl.AllPlayerControls)
-                    {
-                        player.transform.position = target.transform.position;
-                        if(Roles.F_Transporter.specialSetCooldownAfterTeleportOption.getBool()){
-                            RPCEventInvoker.AfterTeleportEvent(Roles.F_Transporter.leastCooldownOption.getFloat());
-                        }
+                    RPCEventInvoker.Teleport(target);
+                    if(Roles.F_Transporter.specialSetCooldownAfterTeleportOption.getBool()){
+                        RPCEventInvoker.AfterTeleportEvent(Roles.F_Transporter.leastCooldownOption.getFloat());
                     }
                     teleport.Timer = teleport.MaxTimer;
                     teleport.Sprite = markSprite.GetSprite();

@@ -139,7 +139,7 @@ class ExileControllerPatch
                     Helpers.RoleAction(exiled.PlayerId, (role) => { role.OnExiledPost(voters); });
                     Helpers.RoleAction(exiled.PlayerId, (role) => { role.OnDied(); });
 
-                    Game.GameData.data.myData.CanSeeEveryoneInfo = true;
+                    if (!PlayerControl.LocalPlayer.GetModData().IsAlive && (PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.Resurrectionist || Roles.Roles.Resurrectionist.hasRevived)) Game.GameData.data.myData.CanSeeEveryoneInfo = true;
                 }
             }
             else
@@ -212,7 +212,9 @@ class ExileControllerPatch
                             p.GetModData().role.side == Roles.Side.Yandere || 
                             p.GetModData().HasExtraRole(Roles.Roles.SecondaryJackal) || 
                             p.GetModData().HasExtraRole(Roles.Roles.SecondarySidekick) || 
-                            p.GetModData().role.side == Roles.Side.Jester
+                            p.GetModData().role.side == Roles.Side.Jester ||
+                            p.GetModData().role.side == Roles.Side.Challenger || 
+                            p.GetModData().role.side == Roles.Side.Oracle
                             )) sums++;
                             //Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
                         }
@@ -231,7 +233,9 @@ class ExileControllerPatch
                             player.GetModData().role.side == Roles.Side.Yandere || 
                             player.GetModData().HasExtraRole(Roles.Roles.SecondaryJackal) || 
                             player.GetModData().HasExtraRole(Roles.Roles.SecondarySidekick) || 
-                            player.GetModData().role.side == Roles.Side.Jester
+                            player.GetModData().role.side == Roles.Side.Jester ||
+                            player.GetModData().role.side == Roles.Side.Challenger || 
+                            player.GetModData().role.side == Roles.Side.Oracle
                         )) sums--;
                         //__result.Remove('.');
                         //__result.Remove('。');
@@ -268,7 +272,7 @@ class ExileControllerPatch
                             __result = Helpers.cs(Roles.NeutralRoles.Jester.RoleColor,Language.Language.GetString("text.exile.jesterAddition"));
                             return;
                         }
-                        else if (player == Roles.NeutralRoles.Cascrubinter.target) __result = Helpers.cs(Roles.NeutralRoles.Cascrubinter.RoleColor,Language.Language.GetString("text.exile.cascrubinterAddition"));
+                        else if (player.PlayerId == Roles.Roles.Cascrubinter.target.PlayerId) __result = Helpers.cs(Roles.NeutralRoles.Cascrubinter.RoleColor,Language.Language.GetString("text.exile.cascrubinterAddition"));
                     } 
                 }else{
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS){

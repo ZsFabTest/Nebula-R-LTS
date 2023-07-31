@@ -28,7 +28,6 @@ public class Heretic : Role{
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         maxPreachCountOption = CreateOption(Color.white,"maxPreachCount",1f,1f,3f,1f);
         preachCooldownOption = CreateOption(Color.white,"preachCooldown",20f,10f,30f,5f);
         preachCooldownOption.suffix = "second";

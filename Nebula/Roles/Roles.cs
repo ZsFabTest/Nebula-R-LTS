@@ -209,6 +209,10 @@ static public class Roles
     public static NeutralRoles.Challenger Challenger = new NeutralRoles.Challenger();
     public static ExtraRoles.Supportee Supportee = new ExtraRoles.Supportee();
     public static NeutralRoles.Oracle OracleN = new NeutralRoles.Oracle();
+    public static NeutralRoles.WerewolfsCat WerewolfsCat = new NeutralRoles.WerewolfsCat();
+    public static NeutralRoles.OraclesCat OraclesCat = new NeutralRoles.OraclesCat();
+    //public static CrewmateRoles.Detective Detective = new CrewmateRoles.Detective();
+    //public static ExtraRoles.Singer Singer = new ExtraRoles.Singer();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -222,11 +226,11 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/
             Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,
             JackalMayor,
-            SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
+            SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,WerewolfsCat,OraclesCat,
 
             Player,
             Hadar,
@@ -241,7 +245,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee
+            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee/*,Singer*/
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

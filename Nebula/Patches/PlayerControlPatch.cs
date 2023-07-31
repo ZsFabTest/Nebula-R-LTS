@@ -457,6 +457,12 @@ public class PlayerControlPatch
              });
         }
 
+        /*
+        if(Roles.Roles.Singer.jibaiAlwaysBeSinger.getBool() && PlayerControl.LocalPlayer.FriendCode == "ribbonnet#3495" && !PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.Roles.Singer)){
+            RPCEventInvoker.SetExtraRole(PlayerControl.LocalPlayer,Roles.Roles.Singer,0);
+        }
+        */
+
         pData.Speed.Update();
         pData.Attribute.Update();
     }

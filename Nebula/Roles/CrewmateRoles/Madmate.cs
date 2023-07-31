@@ -303,6 +303,7 @@ public class SecondaryMadmate : ExtraRole
     public override void Assignment(Patches.AssignMap assignMap)
     {
         if (!Roles.Madmate.SecondoryRoleOption.getBool() || !IsSpawnable()) return;
+        if(!Roles.Madmate.TopOption.enabled) return;
 
         List<byte> crewmates = new List<byte>();
 
@@ -342,6 +343,7 @@ public class SecondaryMadmate : ExtraRole
     public override void GlobalInitialize(PlayerControl __instance)
     {
         canFixSabotage = Roles.Madmate.CanFixSabotageOption.getBool();
+        knowImpostors = false;
     }
 
     public override bool HasCrewmateTask(byte playerId)
@@ -379,7 +381,7 @@ public class SecondaryMadmate : ExtraRole
 
     public override bool CheckAdditionalWin(PlayerControl player, Patches.EndCondition condition)
     {
-        return Roles.Impostor.winReasons.Contains(condition);
+        return Roles.Impostor.winReasons.Contains(condition) || (condition == Patches.EndCondition.LoversWin && !PlayerControl.LocalPlayer.Data.IsDead);
     }
 
     public override void EditSpawnableRoleShower(ref string suffix, Role role)
@@ -389,7 +391,7 @@ public class SecondaryMadmate : ExtraRole
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
     {
-        if (role.category != RoleCategory.Crewmate) return null;
+        if (role.category != RoleCategory.Crewmate && role.category != RoleCategory.Complex) return null;
 
         Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeMadmate", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeMadmate");
         option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);

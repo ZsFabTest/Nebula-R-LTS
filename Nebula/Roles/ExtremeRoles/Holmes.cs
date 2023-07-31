@@ -71,7 +71,9 @@ public class Holmes : Role
     {
         PlayerControl p = Helpers.playerById(playerId);
         var data = p.GetModData();
-        data.RoleInfo = Helpers.cs(checkColor(data.role.GetActualRole(data)),canKnowJobsOption.getBool() ? Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name") : "???");
+        Role MoriartyFakeRole = Roles.AllRoles[NebulaPlugin.rnd.Next(39,62)];
+        data.RoleInfo = Helpers.cs(checkColor((data.role.side == Side.Moriarty ? MoriartyFakeRole : data.role).GetActualRole(data)),canKnowJobsOption.getBool() ? (data.role.side == Side.Moriarty ? Language.Language.GetString("role." + MoriartyFakeRole.LocalizeName + ".name") : Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name")) : "???");
+        RPCEventInvoker.SendInfo(playerId,data.RoleInfo);
     }
 
     private Color checkColor(Role operRole)
@@ -79,6 +81,10 @@ public class Holmes : Role
         if (canKnowJobsOption.getBool()) return operRole.Color;
         if (operRole.side == Side.Impostor) return Palette.ImpostorRed;
         else if (operRole.side == Side.Jackal) return Roles.Jackal.Color;
+        else if (operRole.side == Side.Pavlov) return Roles.Pavlov.Color;
+        else if (operRole.side == Side.Werewolf) return Roles.Werewolf.Color;
+        else if (operRole.side == Side.Challenger) return Roles.Challenger.Color;
+        else if (operRole.side == Side.Oracle) return Roles.OracleN.Color;
         else if (operRole.side == Side.Crewmate) return Palette.CrewmateBlue;
         else return Roles.ChainShifter.Color;
     }

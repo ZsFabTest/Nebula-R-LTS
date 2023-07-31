@@ -34,7 +34,7 @@ public class TImpostor : Role{
     public TImpostor(string name,string localizeName,bool canUsev)
         : base(name,localizeName,Palette.ImpostorRed,RoleCategory.Impostor,Side.Impostor,Side.Impostor,
         ImpostorRoles.Impostor.impostorSideSet,ImpostorRoles.Impostor.impostorSideSet,ImpostorRoles.Impostor.impostorEndSet,
-        true,canUsev ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse,canUsev,false,false){
+        true,canUsev ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse,canUsev,true,true){
         this.hasRoleUpdate = false;
     }
 }

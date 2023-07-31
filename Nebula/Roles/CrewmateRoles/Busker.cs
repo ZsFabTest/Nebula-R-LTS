@@ -21,7 +21,7 @@ public class Busker : Role
             new HelpSprite(reviveButtonSprite,"role.busker.help.revive",0.3f)
     };
 
-    private bool pseudocideFlag = false;
+    public bool pseudocideFlag = false;
 
     private void dieBusker()
     {
