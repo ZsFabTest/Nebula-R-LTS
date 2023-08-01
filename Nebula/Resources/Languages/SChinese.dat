@@ -1856,8 +1856,8 @@
 "role.programmer.name" : "程序员"
 "role.programmer.short" : "程"
 "role.programmer.description" : "因为实在不知道取什么名字所以就这样吧"
-"role.programmer.hint" : "让别人成为你的诱饵"
-"role.programmer.info" : "当目标被击杀时，屏幕会闪光提示并将目标转变为凶手。\n你只有一次设定目标的机会。"
+"role.programmer.hint" : "监视通风管道"
+"role.programmer.info" : "可以标记一个通风管。\n有人跳入/跳出时，屏幕会闪对方职业颜色的光。"
 "role.programmer.hasArrow" : "有指向目标的箭头"
 
 "role.plumber.name" : "管道工"
