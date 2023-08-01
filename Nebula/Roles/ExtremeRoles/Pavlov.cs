@@ -20,13 +20,13 @@ public class Pavlov : Role
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.AppointButton.png", 115f);
 
     public bool hasDog;
-    public static byte leftDogDataId;
+    public static int leftDogDataId;
     public static byte myDog;
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
         myDog = 255;
-        leftDogDataId = (byte)(int)dogMaxNumOption.getFloat();
+        leftDogDataId = (int)dogMaxNumOption.getFloat();
         hasDog = false;
     }
 
@@ -58,7 +58,7 @@ public class Pavlov : Role
             "button.label.feed"
         ).SetTimer(CustomOptionHolder.InitialForcefulAbilityCoolDownOption.getFloat());
         feed.MaxTimer = createDogsCooldownOption.getFloat();
-        feed.UsesText.text = "3";
+        feed.UsesText.text = leftDogDataId.ToString();
     }
 
     public override void MyPlayerControlUpdate()

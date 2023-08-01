@@ -396,7 +396,7 @@ public class CustomOptionHolder
         showExtraRoles = CustomOption.Create(Color.white,"option.showExtraRoles",true,meetingOptions).AddCustomPrerequisite(() => {
             try
             {
-                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool();
+                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool() && showRoleOfExiled.getBool();
             }
             catch
             {
@@ -407,7 +407,7 @@ public class CustomOptionHolder
         {
             try
             {
-                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool();
+                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool() && showRoleOfExiled.getBool();
             }
             catch
             {
@@ -418,7 +418,7 @@ public class CustomOptionHolder
         {
             try
             {
-                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool();
+                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool() && showRoleOfExiled.getBool();
             }
             catch
             {

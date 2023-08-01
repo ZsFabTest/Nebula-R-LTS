@@ -78,12 +78,13 @@ public class Assassin : Role
         assassinate = new CustomButton(
             () =>
             {
-                RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
+                //RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
                 PlayerControl target = assassinateTarget;
                 var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead, false, true);
                 if (res != Helpers.MurderAttemptResult.SuppressKill)
                     assassinate.Timer = assassinate.MaxTimer;
                                 if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
+                HudManager.Instance.StartCoroutine(NebulaEffects.CoGroupOfLeavesEffect(HudManager.Instance, LayerExpansion.GetDefaultLayer(), null, PlayerControl.LocalPlayer.transform.position + new Vector3(0, 0, -2)).WrapToIl2Cpp());
                 assassinateTarget = null;
                 assassinate.Timer = assassinateCooldownOption.getFloat();
                 //Objeck = RPCEventInvoker.ObjectInstantiate(CustomObject.Type.Leaves,target.transform.position);/

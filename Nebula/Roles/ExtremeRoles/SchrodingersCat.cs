@@ -2,13 +2,15 @@
 
 public class SchrodingersCat : Role
 {
+    public static List<Role> AllCat = new List<Role>() { Roles.SchrodingersCat,Roles.RedCat,Roles.BlueCat,Roles.WhiteCat,Roles.PavlovsCat,Roles.WerewolfsCat,Roles.OraclesCat };
+
     public static Color RoleColor = ChainShifter.RoleColor;
 
     public class CatEvent : Events.LocalEvent
     {
         byte murderId;
         Role targetRole;
-        public CatEvent(byte murderId,Role targetRole) : base(0.05f)
+        public CatEvent(byte murderId,Role targetRole) : base(0.1f)
         {
             this.murderId = murderId;
             this.targetRole = targetRole;
@@ -16,6 +18,14 @@ public class SchrodingersCat : Role
 
         public override void OnActivate()
         {
+            if(Roles.SchrodingersCat.fixCameraOption.getBool()) return;
+            RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
+            RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, this.targetRole);
+        }
+
+        public override void OnTerminal()
+        {
+            if(!Roles.SchrodingersCat.fixCameraOption.getBool()) return;
             RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
             RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, this.targetRole);
         }
@@ -38,6 +48,7 @@ public class SchrodingersCat : Role
     public Module.CustomOption canBeOracle;
     public Module.CustomOption canUseKillButtonO;
     public Module.CustomOption killCooldownO;
+    public Module.CustomOption fixCameraOption;
 
     public override void LoadOptionData()
     {
@@ -62,6 +73,7 @@ public class SchrodingersCat : Role
         killCooldownO = CreateOption(Roles.OracleN.Color, "killCooldownO", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonO);
         killCooldownO.suffix = "second";
         canChangeTeam = CreateOption(Color.white, "canAlwaysChangeTeam", true);
+        fixCameraOption = CreateOption(Color.white,"fixCamera",false);
     }
 
     public override bool IsGuessableRole { get => isGuessable.getBool(); protected set => base.IsGuessableRole = value; }

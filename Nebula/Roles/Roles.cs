@@ -169,7 +169,7 @@ static public class Roles
     public static NeutralRoles.Cascrubinter Cascrubinter = new NeutralRoles.Cascrubinter();
     public static ImpostorRoles.Heretic Heretic = new ImpostorRoles.Heretic();
     public static NeutralRoles.Amnesiac Amnesiac = new NeutralRoles.Amnesiac();
-    public static CrewmateRoles.Bartender Bartender = new CrewmateRoles.Bartender();
+    //public static CrewmateRoles.Bartender Bartender = new CrewmateRoles.Bartender();
     public static ComplexRoles.FSwapper F_Swapper = new ComplexRoles.FSwapper();
     public static ComplexRoles.Swapper EvilSwapper = new ComplexRoles.Swapper("EvilSwapper","evilSwapper",true);
     public static ComplexRoles.Swapper NiceSwapper = new ComplexRoles.Swapper("NiceSwapper","niceSwapper",false);
@@ -226,7 +226,7 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/
             Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,
             JackalMayor,

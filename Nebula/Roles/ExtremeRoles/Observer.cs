@@ -77,12 +77,14 @@ public class Observer : Role
                     watchingTarget = Game.GameData.data.myData.currentTarget;
                     watchingTarget.ShowFailedMurder();
                     cameraButton.Sprite = monitorButtonSprite.GetSprite();
+                    cameraButton.SetLabel("button.label.monitor");
                     return;
                 }
                 if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer){
                     HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);                
                     watchingTarget = null;
                     cameraButton.Sprite = MarkButtonSprite.GetSprite();
+                    cameraButton.SetLabel("button.label.mark");
                 }
                 else HudManager.Instance.PlayerCam.SetTargetWithLight(watchingTarget);
             },
@@ -93,7 +95,7 @@ public class Observer : Role
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.modifierAbilityInput.keyCode,
-            "button.label.monitor"
+            "button.label.mark"
         );
         cameraButton.Timer = cameraButton.MaxTimer = 0f;
     }

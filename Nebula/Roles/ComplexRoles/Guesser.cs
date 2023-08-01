@@ -236,8 +236,7 @@ static public class GuesserSystem
                     (
                     actualRole == role ||
                     role.GetImplicateRoles().Contains(actualRole) ||
-                    role.GetImplicateExtraRoles().Any((r) => focusedTargetData.HasExtraRole(r))
-                    )
+                    role.GetImplicateExtraRoles().Any((r) => focusedTargetData.HasExtraRole(r)))
                     ? focusedTarget : PlayerControl.LocalPlayer;
 
                     // Reset the GUI
@@ -353,7 +352,7 @@ static public class GuesserSystem
                             actualRole == role ||
                             role.GetImplicateRoles().Contains(actualRole) ||
                             role.GetImplicateExtraRoles().Any((r) => focusedTargetData.HasExtraRole(r)) ||
-                            role == Roles.SchrodingersCat && (actualRole == Roles.RedCat || actualRole == Roles.BlueCat || actualRole == Roles.WhiteCat || actualRole == Roles.PavlovsCat)
+                            role == Roles.SchrodingersCat && (NeutralRoles.SchrodingersCat.AllCat.Contains(actualRole))
                             )
                             ? focusedTarget : PlayerControl.LocalPlayer;
 

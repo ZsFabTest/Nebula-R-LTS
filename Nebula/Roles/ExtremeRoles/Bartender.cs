@@ -1,3 +1,4 @@
+/*
 namespace Nebula.Roles.CrewmateRoles;
 
 public class Bartender : Role{
@@ -13,3 +14,4 @@ public class Bartender : Role{
         false,VentPermission.CanNotUse,false,false,false){
     }
 }
+*/

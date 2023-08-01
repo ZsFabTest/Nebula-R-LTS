@@ -22,7 +22,6 @@ public class LastImpostor : ExtraRole
 
     public override void LoadOptionData()
     {
-        TopOption.AddCustomPrerequisite(() => { return true; });
         canSpawnOption = CreateOption(Color.white, "canSpawn", false);
         GuessCountOption = CreateOption(Color.white, "guessCount",5f,1f,15f,1f);
     }

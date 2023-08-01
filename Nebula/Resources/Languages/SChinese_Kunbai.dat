@@ -268,13 +268,13 @@
 "game.exile.roleText" : "%PLAYER% 的职业是 %ROLE%."
 
 "role.void.name" : "超管"
-"role.void.short" : "超"
+"role.void.short" : "超管"
 "role.void.description" : "你是支配整局游戏的管理者"
 "role.void.hint" : "你是超管"
 "role.void.info" : "你可以使用技能管理场上局势"
 "role.void.help.void" : "管理场上局势"
 
-"role.crewmate.name" : "船员"
+"role.crewmate.name" : "白板"
 "role.crewmate.short" : "船"
 "role.crewmate.description" : "找出<color=#ff1919ff>伪装者</color>"
 "role.crewmate.hint" : "完成任务"
@@ -337,7 +337,7 @@
 "role.trapper.rootTime" : "放置陷阱所需时间"
 "role.trapper.numOfSecondarySide" : "邪恶的陷阱师数量"
 
-"role.agent.name" : "代理人"
+"role.agent.name" : "打工人"
 "role.agent.hint" : "做更多的任务"
 "role.agent.short" : "代"
 "role.agent.description" : "帮助船员完成任务"
@@ -348,7 +348,7 @@
 "role.agent.maxVents" : "可使用管道次数"
 "role.agent.killCoolDownBonus" : "叛变的代理人每完成一个任务时为伪装者击杀冷却的减少量"
 
-"role.alien.name" : "外星人"
+"role.alien.name" : "人体屏障"
 "role.alien.short" : "外"
 "role.alien.description" : "维持船上秩序"
 "role.alien.hint" : "干扰伪装者"
@@ -360,14 +360,14 @@
 "role.alien.emiInhibitsCrewmates" : "电磁干扰也会停滞船员技能冷却"
 "role.alien.countOfCallingSabotage" : "最大破坏次数"
 
-"role.bait.name" : "诱饵"
+"role.bait.name" : "大奖"
 "role.bait.short" : "诱"
 "role.bait.description" : "诱骗敌人"
 "role.bait.hint" : "杀死你的凶手会立即报告"
 "role.bait.info" : "一旦诱饵被杀死，击杀诱饵的凶手就会立刻报告。"
 "role.bait.killerCanKnowBaitKillByFlash" : "击杀诱饵的凶手有闪光提醒"
 
-"role.busker.name" : "灵化使"
+"role.busker.name" : "半人半魂"
 "role.busker.short" : "灵"
 "role.busker.description" : "秘法·灵魂出窍之术"
 "role.busker.hint" : "灵魂出窍"
@@ -377,7 +377,7 @@
 "role.busker.buskCoolDown" : "假死冷却"
 "role.busker.buskDuration" : "假死持续时间"
 
-"role.comet.name" : "彗星之子"
+"role.comet.name" : "偷窥狂"
 "role.comet.short" : "彗"
 "role.comet.description" : "一飞冲天"
 "role.comet.hint" : "暗中行动"
@@ -389,7 +389,7 @@
 "role.comet.boostVisionRate" : "冲刺时的视野放大率"
 "role.comet.boostViewRate" : "冲刺时的视野率"
 
-"role.doctor.name" : "医学家"
+"role.doctor.name" : "心电图"
 "role.doctor.short" : "医"
 "role.doctor.description" : "从死人身上获取信息"
 "role.doctor.hint" : "随时掌握生命状况"
@@ -400,7 +400,7 @@
 "role.doctor.gadgetLeft" : "%SECOND%秒"
 "role.doctor.batteryIsEmpty" : "缺少电能"
 
-"role.guardian.name" : "特工"
+"role.guardian.name" : "盾哥"
 "role.guardian.short" : "特"
 "role.guardian.description" : "坚不可摧"
 "role.guardian.hint" : "控制，收容，保护"
@@ -415,7 +415,7 @@
 "role.guardian.alertMode" : "警戒模式"
 "role.guardian.alertInterval" : "警戒间隔"
 
-"role.mayor.name" : "市长"
+"role.mayor.name" : "总统"
 "role.mayor.short" : "市"
 "role.mayor.description" : "放逐<color=#ff1919ff>伪装者</color>"
 "role.mayor.hint" : "储存票数以备不时之需"
@@ -439,7 +439,7 @@
 "role.navvy.ventCoolDown" : "使用管道冷却"
 "role.navvy.ventDuration" : "管道潜伏时间"
 
-"role.necromancer.name" : "死灵法师"
+"role.necromancer.name" : "回魂者"
 "role.necromancer.short" : "死"
 "role.necromancer.description" : "召回灵魂"
 "role.necromancer.hint" : "妙手回春"
@@ -506,7 +506,7 @@
 "role.niceGuesser.hint" : "在会议中猜测身份"
 "role.niceGuesser.info" : "赌怪可以在会议中猜测其他玩家的身份。\n如果赌怪猜测正确，那名玩家立即死亡。\n如果赌怪猜测错误，赌怪立即死亡。"
 
-"role.niceTrapper.name" : "正义的陷阱师"
+"role.niceTrapper.name" : "正义的地雷师"
 "role.niceTrapper.short" : "正陷"
 "role.niceTrapper.description" : "安放陷阱并找出<color=#ff1919ff>伪装者</color>"
 "role.niceTrapper.hint" : "放置各种陷阱"
@@ -518,7 +518,7 @@
 "role.niceTracker.description" : "不会让你逃走的！"
 "role.niceTracker.info" : "你可以追踪其他玩家"
 
-"role.oracle.name" : "占卜师"
+"role.oracle.name" : "预言家"
 "role.oracle.short" : "占"
 "role.oracle.description" : "你可以查验对方的职业"
 "role.oracle.hint" : "通过占卜推断身份"
@@ -532,7 +532,7 @@
 "role.oracle.dieWhenDiviningOpportunist" : "占卜对象为投机者时占卜师死亡"
 "role.oracle.dieWhenDiviningOracle" : "占卜对象为其他占卜师时占卜师死亡"
 
-"role.provocateur.name" : "挑衅者"
+"role.provocateur.name" : "犯贱"
 "role.provocateur.short" : "衅"
 "role.provocateur.description" : "我死了，你也别想活着!"
 "role.provocateur.hint" : "同归于尽"
@@ -542,7 +542,7 @@
 "role.provocateur.embroilCoolDownAddition" : "挑衅冷却时间追加"
 "role.provocateur.embroilDuration" : "挑衅持续时间"
 
-"role.psychic.name" : "通灵师"
+"role.psychic.name" : "恶魔"
 "role.psychic.short" : "通"
 "role.psychic.description" : "快去找死者收集证言"
 "role.psychic.hint" : "获取死亡信息"
@@ -558,7 +558,7 @@
 "role.psychic.message.myRole" : "我的职业是 %MYROLE% ！"
 "role.psychic.message.losing" : "我好恨啊..."
 
-"role.sheriff.name" : "警长"
+"role.sheriff.name" : "美利坚"
 "role.sheriff.short" : "警"
 "role.sheriff.description" : "杀死<color=#ff1919ff>伪装者</color>"
 "role.sheriff.hint" : "杀死<color=#ff1919ff>伪装者</color>"
@@ -572,7 +572,7 @@
 "role.sheriff.canKillChainShifter" : "可以击杀交换师"
 "role.sheriff.numberOfShots" : "最大击杀次数"
 
-"role.seer.name" : "灵媒"
+"role.seer.name" : "闪屏哥"
 "role.seer.short" : "灵"
 "role.seer.hint" : "得知死亡时间与地点"
 "role.seer.description" : "你可以预见死亡"
@@ -631,9 +631,9 @@
 "role.banshee.minWeepNoticeRange" : "被诅咒后最小的通知范围"
 "role.banshee.fuzzinessWeepNotice" : "简化诅咒通知"
 
-"role.bountyHunter.name" : "赏金猎人"
+"role.bountyHunter.name" : "猎杀者"
 "role.bountyHunter.short" : "赏"
-"role.bountyHunter.description" : "猎杀你的悬赏目标"
+"role.bountyHunter.description" : "都是猎物！"
 "role.bountyHunter.hint" : "猎杀悬赏目标"
 "role.bountyHunter.info" : "当你击杀目标时下一次击杀将近在咫尺！\n但你杀死了非目标时会受到惩罚......看清你的目标！"
 "role.bountyHunter.changingBountyInterval" : "改变追猎目标的时间间隔"
@@ -642,7 +642,7 @@
 "role.bountyHunter.showArrowPointingTowardsTheBounty" : "对追猎目标用箭头标记"
 "role.bountyHunter.bountyArrowUpdateInterval" : "追猎目标箭头更新间隔"
 
-"role.camouflager.name" : "隐蔽者"
+"role.camouflager.name" : "小黑人"
 "role.camouflager.short" : "隐"
 "role.camouflager.description" : "给他们上个迷彩涂装"
 "role.camouflager.hint" : "给他们上个迷彩涂装"
@@ -651,7 +651,7 @@
 "role.camouflager.camouflageCoolDown" : "隐蔽冷却"
 "role.camouflager.camouflageDuration" : "隐蔽持续时间"
 
-"role.cleaner.name" : "清理者"
+"role.cleaner.name" : "扫地工"
 "role.cleaner.short" : "清"
 "role.cleaner.description" : "杀人不留痕迹"
 "role.cleaner.hint" : "清理尸体"
@@ -673,7 +673,7 @@
 "role.damned.info" : "你被<color=#ff1919ff>诅咒</color>了，伪装者的意志在你的体内苏醒。背叛曾经的伙伴们吧\n下一次会议后你将成为伪装者的一员！"
 "role.damned.message.killed" : "伪装者之魂在你体内苏醒，下次会议时你就是伪装者的一员了！"
 
-"role.disturber.name" : "干扰者"
+"role.disturber.name" : "电磁门"
 "role.disturber.short" : "扰"
 "role.disturber.description" : "干扰船员"
 "role.disturber.hint" : "操纵电磁屏障"
@@ -683,7 +683,7 @@
 "role.disturber.disturbDuration" : "技能持续时间"
 "role.disturber.countOfBolts" : "磁极数量"
 
-"role.eraser.name" : "抹除者"
+"role.eraser.name" : "白板制造机"
 "role.eraser.short" : "抹"
 "role.eraser.description" : "抹去他们的职业"
 "role.eraser.hint" : "抹除身份"
@@ -695,7 +695,7 @@
 "role.eraser.eraseCoolDownAddition" : "抹除冷却递增"
 "role.eraser.eraserCanGuessCrewmate" : "赌怪抹除者可以在会议中猜测船员"
 
-"role.evilAce.name" : "密命王牌"
+"role.evilAce.name" : "暗影"
 "role.evilAce.short" : "密"
 "role.evilAce.description" : "秘密隐藏的ability 让我来向你证明它的意义"
 "role.evilAce.hint" : "杀死船员"
@@ -710,7 +710,7 @@
 "role.evilGuesser.hint" : "在会议中猜测身份"
 "role.evilGuesser.info" : "赌怪可以在会议中猜测其他玩家的身份。\n如果赌怪猜测正确，那名玩家立即死亡。\n如果赌怪猜测错误，赌怪立即死亡。"
 
-"role.evilTrapper.name" : "邪恶的陷阱师"
+"role.evilTrapper.name" : "真地雷师"
 "role.evilTrapper.short" : "邪陷"
 "role.evilTrapper.description" : "你的陷阱是害人的！"
 "role.evilTrapper.hint" : "布置各种陷阱"
@@ -730,7 +730,7 @@
 "role.executioner.help.killRange" : "显示击杀范围"
 "role.executioner.killCoolDownOddsOnFailed" : "击杀失败时所缩短冷却倍率"
 
-"role.jailer.name" : "狱卒"
+"role.jailer.name" : "黑客"
 "role.jailer.short" : "狱"
 "role.jailer.info" : "狱卒可以远程查看主控台（点击破坏可见）\n另外，在地图上你可以辨认出尸体和你的队友"
 "role.jailer.hint" : "掌握船员动向"
@@ -763,7 +763,7 @@
 "role.marionette.decoyDuration" : "木偶可存在时间"
 "role.marionette.swapCoolDown" : "交换位置冷却"
 
-"role.morphing.name" : "化形者"
+"role.morphing.name" : "化皮者"
 "role.morphing.short" : "化"
 "role.morphing.description" : "装作别人的样子"
 "role.morphing.hint" : "取样并化形"
@@ -782,7 +782,7 @@
 "role.ninja.help.vent" : "传送进最近的管道内"
 "role.ninja.evasionCoolDown" : "躲藏冷却时间"
 
-"role.reaper.name" : "送葬者"
+"role.reaper.name" : "搬运工"
 "role.reaper.short" : "葬"
 "role.reaper.info" : "送葬者可以拖拽尸体。\n此外，对于送葬者而言，全部管道网络均联通。"
 "role.reaper.description" : "拖走尸体来欺骗船员"
@@ -791,7 +791,7 @@
 "role.reaper.ventCoolDown" : "管道冷却"
 "role.reaper.ventDuration" : "管道潜伏时间"
 
-"role.raider.name" : "强盗"
+"role.raider.name" : "斧头帮"
 "role.raider.short" : "强"
 "role.raider.info" : "强盗无法正常击杀，但可以掷出一把可以穿透人体的斧头击杀他人"
 "role.raider.description" : "一斧制敌"
@@ -819,7 +819,7 @@
 "role.sniper.aimAssistDuration" : "辅助瞄准线的持续时间"
 "role.sniper.nearMessage" : "你的附近似乎有一个隐身的玩家，千万小心！"
 
-"role.arsonist.name" : "纵火犯"
+"role.arsonist.name" : "烧鸡"
 "role.arsonist.short" : "纵"
 "role.arsonist.description" : "燃烧吧！"
 "role.arsonist.hint" : "油，火，灰烬"
@@ -831,7 +831,7 @@
 "role.arsonist.douseRange" : "最大涂油距离"
 "role.arsonist.canUseVents" : "纵火犯可使用管道"
 
-"role.chainShifter.name" : "交换师"
+"role.chainShifter.name" : "搅屎棍"
 "role.chainShifter.short" : "交"
 "role.chainShifter.description" : "交换他人职业"
 "role.chainShifter.hint" : "换换口味"
@@ -843,7 +843,7 @@
 "role.chainShifter.guesserMode.erase" : "消失"
 "role.chainShifter.guesserMode.shift" : "交换"
 
-"role.empiric.name" : "疫医"
+"role.empiric.name" : "新冠病毒"
 "role.empiric.short" : "疫"
 "role.empiric.description" : "感染所有人"
 "role.empiric.hint" : "传播疫病"
@@ -867,7 +867,7 @@
 "role.immoralist.canKnowWhereIsDeadBodies" : "得知尸体位置"
 "role.immoralist.canFixLightsAndComms" : "可维修灯光和通讯"
 
-"role.jackal.name" : "豺狼"
+"role.jackal.name" : "坤坤"
 "role.jackal.short" : "豺"
 "role.jackal.description" : "歼灭其他玩家"
 "role.jackal.hint" : "歼灭全船"
@@ -877,7 +877,7 @@
 "role.jackal.killCoolDown" : "击杀冷却"
 "role.jackal.numOfKillingToCreateSidekick" : "豺狼可以招募跟班前需要击杀的人数"
 
-"role.sidekick.name" : "跟班"
+"role.sidekick.name" : "小黑子"
 "role.sidekick.short" : "跟"
 "role.sidekick.hint" : "协助豺狼歼灭所有人"
 "role.sidekick.info" : "豺狼死亡后，你会成为新的豺狼。"
@@ -887,7 +887,7 @@
 "role.sidekick.canCreateSidekick" : "跟班晋升为豺狼后可招募新的跟班"
 "role.sidekick.canUseVents" : "跟班可使用管道"
 
-"role.jester.name" : "小丑"
+"role.jester.name" : "名游社"
 "role.jester.short" : "丑"
 "role.jester.description" : "想办法让自己被投出去"
 "role.jester.hint" : "想办法被投出去"
@@ -902,7 +902,7 @@
 "role.jester.canDragBodies" : "可以拖曳尸体"
 "role.jester.canFireBlankShots" : "可以发射空包弹"
 
-"role.opportunist.name" : "投机者" 
+"role.opportunist.name" : "混子" 
 "role.opportunist.short" : "投"
 "role.opportunist.description" : "苟且偷生"
 "role.opportunist.hint" : "完成任务并活下去"
@@ -1002,7 +1002,7 @@
 "role.spectre.task.rancor.phase.delivery" : "传递怨恨至%PLAYER%身上"
 "role.spectre.task.rancor.phase.statue" : "在神像中储存能量"
 
-"role.vulture.name" : "秃鹫"
+"role.vulture.name" : "只因"
 "role.vulture.short" : "秃"
 "role.vulture.description" : "吞噬尸体"
 "role.vulture.hint" : "吞噬死尸"
@@ -1013,8 +1013,8 @@
 "role.vulture.ventCoolDown" : "管道冷却"
 "role.vulture.ventDuration" : "管道潜伏时间"
 
-"role.crewmate.secret.name" : "？？？"
-"role.impostor.secret.name" : "？？？"
+"role.crewmate.secret.name" : "神秘人"
+"role.impostor.secret.name" : "神秘人"
 "role.crewmate.secret.short" : "？？？"
 "role.impostor.secret.short" : "？？？"
 "role.crewmate.secret.description" : "完成任务唤醒你的职业"
@@ -1297,7 +1297,7 @@
 "button.label.sample" : "取样"
 "button.label.seal" : "封锁"
 "button.label.search" : "追踪尸体"
-"button.label.sidekick" : "招募"
+"button.label.sidekick" : "黑化"
 "button.label.snipe" : "狙击"
 "button.label.suicide" : "自尽"
 "button.label.swap" : "交换"

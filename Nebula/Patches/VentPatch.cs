@@ -6,6 +6,7 @@ public static class VentEnterPatch
     public static void Postfix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
     {
         Module.VentManager.checkBomb(__instance,pc);
+        Roles.Roles.Programmer.check(__instance,pc);
         if (pc != PlayerControl.LocalPlayer) return;
         Game.GameData.data.myData.VentDurationTimer = pc.GetModData().role.VentDurationMaxTimer;
         Helpers.RoleAction(pc, (role) => role.OnEnterVent(__instance));
@@ -19,6 +20,7 @@ public static class VentExitPatch
     public static void Postfix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
     {
         Module.VentManager.checkBomb(__instance,pc);
+        Roles.Roles.Programmer.check(__instance,pc);
         if (pc != PlayerControl.LocalPlayer) return;
         Game.GameData.data.myData.VentCoolDownTimer = pc.GetModData().role.VentCoolDownMaxTimer;
         Helpers.RoleAction(pc, (role) => role.OnExitVent(__instance));
