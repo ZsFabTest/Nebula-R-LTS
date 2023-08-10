@@ -3,7 +3,7 @@
 public class WhiteCat : Role
 {
 
-    public override bool IsGuessableRole { get => Roles.SchrodingersCat.isGuessable.getBool(); protected set => base.IsGuessableRole = value; }
+    public override bool IsGuessableRole { get => false; protected set => base.IsGuessableRole = value; }
 
     public override void OnMurdered(byte murderId)
     {

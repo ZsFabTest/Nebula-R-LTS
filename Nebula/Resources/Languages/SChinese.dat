@@ -243,7 +243,7 @@
 "option.advanceRoleOptions" : "进阶设置"
 
 "option.roleChance" : "生成概率"
-"option.roleChanceSecondary" : "生成概率(作为附加职业)"
+"option.roleChanceSecondary" : "生成概率(作为伪装者阵营)"
 "option.roleCount" : "最大数量"
 
 "option.canBeLovers" : "可以成为恋人"
@@ -961,6 +961,7 @@
 
 "role.santaClaus.name" : "圣诞老人"
 "role.santaClaus.short" : "圣"
+"role.santaClaus.hint" : "小朋友想吃糖吗？"
 "role.santaClaus.description" : "叮叮当，叮叮当"
 "role.santaClaus.info" : "邀请他人进入团队\n如果你的团队成员都活着，那么整个团队获得胜利"
 "role.santaClaus.help.santa" : "邀请他人进入你的团队"
@@ -973,6 +974,7 @@
 "role.blackSanta.name" : "邪恶的圣诞老人"
 "role.blackSanta.short" : "邪圣"
 "role.blackSanta.description" : "在飞船上寻些乐子"
+"role.blackSanta.hint" : "小朋友车上有糖吃awa"
 "role.blackSanta.info" : "杀死他人与你的团队获得胜利。当你的邀请在冷却时，可以杀害他人并移动尸体。\n如果你的团队成员都活着，那么整个团队获得胜利"
 "role.blackSanta.help.capture" : "拖曳尸体"
 "role.blackSanta.help.release" : "放下尸体"
@@ -1128,6 +1130,7 @@
 "role.hadar.damageRadius" : "有效伤害距离"
 "role.hadar.damageLevel" : "伤害强度"
 "role.hadar.reappearance" : "重新出现冷却时间"
+"role.hadar.disappearance" : "潜伏冷却时间"
 
 "role.ritualCrewmate.name" : "船员"
 "role.ritualCrewmate.short" : "船员"
@@ -2042,6 +2045,28 @@
 "role.singer.showRoleNum" : "显示职业需要的最多人数"
 "role.singer.jibaiAlwaysBeSinger" : "击败永远拥有该附加"
 
+"role.zombie.name" : "僵尸"
+"role.zombie.short" : "僵"
+"role.zombie.hint" : "通过击杀招募小弟"
+"role.zombie.description" : "看看你离死亡还有多远？"
+"role.zombie.info" : "通过击杀概率使被击杀者加入伪装者阵营。"
+"role.zombie.killCooldown" : "击杀冷却时间"
+"role.zombie.chanceToInfluence" : "感染概率"
+
+"role.zombieSidekick.name" : "僵尸小弟"
+"role.zombieSidekick.short" : "弟"
+"role.zombieSidekick.hint" : "全力支持伪装者阵营"
+"role.zombieSidekick.info" : "欢迎你加入伪装者阵营！"
+
+"role.taoistPriest.name" : "道士"
+"role.taoistPriest.short" : "道"
+"role.taoistPriest.hint" : "物理超度才是最好的解决办法"
+"role.taoistPriest.info" : "使用超度技能后，你会在会议结束后直接击杀超度对象。"
+"role.taoistPriest.killCooldown" : "超度冷却时间"
+
+"role.secretCrush.name" : "病娇胜利附加判断"
+"role.secretCrush.info" : "病娇胜利时，该附加会赋予病娇的暗恋对象。\n不要担心，它不会自己生成的。"
+
 "option.display.random" : "随机"
 
 "side.paparazzo.name" : "摄影师"
@@ -2107,6 +2132,7 @@
 "button.label.madmate" : "策反"
 "button.label.mad" : "狂暴"
 "button.label.challenge" : "挑战"
+"button.label.releaseSouls" : "超度"
 
 "meeting.seb" : "特殊会议"
 "meeting.forbid" : "你不能召开紧急会议"

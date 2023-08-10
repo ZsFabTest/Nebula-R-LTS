@@ -4,7 +4,7 @@ public class BlueCat : Role
 {
     private static CustomButton killButton;
 
-    public override bool IsGuessableRole { get => Roles.SchrodingersCat.isGuessable.getBool(); protected set => base.IsGuessableRole = value; }
+    public override bool IsGuessableRole { get => false; protected set => base.IsGuessableRole = value; }
 
     public override void MyPlayerControlUpdate()
     {

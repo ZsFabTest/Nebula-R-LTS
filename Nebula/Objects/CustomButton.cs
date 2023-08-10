@@ -329,7 +329,7 @@ public class CustomButton
                 }
 
                 this.OnClick();
-                //if(Roles.Roles.Programmer.targetId != PlayerControl.LocalPlayer.PlayerId) this.OnClick();
+                // if(Roles.Roles.Programmer.targetId != PlayerControl.LocalPlayer.PlayerId) this.OnClick();
             }
             else if (OnSuspended != null && this.HasEffect && this.isEffectActive)
             {

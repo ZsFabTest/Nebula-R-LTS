@@ -2,7 +2,7 @@
 
 public class RedCat : Role
 {
-    public override bool IsGuessableRole { get => Roles.SchrodingersCat.isGuessable.getBool(); protected set => base.IsGuessableRole = value; }
+    public override bool IsGuessableRole { get => false; protected set => base.IsGuessableRole = value; }
 
     public override void GlobalInitialize(PlayerControl __instance)
     {

@@ -4,7 +4,7 @@ public class PavlovsCat : Role
 {
     private static CustomButton killButton;
 
-    public override bool IsGuessableRole { get => Roles.SchrodingersCat.isGuessable.getBool(); protected set => base.IsGuessableRole = value; }
+    public override bool IsGuessableRole { get => false; protected set => base.IsGuessableRole = value; }
 
     public override void MyPlayerControlUpdate()
     {
@@ -35,6 +35,7 @@ public class PavlovsCat : Role
             {
                 Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
                 killButton.Timer = killButton.MaxTimer;
+                Game.GameData.data.myData.currentTarget = null;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && Roles.SchrodingersCat.canUseKillButtonP.getBool(); },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },

@@ -26,7 +26,7 @@ public class EndCondition
     public static EndCondition AvengerWin = new EndCondition(23, Roles.NeutralRoles.Avenger.RoleColor, "avenger", 0, Module.CustomGameMode.Standard);
     public static EndCondition LoversWin = new EndCondition(24, Roles.ExtraRoles.Lover.iconColor[0], "lovers", 0, Module.CustomGameMode.Standard);
     public static EndCondition TrilemmaWin = new EndCondition(25, new Color(209f / 255f, 63f / 255f, 138f / 255f), "trilemma", 0, Module.CustomGameMode.Standard);
-    //public static EndCondition SantaWin = new EndCondition(26, Roles.NeutralRoles.SantaClaus.RoleColor, "santa", 4, Module.CustomGameMode.Standard);
+    public static EndCondition SantaWin = new EndCondition(26, Roles.NeutralRoles.SantaClaus.RoleColor, "santa", 4, Module.CustomGameMode.Standard);
 
     public static EndCondition NobodyWin = new EndCondition(48, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody", 0, Module.CustomGameMode.All).SetNoBodyWin(true);
     public static EndCondition NobodySkeldWin = new EndCondition(49, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.skeld", 32, Module.CustomGameMode.All).SetNoBodyWin(true);
@@ -52,7 +52,7 @@ public class EndCondition
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
             ImpostorWinByKill,ImpostorWinBySabotage,ImpostorWinByVote,ImpostorWinDisconnect,
             CrewmateWinHnS,ImpostorWinHnS,
-            JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,/*SantaWin,*/
+            JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,SantaWin,
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
             PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin
@@ -740,6 +740,8 @@ public class PlayerStatistics
     public int AliveOracleWithSidekick;
     public int AliveInLoveOracleWithSidekick;
 
+    public int AliveZombieSidekick;
+
     public bool IsValid;
 
     //
@@ -805,6 +807,8 @@ public class PlayerStatistics
         AliveInLoveOracleWithMadmate = 0;
         AliveOracleWithSidekick = 0;
         AliveInLoveOracleWithSidekick = 0;
+
+        AliveZombieSidekick = 0;
         
 
         Roles.Side side;
@@ -1054,6 +1058,8 @@ public class PlayerStatistics
                         AliveSecondaryJackal++;
                     }else AliveSpectre++;
                 }
+
+                if(data.role == Roles.Roles.ZombieSidekick) AliveZombieSidekick++;
 
                 IsValid = true;
             }

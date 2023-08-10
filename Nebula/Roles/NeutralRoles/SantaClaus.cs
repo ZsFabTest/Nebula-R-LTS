@@ -3,7 +3,7 @@ using Nebula.Game;
 
 namespace Nebula.Roles.NeutralRoles;
 
-/*
+
 public class SantaClaus : Role
 {
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
@@ -49,10 +49,10 @@ public class SantaClaus : Role
         actualTasks = Helpers.GetRandomTaskList((int)tasksPerPresentOption.getFloat(), 0.4);
     }
 
-    public override void OnTaskComplete()
+    public override void OnTaskComplete(PlayerTask? task)
     {
-        var task = Game.GameData.data.myData.getGlobalData().Tasks;
-        if (task.Completed == task.AllTasks)
+        var tasks = Game.GameData.data.myData.getGlobalData().Tasks;
+        if (tasks.Completed == tasks.AllTasks)
         {
             RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, leftPresentDataId, 1);
             if (Game.GameData.data.myData.getGlobalData().GetRoleData(leftTaskSetDataId) > 0)
@@ -93,10 +93,10 @@ public class SantaClaus : Role
             },
             () => { santaButton.Timer = santaButton.MaxTimer; },
             buttonSprite.GetSprite(),
-            new Vector3(-1.8f, 0, 0),
+            //new Vector3(-1.8f, 0, 0),
+            Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.abilityInput.keyCode,
-            false,
             "button.label.present"
         ).SetTimer(CustomOptionHolder.InitialAbilityCoolDownOption.getFloat());
         santaButton.MaxTimer = 10.0f;
@@ -223,10 +223,10 @@ public class BlackSanta : Role
                 santaButton.SetLabel("button.label.capture");
             },
             buttonSprite.GetSprite(),
-            new Vector3(-1.8f, 0f, 0),
+            //new Vector3(-1.8f, 0f, 0),
+            Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.abilityInput.keyCode,
-            false,
             "button.label.capture"
         ).SetTimer(CustomOptionHolder.InitialAbilityCoolDownOption.getFloat());
         santaButton.MaxTimer = 10.0f;
@@ -263,7 +263,8 @@ public class BlackSanta : Role
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { killButton.Timer = killButton.MaxTimer; },
             __instance.KillButton.graphic.sprite,
-            new Vector3(0f, 1f, 0),
+            //new Vector3(0f, 1f, 0),
+            Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.modKillInput.keyCode
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
@@ -319,4 +320,4 @@ public class BlackSanta : Role
         IsHideRole = true;
     }
 }
-*/
+

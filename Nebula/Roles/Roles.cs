@@ -95,8 +95,8 @@ static public class Roles
     public static NeutralRoles.Paparazzo Paparazzo = new NeutralRoles.Paparazzo();
     public static NeutralRoles.Opportunist Opportunist = new NeutralRoles.Opportunist();
     public static NeutralRoles.Spectre Spectre = new NeutralRoles.Spectre();
-    //public static NeutralRoles.SantaClaus SantaClaus = new NeutralRoles.SantaClaus();
-    //public static NeutralRoles.BlackSanta BlackSanta = new NeutralRoles.BlackSanta();
+    public static NeutralRoles.SantaClaus SantaClaus = new NeutralRoles.SantaClaus();
+    public static NeutralRoles.BlackSanta BlackSanta = new NeutralRoles.BlackSanta();
     public static NeutralRoles.Vulture Vulture = new NeutralRoles.Vulture();
 
     public static MinigameRoles.Player Player = new MinigameRoles.Player();
@@ -128,7 +128,7 @@ static public class Roles
     public static ExtraRoles.Lover Lover = new ExtraRoles.Lover();
     public static ExtraRoles.Trilemma Trilemma = new ExtraRoles.Trilemma();
     public static ExtraRoles.AvengerTarget AvengerTarget = new ExtraRoles.AvengerTarget();
-   // public static ExtraRoles.TeamSanta TeamSanta = new ExtraRoles.TeamSanta();
+    public static ExtraRoles.TeamSanta TeamSanta = new ExtraRoles.TeamSanta();
     public static MetaRoles.MetaRole MetaRole = new MetaRoles.MetaRole();
     public static PerkHolder PerkHolder = new Perk.PerkHolder();
 
@@ -213,38 +213,42 @@ static public class Roles
     public static NeutralRoles.OraclesCat OraclesCat = new NeutralRoles.OraclesCat();
     //public static CrewmateRoles.Detective Detective = new CrewmateRoles.Detective();
     //public static ExtraRoles.Singer Singer = new ExtraRoles.Singer();
+    public static ImpostorRoles.Hadar HadarS = new ImpostorRoles.Hadar();
+    public static ImpostorRoles.Zombie Zombie = new ImpostorRoles.Zombie();
+    public static CrewmateRoles.ZombieSidekick ZombieSidekick = new CrewmateRoles.ZombieSidekick();
+    public static CrewmateRoles.TaoistPriest TaoistPriest = new CrewmateRoles.TaoistPriest();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
         {
             VOID,
             Impostor,Banshee,BountyHunter,Camouflager,Cleaner,Covert,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Ninja,Painter,Raider,Reaper,Sniper,
-            /*SantaClaus,BlackSanta,*/Arsonist,Avenger,ChainShifter,Empiric,Immoralist,Jackal,Jester,Opportunist,Paparazzo,Sidekick,Spectre,Vulture,
+            SantaClaus,BlackSanta,Arsonist,Avenger,ChainShifter,Empiric,Immoralist,Jackal,Jester,Opportunist,Paparazzo,Sidekick,Spectre,Vulture,
             F_Crewmate,
             F_Guesser,F_Tracker,F_Trapper,
             Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/
-            Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,
+            Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,WerewolfsCat,OraclesCat,
 
             Player,
-            Hadar,
-            HnSCrewmate,
-            HnSCleaner,HnSHadar,HnSRaider,HnSReaper
+            //Hadar,
+            //HnSCrewmate,
+            //HnSCleaner,HnSHadar,HnSRaider,HnSReaper
         };
 
     public static List<ExtraRole> AllExtraRoles = new List<ExtraRole>()
         {
             SecondaryGuesser,SecondarySidekick,SecondaryMadmate,InheritedJailer,
-            DiamondPossessor,LastImpostor,/*TeamSanta,*/
+            /*DiamondPossessor,*/LastImpostor,TeamSanta,
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
-            PerkHolder,
+            /*PerkHolder,*/
             SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee/*,Singer*/
         };
 
