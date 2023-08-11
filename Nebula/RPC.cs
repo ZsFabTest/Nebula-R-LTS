@@ -105,6 +105,9 @@ public enum CustomRPC
     Teleport,
     SendInfo,
     SetCascrubinterTarget,
+    LockKillButton,
+    FakeKill,
+    FixedRevive,
 }
 
 //RPCを受け取ったときのイベント
@@ -407,6 +410,15 @@ class RPCHandlerPatch
                 break;
             case (byte)CustomRPC.SetCascrubinterTarget:
                 RPCEvents.SetCascrubinterTarget(reader.ReadByte());
+                break;
+            case (byte)CustomRPC.LockKillButton:
+                RPCEvents.LockKillButton(reader.ReadByte());
+                break;
+            case (byte)CustomRPC.FakeKill:
+                RPCEvents.FakeKill(reader.ReadByte(),reader.ReadByte());
+                break;
+            case (byte)CustomRPC.FixedRevive:
+                RPCEvents.FixedRevive(reader.ReadByte());
                 break;
         }
     }
@@ -992,10 +1004,13 @@ static class RPCEvents
             foreach (DeadBody body in Helpers.AllDeadBodies())
             {
                 if (body.ParentId != playerId) continue;
-
+                
                 UnityEngine.Object.Destroy(body.gameObject);
+                //body.gameObject.active = false;
                 break;
             }
+            
+            //Events.LocalEvent.Activate(new Events.DeadBodyFix(playerId));
 
             Game.GameData.data.playersArray[playerId]?.Revive(changeStatus);
             PlayerControl player = Helpers.playerById(playerId);
@@ -1006,11 +1021,15 @@ static class RPCEvents
         }
         else
         {
+            
             foreach (DeadBody body in Helpers.AllDeadBodies())
             {
                 if (body.ParentId != playerId) continue;
                 UnityEngine.Object.Destroy(body.gameObject);
+                //body.gameObject.active = false;
             }
+            
+            //Events.LocalEvent.Activate(new Events.DeadBodyFix(playerId));
 
             Game.GameData.data.playersArray[playerId]?.Revive();
             PlayerControl player = Helpers.playerById(playerId);
@@ -1696,6 +1715,27 @@ static class RPCEvents
 
     public static void SetCascrubinterTarget(byte targetId){
         Roles.Roles.Cascrubinter.target = Helpers.playerById(targetId);
+    }
+
+    public static void LockKillButton(byte targetId){
+        if(PlayerControl.LocalPlayer.PlayerId == targetId){
+            Game.GameData.data.IsLockedKill = true;
+        }
+    }
+
+    public static void FakeKill(byte murderId,byte targetId){
+        if(PlayerControl.LocalPlayer.PlayerId == murderId) PlayerControl.LocalPlayer.transform.position = Helpers.playerById(targetId).transform.position;
+    }
+
+    public static void FixedRevive(byte playerId){
+        PlayerControl player = Helpers.playerById(playerId);
+        player.Revive();
+        DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+        foreach(var DeadBody in array){
+            if(DeadBody.ParentId == playerId){
+                DeadBody.gameObject.active = false;
+            }
+        }
     }
 }
 
@@ -2703,5 +2743,27 @@ public class RPCEventInvoker
         writer.Write(target.PlayerId);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SetCascrubinterTarget(target.PlayerId);
+    }
+
+    public static void LockKillButton(PlayerControl target){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.LockKillButton,Hazel.SendOption.Reliable,-1);
+        writer.Write(target.PlayerId);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.LockKillButton(target.PlayerId);
+    }
+
+    public static void FakeKill(PlayerControl murder,PlayerControl target){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.FakeKill,Hazel.SendOption.Reliable,-1);
+        writer.Write(murder.PlayerId);
+        writer.Write(target.PlayerId);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.FakeKill(murder.PlayerId,target.PlayerId);
+    }
+
+    public static void FixedRevive(PlayerControl player){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.FixedRevive,Hazel.SendOption.Reliable,-1);
+        writer.Write(player.PlayerId);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.FixedRevive(player.PlayerId);
     }
 }   

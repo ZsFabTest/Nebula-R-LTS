@@ -1,26 +1,22 @@
 namespace Nebula.Roles.ImpostorRoles{
 	public class Dying : Role{
 		public class dyingEvent : Events.LocalEvent{
-			byte murderId = Byte.MaxValue;
+			byte murderId = byte.MaxValue;
 
 			public dyingEvent(byte murderId) : base(madDuringTimeOption.getFloat()) { this.murderId = murderId; }
 
 			public override void OnTerminal(){
-				RPCEventInvoker.UncheckedMurderPlayer(murderId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
+				if(!PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(murderId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
 			}
 		}
 
+	/*
 		public class reviveEvent : Events.LocalEvent{
 			byte murderId;
 			public reviveEvent(byte murderId) : base(0.05f) { this.murderId = murderId; }
-			public override void OnTerminal(){
-				Activate(new dyingEvent(murderId));
-				Roles.Dying.isMurdered = true;
-				RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
-				Roles.Dying.killButton.MaxTimer = specialKillCooldownOption.getFloat();
-				Roles.Dying.killButton.Timer = 0f;
-			}
+
 		}
+	*/
 
 		public static Module.CustomOption madDuringTimeOption;
 		public static Module.CustomOption specialKillCooldownOption;
@@ -35,7 +31,20 @@ namespace Nebula.Roles.ImpostorRoles{
 	    		killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
 	    		return;
 	    	}
-	    	Events.LocalEvent.Activate(new reviveEvent(murderId));
+			/*
+			PlayerControl.LocalPlayer.Revive();
+			DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+			foreach(var DeadBody in array){
+				if(DeadBody.ParentId == PlayerControl.LocalPlayer.PlayerId){
+					DeadBody.gameObject.active = false;
+				}
+			}
+			*/
+			RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
+			isMurdered = true;
+			killButton.MaxTimer = specialKillCooldownOption.getFloat();
+			killButton.Timer = 0f;
+	    	Events.LocalEvent.Activate(new dyingEvent(murderId));
 	    }
 
 		public override void LoadOptionData(){

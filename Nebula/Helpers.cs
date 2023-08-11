@@ -398,7 +398,7 @@ public static class Helpers
         //Componentで探すよりタグで探す方が相当はやい
         var bodies = GameObject.FindGameObjectsWithTag("DeadBody");
         DeadBody[] deadBodies = new DeadBody[bodies.Count];
-        for (int i = 0; i < bodies.Count; i++) deadBodies[i] = bodies[i].GetComponent<DeadBody>();
+        for (int i = 0; i < bodies.Count; i++) if(bodies[i].gameObject.active) deadBodies[i] = bodies[i].GetComponent<DeadBody>();
         return deadBodies;
     }
 
@@ -453,23 +453,18 @@ public static class Helpers
 
     private static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false)
     {
-        MurderAttemptResult result = MurderAttemptResult.PerformKill;
         var targetData = target.GetModData();
 
-        if (targetData.guardStatus.RPCGuard())
+        if (targetData.guardStatus.RPCGuard() || Game.GameData.data.IsLockedKill)
         {
+            Game.GameData.data.IsLockedKill = false;
             RPCEventInvoker.Guard(killer.PlayerId, target.PlayerId);
             return MurderAttemptResult.SuppressKill;
         }
 
         //GlobalMethod
-        result = targetData.role.OnMurdered(killer.PlayerId, target.PlayerId);
-        if (result != MurderAttemptResult.PerformKill)
-        {
-            return result;
-        }
+        return targetData.role.OnMurdered(killer.PlayerId, target.PlayerId);;
 
-        return MurderAttemptResult.PerformKill;
     }
 
     public static MurderAttemptResult checkMurderAttemptAndAction(PlayerControl killer, PlayerControl target, Action successAction, Action failedAction, bool isMeetingStart = false)

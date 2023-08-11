@@ -1,10 +1,12 @@
 namespace Nebula.Roles.NeutralRoles;
+/*
 public class GhostEvent : Events.LocalEvent{
     public GhostEvent() : base(0.1f) {}
     public override void OnTerminal(){
         RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
     }
 }
+*/
 
 public class Ghost : Role,Template.HasWinTrigger{
     public bool WinTrigger { get; set; }
@@ -30,11 +32,21 @@ public class Ghost : Role,Template.HasWinTrigger{
 
     public override void OnMurdered(byte murderId){
         if(lcnt <= -1){
-            Events.LocalEvent.Activate(new GhostEvent());
+            /*
+			PlayerControl.LocalPlayer.Revive();
+			DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+			foreach(var DeadBody in array){
+				if(DeadBody.ParentId == PlayerControl.LocalPlayer.PlayerId){
+					DeadBody.gameObject.active = false;
+				}
+			}
+            */
+            RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
             MurderId = murderId;
             lcnt = (short)LiveAddition.getFloat();
             killButton.Timer = killButton.MaxTimer;
-            PlayerControl.LocalPlayer.ShowFailedMurder();
+            Helpers.playerById(murderId).ShowFailedMurder();
+            //Events.LocalEvent.Activate(new Events.FixCam());
         }
     }
 

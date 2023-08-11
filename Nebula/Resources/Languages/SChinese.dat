@@ -2088,6 +2088,13 @@
 "role.ghost.killCooldown" : "击杀冷却时间"
 "role.ghost.liveAddition" : "额外的存货轮数"
 
+"role.paranoiac.name" : "被害妄想者"
+"role.paranoiac.short" : "妄"
+"role.paranoiac.description" : "你别过来啊啊"
+"role.paranoiac.hint" : "阻止<color=#ff1919ff>凶手</color>击杀"
+"role.paranoiac.info" : "你的技能可以阻止一次使用对象的击杀。\n若没有触发该技能会一直保留。\n多次使用无效。"
+"role.paranoiac.lockKillCooldown" : "阻碍冷却时间"
+
 
 "option.display.random" : "随机"
 
@@ -2157,6 +2164,7 @@
 "button.label.mad" : "狂暴"
 "button.label.challenge" : "挑战"
 "button.label.releaseSouls" : "超度"
+"button.label.lock" : "上锁"
 
 "meeting.seb" : "特殊会议"
 "meeting.forbid" : "你不能召开紧急会议"

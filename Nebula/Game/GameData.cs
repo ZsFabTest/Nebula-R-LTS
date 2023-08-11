@@ -1346,6 +1346,8 @@ public class GameData
 
     public bool IsCanceled;
 
+    public bool IsLockedKill;
+
     public GameData()
     {
 
@@ -1380,6 +1382,8 @@ public class GameData
 
         Reporter = null;
         Dead = null;
+
+        IsLockedKill = false;
 
         Roles.Perk.PerkHolder.PerkData.InitializePerkData();
     }

@@ -6,6 +6,7 @@ public class SchrodingersCat : Role
 
     public static Color RoleColor = ChainShifter.RoleColor;
 
+    /*
     public class CatEvent : Events.LocalEvent
     {
         byte murderId;
@@ -18,18 +19,21 @@ public class SchrodingersCat : Role
 
         public override void OnActivate()
         {
-            if(Roles.SchrodingersCat.fixCameraOption.getBool()) return;
-            RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
-            RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, this.targetRole);
+            //if(Roles.SchrodingersCat.fixCameraOption.getBool()) return;
+
         }
 
+        /*
         public override void OnTerminal()
         {
             if(!Roles.SchrodingersCat.fixCameraOption.getBool()) return;
             RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
             RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, this.targetRole);
         }
+        *
     }
+
+    */
 
     public Module.CustomOption isGuessable;
     public Module.CustomOption canBeCrewmate;
@@ -48,7 +52,7 @@ public class SchrodingersCat : Role
     public Module.CustomOption canBeOracle;
     public Module.CustomOption canUseKillButtonO;
     public Module.CustomOption killCooldownO;
-    public Module.CustomOption fixCameraOption;
+    //public Module.CustomOption fixCameraOption;
 
     public override void LoadOptionData()
     {
@@ -73,7 +77,7 @@ public class SchrodingersCat : Role
         killCooldownO = CreateOption(Roles.OracleN.Color, "killCooldownO", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonO);
         killCooldownO.suffix = "second";
         canChangeTeam = CreateOption(Color.white, "canAlwaysChangeTeam", true);
-        fixCameraOption = CreateOption(Color.white,"fixCamera",false);
+        //fixCameraOption = CreateOption(Color.white,"fixCamera",false);
     }
 
     public override bool IsGuessableRole { get => isGuessable.getBool(); protected set => base.IsGuessableRole = value; }
@@ -84,28 +88,44 @@ public class SchrodingersCat : Role
         if(PlayerControl.LocalPlayer.GetModData().role != Roles.SchrodingersCat && !canChangeTeam.getBool()) return;
         if (checkrole.side == Side.Crewmate && canBeCrewmate.getBool())
         {
-            Events.LocalEvent.Activate(new CatEvent(murderId,Roles.WhiteCat));
+            changeRole(Roles.WhiteCat);
         }
         else if (checkrole.side == Side.Impostor && canBeImpostor.getBool())
         {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.RedCat));
+            changeRole(Roles.RedCat);
         }
         else if (checkrole.side == Side.Jackal && canBeJackal.getBool())
         {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.BlueCat));
+            changeRole(Roles.BlueCat);;
         }
         else if (checkrole.side == Side.Pavlov && Roles.SchrodingersCat.canBePavlovsCat.getBool())
         {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.PavlovsCat));
+            changeRole(Roles.PavlovsCat);
         }
         else if (checkrole.side == Side.Werewolf && Roles.SchrodingersCat.canBeWerewolf.getBool())
         {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.WerewolfsCat));
+            changeRole(Roles.WerewolfsCat);
         }
         else if (checkrole.side == Side.Oracle && Roles.SchrodingersCat.canBeOracle.getBool())
         {
-            Events.LocalEvent.Activate(new CatEvent(murderId, Roles.OraclesCat));
+            changeRole(Roles.OraclesCat);
         }
+        RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
+        /*
+        PlayerControl.LocalPlayer.Revive();
+        DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+        foreach(var DeadBody in array){
+            if(DeadBody.ParentId == PlayerControl.LocalPlayer.PlayerId){
+                DeadBody.gameObject.active = false;
+            }
+        }
+        */
+    }
+
+    private void changeRole(Role targetRole){
+        RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
+        RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,targetRole);
+        //Events.LocalEvent.Activate(new Events.FixCam());
     }
 
     public SchrodingersCat()

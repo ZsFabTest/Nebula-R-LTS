@@ -51,7 +51,7 @@ public class TaoistPriest : Template.TCrewmate{
         }
     }
 
-    public TaoistPriest() : base("TaoistPriest","taoistPriest",RoleColor,true){
+    public TaoistPriest() : base("TaoistPriest","taoistPriest",RoleColor,false){
         hasRoleUpdate = true;
     }
 }
