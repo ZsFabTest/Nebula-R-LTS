@@ -601,6 +601,7 @@ public class SecondaryGuesser : ExtraRole
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
     {
+        if(role == Roles.WiseMan || role == Roles.F_Swapper) return null;
         Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeGuesser", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeGuesser");
         option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         option.AddCustomPrerequisite(() => { return Roles.SecondaryGuesser.IsSpawnable(); });
@@ -609,8 +610,7 @@ public class SecondaryGuesser : ExtraRole
             return
                 (role.side == Side.Crewmate && Roles.F_Guesser.crewmateRoleCountOption.getFloat() > 0) ||
                 (role.side == Side.Impostor && Roles.F_Guesser.impostorRoleCountOption.getFloat() > 0) ||
-                (role.side != Side.Crewmate && role.side != Side.Impostor && Roles.F_Guesser.neutralRoleCountOption.getFloat() > 0) ||
-                (role != Roles.EvilDecider && role != Roles.NiceDecider && role != Roles.EvilSwapper && role != Roles.NiceSwapper);
+                (role.side != Side.Crewmate && role.side != Side.Impostor && Roles.F_Guesser.neutralRoleCountOption.getFloat() > 0);
         });
         return option;
     }

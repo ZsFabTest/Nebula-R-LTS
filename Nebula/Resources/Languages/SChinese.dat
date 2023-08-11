@@ -1389,6 +1389,7 @@
 "option.exclusiveAssignment.ExecutionerAndAssassin" : "处刑者 或 刺客"
 
 "option.tab.ghostRoles" : "亡灵<color=#ffffffff>与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
+"option.tab.advancedSettings" : "进阶<color=#ffffffff>设置与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
 
 "option.canBeSick" : "可以成为病人"
 "option.canBeBait" : "可以成为诱饵"
@@ -1400,6 +1401,7 @@
 "option.canBeOnlineCelebrity" : "可以成为网红"
 "option.canBeSuperstar" : "可以成为明星"
 "option.canBeSinger" : "可以成为歌姬"
+"option.canBeWanted" : "可以成为通缉犯"
 "option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
 "option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
 "option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
@@ -2022,7 +2024,7 @@
 "role.challenger.info" : "挑战者可以选定一位玩家与其挑战，被挑战的玩家职业转变为挑战者。\n只有其中一名挑战者死亡后，另一名挑战者才能继续挑战。\n死亡后挑战者职业转变为失忆者。\n挑战者只能击杀其他挑战者。"
 "role.challenger.killCooldown" : "挑战开始后的初始击杀冷却"
 "role.challenger.challengeCooldown" : "挑战冷却时间"
-"role.challenger.challengerDieIfMeetingStart" : "在挑战期间开会暴毙"
+"role.challenger.challengerDieIfMeetingStart" : "挑战时开会后死亡"
 
 "role.supportee.name" : "受支持者"
 "role.supportee.short" : "受"
@@ -2064,8 +2066,28 @@
 "role.taoistPriest.info" : "使用超度技能后，你会在会议结束后直接击杀超度对象。"
 "role.taoistPriest.killCooldown" : "超度冷却时间"
 
+"role.wiseMan.name" : "智者"
+"role.wiseMan.short" : "智"
+"role.wiseMan.hint" : "洞悉一切"
+"role.wiseMan.description" : "对一切了如指掌"
+"role.wiseMan.info" : "在会议时可以看到所有的职业。"
+
+"role.wanted.name" : "通缉犯"
+"role.wanted.short" : "缉"
+"role.wanted.description" : "为什么会变成这样呢？"
+"role.wanted.info" : "伪装者和中立们可以看到你名字后的红色星。"
+
 "role.secretCrush.name" : "病娇胜利附加判断"
 "role.secretCrush.info" : "病娇胜利时，该附加会赋予病娇的暗恋对象。\n不要担心，它不会自己生成的。"
+
+"role.ghost.name" : "怨灵"
+"role.ghost.short" : "怨"
+"role.ghost.description" : "我会回来报仇的"
+"role.ghost.hint" : "报复击杀你的人"
+"role.ghost.info" : "在你第一次被击杀后，你将会复活并且可以杀死击杀者。\n杀死击杀者后胜利。\n没有在指定的轮数内击杀则暴毙。"
+"role.ghost.killCooldown" : "击杀冷却时间"
+"role.ghost.liveAddition" : "额外的存货轮数"
+
 
 "option.display.random" : "随机"
 
@@ -2080,6 +2102,7 @@
 "side.werewolf.name" : "狼人"
 "side.challenger.name" : "挑战者"
 "side.oracle.name" : "天启"
+"side.ghost.name" : "怨灵"
 
 "text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
 "text.exile.connection" : " "
@@ -2101,6 +2124,7 @@
 "game.endText.werewolf" : "狼人胜利"
 "game.endText.challenger" : "挑战者胜利"
 "game.endText.oracle" : "天启胜利"
+"game.endText.ghost" : "怨灵胜利"
 
 "status.hemorrhage" : "失血"
 "status.killed" : "爆炸"

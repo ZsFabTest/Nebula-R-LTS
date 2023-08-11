@@ -352,6 +352,13 @@ public class Side
         return null;
     });
 
+    public static Side Ghost = new Side("Ghost","ghost",IntroDisplayOption.SHOW_ONLY_ME,new(1f,1f,1f),(PlayerStatistics statistics,ShipStatus status) => {
+        if(Roles.Ghost.WinTrigger){
+            return EndCondition.GhostWin;
+        }
+        return null;
+    });
+
     public static Side SantaClaus = new Side("SantaClaus", "santaClaus", IntroDisplayOption.STANDARD, NeutralRoles.SantaClaus.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
         if (statistics.TotalAlive == 0) return null;

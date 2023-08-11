@@ -98,7 +98,12 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void OnMeetingStart()
         {
-            if(ChallengerDieIfMeetingStart.getBool() && !canChallenge) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Suicide.Id,false);
+            Events.Schedule.RegisterPostMeetingAction(() => {
+                if(ChallengerDieIfMeetingStart.getBool() && !canChallenge){
+                    RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Suicide.Id,false);
+                    RPCEventInvoker.CleanDeadBody(PlayerControl.LocalPlayer.PlayerId);
+                }
+            },16);
         }
 
         public override void OnKillPlayer(byte targetId)

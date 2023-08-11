@@ -45,7 +45,7 @@ public class EndCondition
     public static EndCondition WerewolfWin = new EndCondition(134,Roles.NeutralRoles.Werewolf.RoleColor,"werewolf",1,Module.CustomGameMode.Standard);
     public static EndCondition ChallengerWin = new EndCondition(135,Roles.NeutralRoles.Challenger.RoleColor,"challenger",1,Module.CustomGameMode.Standard);
     public static EndCondition OracleWin = new EndCondition(136,Roles.NeutralRoles.Oracle.RoleColor,"oracle",1,Module.CustomGameMode.Standard);
-
+    public static EndCondition GhostWin = new EndCondition(137,new(1f,1f,1f),"ghost",1,Module.CustomGameMode.Standard);
 
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
@@ -55,7 +55,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,SantaWin,
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
