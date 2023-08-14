@@ -13,7 +13,7 @@ public class WiseMan : Template.TCrewmate{
             Info += Language.Language.GetString("role." + p.GetModData().role.LocalizeName + ".short") + ", ";
         }
         
-        Info.Insert(Info.Count() / 2,"\n");
+        Info = Info.Insert(Info.Length / 2,"\n");
         
         meetingInfo.text = Info;
         meetingInfo.gameObject.SetActive(true);

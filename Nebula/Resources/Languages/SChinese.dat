@@ -2103,6 +2103,9 @@
 "role.bomber.bombSetCooldown" : "设置炸弹冷却时间"
 "role.bomber.bombSetDuringTime" : "设置炸弹所需时间"
 "role.bomber.bombExplodeCooldown" : "引爆炸弹冷却时间"
+"role.bomber.targetA" : "你"
+"role.bomber.targetB" : "搭档"
+"role.bomber.ptarget" : "搭档"
 
 
 "option.display.random" : "随机"

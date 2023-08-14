@@ -23,6 +23,7 @@ using Nebula.Patches;
 using UnityEngine.SceneManagement;
 using Il2CppSystem.Xml;
 using Nebula.Module;
+using Reactor;
 
 namespace Nebula;
 
@@ -33,6 +34,7 @@ public static class RuntimePrefabs
 }
 
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
+[BepInDependency(ReactorPlugin.Id)]
 [BepInProcess("Among Us.exe")]
 public class NebulaPlugin : BasePlugin
 {
@@ -41,20 +43,20 @@ public class NebulaPlugin : BasePlugin
     public const string AmongUsVersion = "2023.3.28";
     public const string PluginGuid = "cn.zsfabtest.amongus.nebular";
     public const string PluginName = "TheNebula-R-LTS";
-    public const string PluginVersion = "1.0.3.6";
+    public const string PluginVersion = "1.0.4.0";
     public const bool IsSnapshot = true;
 
-    public static string PluginVisualVersion = (IsSnapshot ? "23.08.12-" : "") + PluginVersion;
+    public static string PluginVisualVersion = (IsSnapshot ? "23.08.14-" : "") + PluginVersion;
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
     
-    public const string PluginVersionForFetch = "1.0.3.6";
-    public byte[] PluginVersionData = new byte[] { 1, 0, 3, 6 };
+    public const string PluginVersionForFetch = "1.0.4.0";
+    public byte[] PluginVersionData = new byte[] { 1, 0, 4, 0 };
 
     public static NebulaPlugin Instance;
 
     public Harmony Harmony = new Harmony(PluginGuid);
 
-    public static Sprite ModStamp;
+    //public static Sprite ModStamp;
 
     public Logger.Logger Logger;
 
@@ -148,11 +150,13 @@ public class NebulaPlugin : BasePlugin
         });
     }
 
+    /*
     public static Sprite GetModStamp()
     {
         if (ModStamp) return ModStamp;
         return ModStamp = Helpers.loadSpriteFromResources("Nebula.Resources.ModStamp.png", 150f);
     }
+    */
 }
 
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.Awake))]

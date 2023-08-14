@@ -44,6 +44,7 @@
   <ItemGroup>
     <Reference Include="D:\Nebula-R-LTS-master_2\Among Us BepInEx\BepInEx\core\*.dll" />
     <Reference Include="D:\Nebula-R-LTS-master_2\Among Us BepInEx\BepInEx\interop\*.dll" />
+    <Reference Include="D:\Nebula-R-LTS-master_2\Among Us BepInEx\BepInEx\reactor\*.dll" />
     <Reference Include="D:\Nebula-R-LTS-master_2\Among Us BepInEx\dotnet\*.dll" />
   </ItemGroup>
 

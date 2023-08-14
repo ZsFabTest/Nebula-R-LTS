@@ -348,16 +348,16 @@ public class CustomOptionHolder
 
         roleCountOption = CustomOption.Create(Color.white, "option.roleCount", new string[] { "option.empty" }, "option.empty", null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.All).HiddenOnDisplay(true);
         CustomOption.RegisterTopOption(roleCountOption);
-        crewmateRolesCountMin = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.minimumCrewmateRoles", 0f, 0f, 15f, 1f, roleCountOption, true, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
-        crewmateRolesCountMax = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.maximumCrewmateRoles", 0f, 0f, 15f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
-        neutralRolesCountMin = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.minimumNeutralRoles", 0f, 0f, 15f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
-        neutralRolesCountMax = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.maximumNeutralRoles", 0f, 0f, 15f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
-        impostorRolesCountMin = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.minimumImpostorRoles", 0f, 0f, 5f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
-        impostorRolesCountMax = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.maximumImpostorRoles", 0f, 0f, 5f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
+        crewmateRolesCountMin = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.minimumCrewmateRoles", 0f, 0f, 127f, 1f, roleCountOption, true, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
+        crewmateRolesCountMax = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.maximumCrewmateRoles", 0f, 0f, 127f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
+        neutralRolesCountMin = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.minimumNeutralRoles", 0f, 0f, 127f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
+        neutralRolesCountMax = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.maximumNeutralRoles", 0f, 0f, 127f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
+        impostorRolesCountMin = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.minimumImpostorRoles", 0f, 0f, 12f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
+        impostorRolesCountMax = CustomOption.Create(new Color(204f / 255f, 204f / 255f, 0, 1f), "option.maximumImpostorRoles", 0f, 0f, 12f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true);
 
         SoloFreePlayOption = CustomOption.Create(Color.white, "option.soloFreePlayOption", new string[] { "option.empty" }, "option.empty", null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.FreePlay).AddCustomPrerequisite(() => { return PlayerControl.AllPlayerControls.Count == 1; });
         CustomOption.RegisterTopOption(SoloFreePlayOption);
-        CountOfDummiesOption = CustomOption.Create(Color.white, "option.countOfDummies", 0, 0, 14, 1, SoloFreePlayOption).SetGameMode(CustomGameMode.All);
+        CountOfDummiesOption = CustomOption.Create(Color.white, "option.countOfDummies", 0, 0, 126, 1, SoloFreePlayOption).SetGameMode(CustomGameMode.All);
 
         meetingOptions = CustomOption.Create(Color.white, "option.meetingOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(~(CustomGameMode.AllHnS));
         CustomOption.RegisterTopOption(meetingOptions);

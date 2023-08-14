@@ -1,6 +1,6 @@
 namespace Nebula.Roles.ImpostorRoles;
 
-public class BomberA : Template.TImpostor{
+public class BomberA : Template.HasHologram{
     public static Module.CustomOption bombSetCooldown;
     public static Module.CustomOption bombSetDuringTime;
     public static Module.CustomOption bombExplodeCooldown;
@@ -30,6 +30,8 @@ public class BomberA : Template.TImpostor{
         HideKillButtonEvenImpostor = true;
         isParternDied = false;
         arrow = new(Palette.ImpostorRed);
+        RPCEventInvoker.SetBombTarget(1,byte.MaxValue);
+        RPCEventInvoker.SetBombTarget(2,byte.MaxValue);
     }
 
     private CustomButton bombButton,explodeButton;
@@ -63,14 +65,13 @@ public class BomberA : Template.TImpostor{
                 Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer,Helpers.playerById(target),Game.PlayerData.PlayerStatus.Dead,false,false);
                 RPCEventInvoker.SetBombTarget(1,byte.MaxValue);
                 RPCEventInvoker.SetBombTarget(2,byte.MaxValue);
+                foreach (var icon in PlayerIcons.Values)
+                    icon.gameObject.SetActive(false);
                 explodeButton.Timer = explodeButton.MaxTimer;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && !isParternDied; },
             () => { return PlayerControl.LocalPlayer.CanMove && target != byte.MaxValue && Game.GameData.data.myData.currentTarget && Roles.BomberB.target != byte.MaxValue; },
-            () => { 
-                target = byte.MaxValue;
-                explodeButton.Timer = explodeButton.MaxTimer;
-            },
+            () => { explodeButton.Timer = explodeButton.MaxTimer; },
             sprite2.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
@@ -81,7 +82,15 @@ public class BomberA : Template.TImpostor{
         explodeButton.SetButtonCoolDownOption(true);
     }
 
+    public override void OnMeetingEnd(){
+        foreach (var icon in PlayerIcons.Values)
+            icon.gameObject.SetActive(false);
+        RPCEventInvoker.SetBombTarget(1,byte.MaxValue);
+        RPCEventInvoker.SetBombTarget(2,byte.MaxValue);
+    }
+
     public override void CleanUp(){
+        base.CleanUp();
         if(bombButton != null){
             bombButton.Destroy();
             bombButton = null;
@@ -107,6 +116,10 @@ public class BomberA : Template.TImpostor{
             isParternDied = true;
             GameObject.Destroy(arrow?.arrow);
         }else arrow.Update(PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((player) => { return !player.Data.IsDead && player.GetModData().role == Roles.BomberB; }).transform.position);
+        if(Roles.BomberB.target != byte.MaxValue){
+            PlayerIcons[Roles.BomberB.target].gameObject.SetActive(true);
+            PlayerIcons[Roles.BomberB.target].cosmetics.nameText.text = Language.Language.GetString("role.bomber.ptarget");
+        }
     }
 
     public override void OnDied(){
@@ -119,7 +132,16 @@ public class BomberA : Template.TImpostor{
         if(playerId == target || playerId == Roles.BomberB.target) displayColor = new(0f,0f,0f);
     }
 
-    public BomberA() : base("Bomber","bomber",true){
+    public override void InitializePlayerIcon(PoolablePlayer player, byte PlayerId, int index)
+    {
+        base.InitializePlayerIcon(player, PlayerId, index);
+
+        player.cosmetics.nameText.transform.localScale *= 5f;
+    }
+
+    public BomberA() : base("Bomber", "bomber", Palette.ImpostorRed, RoleCategory.Impostor, Side.Impostor, Side.Impostor,
+         Impostor.impostorSideSet, Impostor.impostorSideSet, Impostor.impostorEndSet,
+         true, VentPermission.CanUseUnlimittedVent, true, true, true){
         HideKillButtonEvenImpostor = true;
     }
 }
