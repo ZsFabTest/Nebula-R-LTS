@@ -212,7 +212,7 @@ static public class Roles
     public static NeutralRoles.WerewolfsCat WerewolfsCat = new NeutralRoles.WerewolfsCat();
     public static NeutralRoles.OraclesCat OraclesCat = new NeutralRoles.OraclesCat();
     //public static CrewmateRoles.Detective Detective = new CrewmateRoles.Detective();
-    //public static ExtraRoles.Singer Singer = new ExtraRoles.Singer();
+    public static ExtraRoles.Singer Singer = new ExtraRoles.Singer();
     public static ImpostorRoles.Hadar HadarS = new ImpostorRoles.Hadar();
     public static ImpostorRoles.Zombie Zombie = new ImpostorRoles.Zombie();
     public static CrewmateRoles.ZombieSidekick ZombieSidekick = new CrewmateRoles.ZombieSidekick();
@@ -221,6 +221,8 @@ static public class Roles
     public static ExtraRoles.Wanted Wanted = new();
     public static NeutralRoles.Ghost Ghost = new();
     public static CrewmateRoles.Paranoiac Paranoiac = new();
+    public static ImpostorRoles.BomberA BomberA = new();
+    public static ImpostorRoles.BomberB BomberB = new();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -234,7 +236,7 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,BomberA,BomberB,
             Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,
             JackalMayor,
@@ -253,7 +255,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             /*PerkHolder,*/
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee/*,Singer*/,Wanted
+            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee,Singer,Wanted
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

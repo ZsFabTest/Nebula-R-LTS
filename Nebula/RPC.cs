@@ -108,6 +108,7 @@ public enum CustomRPC
     LockKillButton,
     FakeKill,
     FixedRevive,
+    SetBombTarget,
 }
 
 //RPCを受け取ったときのイベント
@@ -419,6 +420,9 @@ class RPCHandlerPatch
                 break;
             case (byte)CustomRPC.FixedRevive:
                 RPCEvents.FixedRevive(reader.ReadByte());
+                break;
+            case (byte)CustomRPC.SetBombTarget:
+                RPCEvents.SetBombTarget(reader.ReadByte(),reader.ReadByte());
                 break;
         }
     }
@@ -1736,6 +1740,15 @@ static class RPCEvents
                 DeadBody.gameObject.active = false;
             }
         }
+        Game.GameData.data.playersArray[playerId]?.Revive();
+        player.Data.IsDead = false;
+        Game.GameData.data.myData.CanSeeEveryoneInfo = false;
+    }
+
+    public static void SetBombTarget(byte mode,byte data){
+        if(mode == 1) Roles.Roles.BomberA.target = data;
+        else if(mode == 2) Roles.Roles.BomberB.target = data;
+        else Debug.LogError("[RPC]Error: Set Bomb Target Failed.");
     }
 }
 
@@ -2765,5 +2778,13 @@ public class RPCEventInvoker
         writer.Write(player.PlayerId);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.FixedRevive(player.PlayerId);
+    }
+
+    public static void SetBombTarget(byte mode,byte data){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetBombTarget,Hazel.SendOption.Reliable,-1);
+        writer.Write(mode);
+        writer.Write(data);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetBombTarget(mode,data);
     }
 }   

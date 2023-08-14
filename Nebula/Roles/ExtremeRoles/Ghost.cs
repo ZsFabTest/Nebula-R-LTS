@@ -96,9 +96,10 @@ public class Ghost : Role,Template.HasWinTrigger{
         if(--lcnt == 0) Events.Schedule.RegisterPostMeetingAction(() => {
             RPCEventInvoker.UncheckedMurderPlayer(MurderId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
             RPCEventInvoker.CleanDeadBody(PlayerControl.LocalPlayer.PlayerId);
+            Game.GameData.data.myData.CanSeeEveryoneInfo = true;
             MurderId = 16;
             lcnt = -1;
-        },16);
+        },0);
     }
 
     public override void EditOthersDisplayNameColor(byte playerId,ref Color displayColor){

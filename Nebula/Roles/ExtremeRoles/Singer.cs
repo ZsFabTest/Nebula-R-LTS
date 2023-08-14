@@ -1,16 +1,16 @@
-/*
+
 namespace Nebula.Roles.ExtraRoles{
     public class Singer : Template.StandardExtraRole{
         static public Color RoleColor = new Color(240f / 255f,135f / 255f,132f / 255f);
 
         private Module.CustomOption showRoleNum;
-        public Module.CustomOption jibaiAlwaysBeSinger;
+        //public Module.CustomOption jibaiAlwaysBeSinger;
 
         public override void LoadOptionData()
         {
             base.LoadOptionData();
             showRoleNum = CreateOption(Color.white,"showRoleNum",4f,2f,15f,1f);
-            jibaiAlwaysBeSinger = CreateOption(Color.white,"jibaiAlwaysBeSinger",false).AddInvPrerequisite(Roles.Challenger.ChallengerDieIfMeetingStart).AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
+            //jibaiAlwaysBeSinger = CreateOption(Color.white,"jibaiAlwaysBeSinger",false).AddInvPrerequisite(Roles.Challenger.ChallengerDieIfMeetingStart).AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         }
 
         public override void MyPlayerControlUpdate()
@@ -46,4 +46,3 @@ namespace Nebula.Roles.ExtraRoles{
         }
     }
 }
-*/

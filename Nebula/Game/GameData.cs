@@ -1380,8 +1380,8 @@ public class GameData
 
         IsCanceled = false;
 
-        Reporter = null;
-        Dead = null;
+        //Reporter = null;
+        //Dead = null;
 
         IsLockedKill = false;
 

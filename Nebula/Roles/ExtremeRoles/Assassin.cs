@@ -99,6 +99,7 @@ public class Assassin : Role
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.assassinate"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
+        assassinate.SetButtonCoolDownOption(true);
 
         if (cameraButton != null)
         {

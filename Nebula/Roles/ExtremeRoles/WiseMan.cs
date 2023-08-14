@@ -9,19 +9,12 @@ public class WiseMan : Template.TCrewmate{
     public override void MeetingUpdate(MeetingHud __instance, TMPro.TextMeshPro meetingInfo)
     {
         string Info = "";
-        short line = 1;
-        List<string> allrole = new();
         foreach(PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator()){
-            allrole.Add(Language.Language.GetString("role." + p.GetModData().role.LocalizeName + ".name") + ", ");
+            Info += Language.Language.GetString("role." + p.GetModData().role.LocalizeName + ".short") + ", ";
         }
-        allrole.Sort();
-        foreach(string s in allrole){
-            Info += s;
-            if(s.Length >= line * 25){
-                Info += "\n";
-                line++;
-            }
-        }
+        
+        Info.Insert(Info.Count() / 2,"\n");
+        
         meetingInfo.text = Info;
         meetingInfo.gameObject.SetActive(true);
     }

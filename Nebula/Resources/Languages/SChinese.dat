@@ -2095,6 +2095,15 @@
 "role.paranoiac.info" : "你的技能可以阻止一次使用对象的击杀。\n若没有触发该技能会一直保留。\n多次使用无效。"
 "role.paranoiac.lockKillCooldown" : "阻碍冷却时间"
 
+"role.bomber.name" : "双子爆破者"
+"role.bomber.short" : "双"
+"role.bomber.description" : "爆破！Boom!"
+"role.bomber.hint" : "爆炸就是艺术！"
+"role.bomber.info" : "类似于TORGMH的双子爆破者，但不会在左下角显示目标。"
+"role.bomber.bombSetCooldown" : "设置炸弹冷却时间"
+"role.bomber.bombSetDuringTime" : "设置炸弹所需时间"
+"role.bomber.bombExplodeCooldown" : "引爆炸弹冷却时间"
+
 
 "option.display.random" : "随机"
 
