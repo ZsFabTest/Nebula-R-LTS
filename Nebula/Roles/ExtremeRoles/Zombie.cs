@@ -21,7 +21,7 @@ public class Zombie : Template.TImpostor{
         killButton = new CustomButton(
             () =>
             {
-                if(Game.GameData.data.myData.currentTarget.GetModData().role.category == RoleCategory.Crewmate && NebulaPlugin.rnd.Next(1,101) <= ChanceToInfluence.getFloat()){
+                if(NebulaPlugin.rnd.Next(1,101) <= ChanceToInfluence.getFloat()){
                     RPCEventInvoker.ImmediatelyChangeRole(Game.GameData.data.myData.currentTarget,Roles.ZombieSidekick);
                     PlayerControl target = Game.GameData.data.myData.currentTarget;
                     while(target.GetModData().extraRole.Count > 0){

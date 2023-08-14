@@ -123,5 +123,6 @@ public class BomberB : Template.HasHologram{
          Impostor.impostorSideSet, Impostor.impostorSideSet, Impostor.impostorEndSet,
          true, VentPermission.CanUseUnlimittedVent, true, true, true){
         HideKillButtonEvenImpostor = true;
+        IsHideRole = true;
     }
 }
