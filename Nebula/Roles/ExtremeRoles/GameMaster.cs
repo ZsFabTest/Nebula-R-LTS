@@ -18,7 +18,7 @@ public class GameMaster : Role
     public override void Initialize(PlayerControl __instance)
     {
         //RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.SecondaryGuesser, 0);
-        //RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.Cheater, 0);
+        //RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.Voter, 0);
     }
 
     private CustomButton testButton;

@@ -476,6 +476,23 @@ class RoleAssignmentPatch
             crewmates.RemoveAll((p) => p.PlayerId == PlayerControl.LocalPlayer.PlayerId);
         }
 
+        if (CustomOptionHolder.GetCustomGameMode() == Module.CustomGameMode.Battle){
+            var allPlayers = new List<byte>();
+            foreach (var player in PlayerControl.AllPlayerControls.GetFastEnumerator())
+            {
+                allPlayers.Add(player.PlayerId);
+            }
+
+            var array = Helpers.GetRandomArray(allPlayers.Count);
+
+            for(int tmp = 0;tmp < allPlayers.Count;tmp++){
+                if(array[tmp] % 2 == 0) assignMap.AssignRole(allPlayers[tmp],Roles.Roles.YellowTeam.id);
+                else assignMap.AssignRole(allPlayers[tmp],Roles.Roles.GreenTeam.id);
+            }
+
+            return;
+        }
+
         if (property.RequireImpostors)
         {
             //メタ的にインポスターを要求する場合

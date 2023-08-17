@@ -135,7 +135,7 @@ public class GameStartManagerPatch
                 if (AmongUsClient.Instance.AmHost)
                 {
                     
-                    int minPlayers= Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MinPlayers;
+                    int minPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MinPlayers;
                     int maxPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MaxPlayers ?? 15;
                     __instance.MinPlayers = minPlayers;
 

@@ -471,6 +471,8 @@ public class TaskData
     public int AllTasks { get; set; }
     //ノルマタスク数
     public int Quota { get; set; }
+    //真实的任务数量
+    public int ActualTasks { get; set; }
     //完了タスク数
     public int Completed { get; set; }
     //クルーメイトのタスク勝利に反映させるかどうか
@@ -485,6 +487,7 @@ public class TaskData
         this.Quota = Quota;
         this.IsInfluencedCrewmatesTasks = IsCrewmateTask;
         this.IsInfiniteCrewmateTasks = IsInfiniteQuota;
+        this.ActualTasks = 0;
     }
 
     public TaskData(bool hasFakeTask, bool fakeTaskIsExecutable)
@@ -494,6 +497,7 @@ public class TaskData
         {
             var gameOption = GameOptionsManager.Instance.CurrentGameOptions;
             tasks = gameOption.GetInt(Int32OptionNames.NumCommonTasks) + gameOption.GetInt(Int32OptionNames.NumLongTasks) + gameOption.GetInt(Int32OptionNames.NumShortTasks);
+            ActualTasks = tasks;
         }
         else
         {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Nebula.Module;
+using UnityEngine;
 
 namespace Nebula.Patches;
 
@@ -448,8 +449,8 @@ class MeetingHudPatch
                 else if (Roles.ComplexRoles.SwapSystem.isSwapped && playerVoteArea.TargetPlayerId == swapped2.TargetPlayerId) playerVoteArea = swapped1;
                 playerVoteArea.ClearForResults();
                 int num2 = 0;
-                //bool mayorFirstVoteDisplayed = false;
-                Dictionary<int, int> votesApplied = new();
+                //bool mayorFirstVoteDisplayed = !CustomOptionHolder.dontShowExtraVotes.getBool();
+                Dictionary<int, float> votesApplied = new();
                 for (int j = 0; j < states.Length; j++)
                 {
                     MeetingHud.VoterState voterState = states[j];
@@ -466,14 +467,15 @@ class MeetingHudPatch
                         __instance.BloopAVoteIcon(playerById, num, __instance.SkippedVoting.transform);
                         num++;
                     }
-                    else if (voterState.VotedForId == targetPlayerId && !playerById.IsDead)
+                    else if (voterState.VotedForId == targetPlayerId && !playerById.IsDead && (!votesApplied.ContainsKey(voter.PlayerId) || !CustomOptionHolder.dontShowExtraVotes.getBool()))
                     {
                         __instance.BloopAVoteIcon(playerById, num2, playerVoteArea.transform);
                         num2++;
                     }
 
-                    if (!votesApplied.ContainsKey(voter.PlayerId))
+                    if (!votesApplied.ContainsKey(voter.PlayerId)){
                         votesApplied[voter.PlayerId] = 0;
+                    }
 
                     votesApplied[voter.PlayerId]++;
                 }

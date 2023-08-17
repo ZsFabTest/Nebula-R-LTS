@@ -224,6 +224,9 @@ static public class Roles
     public static ImpostorRoles.BomberA BomberA = new();
     public static ImpostorRoles.BomberB BomberB = new();
     public static NeutralRoles.Puppeteer Puppeteer = new();
+    //public static ExtraRoles.Voter Voter = new();
+    public static BattleRoles.YellowTeam YellowTeam = new();
+    public static BattleRoles.GreenTeam GreenTeam = new();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -247,6 +250,8 @@ static public class Roles
             //Hadar,
             //HnSCrewmate,
             //HnSCleaner,HnSHadar,HnSRaider,HnSReaper
+
+            YellowTeam,GreenTeam,
         };
 
     public static List<ExtraRole> AllExtraRoles = new List<ExtraRole>()
@@ -256,7 +261,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             /*PerkHolder,*/
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee,Singer,Wanted
+            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee,Singer,Wanted/*,Voter*/
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

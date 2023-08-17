@@ -365,7 +365,7 @@ public class SecondaryMadmate : ExtraRole
     {
         int completedTasks = Game.GameData.data.myData.getGlobalData().Tasks.Completed;
 
-        if (completedTasks >= Game.GameData.data.myData.getGlobalData().Tasks.AllTasks * Roles.Madmate.SecondaryMadmateKnowImpostorsTasksPercentOption.getFloat() * 0.01f)
+        if (completedTasks >= Game.GameData.data.myData.getGlobalData().Tasks.ActualTasks * Roles.Madmate.SecondaryMadmateKnowImpostorsTasksPercentOption.getFloat() * 0.01f)
         {
             knowImpostors = true;
         }

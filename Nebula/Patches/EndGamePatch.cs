@@ -47,7 +47,8 @@ public class EndCondition
     public static EndCondition OracleWin = new EndCondition(136,Roles.NeutralRoles.Oracle.RoleColor,"oracle",1,Module.CustomGameMode.Standard);
     public static EndCondition GhostWin = new EndCondition(137,new(1f,1f,1f),"ghost",1,Module.CustomGameMode.Standard);
     public static EndCondition PuppeteerWin = new EndCondition(138,Roles.NeutralRoles.Puppeteer.RoleColor,"puppeteer",1,Module.CustomGameMode.Standard);
-
+    public static EndCondition YellowTeamWin = new EndCondition(139,Roles.BattleRoles.YellowTeam.RoleColor,"yellowTeam",1,Module.CustomGameMode.Battle);
+    public static EndCondition GreenTeamWin = new EndCondition(140,Roles.BattleRoles.GreenTeam.RoleColor,"greenTeam",1,Module.CustomGameMode.Battle);
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
@@ -56,7 +57,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,SantaWin,
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin,YellowTeamWin,GreenTeamWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
@@ -745,6 +746,9 @@ public class PlayerStatistics
 
     public int AliveZombieSidekick;
 
+    public int AliveYellowTeam;
+    public int AliveGreenTeam;
+
     public bool IsValid;
 
     //
@@ -814,6 +818,8 @@ public class PlayerStatistics
         AliveZombieSidekick = 0;
         AlivePuppeteer = 0;
         
+        AliveYellowTeam = 0;
+        AliveGreenTeam = 0;
 
         Roles.Side side;
         
@@ -1085,6 +1091,8 @@ public class PlayerStatistics
         AliveWerewolf = GetAlivePlayers(Roles.Side.Werewolf);
         AliveChallenger = GetAlivePlayers(Roles.Side.Challenger);
         AliveOracle = GetAlivePlayers(Roles.Side.Oracle);
+        AliveYellowTeam = GetAlivePlayers(Roles.Side.YellowTeam);
+        AliveGreenTeam = GetAlivePlayers(Roles.Side.GreenTeam);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {

@@ -1383,6 +1383,15 @@
 "option.searchCoolDown" : "船员搜索冷却"
 "option.searchableDistance" : "船员搜索最大半径"
 
+"gamemode.battle" : "小游戏：战争模式"
+
+"option.battleOption" : "战争模式设置"
+"option.battleOption.killCooldownOption" : "狙击冷却时间"
+"option.battleOption.initCooldownOption" : "初始冷却时间"
+"option.battleOption.snipeCoolDown" : "狙击冷却时间"
+"option.battleOption.shotSizeOption" : "子弹大小"
+"option.battleOption.shotEffectiveRangeOption" : "子弹射程"
+"option.battleOption.noticeRangeOption" : "枪声提醒半径"
 
 "option.exclusiveAssignment.JackalAndPavlovAndMoriarty" : "豺狼 或 巴普洛夫之主 或 莫里亚蒂"
 "option.exclusiveAssignment.EvilAceAndCovert" : "密命王牌 或 潜伏者"
@@ -1402,10 +1411,12 @@
 "option.canBeSuperstar" : "可以成为明星"
 "option.canBeSinger" : "可以成为歌姬"
 "option.canBeWanted" : "可以成为通缉犯"
+"option.canBeVoter" : "可以成为破平者"
 "option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
 "option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
 "option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
 "option.showExtraRoles" : "驱逐显示附加职业"
+"option.dontShowExtraVotes" : "不显示额外的票数"
 
 "role.guesser.canWinAlong" : "可以单独胜利"
 "role.guesser.guessCountToWin" : "单独胜利需要的正确猜测次数"
@@ -2116,6 +2127,23 @@
 "role.puppeteer.morphDuration" : "傀儡最多存在时间"
 "role.puppeteer.countToWin" : "获胜所需的被击杀次数"
 
+"role.voter.name" : "破平者"
+"role.voter.short" : "破"
+"role.voter.description" : "平票是不存在的"
+"role.voter.info" : "你拥有额外的0.5票。"
+
+"role.yellowTeam.name" : "黄队队员"
+"role.yellowTeam.short" : "黄"
+"role.yellowTeam.description" : "取得战争的胜利"
+"role.yellowTeam.hint" : "取得战争的胜利"
+"role.yellowTeam.info" : "取得战争的胜利"
+
+"role.greenTeam.name" : "绿队队员"
+"role.greenTeam.short" : "绿"
+"role.greenTeam.description" : "取得战争的胜利"
+"role.greenTeam.hint" : "取得战争的胜利"
+"role.greenTeam.info" : "取得战争的胜利"
+
 "option.display.random" : "随机"
 
 "side.paparazzo.name" : "摄影师"
@@ -2130,6 +2158,8 @@
 "side.challenger.name" : "挑战者"
 "side.oracle.name" : "天启"
 "side.ghost.name" : "怨灵"
+"side.yellowTeam.name" : "黄队"
+"side.greenTeam.short" : "绿队"
 
 "text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
 "text.exile.connection" : " "
@@ -2152,6 +2182,8 @@
 "game.endText.challenger" : "挑战者胜利"
 "game.endText.oracle" : "天启胜利"
 "game.endText.ghost" : "怨灵胜利"
+"game.endText.yellowTeam" : "黄队胜利"
+"game.endText.greenTeam" : "绿队胜利"
 
 "status.hemorrhage" : "失血"
 "status.killed" : "爆炸"

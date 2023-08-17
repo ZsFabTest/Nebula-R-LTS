@@ -12,12 +12,15 @@ namespace Nebula.Module;
 [Flags]
 public enum CustomGameMode
 {
-    Standard = 0x0001,
-    FreePlay = 0x0002,
-    StandardHnS = 0x0010,
-    FreePlayHnS = 0x0020,
-    All = int.MaxValue,
-    AllHnS = 0x0030
+    Standard = 1,
+    FreePlay = 2,
+    StandardHnS = 4,
+    FreePlayHnS = 8,
+    All = 15,
+    AllHnS = 12,
+    AllStandard = 3,
+    Battle = 16,
+    ActuallyAll = 31,
         
 }
 
@@ -40,7 +43,7 @@ public static class CustomGameModes
 {
     static public List<CustomGameMode> AllGameModes = new List<CustomGameMode>()
         {
-            CustomGameMode.Standard,CustomGameMode.FreePlay,CustomGameMode.Standard,CustomGameMode.Standard,
+            CustomGameMode.Standard,CustomGameMode.FreePlay,CustomGameMode.Battle,CustomGameMode.Standard,
             CustomGameMode.Standard,CustomGameMode.Standard,CustomGameMode.Standard,CustomGameMode.Standard,
             CustomGameMode.StandardHnS,CustomGameMode.FreePlayHnS
         };

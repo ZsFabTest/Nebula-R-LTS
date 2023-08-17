@@ -69,7 +69,7 @@ public class CustomOptionHolder
             "option.display.percentage.andSoForth", "option.display.percentage.10", "option.display.percentage.20", "option.display.percentage.30", "option.display.percentage.40",
             "option.display.percentage.50", "option.display.percentage.60", "option.display.percentage.70", "option.display.percentage.80", "option.display.percentage.90" };
     public static string[] presets = new string[] { "option.display.preset.1", "option.display.preset.2", "option.display.preset.3", "option.display.preset.4", "option.display.preset.5" };
-    public static string[] gamemodesNormal = new string[] { "gamemode.standard", "gamemode.freePlay" };
+    public static string[] gamemodesNormal = new string[] { "gamemode.standard", "gamemode.freePlay", "gamemode.battle" };
     public static string[] gamemodesHnS = new string[] { "gamemode.standard", "gamemode.freePlay" };
 
     private static byte ToByte(float f)
@@ -153,6 +153,7 @@ public class CustomOptionHolder
     public static CustomOption showExtraRoles;
     public static CustomOption showNumberOfEvilNeutralRoles;
     public static CustomOption dontShowImpostorCountIfDidntExile;
+    public static CustomOption dontShowExtraVotes;
 
     public static CustomOption limiterOptions;
     public static CustomOption timeLimitOption;
@@ -252,6 +253,14 @@ public class CustomOptionHolder
     public static CustomOption ValidPerksOption;
     public static CustomOption MustDoTasksToWinOption;
 
+    public static CustomOption BattleOption;
+    public static CustomOption BattleKillCooldownOption;
+    public static CustomOption BattleInitCooldownOption;
+    public static CustomOption BattleSnipeCoolDownOption;
+    public static CustomOption BattleShotSizeOption;
+    public static CustomOption BattleShotEffectiveRangeOption;
+    public static CustomOption BattleNoticeRangeOption;
+
     public static void AddExclusiveAssignment(ref List<ExclusiveAssignment> exclusiveAssignments)
     {
         if (!exclusiveAssignmentParent.getBool()) return;
@@ -342,7 +351,7 @@ public class CustomOptionHolder
     {
         CustomOption.optionSaver = new DataSaver("options.dat");
 
-        gameModeNormal = CustomOption.Create(Color.white, "option.gameMode", gamemodesNormal, gamemodesNormal[0], null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.All).SetIdentifier("option.gameModeNormal");
+        gameModeNormal = CustomOption.Create(Color.white, "option.gameMode", gamemodesNormal, gamemodesNormal[0], null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll).SetIdentifier("option.gameModeNormal");
         gameModeHnS = CustomOption.Create(Color.white, "option.gameMode", gamemodesHnS, gamemodesHnS[0], null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.All).SetIdentifier("option.gameModeHnS");
 
 
@@ -359,7 +368,7 @@ public class CustomOptionHolder
         CustomOption.RegisterTopOption(SoloFreePlayOption);
         CountOfDummiesOption = CustomOption.Create(Color.white, "option.countOfDummies", 0, 0, 126, 1, SoloFreePlayOption).SetGameMode(CustomGameMode.All);
 
-        meetingOptions = CustomOption.Create(Color.white, "option.meetingOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(~(CustomGameMode.AllHnS));
+        meetingOptions = CustomOption.Create(Color.white, "option.meetingOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.AllStandard);
         CustomOption.RegisterTopOption(meetingOptions);
         maxNumberOfMeetings = CustomOption.Create(Color.white, "option.maxNumberOfMeetings", 10, 0, 15, 1, meetingOptions);
         deathPenaltyForDiscussionTime = CustomOption.Create(Color.white, "option.deathPenaltyForDiscussionTime", 5f, 0f, 30f, 1f, meetingOptions);
@@ -425,6 +434,7 @@ public class CustomOptionHolder
                 return false;
             }
         });
+        dontShowExtraVotes = CustomOption.Create(Color.white, "option.dontShowExtraVotes", false, meetingOptions);
 
         additionalEmergencyCoolDown.alternativeOptionScreenBuilder = (refresher) =>
         {
@@ -571,7 +581,7 @@ public class CustomOptionHolder
                 };
         };
 
-        limiterOptions = CustomOption.Create(Color.white, "option.limitOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(~CustomGameMode.AllHnS);
+        limiterOptions = CustomOption.Create(Color.white, "option.limitOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.AllStandard);
         CustomOption.RegisterTopOption(limiterOptions);
         timeLimitOption = CustomOption.Create(Color.white, "option.timeLimitOption", 20f, 1f, 80f, 1f, limiterOptions).SetGameMode(CustomGameMode.All);
         timeLimitSecondOption = CustomOption.Create(Color.white, "option.timeLimitSecondOption", 0f, 0f, 55f, 5f, limiterOptions).SetGameMode(CustomGameMode.All);
@@ -649,7 +659,7 @@ public class CustomOptionHolder
         DangerousDownloadSpotOption = CustomOption.Create(Color.white, "option.dangerousDownloadSpot", false, TasksOption).SetGameMode(CustomGameMode.All);
         UseVanillaSafeTaskOption = CustomOption.Create(Color.white, "option.useVanillaSafeTask", true, TasksOption).SetGameMode(CustomGameMode.All);
 
-        SabotageOption = CustomOption.Create(Color.white, "option.sabotageOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(~(CustomGameMode.AllHnS));
+        SabotageOption = CustomOption.Create(Color.white, "option.sabotageOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.AllStandard);
         CustomOption.RegisterTopOption(SabotageOption);
         SabotageCoolDownOption = CustomOption.Create(Color.white, "option.sabotageCoolDown", 30f, 5f, 60f, 5f, SabotageOption).SetGameMode(CustomGameMode.All);
         SabotageCoolDownOption.suffix = "second";
@@ -750,7 +760,7 @@ public class CustomOptionHolder
             );
         
 
-        streamersOption = CustomOption.Create(Color.white, "option.streamersOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(~CustomGameMode.AllHnS);
+        streamersOption = CustomOption.Create(Color.white, "option.streamersOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.AllStandard);
         CustomOption.RegisterTopOption(streamersOption);
         enforcePreventingSpoilerOption = CustomOption.Create(Color.white, "option.streamersOption.enforcePreventingSpoiler", false, streamersOption).SetGameMode(CustomGameMode.All);
 
@@ -799,5 +809,17 @@ public class CustomOptionHolder
             }
         }
         Map.MapData.CreateOptionData();
+
+        BattleOption = CustomOption.Create(Color.white, "option.battleOption", new string[] { "option.empty" }, "option.empty", null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.Battle);
+        CustomOption.RegisterTopOption(BattleOption);
+        BattleInitCooldownOption = CustomOption.Create(Color.white, "option.battleOption.initCooldownOption", 15f,1f,40f,1f,BattleOption,false,false,"", CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
+        BattleSnipeCoolDownOption = CustomOption.Create(Color.white, "option.battleOption.snipeCoolDown", 20f, 5f, 60f, 2.5f,BattleOption,false,false,"",CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
+        BattleSnipeCoolDownOption.suffix = "second";
+        BattleShotSizeOption = CustomOption.Create(Color.white, "option.battleOption.shotSizeOption",1f, 0.5f, 4f, 0.25f,BattleOption,false,false,"",CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
+        BattleShotSizeOption.suffix = "cross";
+        BattleShotEffectiveRangeOption = CustomOption.Create(Color.white, "option.battleOption.shotEffectiveRangeOption", 20f, 2f, 40f, 2f,BattleOption,false,false,"",CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
+        BattleShotEffectiveRangeOption.suffix = "cross";
+        BattleNoticeRangeOption = CustomOption.Create(Color.white, "option.battleOption.noticeRangeOption", 20f, 2f, 50f, 2f,BattleOption,false,false,"",CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
+        BattleNoticeRangeOption.suffix = "cross";
     }
 }

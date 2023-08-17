@@ -40,6 +40,7 @@ namespace Nebula.Roles.ImpostorRoles{
 				}
 			}
 			*/
+			// PlayerControl.LocalPlayer.Set
 			RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
 			isMurdered = true;
 			killButton.MaxTimer = specialKillCooldownOption.getFloat();

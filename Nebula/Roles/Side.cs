@@ -385,6 +385,16 @@ public class Side
         return null;
     });
 
+    public static Side YellowTeam = new Side("YellowTeam","yellowTeam",IntroDisplayOption.STANDARD,BattleRoles.YellowTeam.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        if(statistics.AliveYellowTeam > 0 && statistics.AliveGreenTeam <= 0) return EndCondition.YellowTeamWin;
+        return null;
+    });
+
+    public static Side GreenTeam = new Side("GreenTeam","greenTeam",IntroDisplayOption.STANDARD,BattleRoles.GreenTeam.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        if(statistics.AliveGreenTeam > 0 && statistics.AliveYellowTeam <= 0) return EndCondition.GreenTeamWin;
+        return null;
+    });
+
     public static Side GamePlayer = new Side("GamePlayer", "gamePlayer", IntroDisplayOption.SHOW_ONLY_ME, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
@@ -454,7 +464,7 @@ public class Side
             GamePlayer,
             Extra,VOID,
             RitualCrewmate,
-            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere,Werewolf,Challenger,Oracle
+            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere,Werewolf,Challenger,Oracle,Ghost/*,SantaClaus*/,Puppeteer,YellowTeam,GreenTeam
         };
 
     public IntroDisplayOption ShowOption { get; }

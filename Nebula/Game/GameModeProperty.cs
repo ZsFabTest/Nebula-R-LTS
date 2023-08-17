@@ -53,6 +53,7 @@ public class GameModeProperty
     static public GameModeProperty FreePlayMode;
     static public GameModeProperty StandardHnSMode;
     static public GameModeProperty FreePlayHnSMode;
+    static public GameModeProperty BattleMode;
 
     static public void Load()
     {
@@ -64,6 +65,7 @@ public class GameModeProperty
             Module.CustomOptionTab.Settings | Module.CustomOptionTab.CrewmateRoles | Module.CustomOptionTab.ImpostorRoles | Module.CustomOptionTab.AdvancedSettings);
         FreePlayHnSMode = new GameModeProperty(Module.CustomGameMode.FreePlayHnS, new IntRange(0, 1), false, false, false, null, Roles.Roles.HnSCrewmate, Roles.Roles.HnSReaper,
             Module.CustomOptionTab.Settings | Module.CustomOptionTab.AdvancedSettings);
+        BattleMode = new GameModeProperty(Module.CustomGameMode.Battle,2,false,false,false,null,Roles.Roles.Crewmate,Roles.Roles.Impostor,Module.CustomOptionTab.Settings);
     }
 
     static public GameModeProperty GetProperty(Module.CustomGameMode gameMode)
