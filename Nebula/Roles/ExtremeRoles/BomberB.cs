@@ -7,7 +7,8 @@ public class BomberB : Template.HasHologram{
     public bool isParternDied;
     private Arrow arrow;
 
-    public override void GlobalInitialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance){
+        base.Initialize(__instance);
         target = byte.MaxValue;
         HideKillButtonEvenImpostor = true;
         isParternDied = false;
@@ -43,6 +44,8 @@ public class BomberB : Template.HasHologram{
         explodeButton = new CustomButton(
             () => {
                 Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer,Helpers.playerById(target),Game.PlayerData.PlayerStatus.Dead,false,false);
+                RPCEventInvoker.SetSmoke(Helpers.playerById(target));
+                //RPCEventInvoker.ObjectInstantiate(new Objects.ObjectTypes.Bomb(),Helpers.playerById(target).transform.position);
                 RPCEventInvoker.SetBombTarget(1,byte.MaxValue);
                 RPCEventInvoker.SetBombTarget(2,byte.MaxValue);
                 foreach (var icon in PlayerIcons.Values)

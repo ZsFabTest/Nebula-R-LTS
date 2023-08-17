@@ -223,6 +223,7 @@ static public class Roles
     public static CrewmateRoles.Paranoiac Paranoiac = new();
     public static ImpostorRoles.BomberA BomberA = new();
     public static ImpostorRoles.BomberB BomberB = new();
+    public static NeutralRoles.Puppeteer Puppeteer = new();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -238,7 +239,7 @@ static public class Roles
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
             Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,BomberA,BomberB,
             Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,
-            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,
+            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,Puppeteer,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,WerewolfsCat,OraclesCat,
 

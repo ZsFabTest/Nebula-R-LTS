@@ -17,7 +17,7 @@ public class Morphing : Role
             Helpers.GetModData(PlayerId).AddOutfit(outfit);
         }
 
-        public MorphEvent(byte playerId, Game.PlayerData.PlayerOutfitData outfit) : base(Roles.Morphing.morphDurationOption.getFloat())
+        public MorphEvent(byte playerId, Game.PlayerData.PlayerOutfitData outfit,float time = 0f) : base(time == 0f ? Roles.Morphing.morphDurationOption.getFloat() : time)
         {
             PlayerId = playerId;
             this.outfit = outfit;

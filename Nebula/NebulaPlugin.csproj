@@ -39,6 +39,8 @@
     <EmbeddedResource Include="Resources\Help.dat" />
     <EmbeddedResource Include="Resources\Shaders\*.shader" />
     <EmbeddedResource Include="Resources\Assets\nebula_asset" />
+    <EmbeddedResource Include="Resources\Assets\audiobundle" />
+    <EmbeddedResource Include="Resources\Assets\haomingassets" />
   </ItemGroup>
 
   <ItemGroup>

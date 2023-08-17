@@ -16,7 +16,7 @@ public class Heretic : Role{
                     return;
                 }
             }
-            PlayerControl.LocalPlayer.GetModData().AddRoleData(Heretic.leftMadmateDataId, -1);
+            //PlayerControl.LocalPlayer.GetModData().AddRoleData(Heretic.leftMadmateDataId, -1);
         }
     }
 
@@ -35,10 +35,12 @@ public class Heretic : Role{
     }
 
     public static int leftMadmateDataId { get; set; } = 0;
+    private int hasLeftMadmate = 0;
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
-        __instance.GetModData().SetRoleData(leftMadmateDataId,(int)maxPreachCountOption.getFloat());
+        //__instance.GetModData().SetRoleData(leftMadmateDataId,(int)maxPreachCountOption.getFloat());
+        hasLeftMadmate = 0;
     }
 
     private CustomButton preach;
@@ -51,9 +53,10 @@ public class Heretic : Role{
             () =>
             {
                 Events.LocalEvent.Activate(new HereticEvent(Game.GameData.data.myData.currentTarget,secondaryMadmateOption.getBool()));
+                hasLeftMadmate++;
                 Game.GameData.data.myData.currentTarget = null;
             },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead && Game.GameData.data.myData.getGlobalData().GetRoleData(leftMadmateDataId) > 0; },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead && /*Game.GameData.data.myData.getGlobalData().GetRoleData(leftMadmateDataId) > 0;*/hasLeftMadmate < maxPreachCountOption.getFloat(); },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { preach.Timer = preach.MaxTimer; },
             ButtonSprite.GetSprite(),

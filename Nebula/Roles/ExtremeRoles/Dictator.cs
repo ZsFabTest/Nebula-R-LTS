@@ -5,7 +5,7 @@ public class Dictator : Role{
 
     private bool isVoted = false;
     private byte target;
-    private byte voteId = 255;
+    private byte voteId = 100;
 
     public override void GlobalIntroInitialize(PlayerControl __instance)
     {
@@ -31,13 +31,18 @@ public class Dictator : Role{
 
     public override void OnMeetingEnd()
     {
-        if (isVoted)
+        if (isVoted && !PlayerControl.LocalPlayer.Data.IsDead)
         {
             byte playerId = PlayerControl.LocalPlayer.PlayerId;
             RPCEventInvoker.SuicideWithoutOverlay(Game.PlayerData.PlayerStatus.Suicide.Id);
             RPCEventInvoker.CleanDeadBody(playerId);
             RPCEventInvoker.UncheckedExilePlayer(target, Game.PlayerData.PlayerStatus.Exiled.Id);
         }
+    }
+
+    public override void onRevived(byte playerId)
+    {
+        if(playerId == PlayerControl.LocalPlayer.PlayerId) isVoted = false;
     }
 
     public Dictator() : base("Dictator", "dictator", RoleColor, RoleCategory.Crewmate, Side.Crewmate, Side.Crewmate,

@@ -13,6 +13,7 @@ namespace Nebula.Roles.NeutralRoles{
 
             if (player.Data.IsDead && player.GetModData().FinalData?.status != Game.PlayerData.PlayerStatus.Burned) return false;
 
+            EndGameManagerSetUpPatch.AddEndText(Language.Language.GetString("role.mercenary.additionalEndText"));
             return true;
         }
 

@@ -112,7 +112,7 @@ public static class CredentialsPatch
             buttonObj.GetComponent<SpriteRenderer>().sprite = DesignerToolButtonSprite.GetSprite();
             var button = buttonObj.GetComponent<PassiveButton>();
             button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
-            button.OnClick.AddListener((UnityAction)(() => { NebulaPlugin.isFoolDay = !NebulaPlugin.isFoolDay; }));
+            button.OnClick.AddListener((UnityAction)(() => { NebulaPlugin.isFoolDay = !NebulaPlugin.isFoolDay; SoundPlayer.PlaySound(AudioAsset.Uskneko); }));
 
             bottomButtons.GetComponent<DotAligner>().Start();
         }

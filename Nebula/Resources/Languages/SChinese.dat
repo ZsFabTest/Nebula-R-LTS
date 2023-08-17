@@ -243,7 +243,7 @@
 "option.advanceRoleOptions" : "进阶设置"
 
 "option.roleChance" : "生成概率"
-"option.roleChanceSecondary" : "生成概率(作为伪装者阵营)"
+"option.roleChanceSecondary" : "生成概率(生成一个以上时)"
 "option.roleCount" : "最大数量"
 
 "option.canBeLovers" : "可以成为恋人"
@@ -2107,6 +2107,14 @@
 "role.bomber.targetB" : "搭档"
 "role.bomber.ptarget" : "搭档"
 
+"role.puppeteer.name" : "傀儡师"
+"role.puppeteer.short" : "傀"
+"role.puppeteer.description" : "你们全部都是我的傀儡！"
+"role.puppeteer.hint" : "想办法让傀儡被击杀"
+"role.puppeteer.info" : "你可以取样别人(包括趋势后)，然后控制傀儡被击杀数。\n傀儡被击杀一定数目后胜利。"
+"role.puppeteer.morphCoolDown" : "取样冷却时间"
+"role.puppeteer.morphDuration" : "傀儡最多存在时间"
+"role.puppeteer.countToWin" : "获胜所需的被击杀次数"
 
 "option.display.random" : "随机"
 

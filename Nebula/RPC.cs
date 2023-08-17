@@ -109,6 +109,7 @@ public enum CustomRPC
     FakeKill,
     FixedRevive,
     SetBombTarget,
+    SetSmoke,
 }
 
 //RPCを受け取ったときのイベント
@@ -343,7 +344,7 @@ class RPCHandlerPatch
                 RPCEvents.RaiderThrow(reader.ReadByte(), new Vector2(reader.ReadSingle(), reader.ReadSingle()), reader.ReadSingle());
                 break;
             case (byte)CustomRPC.Morph:
-                RPCEvents.Morph(reader.ReadByte(), new Game.PlayerData.PlayerOutfitData(reader));
+                RPCEvents.Morph(reader.ReadByte(), new Game.PlayerData.PlayerOutfitData(reader),reader.ReadSingle());
                 break;
             case (byte)CustomRPC.MorphCancel:
                 RPCEvents.MorphCancel(reader.ReadByte());
@@ -423,6 +424,9 @@ class RPCHandlerPatch
                 break;
             case (byte)CustomRPC.SetBombTarget:
                 RPCEvents.SetBombTarget(reader.ReadByte(),reader.ReadByte());
+                break;
+            case (byte)CustomRPC.SetSmoke:
+                RPCEvents.SetSmoke(reader.ReadByte());
                 break;
         }
     }
@@ -1427,12 +1431,12 @@ static class RPCEvents
         }
     }
 
-    public static void Morph(byte playerId, Game.PlayerData.PlayerOutfitData outfit)
+    public static void Morph(byte playerId, Game.PlayerData.PlayerOutfitData outfit,float oper)
     {
         //Morphingを確定させる
         Game.GameData.data.EstimationAI.Determine(Roles.Roles.Morphing);
 
-        Events.LocalEvent.Activate(new Roles.ImpostorRoles.Morphing.MorphEvent(playerId, outfit));
+        Events.LocalEvent.Activate(new Roles.ImpostorRoles.Morphing.MorphEvent(playerId, outfit, oper));
     }
 
     public static void MorphCancel(byte playerId)
@@ -1734,21 +1738,39 @@ static class RPCEvents
     public static void FixedRevive(byte playerId){
         PlayerControl player = Helpers.playerById(playerId);
         player.Revive();
-        DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-        foreach(var DeadBody in array){
-            if(DeadBody.ParentId == playerId){
-                DeadBody.gameObject.active = false;
+        try{
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            foreach(var DeadBody in array){
+                if(DeadBody.ParentId == playerId){
+                    DeadBody.gameObject.active = false;
+                }
             }
-        }
+        }catch(Exception e) { Debug.LogError(e.StackTrace); }
         Game.GameData.data.playersArray[playerId]?.Revive();
         player.Data.IsDead = false;
-        Game.GameData.data.myData.CanSeeEveryoneInfo = false;
     }
 
     public static void SetBombTarget(byte mode,byte data){
         if(mode == 1) Roles.Roles.BomberA.target = data;
         else if(mode == 2) Roles.Roles.BomberB.target = data;
         else Debug.LogError("[RPC]Error: Set Bomb Target Failed.");
+    }
+
+    public static void SetSmoke(byte playerId){
+        /*
+        for (int i = 0; i < 7; i++)
+        /*
+            HudManager.Instance.StartCoroutine(NebulaEffects.CoSmokeEffect(LayerExpansion.GetDefaultLayer(),null,
+                Helpers.playerById(playerId).transform.position,
+                new Vector3((float)NebulaPlugin.rnd.NextDouble() * 0.4f + 0.1f, 0f).RotateZ((float)NebulaPlugin.rnd.NextDouble() * 360f),
+                (float)NebulaPlugin.rnd.NextDouble() * 40, 0.35f + (float)NebulaPlugin.rnd.NextDouble() * 0.1f,
+                (float)NebulaPlugin.rnd.NextDouble() * 40).WrapToIl2Cpp());
+        *
+        HudManager.Instance.StartCoroutine(NebulaEffects.CoSmokeEffect(LayerExpansion.GetDefaultLayer(), null, Helpers.playerById(playerId).transform.position.RotateZ(360f / 7f * (float)i),
+            new Vector3((float)NebulaPlugin.rnd.NextDouble() * 0.4f + 0.1f, 0f).RotateZ((float)NebulaPlugin.rnd.NextDouble() * 360f),
+            (float)NebulaPlugin.rnd.NextDouble() * 40, 0.35f + (float)NebulaPlugin.rnd.NextDouble() * 0.1f).WrapToIl2Cpp());
+        */
+        RPCEventInvoker.ObjectInstantiate(new Objects.ObjectTypes.Bomb(),Helpers.playerById(playerId).transform.position);
     }
 }
 
@@ -2464,13 +2486,14 @@ public class RPCEventInvoker
         RPCEvents.BansheeWeep(pos);
     }
 
-    public static void Morph(Game.PlayerData.PlayerOutfitData outfit)
+    public static void Morph(Game.PlayerData.PlayerOutfitData outfit,float oper = 0f)
     {
         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.Morph, Hazel.SendOption.Reliable, -1);
         writer.Write(PlayerControl.LocalPlayer.PlayerId);
         outfit.Serialize(writer);
+        writer.Write(oper);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
-        RPCEvents.Morph(PlayerControl.LocalPlayer.PlayerId, outfit);
+        RPCEvents.Morph(PlayerControl.LocalPlayer.PlayerId, outfit,oper);
     }
 
     public static void MorphCancel()
@@ -2786,5 +2809,12 @@ public class RPCEventInvoker
         writer.Write(data);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SetBombTarget(mode,data);
+    }
+
+    public static void SetSmoke(PlayerControl player){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetSmoke,Hazel.SendOption.Reliable,-1);
+        writer.Write(player.PlayerId);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetSmoke(player.PlayerId);
     }
 }   

@@ -236,7 +236,8 @@ class ExileControllerPatch
                             player.GetModData().role.side == Roles.Side.Jester ||
                             player.GetModData().role.side == Roles.Side.Challenger || 
                             player.GetModData().role.side == Roles.Side.Oracle ||
-                            player.GetModData().role.side == Roles.Side.SantaClaus
+                            player.GetModData().role.side == Roles.Side.SantaClaus ||
+                            player.GetModData().role.side == Roles.Side.Ghost
                         )) sums--;
                         //__result.Remove('.');
                         //__result.Remove('。');
@@ -300,7 +301,8 @@ class ExileControllerPatch
                             p.GetModData().role.side == Roles.Side.Jester ||
                             p.GetModData().role.side == Roles.Side.Challenger || 
                             p.GetModData().role.side == Roles.Side.Oracle ||
-                            p.GetModData().role.side == Roles.Side.SantaClaus
+                            p.GetModData().role.side == Roles.Side.SantaClaus ||
+                            p.GetModData().role.side == Roles.Side.Ghost
                             )) sums++;
                             //Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
                         }

@@ -392,6 +392,7 @@ class RoleAssignmentPatch
         {
             //標準ロールを割り当てるならこれ
             //assignDefaultRoles(assignMap);
+            //chooseRoles(assingMap);
             assignRoles(assignMap);
 
         }
@@ -435,6 +436,27 @@ class RoleAssignmentPatch
         }
         return result;
     }
+
+    /*
+    private static void chooseRoles(AssignMap assignMap){
+        var metaAssignment = LoadMetaRoleAssignments();
+
+        Game.GameModeProperty property = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode());
+
+        List<PlayerControl> crewmates = PlayerControl.AllPlayerControls.ToArray().ToList().OrderBy(x => Guid.NewGuid()).ToList();
+
+        List<PlayerControl> impostors = new List<PlayerControl>();
+
+        //VOID割り当て
+        if (CustomOptionHolder.GetCustomGameMode() != Module.CustomGameMode.FreePlay && Roles.Roles.VOID.TopOption.getBool())
+        {
+            assignMap.AssignRole(PlayerControl.LocalPlayer.PlayerId, Roles.Roles.VOID.id);
+            crewmates.RemoveAll((p) => p.PlayerId == PlayerControl.LocalPlayer.PlayerId);
+        }
+
+
+    }
+    */
 
     private static void assignRoles(AssignMap assignMap)
     {

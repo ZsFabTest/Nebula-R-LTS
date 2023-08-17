@@ -237,8 +237,7 @@ public class GameStartManagerPatch
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ResetVaribles, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCEvents.ResetVaribles();
-
-                if (PlayerControl.AllPlayerControls.Count > (Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MaxPlayers ?? 15)) continueStart = false;
+                //if (PlayerControl.AllPlayerControls.Count > (Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MaxPlayers ?? 15)) continueStart = false;
 
                 foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients)
                 {

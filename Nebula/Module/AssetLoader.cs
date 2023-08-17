@@ -1,4 +1,5 @@
-﻿using Nebula.Tasks;
+﻿using Nebula.Roles.NeutralRoles;
+using Nebula.Tasks;
 using System.Reflection;
 using UnityEngine;
 
@@ -42,6 +43,9 @@ public static class AssetLoader
     public static AudioClip SpectreStatueBroken;
 
     public static AudioClip Paparazzo;
+
+    public static AudioClip PuppeteerLaugh;
+    public static AudioClip Uskneko;
 
     public static GameObject SkeldDivMap;
     public static GameObject MIRADivMap;
@@ -95,6 +99,9 @@ public static class AssetLoader
         MetaObjectPrefab = assetBundleBundle.LoadAsset<GameObject>("MetaObjectPrefab").DontUnload();
 
         Paparazzo = assetBundleBundle.LoadAsset<AudioClip>("Camera").DontUnload();
+
+        PuppeteerLaugh = AssetBundle.LoadFromMemory(assembly.GetManifestResourceStream("Nebula.Resources.Assets.audiobundle").ReadFully()).LoadAsset<AudioClip>("PuppeteerLaugh.mp3").DontUnload();
+        Uskneko = AssetBundle.LoadFromMemory(assembly.GetManifestResourceStream("Nebula.Resources.Assets.haomingassets").ReadFully()).LoadAsset<AudioClip>("Uskneko.mp3").DontUnload();
     }
 
     public static Sprite GetMapSprite(byte mapId,Vector2 size,Int32 mask)
@@ -223,6 +230,11 @@ public static class AssetLoader
 
             case AudioAsset.Paparazzo:
                 return Paparazzo;
+
+            case AudioAsset.PuppeteerLaugh:
+                return PuppeteerLaugh;
+            case AudioAsset.Uskneko:
+                return Uskneko;
         }
 
         return null;
@@ -245,6 +257,8 @@ public enum AudioAsset
     SpectreStatueCrush0,
     SpectreStatueCrush1,
     SpectreStatueBroken,
-    Paparazzo
+    Paparazzo,
+    PuppeteerLaugh,
+    Uskneko,
 
 }

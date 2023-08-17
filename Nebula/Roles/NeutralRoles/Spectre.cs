@@ -38,6 +38,7 @@ public class Spectre : Role
     private List<Objects.Arrow?> werewolfArrows;
     private List<Objects.Arrow?> challengerArrows;
     private List<Objects.Arrow?> oracleArrows;
+    private List<Objects.Arrow?> santaArrows;
 
     int clarifyChargeId;
 
@@ -248,6 +249,7 @@ public class Spectre : Role
         foreach (var a in werewolfArrows) if (a != null) GameObject.Destroy(a.arrow);
         foreach (var a in challengerArrows) if (a != null) GameObject.Destroy(a.arrow);
         foreach (var a in oracleArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in santaArrows) if (a != null) GameObject.Destroy(a.arrow);
         impostorArrows.Clear();
         jackalArrows.Clear();
         pavlovArrows.Clear();
@@ -256,6 +258,7 @@ public class Spectre : Role
         werewolfArrows.Clear();
         challengerArrows.Clear();
         oracleArrows.Clear();
+        santaArrows.Clear();
     }
 
     //道連れ
@@ -629,7 +632,7 @@ public class Spectre : Role
     SpriteLoader arrowSprite = new SpriteLoader("role.spectre.arrow");
     public override void MyPlayerControlUpdate()
     {
-        int i = 0,i1 = 0,i2 = 0,i3 = 0,i4 = 0,i5 = 0,i6 = 0,i7 = 0;
+        int i = 0,i1 = 0,i2 = 0,i3 = 0,i4 = 0,i5 = 0,i6 = 0,i7 = 0,i8 = 0;
         foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if ((p.Data.Role.IsImpostor || p.GetModData().role.DeceiveImpostorInNameDisplay) && !p.Data.IsDead)
@@ -642,7 +645,7 @@ public class Spectre : Role
 
                 i++;
             }
-            else if ((p.GetModData().role.side == Side.Jackal && p.GetModData().role != Roles.Sidekick) && !p.Data.IsDead){
+            else if (p.GetModData().role == Roles.Jackal && !p.Data.IsDead){
                 if (jackalArrows.Count >= i1) jackalArrows.Add(null);
 
                 var arrow = jackalArrows[i1];
@@ -705,6 +708,15 @@ public class Spectre : Role
 
                 i7++;
             }
+            else if ((p.GetModData().role == Roles.BlackSanta) && !p.Data.IsDead){
+                if (santaArrows.Count >= i8) santaArrows.Add(null);
+
+                var arrow = santaArrows[i8];
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.BlackSanta.Color,arrowSprite);
+                santaArrows[i8] = arrow;
+
+                i8++;
+            }
         }
         int removed = impostorArrows.Count - i;
         for (; i < impostorArrows.Count; i++) if (impostorArrows[i] != null) GameObject.Destroy(impostorArrows[i].arrow);
@@ -721,22 +733,25 @@ public class Spectre : Role
         removed = sheriffArrows.Count - i4;
         for (; i4 < sheriffArrows.Count; i4++) if (sheriffArrows[i4] != null) GameObject.Destroy(sheriffArrows[i4].arrow);
         sheriffArrows.RemoveRange(sheriffArrows.Count - removed, removed);
-        removed = sheriffArrows.Count - i5;
+        removed = werewolfArrows.Count - i5;
         for (; i5 < werewolfArrows.Count; i5++) if (werewolfArrows[i5] != null) GameObject.Destroy(werewolfArrows[i5].arrow);
         werewolfArrows.RemoveRange(werewolfArrows.Count - removed, removed);
-        removed = sheriffArrows.Count - i6;
+        removed = challengerArrows.Count - i6;
         for (; i6 < challengerArrows.Count; i6++) if (challengerArrows[i6] != null) GameObject.Destroy(challengerArrows[i6].arrow);
         challengerArrows.RemoveRange(challengerArrows.Count - removed, removed);
-        removed = sheriffArrows.Count - i7;
+        removed = oracleArrows.Count - i7;
         for (; i7 < oracleArrows.Count; i7++) if (oracleArrows[i7] != null) GameObject.Destroy(oracleArrows[i7].arrow);
         oracleArrows.RemoveRange(oracleArrows.Count - removed, removed);
+        removed = santaArrows.Count - i8;
+        for (; i8 < santaArrows.Count; i8++) if (santaArrows[i8] != null) GameObject.Destroy(santaArrows[i8].arrow);
+        santaArrows.RemoveRange(santaArrows.Count - removed, removed);
     }
 
     public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
     {
         base.EditOthersDisplayNameColor(playerId, ref displayColor);
         PlayerControl player = Helpers.playerById(playerId);
-        if (player.GetModData().role.side == Side.Jackal && player.GetModData().role != Roles.Sidekick)
+        if (player.GetModData().role == Roles.Jackal)
         {
             displayColor = Jackal.RoleColor;
         }
@@ -763,6 +778,10 @@ public class Spectre : Role
         else if (player.GetModData().role == Roles.OracleN)
         {
             displayColor = Oracle.RoleColor;
+        }
+        else if (player.GetModData().role == Roles.BlackSanta)
+        {
+            displayColor = BlackSanta.RoleColor;
         }
     }
 
@@ -806,6 +825,7 @@ public class Spectre : Role
         werewolfArrows = new List<Arrow?>();
         challengerArrows = new List<Arrow?>();
         oracleArrows = new List<Arrow?>();
+        santaArrows = new List<Arrow?>();
 
         spectreFoxAnimationSprites = new ISpriteLoader[25];
         for(int i = 0; i < 25; i++)

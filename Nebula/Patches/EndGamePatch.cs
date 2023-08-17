@@ -46,6 +46,7 @@ public class EndCondition
     public static EndCondition ChallengerWin = new EndCondition(135,Roles.NeutralRoles.Challenger.RoleColor,"challenger",1,Module.CustomGameMode.Standard);
     public static EndCondition OracleWin = new EndCondition(136,Roles.NeutralRoles.Oracle.RoleColor,"oracle",1,Module.CustomGameMode.Standard);
     public static EndCondition GhostWin = new EndCondition(137,new(1f,1f,1f),"ghost",1,Module.CustomGameMode.Standard);
+    public static EndCondition PuppeteerWin = new EndCondition(138,Roles.NeutralRoles.Puppeteer.RoleColor,"puppeteer",1,Module.CustomGameMode.Standard);
 
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
@@ -55,7 +56,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,SantaWin,
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
@@ -740,6 +741,8 @@ public class PlayerStatistics
     public int AliveOracleWithSidekick;
     public int AliveInLoveOracleWithSidekick;
 
+    public int AlivePuppeteer;
+
     public int AliveZombieSidekick;
 
     public bool IsValid;
@@ -809,6 +812,7 @@ public class PlayerStatistics
         AliveInLoveOracleWithSidekick = 0;
 
         AliveZombieSidekick = 0;
+        AlivePuppeteer = 0;
         
 
         Roles.Side side;
@@ -1060,6 +1064,8 @@ public class PlayerStatistics
                 }
 
                 if(data.role == Roles.Roles.ZombieSidekick) AliveZombieSidekick++;
+
+                if(data.role == Roles.Roles.Puppeteer) AlivePuppeteer++;
 
                 IsValid = true;
             }
