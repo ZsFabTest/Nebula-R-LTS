@@ -504,23 +504,23 @@ public class CustomOptionHolder
 
         mapOptions = CustomOption.Create(Color.white, "option.mapOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
         CustomOption.RegisterTopOption(mapOptions);
-        dynamicMap = CustomOption.Create(Color.white, "option.playRandomMaps", false, mapOptions).SetGameMode(CustomGameMode.All);
-        exceptSkeld = CustomOption.Create(Color.white, "option.exceptSkeld", false, dynamicMap).SetGameMode(CustomGameMode.All);
-        exceptMIRA = CustomOption.Create(Color.white, "option.exceptMIRA", false, dynamicMap).SetGameMode(CustomGameMode.All);
-        exceptPolus = CustomOption.Create(Color.white, "option.exceptPolus", false, dynamicMap).SetGameMode(CustomGameMode.All);
-        exceptAirship = CustomOption.Create(Color.white, "option.exceptAirship", false, dynamicMap).SetGameMode(CustomGameMode.All);
-        additionalVents = CustomOption.Create(Color.white, "option.additionalVents", false, mapOptions).SetGameMode(CustomGameMode.All);
-        spawnMethod = CustomOption.Create(Color.white, "option.spawnMethod", new string[] { "option.spawnMethod.default", "option.spawnMethod.selectable", "option.spawnMethod.random" }, "option.spawnMethod.default", mapOptions).SetGameMode(CustomGameMode.All);
-        respawnNearbyFinalPosition = CustomOption.Create(Color.white, "option.respawnNearbyFinalPosition", false, mapOptions).SetGameMode(CustomGameMode.All).AddCustomPrerequisite(() => spawnMethod.getSelection() == 2);
-        synchronizedSpawning = CustomOption.Create(Color.white, "option.synchronizedSpawning", false, mapOptions).SetGameMode(CustomGameMode.All);
-        optimizedMaps = CustomOption.Create(Color.white, "option.optimizedMaps", true, mapOptions).SetGameMode(CustomGameMode.All);
-        invalidatePrimaryAdmin = CustomOption.Create(Color.white, "option.invalidatePrimaryAdmin", new string[] { "option.switch.off", "option.invalidatePrimaryAdmin.onlyAirship", "option.switch.on" }, "option.switch.off", mapOptions).SetGameMode(CustomGameMode.All);
-        invalidateSecondaryAdmin = CustomOption.Create(Color.white, "option.invalidateSecondaryAdmin", true, mapOptions).SetGameMode(CustomGameMode.All);
-        useClassicAdmin = CustomOption.Create(Color.white, "option.useClassicAdmin", false, mapOptions).SetGameMode(CustomGameMode.All);
-        allowParallelMedBayScans = CustomOption.Create(Color.white, "option.allowParallelMedBayScans", false, mapOptions).SetGameMode(CustomGameMode.All);
-        quietVentsInTheShadow = CustomOption.Create(Color.white, "option.quietVentsInTheShadow", false, mapOptions).SetGameMode(CustomGameMode.All);
-        oneWayMeetingRoomOption = CustomOption.Create(Color.white, "option.oneWayMeetingRoom", false, mapOptions).SetGameMode(CustomGameMode.All);
-        shuffledElectricalOption = CustomOption.Create(Color.white, "option.shuffledElectrical", false, mapOptions).SetGameMode(CustomGameMode.All);
+        dynamicMap = CustomOption.Create(Color.white, "option.playRandomMaps", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        exceptSkeld = CustomOption.Create(Color.white, "option.exceptSkeld", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
+        exceptMIRA = CustomOption.Create(Color.white, "option.exceptMIRA", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
+        exceptPolus = CustomOption.Create(Color.white, "option.exceptPolus", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
+        exceptAirship = CustomOption.Create(Color.white, "option.exceptAirship", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
+        additionalVents = CustomOption.Create(Color.white, "option.additionalVents", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        spawnMethod = CustomOption.Create(Color.white, "option.spawnMethod", new string[] { "option.spawnMethod.default", "option.spawnMethod.selectable", "option.spawnMethod.random" }, "option.spawnMethod.default", mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        respawnNearbyFinalPosition = CustomOption.Create(Color.white, "option.respawnNearbyFinalPosition", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll).AddCustomPrerequisite(() => spawnMethod.getSelection() == 2);
+        synchronizedSpawning = CustomOption.Create(Color.white, "option.synchronizedSpawning", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        optimizedMaps = CustomOption.Create(Color.white, "option.optimizedMaps", true, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        invalidatePrimaryAdmin = CustomOption.Create(Color.white, "option.invalidatePrimaryAdmin", new string[] { "option.switch.off", "option.invalidatePrimaryAdmin.onlyAirship", "option.switch.on" }, "option.switch.off", mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        invalidateSecondaryAdmin = CustomOption.Create(Color.white, "option.invalidateSecondaryAdmin", true, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        useClassicAdmin = CustomOption.Create(Color.white, "option.useClassicAdmin", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        allowParallelMedBayScans = CustomOption.Create(Color.white, "option.allowParallelMedBayScans", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        quietVentsInTheShadow = CustomOption.Create(Color.white, "option.quietVentsInTheShadow", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        oneWayMeetingRoomOption = CustomOption.Create(Color.white, "option.oneWayMeetingRoom", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        shuffledElectricalOption = CustomOption.Create(Color.white, "option.shuffledElectrical", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
 
         spawnMethod.alternativeOptionScreenBuilder = (refresher) =>
         {
@@ -583,8 +583,8 @@ public class CustomOptionHolder
 
         limiterOptions = CustomOption.Create(Color.white, "option.limitOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
         CustomOption.RegisterTopOption(limiterOptions);
-        timeLimitOption = CustomOption.Create(Color.white, "option.timeLimitOption", 20f, 1f, 80f, 1f, limiterOptions).SetGameMode(CustomGameMode.All);
-        timeLimitSecondOption = CustomOption.Create(Color.white, "option.timeLimitSecondOption", 0f, 0f, 55f, 5f, limiterOptions).SetGameMode(CustomGameMode.All);
+        timeLimitOption = CustomOption.Create(Color.white, "option.timeLimitOption", 20f, 1f, 80f, 1f, limiterOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        timeLimitSecondOption = CustomOption.Create(Color.white, "option.timeLimitSecondOption", 0f, 0f, 55f, 5f, limiterOptions).SetGameMode(CustomGameMode.ActuallyAll);
         timeLimitOption.suffix = "minute";
         timeLimitSecondOption.suffix = "second";
 
