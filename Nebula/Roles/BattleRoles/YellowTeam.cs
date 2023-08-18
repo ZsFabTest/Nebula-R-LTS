@@ -198,7 +198,7 @@ public class YellowTeam : Role
     }
 
     public override void EditOthersDisplayNameColor(byte playerId,ref Color displayColor){
-        displayColor = RoleColor;
+        if(Helpers.playerById(playerId).GetModData().role == Roles.YellowTeam) displayColor = RoleColor;
     }
 
     public override void OnMurdered(byte murderId){
