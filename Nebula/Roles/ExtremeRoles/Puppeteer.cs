@@ -178,7 +178,7 @@ public class Puppeteer : Role,Template.HasWinTrigger
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(1f);
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color.yellow);
 
-        RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, morphTarget, Color.red, arrowSprite);
+        RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, morphTarget, RoleColor, arrowSprite);
 
         int i = 0,i1 = 0,i2 = 0,i3 = 0,i4 = 0,i5 = 0,i6 = 0,i7 = 0,i8 = 0;
         foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
@@ -363,6 +363,24 @@ public class Puppeteer : Role,Template.HasWinTrigger
             GameObject.Destroy(arrow.arrow);
             arrow = null;
         }
+        foreach (var a in impostorArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in jackalArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in pavlovArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in moriartyArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in sheriffArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in werewolfArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in challengerArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in oracleArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in santaArrows) if (a != null) GameObject.Destroy(a.arrow);
+        impostorArrows.Clear();
+        jackalArrows.Clear();
+        pavlovArrows.Clear();
+        moriartyArrows.Clear();
+        sheriffArrows.Clear();
+        werewolfArrows.Clear();
+        challengerArrows.Clear();
+        oracleArrows.Clear();
+        santaArrows.Clear();
     }
 
     public override void OnRoleRelationSetting()

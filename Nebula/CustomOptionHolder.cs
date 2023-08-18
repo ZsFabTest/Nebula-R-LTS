@@ -69,7 +69,7 @@ public class CustomOptionHolder
             "option.display.percentage.andSoForth", "option.display.percentage.10", "option.display.percentage.20", "option.display.percentage.30", "option.display.percentage.40",
             "option.display.percentage.50", "option.display.percentage.60", "option.display.percentage.70", "option.display.percentage.80", "option.display.percentage.90" };
     public static string[] presets = new string[] { "option.display.preset.1", "option.display.preset.2", "option.display.preset.3", "option.display.preset.4", "option.display.preset.5" };
-    public static string[] gamemodesNormal = new string[] { "gamemode.standard", "gamemode.freePlay", "gamemode.battle" };
+    public static string[] gamemodesNormal = new string[] { "gamemode.standard", "gamemode.freePlay", "gamemode.battle", "gamemode.viruscrisis" };
     public static string[] gamemodesHnS = new string[] { "gamemode.standard", "gamemode.freePlay" };
 
     private static byte ToByte(float f)
@@ -502,7 +502,7 @@ public class CustomOptionHolder
             }
         };
 
-        mapOptions = CustomOption.Create(Color.white, "option.mapOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.All);
+        mapOptions = CustomOption.Create(Color.white, "option.mapOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
         CustomOption.RegisterTopOption(mapOptions);
         dynamicMap = CustomOption.Create(Color.white, "option.playRandomMaps", false, mapOptions).SetGameMode(CustomGameMode.All);
         exceptSkeld = CustomOption.Create(Color.white, "option.exceptSkeld", false, dynamicMap).SetGameMode(CustomGameMode.All);
@@ -581,7 +581,7 @@ public class CustomOptionHolder
                 };
         };
 
-        limiterOptions = CustomOption.Create(Color.white, "option.limitOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.AllStandard);
+        limiterOptions = CustomOption.Create(Color.white, "option.limitOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
         CustomOption.RegisterTopOption(limiterOptions);
         timeLimitOption = CustomOption.Create(Color.white, "option.timeLimitOption", 20f, 1f, 80f, 1f, limiterOptions).SetGameMode(CustomGameMode.All);
         timeLimitSecondOption = CustomOption.Create(Color.white, "option.timeLimitSecondOption", 0f, 0f, 55f, 5f, limiterOptions).SetGameMode(CustomGameMode.All);

@@ -198,7 +198,11 @@ public class GreenTeam : Role
     }
 
     public override void EditOthersDisplayNameColor(byte playerId,ref Color displayColor){
-        if(Helpers.playerById(playerId).GetModData().role.side == Side.GreenTeam) displayColor = RoleColor;
+        displayColor = RoleColor;
+    }
+
+    public override void OnMurdered(byte murderId){
+        Game.GameData.data.myData.CanSeeEveryoneInfo = true;
     }
 
     public GreenTeam()

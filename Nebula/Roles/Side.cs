@@ -395,6 +395,16 @@ public class Side
         return null;
     });
 
+    public static Side Infected = new Side("Infected","infected",IntroDisplayOption.SHOW_ONLY_ME,Palette.ImpostorRed,(PlayerStatistics statistics,ShipStatus status) => {
+        if(statistics.AliveInfected >= 1 && statistics.AliveSurvivals <= 0) return EndCondition.InfectedWin;
+        return null;
+    });
+
+    public static Side Survival = new Side("Survival","survival",IntroDisplayOption.STANDARD,Palette.CrewmateBlue,(PlayerStatistics statistics,ShipStatus status) => {
+        if(statistics.AliveInfected <= 0 && statistics.AliveSurvivals >= 1) return EndCondition.SurvivalWin;
+        return null;
+    });
+
     public static Side GamePlayer = new Side("GamePlayer", "gamePlayer", IntroDisplayOption.SHOW_ONLY_ME, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
@@ -412,6 +422,7 @@ public class Side
         {
             if (Game.GameData.data.Timer < 1f)
             {
+                if(Game.GameData.data.GameMode == Module.CustomGameMode.VirusCrisis) return EndCondition.InfectedWin;
                 switch (GameOptionsManager.Instance.CurrentGameOptions.MapId)
                 {
                     case 0:
@@ -464,7 +475,7 @@ public class Side
             GamePlayer,
             Extra,VOID,
             RitualCrewmate,
-            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere,Werewolf,Challenger,Oracle,Ghost/*,SantaClaus*/,Puppeteer,YellowTeam,GreenTeam
+            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere,Werewolf,Challenger,Oracle,Ghost/*,SantaClaus*/,Puppeteer,YellowTeam,GreenTeam,Infected,Survival,
         };
 
     public IntroDisplayOption ShowOption { get; }

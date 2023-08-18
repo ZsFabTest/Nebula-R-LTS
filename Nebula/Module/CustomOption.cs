@@ -20,8 +20,8 @@ public enum CustomGameMode
     AllHnS = 12,
     AllStandard = 3,
     Battle = 16,
-    ActuallyAll = 31,
-        
+    ActuallyAll = 63,
+    VirusCrisis = 32,
 }
 
 [Flags]
@@ -43,7 +43,7 @@ public static class CustomGameModes
 {
     static public List<CustomGameMode> AllGameModes = new List<CustomGameMode>()
         {
-            CustomGameMode.Standard,CustomGameMode.FreePlay,CustomGameMode.Battle,CustomGameMode.Standard,
+            CustomGameMode.Standard,CustomGameMode.FreePlay,CustomGameMode.Battle,CustomGameMode.VirusCrisis,
             CustomGameMode.Standard,CustomGameMode.Standard,CustomGameMode.Standard,CustomGameMode.Standard,
             CustomGameMode.StandardHnS,CustomGameMode.FreePlayHnS
         };

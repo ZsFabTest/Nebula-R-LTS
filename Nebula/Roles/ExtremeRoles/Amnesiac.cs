@@ -34,6 +34,8 @@ public class Amnesiac : Role{
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.PoltergeistButton.png", 115f);
     public static Module.CustomOption targetsRoleModeOption;
     private Module.CustomOption rememberCoolDownOption;
+    Dictionary<byte, Arrow> Arrows;
+    SpriteLoader arrowSprite = new SpriteLoader("role.spectre.arrow");
 
     public override void LoadOptionData()
     {
@@ -42,25 +44,71 @@ public class Amnesiac : Role{
         rememberCoolDownOption.suffix = "second";
     }
 
+    public override void Initialize(PlayerControl __instance){
+        Arrows = new();
+    }
+
     public override void MyPlayerControlUpdate()
     {
         if (PlayerControl.LocalPlayer.Data.IsDead) return;
 
         /* 捕食対象の探索 */
 
+        DeadBody b = Patches.PlayerControlPatch.SetMyDeadTarget();
+        if (b)
         {
-            DeadBody body = Patches.PlayerControlPatch.SetMyDeadTarget();
-            if (body)
+            deadBodyId = b.ParentId;
+        }
+        else
+        {
+            deadBodyId = byte.MaxValue;
+        }
+        Patches.PlayerControlPatch.SetDeadBodyOutline(b, Color.yellow);
+
+        if (PlayerControl.LocalPlayer.Data.IsDead)
+        {
+            if (Arrows.Count > 0) ClearArrows();
+        }
+        else
+        {
+            DeadBody[] deadBodys = Helpers.AllDeadBodies();
+            //削除するキーをリストアップする
+            var removeList = Arrows.Where(entry =>
             {
-                deadBodyId = body.ParentId;
-            }
-            else
+                foreach (DeadBody body in deadBodys)
+                {
+                    if (body.ParentId == entry.Key) return false;
+                }
+                return true;
+            });
+            foreach (var entry in removeList)
             {
-                deadBodyId = byte.MaxValue;
+                UnityEngine.Object.Destroy(entry.Value.arrow);
+                Arrows.Remove(entry.Key);
             }
-            Patches.PlayerControlPatch.SetDeadBodyOutline(body, Color.yellow);
+            //残った矢印を最新の状態へ更新する
+            foreach (DeadBody body in deadBodys)
+            {
+                if (!Arrows.ContainsKey(body.ParentId))
+                {
+                    Arrows[body.ParentId] = new Arrow(RoleColor,true,arrowSprite.GetSprite());
+                    Arrows[body.ParentId].arrow.SetActive(true);
+                }
+                Arrows[body.ParentId].Update(body.transform.position);
+            }
         }
     }
+
+    public override void OnDied()
+    {
+        ClearArrows();
+    }
+
+    public override void OnMeetingEnd()
+    {
+        ClearArrows();
+    }
+
 
     private CustomButton remember;
     public override void ButtonInitialize(HudManager __instance){
@@ -85,11 +133,22 @@ public class Amnesiac : Role{
         remember.MaxTimer = rememberCoolDownOption.getFloat();    
     }
 
+    private void ClearArrows()
+    {
+        //矢印を消す
+        foreach (Arrow arrow in Arrows.Values)
+        {
+            UnityEngine.Object.Destroy(arrow.arrow);
+        }
+        Arrows.Clear();
+    }
+
     public override void CleanUp(){
         if(remember != null){
             remember.Destroy();
             remember = null;
         }
+        ClearArrows();
     }
 
     public Amnesiac()
@@ -98,5 +157,6 @@ public class Amnesiac : Role{
         new HashSet<Patches.EndCondition>() {},
         true,VentPermission.CanNotUse,false,false,false){
         remember = null;
+        Arrows = new();
     }
 }

@@ -491,6 +491,25 @@ class RoleAssignmentPatch
             }
 
             return;
+        }else if(CustomOptionHolder.GetCustomGameMode() == Module.CustomGameMode.VirusCrisis){
+            var allPlayers = new List<byte>();
+            foreach (var player in PlayerControl.AllPlayerControls.GetFastEnumerator())
+            {
+                allPlayers.Add(player.PlayerId);
+            }
+
+            var impidx = NebulaPlugin.rnd.Next(0,allPlayers.Count);
+            assignMap.AssignRole(allPlayers[impidx],Roles.Roles.Infected.id);
+            allPlayers.RemoveAt(impidx);
+            for(int i = 0;i < Roles.Roles.Gunner.neutrallySpawnCount.getFloat();i++){
+                var idx = NebulaPlugin.rnd.Next(0,allPlayers.Count);
+                assignMap.AssignRole(allPlayers[idx],Roles.Roles.Gunner.id);
+                allPlayers.RemoveAt(idx);
+            }
+            foreach(var pi in allPlayers){
+                assignMap.AssignRole(pi,Roles.Roles.Survival.id);
+            }
+            return;
         }
 
         if (property.RequireImpostors)

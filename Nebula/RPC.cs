@@ -110,6 +110,7 @@ public enum CustomRPC
     FixedRevive,
     SetBombTarget,
     SetSmoke,
+    SetInfectLives,
 }
 
 //RPCを受け取ったときのイベント
@@ -427,6 +428,9 @@ class RPCHandlerPatch
                 break;
             case (byte)CustomRPC.SetSmoke:
                 RPCEvents.SetSmoke(reader.ReadByte());
+                break;
+            case (byte)CustomRPC.SetInfectLives:
+                RPCEvents.SetInfectLives(reader.ReadByte());
                 break;
         }
     }
@@ -1772,6 +1776,10 @@ static class RPCEvents
         */
         RPCEventInvoker.ObjectInstantiate(new Objects.ObjectTypes.Bomb(),Helpers.playerById(playerId).transform.position);
     }
+
+    public static void SetInfectLives(byte lives){
+        Roles.Roles.Infected.TotalLives = lives;
+    }
 }
 
 public class RPCEventInvoker
@@ -2816,5 +2824,12 @@ public class RPCEventInvoker
         writer.Write(player.PlayerId);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SetSmoke(player.PlayerId);
+    }
+
+    public static void SetInfectLives(byte lives){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetInfectLives,Hazel.SendOption.Reliable,-1);
+        writer.Write(lives);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetInfectLives(lives);
     }
 }   

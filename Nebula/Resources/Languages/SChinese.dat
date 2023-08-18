@@ -1384,6 +1384,7 @@
 "option.searchableDistance" : "船员搜索最大半径"
 
 "gamemode.battle" : "小游戏：战争模式"
+"gamemode.viruscrisis" : "小游戏：感染对抗"
 
 "option.battleOption" : "战争模式设置"
 "option.battleOption.killCooldownOption" : "狙击冷却时间"
@@ -2144,6 +2145,30 @@
 "role.greenTeam.hint" : "取得战争的胜利"
 "role.greenTeam.info" : "取得战争的胜利"
 
+"role.infected.name" : "感染者"
+"role.infected.short" : "感"
+"role.infected.hint" : "将所有人杀干净"
+"role.infected.description" : "将他们杀干净！"
+"role.infected.info" : "你拥有极快的冷却。\n如果有时间设置，时间结束后将胜利。"
+"role.infected.initkillcooldown" : "初始击杀冷却"
+"role.infected.killcooldown" : "击杀冷却"
+"role.infected.totalLives" : "初始生命值"
+
+"role.survival.name" : "幸存者"
+"role.survival.short" : "幸"
+"role.survival.description" : "想办法活下来"
+"role.survival.hint" : "做任务 活下来"
+"role.survival.info" : "你可以跳管道保命。\n做完任务后将成为枪手。\n你可以挨两刀。"
+"role.survival.taskCount" : "任务数量"
+
+"role.gunner.name" : "枪手"
+"role.gunner.short" : "枪"
+"role.gunner.description" : "击杀<color=#ff1919ff>感染者</color>！"
+"role.gunner.hint" : "击杀<color=#ff1919ff>感染者</color>"
+"role.gunner.info" : "你可以攻击伪装者。\n更重要的是，你只有一次机会(一条命)。"
+"role.gunner.killcooldown" : "击杀冷却时间"
+"role.gunner.neutrallySpawnCount" : "自然生成的枪手个数"
+
 "option.display.random" : "随机"
 
 "side.paparazzo.name" : "摄影师"
@@ -2159,7 +2184,9 @@
 "side.oracle.name" : "天启"
 "side.ghost.name" : "怨灵"
 "side.yellowTeam.name" : "黄队"
-"side.greenTeam.short" : "绿队"
+"side.greenTeam.name" : "绿队"
+"side.infected.name" : "感染者"
+"side.survival.name" : "幸存者"
 
 "text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
 "text.exile.connection" : " "
@@ -2182,8 +2209,10 @@
 "game.endText.challenger" : "挑战者胜利"
 "game.endText.oracle" : "天启胜利"
 "game.endText.ghost" : "怨灵胜利"
-"game.endText.yellowTeam" : "黄队胜利"
-"game.endText.greenTeam" : "绿队胜利"
+"game.endText.yellowTeam" : "黄队取得了战争的胜利！"
+"game.endText.greenTeam" : "绿队取得了战争的胜利！"
+"game.endText.infected" : "所有人都失踪了！"
+"game.endText.survival" : "我们活下来了！"
 
 "status.hemorrhage" : "失血"
 "status.killed" : "爆炸"

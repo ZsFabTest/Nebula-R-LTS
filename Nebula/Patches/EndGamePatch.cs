@@ -28,13 +28,13 @@ public class EndCondition
     public static EndCondition TrilemmaWin = new EndCondition(25, new Color(209f / 255f, 63f / 255f, 138f / 255f), "trilemma", 0, Module.CustomGameMode.Standard);
     public static EndCondition SantaWin = new EndCondition(26, Roles.NeutralRoles.SantaClaus.RoleColor, "santa", 4, Module.CustomGameMode.Standard);
 
-    public static EndCondition NobodyWin = new EndCondition(48, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody", 0, Module.CustomGameMode.All).SetNoBodyWin(true);
-    public static EndCondition NobodySkeldWin = new EndCondition(49, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.skeld", 32, Module.CustomGameMode.All).SetNoBodyWin(true);
-    public static EndCondition NobodyMiraWin = new EndCondition(50, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.mira", 32, Module.CustomGameMode.All).SetNoBodyWin(true);
-    public static EndCondition NobodyPolusWin = new EndCondition(51, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.polus", 32, Module.CustomGameMode.All).SetNoBodyWin(true);
-    public static EndCondition NobodyAirshipWin = new EndCondition(52, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.airship", 32, Module.CustomGameMode.All).SetNoBodyWin(true);
+    public static EndCondition NobodyWin = new EndCondition(48, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody", 0, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition NobodySkeldWin = new EndCondition(49, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.skeld", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition NobodyMiraWin = new EndCondition(50, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.mira", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition NobodyPolusWin = new EndCondition(51, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.polus", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition NobodyAirshipWin = new EndCondition(52, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.airship", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
-    public static EndCondition NoGame = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "noGame", 0, Module.CustomGameMode.All).SetNoBodyWin(true);
+    public static EndCondition NoGame = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "noGame", 0, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
     public static EndCondition PavlovWin = new EndCondition(128, Roles.NeutralRoles.Pavlov.RoleColor, "pavlov", 1, Module.CustomGameMode.Standard);
     public static EndCondition MoriartyWin = new EndCondition(129, Roles.NeutralRoles.Moriarty.RoleColor, "moriarty", 1, Module.CustomGameMode.Standard);
@@ -49,6 +49,8 @@ public class EndCondition
     public static EndCondition PuppeteerWin = new EndCondition(138,Roles.NeutralRoles.Puppeteer.RoleColor,"puppeteer",1,Module.CustomGameMode.Standard);
     public static EndCondition YellowTeamWin = new EndCondition(139,Roles.BattleRoles.YellowTeam.RoleColor,"yellowTeam",1,Module.CustomGameMode.Battle);
     public static EndCondition GreenTeamWin = new EndCondition(140,Roles.BattleRoles.GreenTeam.RoleColor,"greenTeam",1,Module.CustomGameMode.Battle);
+    public static EndCondition InfectedWin = new EndCondition(141,Palette.ImpostorRed,"infected",1,Module.CustomGameMode.VirusCrisis);
+    public static EndCondition SurvivalWin = new EndCondition(142,Palette.CrewmateBlue,"survival",1,Module.CustomGameMode.VirusCrisis);
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
@@ -57,7 +59,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,SantaWin,
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin,YellowTeamWin,GreenTeamWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin,YellowTeamWin,GreenTeamWin,InfectedWin,SurvivalWin,
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
@@ -749,6 +751,9 @@ public class PlayerStatistics
     public int AliveYellowTeam;
     public int AliveGreenTeam;
 
+    public int AliveInfected;
+    public int AliveSurvivals;
+
     public bool IsValid;
 
     //
@@ -820,6 +825,9 @@ public class PlayerStatistics
         
         AliveYellowTeam = 0;
         AliveGreenTeam = 0;
+
+        AliveInfected = 0;
+        AliveSurvivals = 0;
 
         Roles.Side side;
         
@@ -1093,6 +1101,8 @@ public class PlayerStatistics
         AliveOracle = GetAlivePlayers(Roles.Side.Oracle);
         AliveYellowTeam = GetAlivePlayers(Roles.Side.YellowTeam);
         AliveGreenTeam = GetAlivePlayers(Roles.Side.GreenTeam);
+        AliveInfected = GetAlivePlayers(Roles.Side.Infected);
+        AliveSurvivals = GetAlivePlayers(Roles.Side.Survival);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {
