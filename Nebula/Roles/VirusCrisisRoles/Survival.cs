@@ -19,9 +19,8 @@ public class Survival : Role{
 
     public override void OnTaskComplete(PlayerTask? task){
         if(Game.GameData.data.myData.getGlobalData().Tasks.Completed < taskCount.getFloat()) return;
-        if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.Supportee)){
-            RPCEventInvoker.ImmediatelyUnsetExtraRole(PlayerControl.LocalPlayer,Roles.Supportee);
-        }
+        //if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.Supportee)){
+        RPCEventInvoker.ImmediatelyUnsetExtraRole(PlayerControl.LocalPlayer,Roles.Supportee);
         RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Gunner);
     }
 

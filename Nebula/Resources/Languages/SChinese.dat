@@ -2165,9 +2165,16 @@
 "role.gunner.short" : "枪"
 "role.gunner.description" : "击杀<color=#ff1919ff>感染者</color>！"
 "role.gunner.hint" : "击杀<color=#ff1919ff>感染者</color>"
-"role.gunner.info" : "你可以攻击伪装者。\n更重要的是，你只有一次机会(一条命)。"
+"role.gunner.info" : "你可以攻击伪装者。"
 "role.gunner.killcooldown" : "击杀冷却时间"
 "role.gunner.neutrallySpawnCount" : "自然生成的枪手个数"
+
+"role.infectedSidekick.name" : "被感染者"
+"role.infectedSidekick.short" : "被"
+"role.infectedSidekick.hint" : "拖住别人的脚步"
+"role.infectedSidekick.info" : "你加入了感染者阵营。\n想办法拖住幸存者们！"
+"role.infectedSidekick.freezecooldown" : "冻结冷却时间"
+"role.infectedSidekick.freezeduring" : "冻结持续时间"
 
 "option.display.random" : "随机"
 
@@ -2246,6 +2253,7 @@
 "button.label.challenge" : "挑战"
 "button.label.releaseSouls" : "超度"
 "button.label.lock" : "上锁"
+"button.label.freeze" : "冻结"
 
 "meeting.seb" : "特殊会议"
 "meeting.forbid" : "你不能召开紧急会议"

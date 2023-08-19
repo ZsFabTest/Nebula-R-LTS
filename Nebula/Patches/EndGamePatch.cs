@@ -1081,6 +1081,8 @@ public class PlayerStatistics
 
                 if(data.role == Roles.Roles.Puppeteer) AlivePuppeteer++;
 
+                if(data.role == Roles.Roles.Infected) AliveInfected++;
+
                 IsValid = true;
             }
             catch(Exception e) 
@@ -1101,7 +1103,7 @@ public class PlayerStatistics
         AliveOracle = GetAlivePlayers(Roles.Side.Oracle);
         AliveYellowTeam = GetAlivePlayers(Roles.Side.YellowTeam);
         AliveGreenTeam = GetAlivePlayers(Roles.Side.GreenTeam);
-        AliveInfected = GetAlivePlayers(Roles.Side.Infected);
+        //AliveInfected = GetAlivePlayers(Roles.Side.Infected);
         AliveSurvivals = GetAlivePlayers(Roles.Side.Survival);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())

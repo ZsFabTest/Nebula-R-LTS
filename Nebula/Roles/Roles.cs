@@ -230,6 +230,7 @@ static public class Roles
     public static VirusCrisisRoles.Infected Infected = new();
     public static VirusCrisisRoles.Survival Survival = new();
     public static VirusCrisisRoles.Gunner Gunner = new();
+    public static VirusCrisisRoles.InfectedSidekick InfectedSidekick = new();
 
 
     //全てのロールはこの中に含まれている必要があります
@@ -256,7 +257,7 @@ static public class Roles
             //HnSCleaner,HnSHadar,HnSRaider,HnSReaper
 
             YellowTeam,GreenTeam,
-            Infected,Survival,Gunner
+            Infected,Survival,Gunner,InfectedSidekick
         };
 
     public static List<ExtraRole> AllExtraRoles = new List<ExtraRole>()

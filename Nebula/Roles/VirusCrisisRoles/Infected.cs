@@ -14,9 +14,9 @@ public class Infected : Role{
         TopOption.AddCustomPrerequisite(() => { return CustomOptionHolder.gameModeNormal.getSelection() == 3; });
         InitKillCooldown = CreateOption(Color.white,"initkillcooldown",15f,2.5f,45f,2.5f);
         InitKillCooldown.suffix = "second";
-        killCooldown = CreateOption(Color.white,"killcooldown",7.5f,2.5f,45f,2.5f);
+        killCooldown = CreateOption(Color.white,"killcooldown",25f,10f,45f,2.5f);
         killCooldown.suffix = "second";
-        lives = CreateOption(Color.white,"totalLives",6f,1f,40f,1f);
+        lives = CreateOption(Color.white,"totalLives",3f,1f,10f,1f);
     }
 
     public int TotalLives;
@@ -41,14 +41,17 @@ public class Infected : Role{
         killButton = new CustomButton(
             () =>
             {
-                if(Game.GameData.data.myData.currentTarget.GetModData().role != Roles.Survival || Game.GameData.data.myData.currentTarget.GetModData().extraRole.Contains(Roles.Supportee)) Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
+                if(Game.GameData.data.myData.currentTarget.GetModData().extraRole.Contains(Roles.Supportee)){
+                    RPCEventInvoker.ImmediatelyChangeRole(Game.GameData.data.myData.currentTarget, Roles.InfectedSidekick);
+                    RPCEventInvoker.ImmediatelyUnsetExtraRole(PlayerControl.LocalPlayer,Roles.Supportee);
+                } //Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
                 else{
                     RPCEventInvoker.SetExtraRole(Game.GameData.data.myData.currentTarget,Roles.Supportee,0);
                     Game.GameData.data.myData.currentTarget.ShowFailedMurder();
                 }
                 killButton.Timer = killButton.MaxTimer;
             },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead && Roles.SchrodingersCat.canUseKillButton.getBool(); },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { killButton.Timer = killButton.MaxTimer; },
             __instance.KillButton.graphic.sprite,
@@ -88,7 +91,7 @@ public class Infected : Role{
 
     public Infected() : base("Infected","infected",Palette.ImpostorRed,RoleCategory.Neutral,Side.Infected,Side.Infected,
          new HashSet<Side>() { Side.Infected },new HashSet<Side>() { Side.Infected },new HashSet<Patches.EndCondition> { Patches.EndCondition.InfectedWin },
-         false,VentPermission.CanNotUse,false,true,true){
+         true,VentPermission.CanNotUse,false,true,true){
         //IsHideRole = true;
         Allocation = AllocationType.None;
         ValidGamemode = Module.CustomGameMode.VirusCrisis;

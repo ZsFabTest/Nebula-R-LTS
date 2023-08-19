@@ -14,10 +14,16 @@ public class LuckyMan : Role{
     public override bool OnExiledPost(byte[] voters, byte playerId)
     {
         if(playerId == PlayerControl.LocalPlayer.PlayerId){
-            int r = NebulaPlugin.rnd.Next(1,11);
-            if(r <= (chanceToRevievOption.getFloat() / 10f)) return true;
+            int r = NebulaPlugin.rnd.Next(1,101);
+            if(r <= chanceToRevievOption.getFloat()) return true;
         }
         return false;
+    }
+
+    public override Helpers.MurderAttemptResult OnMurdered(byte murderId,byte playerId){
+        int r = NebulaPlugin.rnd.Next(1,101);
+        if(r <= chanceToRevievOption.getFloat()) return Helpers.MurderAttemptResult.SuppressKill;
+        return Helpers.MurderAttemptResult.PerformKill;
     }
 
     public LuckyMan()
