@@ -231,6 +231,9 @@ static public class Roles
     public static VirusCrisisRoles.Survival Survival = new();
     public static VirusCrisisRoles.Gunner Gunner = new();
     public static VirusCrisisRoles.InfectedSidekick InfectedSidekick = new();
+    public static CrewmateRoles.Officer Officer = new();
+    public static NeutralRoles.Follower Follower = new();
+    public static CrewmateRoles.杀路无法意识 杀路无法意识 = new();
 
 
     //全てのロールはこの中に含まれている必要があります
@@ -245,9 +248,9 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,BomberA,BomberB,
-            Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,
-            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,Puppeteer,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,Officer,杀路无法意识,
+            Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,BomberA,BomberB,
+            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,Puppeteer,Follower,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,WerewolfsCat,OraclesCat,
 

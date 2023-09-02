@@ -1429,7 +1429,7 @@
 
 "role.bait.canBeExtraRole" : "生成为附加职业"
 
-"role.madmate.taskPercent" : "得知伪装者所需任务百分比"
+"role.madmate.taskPercent" : "得知伪装者所需任务"
 "role.madmate.IgnoringMadmate" : "忽略叛徒人数"
 
 "role.sheriff.madmateCanKillEveryone" : "叛徒警长可以任意击杀"
@@ -1455,6 +1455,17 @@
 "role.lastImpostor.guessCount" : "最多猜测次数"
 
 "role.opportunist.canWinWithPavlov" : "可以与巴浦洛夫团队共同胜利"
+"role.opportunist.canWinWithMoriarty" : "可以与莫里亚蒂团队共同胜利"
+"role.opportunist.canWinWithCascrubinter" : "可以与代行刑者共同胜利"
+"role.opportunist.canWinWithGuessers" : "可以与赌怪们共同胜利"
+"role.opportunist.canWinWithYandere" : "可以与病娇共同胜利"
+"role.opportunist.canWinWithSanta" : "可以与圣诞老人团队共同胜利"
+"role.opportunist.canWinWithWerewolf" : "可以与狼人共同胜利"
+"role.opportunist.canWinWithOracle" : "可以与天启共同胜利"
+"role.opportunist.canWinWithGhost" : "可以与怨灵共同胜利"
+"role.opportunist.canWinWithPuppeteer" : "可以与傀儡师共同胜利"
+"role.opportunist.canWinWithSpectre" : "可以与狐妖共同胜利"
+"role.opportunist.canWinWithPaparazzo" : "可以与摄影师共同胜利"
 
 "role.holmes.name" : "福尔摩斯"
 "role.holmes.short" : "福"
@@ -2007,6 +2018,7 @@
 "role.mercenary.info" : "你可以和任何阵营获胜。"
 "role.mercenary.killCooldown" : "击杀冷却时间"
 "role.mercenary.canUseVent" : "可以使用管道"
+"role.mercenary.additionalEndText" : " <color=#ffffffff>+</color> 雇佣兵胜利"
 
 "role.resurrectionist.name" : "反生者"
 "role.resurrectionist.short" : "反"
@@ -2168,13 +2180,35 @@
 "role.gunner.info" : "你可以攻击伪装者。"
 "role.gunner.killcooldown" : "击杀冷却时间"
 "role.gunner.neutrallySpawnCount" : "自然生成的枪手个数"
+"role.gunner.leftCount" : "子弹数量"
 
 "role.infectedSidekick.name" : "被感染者"
 "role.infectedSidekick.short" : "被"
-"role.infectedSidekick.hint" : "拖住别人的脚步"
-"role.infectedSidekick.info" : "你加入了感染者阵营。\n想办法拖住幸存者们！"
+"role.infectedSidekick.hint" : "二次感染！"
+"role.infectedSidekick.info" : "你加入了感染者阵营。\n想办法感染幸存者们！"
 "role.infectedSidekick.freezecooldown" : "冻结冷却时间"
 "role.infectedSidekick.freezeduring" : "冻结持续时间"
+"role.infectedSidekick.tips" : "注：被感染者击杀初始冷却和冷却同步感染者"
+
+"role.officer.name" : "长官"
+"role.officer.short" : "长"
+"role.officer.description" : "给我过来！"
+"role.officer.hint" : "阻止别人移动"
+"role.officer.info" : "通过技能，你可以让目标强制跟随你。(不锁定技能冷却)"
+"role.officer.orderCooldown" : "命令冷却时间"
+
+"role.follower.name" : "跟随者"
+"role.follower.short" : "随"
+"role.follower.description" : "结束了么？"
+"role.follower.hint" : "和你信任的人一起获胜"
+"role.follower.info" : "类似与打工人。\n你可以选择一个人并跟随他一起胜利。\n（没有测试）目标掉线后可以重新选择。"
+"role.follower.additionalEndText" : " <color=#ffffffff>+</color> 跟随者胜利"
+
+"role.杀路无法意识.name" : "击败"
+"role.杀路无法意识.short" : "击"
+"role.杀路无法意识.description" : "！"
+"role.杀路无法意识.hint" : "！"
+"role.杀路无法意识.info" : "！"
 
 "option.display.random" : "随机"
 
@@ -2194,6 +2228,7 @@
 "side.greenTeam.name" : "绿队"
 "side.infected.name" : "感染者"
 "side.survival.name" : "幸存者"
+"side.puppeteer.name" : "傀儡师"
 
 "text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
 "text.exile.connection" : " "
@@ -2220,6 +2255,7 @@
 "game.endText.greenTeam" : "绿队取得了战争的胜利！"
 "game.endText.infected" : "所有人都失踪了！"
 "game.endText.survival" : "我们活下来了！"
+"game.endText.puppeteer" : "傀儡师胜利"
 
 "status.hemorrhage" : "失血"
 "status.killed" : "爆炸"
@@ -2231,7 +2267,7 @@
 "button.label.mark" : "标记"
 "button.label.assassinate" : "刺杀"
 "button.label.change" : "更改"
-"button.label.suicide" : "自杀倒计时"
+"button.label.suicideLeft" : "自杀倒计时"
 "button.label.escape" : "逃逸"
 "button.label.hide" : "观察"
 "button.label.snap" : "寻尸"
@@ -2254,6 +2290,8 @@
 "button.label.releaseSouls" : "超度"
 "button.label.lock" : "上锁"
 "button.label.freeze" : "冻结"
+"button.label.choose" : "选择"
+"button.label.order" : "命令"
 
 "meeting.seb" : "特殊会议"
 "meeting.forbid" : "你不能召开紧急会议"

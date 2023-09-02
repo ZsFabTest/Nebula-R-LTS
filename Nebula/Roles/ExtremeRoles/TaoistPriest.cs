@@ -4,6 +4,8 @@ public class TaoistPriest : Template.TCrewmate{
 
     private Module.CustomOption killCooldown;
 
+    private SpriteLoader killButtonSprite = new SpriteLoader("Nebula.Resources.SheriffKillButton.png", 100f, "ui.button.sheriff.kill");
+
     public override void LoadOptionData(){
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
         killCooldown = CreateOption(Color.white,"killCooldown",15f,2.5f,45f,2.5f);
@@ -34,7 +36,7 @@ public class TaoistPriest : Template.TCrewmate{
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove && !target; },
             () => { release.Timer = release.MaxTimer; },
-            __instance.KillButton.graphic.sprite,
+            killButtonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
             Module.NebulaInputManager.modKillInput.keyCode,

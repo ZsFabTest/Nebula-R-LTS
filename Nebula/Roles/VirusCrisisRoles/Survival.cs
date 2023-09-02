@@ -1,6 +1,9 @@
 namespace Nebula.Roles.VirusCrisisRoles;
 
-public class Survival : Role{
+public class Survival : Role,Template.HasWinTrigger{
+    public bool WinTrigger { get; set; }
+    public byte Winner { get; set; }
+
     private Module.CustomOption taskCount;
 
     public override bool IsSpawnable(){
@@ -22,6 +25,10 @@ public class Survival : Role{
         //if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.Supportee)){
         RPCEventInvoker.ImmediatelyUnsetExtraRole(PlayerControl.LocalPlayer,Roles.Supportee);
         RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Gunner);
+    }
+
+    public override void GlobalInitialize(PlayerControl __instance){
+        WinTrigger = false;
     }
 
     public override void OnDied(){

@@ -300,23 +300,10 @@ public class Side
     });
 
     public static Side Yandere = new Side("Yandere","yandere",IntroDisplayOption.Yanderes,NeutralRoles.Yandere.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        if(statistics.AliveYandere * 2 > statistics.TotalAlive || (statistics.AliveImpostors <= 0 && statistics.AliveJackals <= 0 && statistics.AliveMoriarty <= 0 && statistics.AlivePavlov == 0 && statistics.AliveWerewolf <= 0 && statistics.AliveOracle <= 0 && statistics.AliveYandere > 0 && statistics.AliveMadmate <= 0)){
+            return EndCondition.YandereWin;
+        }
         return null;
-    },(EndCondition endCondition, PlayerStatistics statistics, ShipStatus status) => {
-        if (endCondition.IsNoBodyWinEnd) return null;
-        if(statistics.AliveYandere <= 0) return null;
-        if (endCondition == EndCondition.ArsonistWin) return null;
-        if (endCondition == EndCondition.EmpiricWin) return null;
-        if (endCondition == EndCondition.JesterWin) return null;
-        if (endCondition == EndCondition.LoversWin) return null;
-        if (endCondition == EndCondition.VultureWin) return null;
-        if (endCondition == EndCondition.AvengerWin) return null;
-        if (endCondition == EndCondition.SpectreWin) return null;
-        if (endCondition == EndCondition.YandereWin) return null;
-        if (endCondition == EndCondition.ChallengerWin) return null;
-        if (endCondition == EndCondition.GhostWin) return null;
-        if (endCondition == EndCondition.PuppeteerWin) return null;
-        if(!Roles.Yandere.GetLover().GetModData().HasExtraRole(Roles.SecretCrush)) RPCEventInvoker.SetExtraRole(Roles.Yandere.GetLover(),Roles.SecretCrush,0);
-        return EndCondition.YandereWin;
     });
 
     public static Side Guesser = new Side("Guesser","guesser",IntroDisplayOption.STANDARD,ComplexRoles.FGuesser.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {

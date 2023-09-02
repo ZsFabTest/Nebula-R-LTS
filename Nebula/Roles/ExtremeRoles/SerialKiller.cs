@@ -66,7 +66,7 @@ public class SerialKiller : Role
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.noGameInput.keyCode,
-            "button.label.suicide"
+            "button.label.suicideLeft"
         ).SetTimer(114514f);
         suicideButton.MaxTimer = suicideMaxTimeOption.getFloat();
         suicideButton.timeInVent = true;

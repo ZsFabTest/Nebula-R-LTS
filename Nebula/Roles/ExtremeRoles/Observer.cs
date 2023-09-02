@@ -94,7 +94,7 @@ public class Observer : Role
             MarkButtonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
-            Module.NebulaInputManager.modifierAbilityInput.keyCode,
+            Module.NebulaInputManager.secondaryAbilityInput.keyCode,
             "button.label.mark"
         );
         cameraButton.Timer = cameraButton.MaxTimer = 0f;

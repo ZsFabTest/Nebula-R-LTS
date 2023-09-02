@@ -26,7 +26,7 @@ public class Ghost : Role,Template.HasWinTrigger{
     public override void GlobalInitialize(PlayerControl __instance){
         WinTrigger = false;
         Winner = byte.MaxValue;
-        MurderId = 16;
+        MurderId = byte.MaxValue;
         lcnt = -1;
     }
 
@@ -97,7 +97,7 @@ public class Ghost : Role,Template.HasWinTrigger{
             RPCEventInvoker.UncheckedMurderPlayer(MurderId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
             RPCEventInvoker.CleanDeadBody(PlayerControl.LocalPlayer.PlayerId);
             Game.GameData.data.myData.CanSeeEveryoneInfo = true;
-            MurderId = 16;
+            MurderId = byte.MaxValue;
             lcnt = -1;
         },0);
     }

@@ -111,6 +111,7 @@ public enum CustomRPC
     SetBombTarget,
     SetSmoke,
     SetInfectLives,
+    UpdateFollowerData,
 }
 
 //RPCを受け取ったときのイベント
@@ -431,6 +432,9 @@ class RPCHandlerPatch
                 break;
             case (byte)CustomRPC.SetInfectLives:
                 RPCEvents.SetInfectLives(reader.ReadByte());
+                break;
+            case (byte)CustomRPC.UpdateFollowerData:
+                RPCEvents.UpdateFollowerData(reader.ReadByte());
                 break;
         }
     }
@@ -1000,8 +1004,12 @@ static class RPCEvents
             Roles.Role role1 = data1.role, role2 = data2.role;
 
                 //ロールを変更
+            try{
                 SetUpRole(data1, Helpers.playerById(playerId_1), role2, roleData2);
-            SetUpRole(data2, Helpers.playerById(playerId_2), role1, roleData1);
+            }catch(Exception e){ Debug.LogError(e.StackTrace); }
+            try{
+                SetUpRole(data2, Helpers.playerById(playerId_2), role1, roleData1);
+            }catch(Exception e){ Debug.LogError(e.StackTrace); }
         }, 16);
     }
 
@@ -1779,6 +1787,10 @@ static class RPCEvents
 
     public static void SetInfectLives(byte lives){
         Roles.Roles.Infected.TotalLives = lives;
+    }
+
+    public static void UpdateFollowerData(byte data){
+        Roles.Roles.Follower.targetId = data;
     }
 }
 
@@ -2831,5 +2843,12 @@ public class RPCEventInvoker
         writer.Write(lives);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SetInfectLives(lives);
+    }
+
+    public static void UpdateFollowerData(byte data){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.UpdateFollowerData,Hazel.SendOption.Reliable,-1);
+        writer.Write(data);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.UpdateFollowerData(data);
     }
 }   

@@ -43,8 +43,7 @@ public class Madmate : Role
 
         InvolveNonImpostorPlayerOnExile = CreateOption(Color.white, "involveNonImpostorPlayerOnExile", false).AddInvPrerequisite(SecondoryRoleOption);
 
-        SecondaryMadmateKnowImpostorsTasksPercentOption = CreateOption(Color.white, "taskPercent", 60f, 10f, 100f, 10f).AddPrerequisite(SecondoryRoleOption);
-        SecondaryMadmateKnowImpostorsTasksPercentOption.suffix = "percent";
+        SecondaryMadmateKnowImpostorsTasksPercentOption = CreateOption(Color.white, "taskPercent", 3f, 1f, 10f, 1f).AddPrerequisite(SecondoryRoleOption);
 
         CanKnowImpostorsByTasksOption = CreateOption(Color.white, "canKnowImpostorsByTasks", true).AddInvPrerequisite(SecondoryRoleOption);
         CanKnowImpostorsByTasksOption.postOptionScreenBuilder = (refresher) =>
@@ -365,8 +364,7 @@ public class SecondaryMadmate : ExtraRole
     {
         int completedTasks = Game.GameData.data.myData.getGlobalData().Tasks.Completed;
 
-        if (completedTasks >= Game.GameData.data.myData.getGlobalData().Tasks.ActualTasks * Roles.Madmate.SecondaryMadmateKnowImpostorsTasksPercentOption.getFloat() * 0.01f)
-        {
+        if (completedTasks >= Roles.Madmate.SecondaryMadmateKnowImpostorsTasksPercentOption.getFloat()){
             knowImpostors = true;
         }
     }

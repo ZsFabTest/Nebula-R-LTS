@@ -8,7 +8,7 @@ public class TCrewmate : Role{
         if(!hasRoleUpdate) return;
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
+        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
     }
 
     public TCrewmate(string name,string localizeName,Color RoleColor,bool canUsev)

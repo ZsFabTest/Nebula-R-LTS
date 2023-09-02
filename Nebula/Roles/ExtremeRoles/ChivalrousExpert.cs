@@ -5,6 +5,8 @@ public class ChivalrousExpert : Role{
 
     public int ceId { get; private set; }
 
+    private SpriteLoader killButtonSprite = new SpriteLoader("Nebula.Resources.SheriffKillButton.png", 100f, "ui.button.sheriff.kill");
+
     public override void LoadOptionData()
     {
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
@@ -34,7 +36,7 @@ public class ChivalrousExpert : Role{
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.GetModData().GetRoleData(ceId) < 1; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { killButton.Timer = killButton.MaxTimer; },
-            __instance.KillButton.graphic.sprite,
+            killButtonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
             Module.NebulaInputManager.modKillInput.keyCode,

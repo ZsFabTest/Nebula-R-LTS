@@ -1,8 +1,7 @@
 namespace Nebula.Roles.VirusCrisisRoles;
 
 public class InfectedSidekick : Role{
-    private Module.CustomOption freezeCooldown;
-    private Module.CustomOption freezeDuring;
+    private Module.CustomOption tips;
 
     public override bool IsSpawnable(){
         return CustomOptionHolder.gameModeNormal.getSelection() == 3;
@@ -11,15 +10,10 @@ public class InfectedSidekick : Role{
     public override void LoadOptionData(){
         TopOption.tab = Module.CustomOptionTab.ImpostorRoles;
         TopOption.AddCustomPrerequisite(() => { return CustomOptionHolder.gameModeNormal.getSelection() == 3; });
-        freezeCooldown = CreateOption(Color.white,"freezecooldown",7.5f,2.5f,25f,2.5f);
-        freezeCooldown.suffix = "second";
-        freezeDuring = CreateOption(Color.white,"freezeduring",2.5f,1f,5f,0.5f);
-        freezeDuring.suffix = "second";
+        tips = CreateOption(Color.white,"tips",true);
     }
 
     //public int TotalLives;
-
-    private SpriteLoader buttonSprite = new("Nebula.Resources.ChainShiftButton.png",115f);
 
 /*
     public override void Initialize(PlayerControl __instance){
@@ -35,43 +29,54 @@ public class InfectedSidekick : Role{
     }
     */
 
-    private CustomButton freeze;
+    private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(freeze != null)
+        if(killButton != null)
         {
-            freeze.Destroy();
+            killButton.Destroy();
         }
-        freeze = new CustomButton(
+        killButton = new CustomButton(
             () =>
             {
-                RPCEventInvoker.EmitSpeedFactor(Game.GameData.data.myData.currentTarget,new Game.SpeedFactor(255, freezeDuring.getFloat(), 0.1f, true));
-                freeze.Timer = freeze.MaxTimer;
+                if(Game.GameData.data.myData.currentTarget.GetModData().extraRole.Contains(Roles.Supportee)){
+                    RPCEventInvoker.ImmediatelyChangeRole(Game.GameData.data.myData.currentTarget, Roles.InfectedSidekick);
+                    RPCEventInvoker.ImmediatelyUnsetExtraRole(Game.GameData.data.myData.currentTarget,Roles.Supportee);
+                    Game.GameData.data.myData.currentTarget.ShowFailedMurder();
+                    RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget);
+                } //Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
+                else{
+                    RPCEventInvoker.SetExtraRole(Game.GameData.data.myData.currentTarget,Roles.Supportee,0);
+                    Game.GameData.data.myData.currentTarget.ShowFailedMurder();
+                    RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget);
+                }
+                killButton.Timer = killButton.MaxTimer;
+                Game.GameData.data.myData.currentTarget = null;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
-            () => { freeze.Timer = freeze.MaxTimer; },
-            buttonSprite.GetSprite(),
+            () => { killButton.Timer = killButton.MaxTimer; },
+            __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.abilityInput.keyCode,
-            "button.label.freeze"
-        ).SetTimer(freezeCooldown.getFloat());
-        freeze.MaxTimer = freezeCooldown.getFloat();
-        //killButton.SetButtonCoolDownOption(true);
+            Module.NebulaInputManager.modKillInput.keyCode,
+            "button.label.kill"
+        ).SetTimer(Roles.Infected.InitKillCooldown.getFloat());
+        killButton.MaxTimer = Roles.Infected.killCooldown.getFloat();
+        killButton.SetButtonCoolDownOption(true);
     }
 
     public override void CleanUp(){
-        if(freeze != null){
-            freeze.Destroy();
-            freeze = null;
+        if(killButton != null){
+            killButton.Destroy();
+            killButton = null;
         }
     }
 
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
+        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((p) => { return p.GetModData().role.side != Side.Infected; });
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
         //if(TotalLives <= 0 && !PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
     }
@@ -87,6 +92,10 @@ public class InfectedSidekick : Role{
     }
     */
 
+    public override void OnDied(){
+        Game.GameData.data.myData.CanSeeEveryoneInfo = true;
+    }
+
     public InfectedSidekick() : base("InfectedSidekick","infectedSidekick",Palette.ImpostorRed,RoleCategory.Neutral,Side.Infected,Side.Infected,
          new HashSet<Side>() { Side.Infected },new HashSet<Side>() { Side.Infected },new HashSet<Patches.EndCondition> { Patches.EndCondition.InfectedWin },
          true,VentPermission.CanUseUnlimittedVent,true,true,true){
@@ -95,6 +104,6 @@ public class InfectedSidekick : Role{
         ValidGamemode = Module.CustomGameMode.VirusCrisis;
         canReport = false;
         CanCallEmergencyMeeting = false;
-        freeze = null;
+        killButton = null;
     }
 }

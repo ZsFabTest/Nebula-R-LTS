@@ -14,7 +14,7 @@ public class Dictator : Role{
 
     public override void OnVote(byte targetId)
     {
-        if(targetId <= 14)
+        if(targetId <= Game.GameData.data.AllPlayers.Count())
         {
             RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer, voteId);
             isVoted = true;

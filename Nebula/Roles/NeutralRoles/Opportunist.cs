@@ -17,6 +17,17 @@ public class Opportunist : Role
     private Module.CustomOption canWinWithLoversOption;
     private Module.CustomOption canWinWithAvengerOption;
     private Module.CustomOption canWinWithPavlovOption;
+    private Module.CustomOption canWinWithMoriartyOption;
+    private Module.CustomOption canWinWithCascrubinterOption;
+    private Module.CustomOption canWinWithGuessersOption;
+    private Module.CustomOption canWinWithYandereOption;
+    private Module.CustomOption canWinWithWerewolfOption;
+    private Module.CustomOption canWinWithOracleOption;
+    private Module.CustomOption canWinWithGhostOption;
+    //private Module.CustomOption canWinWithSantaTeamOption;
+    private Module.CustomOption canWinWithPuppeteerOption;
+    private Module.CustomOption canWinWithSpectreOption;
+    private Module.CustomOption canWinWithPaparazzoOption;
 
     //オポチュタスク割り当て用
     private List<int> stayingTaskOrder;
@@ -62,6 +73,16 @@ public class Opportunist : Role
         canWinWithLoversOption = CreateOption(Color.white, "canWinWithLovers", true);
         canWinWithAvengerOption = CreateOption(Color.white, "canWinWithAvenger", true);
         canWinWithPavlovOption = CreateOption(Color.white, "canWinWithPavlov", true);
+        canWinWithMoriartyOption = CreateOption(Color.white, "canWinWithMoriarty", true);
+        canWinWithCascrubinterOption = CreateOption(Color.white, "canWinWithCascrubinter", true);
+        canWinWithGuessersOption = CreateOption(Color.white, "canWinWithGuessers", true);//.AddPrerequisite(Roles.F_Guesser.canWinAloneOption);;
+        canWinWithYandereOption = CreateOption(Color.white, "canWinWithYandere", true);
+        canWinWithWerewolfOption = CreateOption(Color.white, "canWinWithWerewolf", true);
+        canWinWithOracleOption = CreateOption(Color.white, "canWinWithOracle", true);
+        canWinWithGhostOption = CreateOption(Color.white, "canWinWithGhost", true);
+        canWinWithPuppeteerOption = CreateOption(Color.white, "canWinWithPuppeteer", true);
+        canWinWithSpectreOption = CreateOption(Color.white, "canWinWithSpectre", true);
+        canWinWithPaparazzoOption = CreateOption(Color.white, "canWinWithPaparazzo", true);
     }
 
     public override void Initialize(PlayerControl __instance)
@@ -86,6 +107,17 @@ public class Opportunist : Role
         if (condition == EndCondition.LoversWin && !canWinWithLoversOption.getBool()) return false;
         if (condition == EndCondition.TrilemmaWin && !canWinWithLoversOption.getBool()) return false;
         if (condition == EndCondition.PavlovWin && !canWinWithPavlovOption.getBool()) return false;
+        if ((condition == EndCondition.MoriartyWin || condition == EndCondition.MoriartyWinByKillHolmes) && !canWinWithMoriartyOption.getBool()) return false;
+        if (condition == EndCondition.CascrubinterWin && !canWinWithCascrubinterOption.getBool()) return false;
+        if (condition == EndCondition.GuesserWin && !canWinWithGuessersOption.getBool()) return false;
+        //if (condition == EndCondition.SantaWin && !canWinWithSantaTeamOption.getBool()) return false;
+        if (condition == EndCondition.YandereWin && !canWinWithYandereOption.getBool()) return false;
+        if (condition == EndCondition.WerewolfWin && !canWinWithWerewolfOption.getBool()) return false;
+        if (condition == EndCondition.OracleWin && !canWinWithOracleOption.getBool()) return false;
+        if (condition == EndCondition.GhostWin && !canWinWithGhostOption.getBool()) return false;
+        if (condition == EndCondition.PuppeteerWin && !canWinWithPuppeteerOption.getBool()) return false;
+        if (condition == EndCondition.SpectreWin && !canWinWithSpectreOption.getBool()) return false;
+        if (condition == EndCondition.PaparazzoWin && !canWinWithPaparazzoOption.getBool()) return false;
 
 
         if (player.GetModData().Tasks.AllTasks <= player.GetModData().Tasks.Completed)

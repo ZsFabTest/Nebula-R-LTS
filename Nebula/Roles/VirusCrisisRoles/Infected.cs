@@ -1,8 +1,8 @@
 namespace Nebula.Roles.VirusCrisisRoles;
 
 public class Infected : Role{
-    private Module.CustomOption InitKillCooldown;
-    private Module.CustomOption killCooldown;
+    public Module.CustomOption InitKillCooldown;
+    public Module.CustomOption killCooldown;
     private Module.CustomOption lives;
 
     public override bool IsSpawnable(){
@@ -14,15 +14,15 @@ public class Infected : Role{
         TopOption.AddCustomPrerequisite(() => { return CustomOptionHolder.gameModeNormal.getSelection() == 3; });
         InitKillCooldown = CreateOption(Color.white,"initkillcooldown",15f,2.5f,45f,2.5f);
         InitKillCooldown.suffix = "second";
-        killCooldown = CreateOption(Color.white,"killcooldown",25f,10f,45f,2.5f);
+        killCooldown = CreateOption(Color.white,"killcooldown",15f,10f,20f,2.5f);
         killCooldown.suffix = "second";
-        lives = CreateOption(Color.white,"totalLives",3f,1f,10f,1f);
+        lives = CreateOption(Color.white,"totalLives",5f,1f,10f,1f);
     }
 
     public int TotalLives;
 
-    public override void Initialize(PlayerControl __instance){
-        RPCEventInvoker.SetInfectLives((byte)(int)lives.getFloat());
+    public override void GlobalInitialize(PlayerControl __instance){
+        TotalLives = (int)lives.getFloat();
     }
 
     public override Helpers.MurderAttemptResult OnMurdered(byte murderId,byte playerId){
@@ -43,13 +43,17 @@ public class Infected : Role{
             {
                 if(Game.GameData.data.myData.currentTarget.GetModData().extraRole.Contains(Roles.Supportee)){
                     RPCEventInvoker.ImmediatelyChangeRole(Game.GameData.data.myData.currentTarget, Roles.InfectedSidekick);
-                    RPCEventInvoker.ImmediatelyUnsetExtraRole(PlayerControl.LocalPlayer,Roles.Supportee);
+                    RPCEventInvoker.ImmediatelyUnsetExtraRole(Game.GameData.data.myData.currentTarget,Roles.Supportee);
+                    Game.GameData.data.myData.currentTarget.ShowFailedMurder();
+                    RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget);
                 } //Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
                 else{
                     RPCEventInvoker.SetExtraRole(Game.GameData.data.myData.currentTarget,Roles.Supportee,0);
                     Game.GameData.data.myData.currentTarget.ShowFailedMurder();
+                    RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget);
                 }
                 killButton.Timer = killButton.MaxTimer;
+                Game.GameData.data.myData.currentTarget = null;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
@@ -69,12 +73,13 @@ public class Infected : Role{
             killButton.Destroy();
             killButton = null;
         }
+        TotalLives = 255;
     }
 
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
+        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((p) => { return p.GetModData().role.side != Side.Infected; });
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
 
         if(TotalLives <= 0 && !PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
@@ -89,6 +94,10 @@ public class Infected : Role{
         displayName += " " + TotalLives.ToString() + "♥";
     }
 
+    public override void OnDied(){
+        RPCEventInvoker.WinTrigger(Roles.Survival);
+    }
+
     public Infected() : base("Infected","infected",Palette.ImpostorRed,RoleCategory.Neutral,Side.Infected,Side.Infected,
          new HashSet<Side>() { Side.Infected },new HashSet<Side>() { Side.Infected },new HashSet<Patches.EndCondition> { Patches.EndCondition.InfectedWin },
          true,VentPermission.CanNotUse,false,true,true){
@@ -98,5 +107,6 @@ public class Infected : Role{
         canReport = false;
         CanCallEmergencyMeeting = false;
         killButton = null;
+        TotalLives = 255;
     }
 }

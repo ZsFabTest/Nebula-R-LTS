@@ -299,7 +299,10 @@ public class CustomOption
 
     public bool IsHiddenOnDisplay(CustomGameMode gameMode)
     {
-        return isHiddenOnDisplay || IsHiddenDisplayInternal(gameMode) || (parent != null && parent.IsHiddenOnDisplay(gameMode));
+        //try{
+            return isHiddenOnDisplay || IsHiddenDisplayInternal(gameMode) || (parent != null && parent.IsHiddenOnDisplay(gameMode));
+        //}catch{ Debug.LogError(this.format + "\n"); }
+        //return false;
     }
 
     public static void RegisterTopOption(CustomOption option) { TopOptions.Add(option); }
