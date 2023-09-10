@@ -24,7 +24,7 @@ public class TaoistPriest : Template.TCrewmate{
                 target = Game.GameData.data.myData.currentTarget;
                 Events.Schedule.RegisterPostMeetingAction(() => {
                     if(!PlayerControl.LocalPlayer.Data.IsDead){
-                        Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead, true);
+                        Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead,true,false);
                         RPCEventInvoker.CleanDeadBody(target.PlayerId);
                     }
                     target = null;

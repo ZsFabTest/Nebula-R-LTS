@@ -254,8 +254,18 @@ static public class GuesserSystem
                         __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
 
                     // Shoot player and send chat info if activated
+                    if(dyingTarget.PlayerId != PlayerControl.LocalPlayer.PlayerId){
+                        RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,guessId,1);
+                    }else{
+                        ulong pa = PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.ProfessionalAssassin.id);
+                        if(pa > 0){
+                            pa--;
+                            RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.ProfessionalAssassin.id, pa);
+                            Helpers.PlayQuickFlash(FGuesser.RoleColor);
+                            return;
+                        }
+                    } 
                     RPCEventInvoker.Guess(dyingTarget.PlayerId);
-                    if(dyingTarget.PlayerId != PlayerControl.LocalPlayer.PlayerId) RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,guessId,1);
                 }
             }));
 
@@ -371,8 +381,18 @@ static public class GuesserSystem
                                 __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
 
                             // Shoot player and send chat info if activated
+                            if(dyingTarget.PlayerId != PlayerControl.LocalPlayer.PlayerId){
+                                RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,guessId,1);
+                            }else{
+                                ulong pa = PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.ProfessionalAssassin.id);
+                                if(pa > 0){
+                                    pa--;
+                                    RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.ProfessionalAssassin.id, pa);
+                                    Helpers.PlayQuickFlash(FGuesser.RoleColor);
+                                    return;
+                                }
+                            } 
                             RPCEventInvoker.Guess(dyingTarget.PlayerId);
-                            if(dyingTarget.PlayerId != PlayerControl.LocalPlayer.PlayerId) RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,guessId,1);
                             //Debug.LogWarningFormat(PlayerControl.LocalPlayer.GetModData().GetRoleData(guessId).ToString());
                         }
                     }));
@@ -601,7 +621,7 @@ public class SecondaryGuesser : ExtraRole
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
     {
-        if(role == Roles.WiseMan || role == Roles.F_Swapper) return null;
+        if(role == Roles.WiseMan || role == Roles.F_Swapper || role == Roles.HighRoller) return null;
         Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeGuesser", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeGuesser");
         option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         option.AddCustomPrerequisite(() => { return Roles.SecondaryGuesser.IsSpawnable(); });

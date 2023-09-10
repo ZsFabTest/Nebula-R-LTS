@@ -1,3 +1,4 @@
+/*
 namespace Nebula.Roles.CrewmateRoles{
     public class 杀路无法意识 : Template.TCrewmate{
         public override bool IsGuessableRole => false;
@@ -14,3 +15,4 @@ namespace Nebula.Roles.CrewmateRoles{
         }
     }
 }
+*/

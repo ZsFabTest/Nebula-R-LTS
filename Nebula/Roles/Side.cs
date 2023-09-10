@@ -327,7 +327,7 @@ public class Side
 
     public static Side Challenger = new Side("Challenger","challenger",IntroDisplayOption.SHOW_ALL,NeutralRoles.Challenger.RoleColor,(PlayerStatistics statistics,ShipStatus status) => 
     {
-        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveYandere == 0 && statistics.AliveWerewolf == 0 && statistics.AliveOracle == 0 && statistics.AliveMadmate == 0 && statistics.AliveChallenger <= 1 && statistics.AliveChallenger * 2 >= statistics.TotalAlive){
+        if(statistics.AliveChallenger >= statistics.TotalAlive || Roles.Challenger.WinTrigger){
             return EndCondition.ChallengerWin;
         }
         return null;
@@ -368,6 +368,13 @@ public class Side
     public static Side Puppeteer = new Side("Puppeteer","puppeteer",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Puppeteer.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
         if(Roles.Puppeteer.WinTrigger){
             return EndCondition.PuppeteerWin;
+        }
+        return null;
+    });
+
+    public static Side HighRoller = new Side("HighRoller","highRoller",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.HighRoller.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        if(Roles.HighRoller.WinTrigger){
+            return EndCondition.HighRollerWin;
         }
         return null;
     });
@@ -463,6 +470,7 @@ public class Side
             Extra,VOID,
             RitualCrewmate,
             Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere,Werewolf,Challenger,Oracle,Ghost/*,SantaClaus*/,Puppeteer,YellowTeam,GreenTeam,Infected,Survival,
+            HighRoller
         };
 
     public IntroDisplayOption ShowOption { get; }

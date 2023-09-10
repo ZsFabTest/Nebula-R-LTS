@@ -14,7 +14,7 @@ public class Infected : Role{
         TopOption.AddCustomPrerequisite(() => { return CustomOptionHolder.gameModeNormal.getSelection() == 3; });
         InitKillCooldown = CreateOption(Color.white,"initkillcooldown",15f,2.5f,45f,2.5f);
         InitKillCooldown.suffix = "second";
-        killCooldown = CreateOption(Color.white,"killcooldown",15f,10f,20f,2.5f);
+        killCooldown = CreateOption(Color.white,"killcooldown",15f,2.5f,45f,2.5f);
         killCooldown.suffix = "second";
         lives = CreateOption(Color.white,"totalLives",5f,1f,10f,1f);
     }

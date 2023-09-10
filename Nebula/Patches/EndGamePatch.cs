@@ -51,6 +51,7 @@ public class EndCondition
     public static EndCondition GreenTeamWin = new EndCondition(140,Roles.BattleRoles.GreenTeam.RoleColor,"greenTeam",1,Module.CustomGameMode.Battle);
     public static EndCondition InfectedWin = new EndCondition(141,Palette.ImpostorRed,"infected",1,Module.CustomGameMode.VirusCrisis);
     public static EndCondition SurvivalWin = new EndCondition(142,Palette.CrewmateBlue,"survival",1,Module.CustomGameMode.VirusCrisis);
+    public static EndCondition HighRollerWin = new EndCondition(143,Roles.NeutralRoles.HighRoller.RoleColor,"highRoller",1,Module.CustomGameMode.Standard);
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
@@ -60,6 +61,7 @@ public class EndCondition
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
             PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin,YellowTeamWin,GreenTeamWin,InfectedWin,SurvivalWin,
+            HighRollerWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)

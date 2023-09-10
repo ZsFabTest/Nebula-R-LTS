@@ -9,7 +9,7 @@ public class Gunner : Role{
         return CustomOptionHolder.gameModeNormal.getSelection() == 3;
     }
 
-    private SpriteLoader killButtonSprite = new SpriteLoader("Nebula.Resources.SheriffKillButton.png", 100f, "ui.button.sheriff.kill");
+    private SpriteLoader killButtonSprite = new SpriteLoader("Nebula.Resources.SheriffKillButton.png", 115f, "ui.button.sheriff.kill");
 
     public override void LoadOptionData(){
         TopOption.tab = Module.CustomOptionTab.CrewmateRoles;
@@ -44,7 +44,7 @@ public class Gunner : Role{
                 RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget);
                 Game.GameData.data.myData.currentTarget = null;
             },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead && Roles.SchrodingersCat.canUseKillButton.getBool() && left > 0; },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead && left > 0; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { killButton.Timer = killButton.MaxTimer; },
             killButtonSprite.GetSprite(),
@@ -74,7 +74,7 @@ public class Gunner : Role{
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((p) => { return p.GetModData().role.side != Side.Survival; });
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
+        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
     }
 
     public override void OnDied(){

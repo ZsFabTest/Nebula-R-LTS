@@ -1729,7 +1729,7 @@ static class RPCEvents
     }
 
     public static void SendInfo(byte targetId,string info){
-        if(PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.Marker) return;
+        if(PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.Marker && PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.HighRoller) return;
         if(Helpers.playerById(targetId).GetModData().RoleInfo == "") Helpers.playerById(targetId).GetModData().RoleInfo = info;
     }
 

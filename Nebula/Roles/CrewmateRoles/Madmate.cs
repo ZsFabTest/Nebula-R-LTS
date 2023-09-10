@@ -16,6 +16,7 @@ public class Madmate : Role
     public Module.CustomOption SecondoryRoleOption;
     public Module.CustomOption SecondaryMadmateKnowImpostorsTasksPercentOption;
     public Module.CustomOption IgnoringNumOfMadmateOption;
+    public Module.CustomOption CanTurnIntoImpostorOption;
 
     //Local
     private HashSet<byte> knownImpostors = new HashSet<byte>();
@@ -121,6 +122,8 @@ public class Madmate : Role
 
         IgnoringNumOfMadmateOption = CreateOption(Color.white,"IgnoringMadmate",false);
 
+        CanTurnIntoImpostorOption = CreateOption(Color.white,"CanTurnIntoImpostor",true);
+
         CanBeGuesserOption?.AddInvPrerequisite(SecondoryRoleOption);
         CanBeDrunkOption?.AddInvPrerequisite(SecondoryRoleOption);
         CanBeBloodyOption?.AddInvPrerequisite(SecondoryRoleOption);
@@ -221,7 +224,7 @@ public class Madmate : Role
                 if(player.Data.IsDead) continue;
                 if(player.GetModData().role.side == Side.Impostor) sums++;
             }
-            if(sums is 0) RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Impostor); 
+            if(sums == 0 && CanTurnIntoImpostorOption.getBool()) RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Impostor); 
         }
     }
 
@@ -404,7 +407,7 @@ public class SecondaryMadmate : ExtraRole
                 if(player.Data.IsDead) continue;
                 if(player.GetModData().role.side == Side.Impostor) sums++;
             }
-            if(sums is 0){
+            if(sums == 0 && Roles.Madmate.CanTurnIntoImpostorOption.getBool()){
                 RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Impostor); 
                 RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.SecondaryMadmate,false);
             }

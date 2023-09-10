@@ -71,8 +71,7 @@ public class Holmes : Role
     {
         PlayerControl p = Helpers.playerById(playerId);
         var data = p.GetModData();
-        Role MoriartyFakeRole = Roles.AllRoles[NebulaPlugin.rnd.Next(39,62)];
-        data.RoleInfo = Helpers.cs(checkColor((data.role.side == Side.Moriarty ? MoriartyFakeRole : data.role).GetActualRole(data)),canKnowJobsOption.getBool() ? (data.role.side == Side.Moriarty ? Language.Language.GetString("role." + MoriartyFakeRole.LocalizeName + ".name") : Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name")) : "???");
+        data.RoleInfo = Helpers.cs(checkColor(data.role.GetActualRole(data)),canKnowJobsOption.getBool() ? Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name") : "???");
         RPCEventInvoker.SendInfo(playerId,data.RoleInfo);
     }
 

@@ -21,7 +21,7 @@ public class LuckyMan : Role{
     }
 
     public override Helpers.MurderAttemptResult OnMurdered(byte murderId,byte playerId){
-        int r = NebulaPlugin.rnd.Next(1,101);
+        int r = NebulaPlugin.rnd.Next(0,101);
         if(r <= chanceToRevievOption.getFloat()) return Helpers.MurderAttemptResult.SuppressKill;
         return Helpers.MurderAttemptResult.PerformKill;
     }

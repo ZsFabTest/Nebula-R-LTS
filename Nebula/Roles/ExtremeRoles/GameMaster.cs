@@ -19,6 +19,7 @@ public class GameMaster : Role
     {
         //RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.SecondaryGuesser, 0);
         //RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.Voter, 0);
+        RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.ProfessionalAssassin, 1);
     }
 
     private CustomButton testButton;

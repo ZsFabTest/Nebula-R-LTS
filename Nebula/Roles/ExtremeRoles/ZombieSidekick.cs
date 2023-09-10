@@ -14,7 +14,7 @@ public class ZombieSidekick : Role{
 
     public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
     {
-        if(Helpers.playerById(playerId).GetModData().role.category == RoleCategory.Impostor || PlayerControl.LocalPlayer.GetModData().role == Roles.ZombieSidekick){
+        if(Helpers.playerById(playerId).GetModData().role.category == RoleCategory.Impostor || Helpers.playerById(playerId).GetModData().role == Roles.ZombieSidekick){
             displayColor = Color;
         }
     }

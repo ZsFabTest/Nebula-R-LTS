@@ -989,6 +989,7 @@
 "role.spectre.spectreTask" : "狐妖任务类型"
 "role.spectre.clarifyCharge" : "获得隐身次数所需完成任务"
 "role.spectre.spectreTask.eatTheFried" : "吞噬食物"
+"role.spectre.spectreTask.deliveryRancor" : "传递怨气"
 "role.spectre.numOfTheFriedRequiredToWin" : "获胜所需吞噬食物数量"
 "role.spectre.clarifyDuration" : "隐身持续时间"
 "role.spectre.clarifyCoolDown" : "隐身冷却时间"
@@ -1431,6 +1432,7 @@
 
 "role.madmate.taskPercent" : "得知伪装者所需任务"
 "role.madmate.IgnoringMadmate" : "忽略叛徒人数"
+"role.madmate.CanTurnIntoImpostor" : "可以晋升为伪装者"
 
 "role.sheriff.madmateCanKillEveryone" : "叛徒警长可以任意击杀"
 "role.sheriff.jackalCanKillEveryone" : "豺狼警长可以任意击杀"
@@ -2045,10 +2047,11 @@
 "role.challenger.short" : "挑"
 "role.challenger.description" : "你过来啊"
 "role.challenger.hint" : "与玩家一对一决斗"
-"role.challenger.info" : "挑战者可以选定一位玩家与其挑战，被挑战的玩家职业转变为挑战者。\n只有其中一名挑战者死亡后，另一名挑战者才能继续挑战。\n死亡后挑战者职业转变为失忆者。\n挑战者只能击杀其他挑战者。"
+"role.challenger.info" : "挑战者可以随机一位玩家与其挑战，被挑战的玩家职业获得被挑战者附加。\n若挑战者被驱逐，则连带被挑战者死亡。\n挑战者以其他任意形式死亡视为挑战结束。"
 "role.challenger.killCooldown" : "挑战开始后的初始击杀冷却"
 "role.challenger.challengeCooldown" : "挑战冷却时间"
 "role.challenger.challengerDieIfMeetingStart" : "挑战时开会后死亡"
+"role.challenger.targetCnt" : "获胜所需击杀数"
 
 "role.supportee.name" : "受支持者"
 "role.supportee.short" : "受"
@@ -2110,7 +2113,7 @@
 "role.ghost.hint" : "报复击杀你的人"
 "role.ghost.info" : "在你第一次被击杀后，你将会复活并且可以杀死击杀者。\n杀死击杀者后胜利。\n没有在指定的轮数内击杀则暴毙。"
 "role.ghost.killCooldown" : "击杀冷却时间"
-"role.ghost.liveAddition" : "额外的存货轮数"
+"role.ghost.liveAddition" : "额外的存活轮数"
 
 "role.paranoiac.name" : "被害妄想者"
 "role.paranoiac.short" : "妄"
@@ -2170,8 +2173,11 @@
 "role.survival.short" : "幸"
 "role.survival.description" : "想办法活下来"
 "role.survival.hint" : "做任务 活下来"
-"role.survival.info" : "你可以跳管道保命。\n做完任务后将成为枪手。\n你可以挨两刀。"
+"role.survival.info" : "你可以跳管道保命。\n做完任务后将成为枪手或医生。"
 "role.survival.taskCount" : "任务数量"
+"role.survival.chanceToBeDoctor" : "成为医生的概率(+成为枪手的概率=1)"
+"role.survival.VentCooldown" : "使用管道冷却时间"
+"role.survival.VentDuring" : "最长管道停留时间"
 
 "role.gunner.name" : "枪手"
 "role.gunner.short" : "枪"
@@ -2182,6 +2188,12 @@
 "role.gunner.neutrallySpawnCount" : "自然生成的枪手个数"
 "role.gunner.leftCount" : "子弹数量"
 
+"role.doctorV.name" : "医生"
+"role.doctorV.short" : "医"
+"role.doctorV.hint" : "治疗受伤的幸存者"
+"role.doctorV.info" : "你能对受伤的幸存者使用治疗技能。\n你不能医治自己。"
+"role.doctorV.treatcooldown" : "治疗冷却时间"
+
 "role.infectedSidekick.name" : "被感染者"
 "role.infectedSidekick.short" : "被"
 "role.infectedSidekick.hint" : "二次感染！"
@@ -2189,6 +2201,9 @@
 "role.infectedSidekick.freezecooldown" : "冻结冷却时间"
 "role.infectedSidekick.freezeduring" : "冻结持续时间"
 "role.infectedSidekick.tips" : "注：被感染者击杀初始冷却和冷却同步感染者"
+"role.infectedSidekick.VentCooldown" : "使用管道冷却时间"
+"role.infectedSidekick.VentDuring" : "最长管道停留时间"
+"role.infectedSidekick.killCooldown" : "击杀冷却时间"
 
 "role.officer.name" : "长官"
 "role.officer.short" : "长"
@@ -2204,11 +2219,32 @@
 "role.follower.info" : "类似与打工人。\n你可以选择一个人并跟随他一起胜利。\n（没有测试）目标掉线后可以重新选择。"
 "role.follower.additionalEndText" : " <color=#ffffffff>+</color> 跟随者胜利"
 
+"role.highRoller.name" : "狂赌徒"
+"role.highRoller.short" : "狂"
+"role.highRoller.description" : "开始狂赌吧！"
+"role.highRoller.hint" : "通过猜测别人的职业获胜。"
+"role.highRoller.info" : "你可以通过猜测别人的职业获胜。\n你可以跟随赌怪们获胜（赌怪获胜优先）。"
+"role.highRoller.targetCnt" : "胜利所需正确猜测次数"
+"role.highRoller.dieIfGuessFailed" : "若猜测错误则死亡"
+"role.highRoller.canOracleOthers" : "可以占卜他人"
+"role.highRoller.divineCoolDown" : "占卜冷却"
+"role.highRoller.divineDuration" : "占卜所需时间"
+"role.highRoller.divineCoolDownAddition" : "占卜冷却时间追加"
+"role.highRoller.countOfCandidates" : "占卜后将会得到的职业数"
+
+"role.professionalAssassin.name" : "专业刺客"
+"role.professionalAssassin.description" : "因为不知道写什么所以就这样吧"
+"role.professionalAssassin.info" : "你可以赌错一次而不会死亡。"
+
 "role.杀路无法意识.name" : "击败"
 "role.杀路无法意识.short" : "击"
 "role.杀路无法意识.description" : "！"
 "role.杀路无法意识.hint" : "！"
 "role.杀路无法意识.info" : "！"
+
+"role.challenged.name" : "被挑战者"
+"role.challenged.short" : "被"
+"role.challenged.info" : "你被挑战者选中了。\n尝试逃离挑战者...或是击杀他。\n若挑战者被票出，则你连带死亡。"
 
 "option.display.random" : "随机"
 
@@ -2229,6 +2265,7 @@
 "side.infected.name" : "感染者"
 "side.survival.name" : "幸存者"
 "side.puppeteer.name" : "傀儡师"
+"side.highRoller.name" : "狂赌徒"
 
 "text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
 "text.exile.connection" : " "
@@ -2256,6 +2293,7 @@
 "game.endText.infected" : "所有人都失踪了！"
 "game.endText.survival" : "我们活下来了！"
 "game.endText.puppeteer" : "傀儡师胜利"
+"game.endText.highRoller" : "狂赌徒获胜"
 
 "status.hemorrhage" : "失血"
 "status.killed" : "爆炸"
@@ -2292,6 +2330,7 @@
 "button.label.freeze" : "冻结"
 "button.label.choose" : "选择"
 "button.label.order" : "命令"
+"button.label.treat" : "治疗"
 
 "meeting.seb" : "特殊会议"
 "meeting.forbid" : "你不能召开紧急会议"

@@ -3,6 +3,10 @@ namespace Nebula.Roles.VirusCrisisRoles;
 public class InfectedSidekick : Role{
     private Module.CustomOption tips;
 
+    private Module.CustomOption VentCooldown;
+    private Module.CustomOption VentDuring;
+    private Module.CustomOption killCooldown;
+
     public override bool IsSpawnable(){
         return CustomOptionHolder.gameModeNormal.getSelection() == 3;
     }
@@ -11,6 +15,12 @@ public class InfectedSidekick : Role{
         TopOption.tab = Module.CustomOptionTab.ImpostorRoles;
         TopOption.AddCustomPrerequisite(() => { return CustomOptionHolder.gameModeNormal.getSelection() == 3; });
         tips = CreateOption(Color.white,"tips",true);
+        killCooldown = CreateOption(Color.white,"killcooldown",22.5f,2.5f,45f,2.5f);
+        killCooldown.suffix = "second";
+        VentCooldown = CreateOption(Color.white,"VentCooldown",20f,2.5f,45f,2.5f);
+        VentCooldown.suffix = "second";
+        VentDuring = CreateOption(Color.white,"VentDuring",10f,2.5f,45f,2.5f);
+        VentDuring.suffix = "second";
     }
 
     //public int TotalLives;
@@ -62,7 +72,7 @@ public class InfectedSidekick : Role{
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.kill"
         ).SetTimer(Roles.Infected.InitKillCooldown.getFloat());
-        killButton.MaxTimer = Roles.Infected.killCooldown.getFloat();
+        killButton.MaxTimer = killCooldown.getFloat();
         killButton.SetButtonCoolDownOption(true);
     }
 
@@ -94,6 +104,11 @@ public class InfectedSidekick : Role{
 
     public override void OnDied(){
         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
+    }
+
+    public override void GlobalInitialize(PlayerControl __instance){
+        VentCoolDownMaxTimer = VentCooldown.getFloat();
+        VentDurationMaxTimer = VentDuring.getFloat();
     }
 
     public InfectedSidekick() : base("InfectedSidekick","infectedSidekick",Palette.ImpostorRed,RoleCategory.Neutral,Side.Infected,Side.Infected,

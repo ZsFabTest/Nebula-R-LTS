@@ -233,7 +233,11 @@ static public class Roles
     public static VirusCrisisRoles.InfectedSidekick InfectedSidekick = new();
     public static CrewmateRoles.Officer Officer = new();
     public static NeutralRoles.Follower Follower = new();
-    public static CrewmateRoles.杀路无法意识 杀路无法意识 = new();
+    //public static CrewmateRoles.杀路无法意识 杀路无法意识 = new();
+    public static VirusCrisisRoles.Doctor DoctorV = new();
+    public static NeutralRoles.HighRoller HighRoller = new();
+    public static ExtraRoles.Challenged Challenged = new();
+    public static ExtraRoles.ProfessionalAssassin ProfessionalAssassin = new();
 
 
     //全てのロールはこの中に含まれている必要があります
@@ -248,9 +252,9 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,Officer,杀路无法意识,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,Officer,/*杀路无法意识,*/
             Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,BomberA,BomberB,
-            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,Puppeteer,Follower,
+            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,Puppeteer,Follower,HighRoller,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,WerewolfsCat,OraclesCat,
 
@@ -260,7 +264,7 @@ static public class Roles
             //HnSCleaner,HnSHadar,HnSRaider,HnSReaper
 
             YellowTeam,GreenTeam,
-            Infected,Survival,Gunner,InfectedSidekick
+            Infected,Survival,Gunner,InfectedSidekick,DoctorV
         };
 
     public static List<ExtraRole> AllExtraRoles = new List<ExtraRole>()
@@ -270,7 +274,8 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             /*PerkHolder,*/
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee,Singer,Wanted/*,Voter*/
+            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush,DeputyMayor/*,Signaller*/,OnlineCelebrity,Superstar,Supportee,Singer,Wanted/*,Voter*/,
+            Challenged,ProfessionalAssassin
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()
