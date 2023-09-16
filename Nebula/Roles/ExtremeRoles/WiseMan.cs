@@ -19,7 +19,8 @@ public class WiseMan : Template.TCrewmate{
         
         Info = Info.Insert(Info.Length,"\n");
         
-        meetingInfo.text = Info;
+        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        meetingInfo.text += Info;
         meetingInfo.gameObject.SetActive(true);
     }
 

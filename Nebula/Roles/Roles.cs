@@ -238,6 +238,8 @@ static public class Roles
     public static NeutralRoles.HighRoller HighRoller = new();
     public static ExtraRoles.Challenged Challenged = new();
     public static ExtraRoles.ProfessionalAssassin ProfessionalAssassin = new();
+    public static BattleRoles.GreenTeamCat GreenTeamCat = new();
+    public static BattleRoles.YellowTeamCat YellowTeamCat = new();
 
 
     //全てのロールはこの中に含まれている必要があります
@@ -263,7 +265,7 @@ static public class Roles
             //HnSCrewmate,
             //HnSCleaner,HnSHadar,HnSRaider,HnSReaper
 
-            YellowTeam,GreenTeam,
+            YellowTeam,GreenTeam,YellowTeamCat,GreenTeamCat,
             Infected,Survival,Gunner,InfectedSidekick,DoctorV
         };
 

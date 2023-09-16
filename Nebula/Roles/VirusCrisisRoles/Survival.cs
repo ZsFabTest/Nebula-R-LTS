@@ -49,7 +49,7 @@ public class Survival : Role,Template.HasWinTrigger{
 
     public Survival() : base("Survival","survival",Palette.CrewmateBlue,RoleCategory.Neutral,Side.Survival,Side.Survival,
          new HashSet<Side>() { Side.Survival },new HashSet<Side>() { Side.Survival },new HashSet<Patches.EndCondition>() { Patches.EndCondition.SurvivalWin },
-         false,VentPermission.CanUseUnlimittedVent,true,false,false){
+         false,VentPermission.CanUseLimittedVent,true,false,false){
         Allocation = AllocationType.None;
         ValidGamemode = Module.CustomGameMode.VirusCrisis;
         canReport = false;

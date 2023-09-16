@@ -8,7 +8,10 @@ class PolusEditor : MapEditor
 
     public override void AddVents()
     {
-        CreateVent(SystemTypes.Specimens, "SpecimenVent", new UnityEngine.Vector2(-1f, -1.35f));
+        Vent v = CreateVent(SystemTypes.Specimens, "SpecimenVent", new UnityEngine.Vector2(-1f, -1.35f));
+        Vent RestroomVent = ShipStatus.Instance.AllVents.FirstOrDefault((vent) => { return Vector2.Distance(vent.transform.position,new Vector3(32.963f,-9.526f,2f)) <= 0.01f; });
+        v.Left = RestroomVent;
+        RestroomVent.Center = v;
     }
 
     public override void MapCustomize()

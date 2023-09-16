@@ -483,6 +483,12 @@ class RoleAssignmentPatch
                 allPlayers.Add(player.PlayerId);
             }
 
+            if((allPlayers.Count & 1) == 1){
+                int idx = rnd.Next(allPlayers.Count);
+                assignMap.AssignRole(allPlayers[idx],Roles.Roles.SchrodingersCat.id);
+                allPlayers.RemoveAt(idx);
+            }
+
             var array = Helpers.GetRandomArray(allPlayers.Count);
 
             for(int tmp = 0;tmp < allPlayers.Count;tmp++){

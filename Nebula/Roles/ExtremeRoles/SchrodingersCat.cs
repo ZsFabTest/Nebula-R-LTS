@@ -52,6 +52,7 @@ public class SchrodingersCat : Role
     public Module.CustomOption canBeOracle;
     public Module.CustomOption canUseKillButtonO;
     public Module.CustomOption killCooldownO;
+    public Module.CustomOption maxChangeCnt;
     //public Module.CustomOption fixCameraOption;
 
     public override void LoadOptionData()
@@ -77,15 +78,24 @@ public class SchrodingersCat : Role
         killCooldownO = CreateOption(Roles.OracleN.Color, "killCooldownO", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonO);
         killCooldownO.suffix = "second";
         canChangeTeam = CreateOption(Color.white, "canAlwaysChangeTeam", true);
+        maxChangeCnt = CreateOption(Color.white, "maxChangeCnt",2f,1f,15f,1f).AddPrerequisite(canChangeTeam);
         //fixCameraOption = CreateOption(Color.white,"fixCamera",false);
     }
 
     public override bool IsGuessableRole { get => isGuessable.getBool(); protected set => base.IsGuessableRole = value; }
+    private int changeId;
 
     public override void OnMurdered(byte murderId)
     {
+        if(changeId++ >= maxChangeCnt.getFloat()){
+            CheckBattleMode();
+            return;
+        }
         Role checkrole = Helpers.playerById(murderId).GetModData().role;
-        if(PlayerControl.LocalPlayer.GetModData().role != Roles.SchrodingersCat && !canChangeTeam.getBool()) return;
+        if(PlayerControl.LocalPlayer.GetModData().role != Roles.SchrodingersCat && !canChangeTeam.getBool()){
+            CheckBattleMode();
+            return;
+        }
         if (checkrole.side == Side.Crewmate && canBeCrewmate.getBool())
         {
             changeRole(Roles.WhiteCat);
@@ -110,6 +120,14 @@ public class SchrodingersCat : Role
         {
             changeRole(Roles.OraclesCat);
         }
+        else if (checkrole.side == Side.YellowTeam)
+        {
+            changeRole(Roles.YellowTeamCat);
+        }
+        else if (checkrole.side == Side.GreenTeam)
+        {
+            changeRole(Roles.GreenTeamCat);
+        }
         RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
         /*
         PlayerControl.LocalPlayer.Revive();
@@ -120,6 +138,16 @@ public class SchrodingersCat : Role
             }
         }
         */
+    }
+
+    private void CheckBattleMode(){
+        if(Game.GameData.data.GameMode == Module.CustomGameMode.Battle){
+            Game.GameData.data.myData.CanSeeEveryoneInfo = true;
+        }
+    }
+
+    public override void Initialize(PlayerControl __instance){
+        changeId = 0;
     }
 
     private void changeRole(Role targetRole){
@@ -134,5 +162,6 @@ public class SchrodingersCat : Role
           new HashSet<Patches.EndCondition>() { },
           true, VentPermission.CanNotUse, false, false, false)
     {
+        ValidGamemode = Module.CustomGameMode.Battle | Module.CustomGameMode.Standard;
     }
 }

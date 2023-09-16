@@ -42,7 +42,7 @@ static public class DecideSystem
         else{
             RPCEventInvoker.Guess(target.PlayerId);
         }
-        __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
+        __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("DecideButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("DecideButton").gameObject); });
     }
 
     public static void SetupMeetingButton(MeetingHud __instance)
@@ -56,8 +56,8 @@ static public class DecideSystem
 
                 GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
                 GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
-                targetBox.name = "ShootButton";
-                targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1f);
+                targetBox.name = "DecideButton";
+                targetBox.transform.localPosition = new Vector3(0.95f, 0.03f, -1f);
                 SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
                 renderer.sprite = FGuesser.targetSprite.GetSprite();
                 PassiveButton button = targetBox.GetComponent<PassiveButton>();
@@ -76,7 +76,8 @@ static public class DecideSystem
     {
         int left = Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId);
         if (left <= 0) return;
-        meetingInfo.text = Language.Language.GetString("role.decider.decideLeft") + ": " + left;
+        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        meetingInfo.text += Language.Language.GetString("role.decider.decideLeft") + ": " + left;
         meetingInfo.gameObject.SetActive(true);
     }
 }

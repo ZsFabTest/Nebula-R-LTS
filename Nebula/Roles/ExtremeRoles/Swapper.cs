@@ -55,8 +55,8 @@ public static class SwapSystem{
 
                 GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
                 GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
-                targetBox.name = "ShootButton";
-                targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1f);
+                targetBox.name = "SwapButton";
+                targetBox.transform.localPosition = new Vector3(0.95f, 0.03f, -1f);
                 SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
                 renderer.sprite = FSwapper.targetSprite.GetSprite();
                 PassiveButton button = targetBox.GetComponent<PassiveButton>();
@@ -71,7 +71,8 @@ public static class SwapSystem{
     {
         int left = Game.GameData.data.myData.getGlobalData().GetRoleData(swapDataId);
         if (left <= 0) return;
-        meetingInfo.text = Language.Language.GetString("role.swapper.swapLeft") + ": " + left;
+        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        meetingInfo.text += Language.Language.GetString("role.swapper.swapLeft") + ": " + left;
         meetingInfo.text += "\n" + Language.Language.GetString("role.swapper.target1") + ": " + (swapTargetf == Byte.MaxValue ? Language.Language.GetString("role.swapper.nobody") : Helpers.playerById((byte)swapTargetf).name);
         meetingInfo.text += "\n" + Language.Language.GetString("role.swapper.target2") + ": " + (swapTargets == Byte.MaxValue ? Language.Language.GetString("role.swapper.nobody") : Helpers.playerById((byte)swapTargets).name);
         meetingInfo.gameObject.SetActive(true);

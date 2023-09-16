@@ -8,8 +8,10 @@ class SkeldEditor : MapEditor
 
     public override void AddVents()
     {
-        CreateVent(SystemTypes.Cafeteria, "CafeUpperVent", new UnityEngine.Vector2(-2.1f, 3.8f));
-        CreateVent(SystemTypes.Storage, "StorageVent", new UnityEngine.Vector2(0.45f, -3.6f));
+        Vent v1 = CreateVent(SystemTypes.Cafeteria, "CafeUpperVent", new UnityEngine.Vector2(-2.1f, 3.8f));
+        Vent v2 = CreateVent(SystemTypes.Storage, "StorageVent", new UnityEngine.Vector2(0.45f, -3.6f));
+        v1.Left = v2;
+        v2.Right = v1;
     }
 
     public override void MapCustomize()

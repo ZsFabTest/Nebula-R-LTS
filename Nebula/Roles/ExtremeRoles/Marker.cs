@@ -202,8 +202,8 @@ namespace Nebula.Roles.ImpostorRoles{
                 if(playerVoteArea.AmDead) continue;
                 GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
                 GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
-                targetBox.name = "ShootButton";
-                targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1f);
+                targetBox.name = "MarkButton";
+                targetBox.transform.localPosition = new Vector3(1f, 0.03f, -1f);
                 SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
                 renderer.sprite = ComplexRoles.FGuesser.targetSprite.GetSprite();
                 PassiveButton button = targetBox.GetComponent<PassiveButton>();

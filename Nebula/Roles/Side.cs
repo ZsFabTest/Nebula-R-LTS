@@ -238,6 +238,7 @@ public class Side
         if (endCondition == EndCondition.ChallengerWin) return null;
         if (endCondition == EndCondition.GhostWin) return null;
         if (endCondition == EndCondition.PuppeteerWin) return null;
+        if (endCondition == EndCondition.HighRollerWin) return null;
         if (endCondition == EndCondition.MoriartyWin || endCondition == EndCondition.MoriartyWinByKillHolmes) return null;
 
         foreach (var player in Game.GameData.data.AllPlayers.Values)
@@ -300,7 +301,7 @@ public class Side
     });
 
     public static Side Yandere = new Side("Yandere","yandere",IntroDisplayOption.Yanderes,NeutralRoles.Yandere.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveYandere * 2 > statistics.TotalAlive || (statistics.AliveImpostors <= 0 && statistics.AliveJackals <= 0 && statistics.AliveMoriarty <= 0 && statistics.AlivePavlov == 0 && statistics.AliveWerewolf <= 0 && statistics.AliveOracle <= 0 && statistics.AliveYandere > 0 && statistics.AliveMadmate <= 0)){
+        if(statistics.AliveYandere * 2 > statistics.TotalAlive){
             return EndCondition.YandereWin;
         }
         return null;
@@ -416,7 +417,16 @@ public class Side
         {
             if (Game.GameData.data.Timer < 1f)
             {
-                if(Game.GameData.data.GameMode == Module.CustomGameMode.VirusCrisis) return EndCondition.InfectedWin;
+                if(Game.GameData.data.GameMode == Module.CustomGameMode.VirusCrisis){
+                    switch(CustomOptionHolder.winnerIfTimesUpOption.getSelection()){
+                        case 0:
+                            return EndCondition.SurvivalWin;
+                        case 1:
+                            return EndCondition.InfectedWin;
+                        default:
+                            return EndCondition.NobodyWin;
+                    }
+                }
                 switch (GameOptionsManager.Instance.CurrentGameOptions.MapId)
                 {
                     case 0:

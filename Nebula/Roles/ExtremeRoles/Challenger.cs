@@ -72,7 +72,7 @@ namespace Nebula.Roles.NeutralRoles{
                     break;
                 }
             }
-            if(flag){
+            if(flag && !PlayerControl.LocalPlayer.Data.IsDead){
                 int idx,hasTryCnt = 0;
                 while(PlayerControl.AllPlayerControls[idx = NebulaPlugin.rnd.Next(0,PlayerControl.AllPlayerControls.GetFastEnumerator().Count())].Data.IsDead || PlayerControl.AllPlayerControls[idx].PlayerId == PlayerControl.LocalPlayer.PlayerId)
                      { if(++hasTryCnt >= 1000){ idx = -1; break; } }
@@ -81,9 +81,9 @@ namespace Nebula.Roles.NeutralRoles{
             }
         }
 
-        public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+        public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
         {
-            if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.Challenged)) displayColor = RoleColor;
+            if(Helpers.playerById(playerId).GetModData().extraRole.Contains(Roles.Challenged)) displayColor = RoleColor;
         }
 
         public override void OnKillPlayer(byte targetId)

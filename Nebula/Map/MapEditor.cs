@@ -18,7 +18,7 @@ public class MapEditor
 
     public static void AddVents(int mapId)
     {
-        if (!CustomOptionHolder.additionalVents.getBool()) return;
+        //if (!CustomOptionHolder.additionalVents.getBool()) return;
         if (!MapEditors.ContainsKey(mapId)) return;
 
         MapEditors[mapId].AddVents();

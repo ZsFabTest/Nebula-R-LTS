@@ -9,14 +9,6 @@ public class LastImpostor : ExtraRole
 
     private bool canUse(){
         if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)) return false;
-        else if(PlayerControl.LocalPlayer.GetModData().role == Roles.NiceDecider ||
-            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilDecider || 
-            PlayerControl.LocalPlayer.GetModData().role == Roles.NiceGuesser ||
-            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilGuesser ||
-            PlayerControl.LocalPlayer.GetModData().role == Roles.NiceTracker ||
-            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilTracker ||
-            PlayerControl.LocalPlayer.GetModData().role == Roles.NiceSwapper ||
-            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilSwapper) return false;
         return true;
     }
 

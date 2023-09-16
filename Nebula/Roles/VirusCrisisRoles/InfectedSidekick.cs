@@ -113,7 +113,7 @@ public class InfectedSidekick : Role{
 
     public InfectedSidekick() : base("InfectedSidekick","infectedSidekick",Palette.ImpostorRed,RoleCategory.Neutral,Side.Infected,Side.Infected,
          new HashSet<Side>() { Side.Infected },new HashSet<Side>() { Side.Infected },new HashSet<Patches.EndCondition> { Patches.EndCondition.InfectedWin },
-         true,VentPermission.CanUseUnlimittedVent,true,true,true){
+         true,VentPermission.CanUseLimittedVent,true,true,true){
         //IsHideRole = true;
         Allocation = AllocationType.None;
         ValidGamemode = Module.CustomGameMode.VirusCrisis;

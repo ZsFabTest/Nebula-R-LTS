@@ -1387,6 +1387,10 @@
 "gamemode.battle" : "小游戏：战争模式"
 "gamemode.viruscrisis" : "小游戏：感染对抗"
 
+"option.winnerIfTimesUpOption" : "时间结束时的胜利阵营"
+"option.winnerIfTimesUpOption.Survival" : "幸存者"
+"option.winnerIfTimesUpOption.Infected" : "感染者"
+
 "option.battleOption" : "战争模式设置"
 "option.battleOption.killCooldownOption" : "狙击冷却时间"
 "option.battleOption.initCooldownOption" : "初始冷却时间"
@@ -1401,6 +1405,8 @@
 
 "option.tab.ghostRoles" : "亡灵<color=#ffffffff>与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
 "option.tab.advancedSettings" : "进阶<color=#ffffffff>设置与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
+
+"option.additionalVents" : "追加管道口"
 
 "option.canBeSick" : "可以成为病人"
 "option.canBeBait" : "可以成为诱饵"
@@ -1423,6 +1429,8 @@
 "role.guesser.canWinAlong" : "可以单独胜利"
 "role.guesser.guessCountToWin" : "单独胜利需要的正确猜测次数"
 "role.guesser.spawnableRoleFilter" : "只显示可能生成的职业"
+
+"role.tracker.prefix" : "追踪目标"
 
 "role.agent.canKnowImpostorAndJackal" : "代理人可以得知伪装者/豺狼/巴浦洛夫/莫里亚蒂"
 "role.agent.theLeastCompletedTasks" : "代理人得知伪装者/豺狼/巴浦洛夫/莫里亚蒂需要的最少任务数"
@@ -1468,6 +1476,9 @@
 "role.opportunist.canWinWithPuppeteer" : "可以与傀儡师共同胜利"
 "role.opportunist.canWinWithSpectre" : "可以与狐妖共同胜利"
 "role.opportunist.canWinWithPaparazzo" : "可以与摄影师共同胜利"
+"role.opportunist.canWinWithHighRoller" : "可以与狂赌徒共同胜利"
+"role.opportunist.taskDuring" : "滞留任务时间"
+"role.opportunist.useSpecialTasks" : "使用停留任务"
 
 "role.holmes.name" : "福尔摩斯"
 "role.holmes.short" : "福"
@@ -1543,6 +1554,7 @@
 "role.schrodingersCat.canUseKillButtonO" : "（天启）击杀冷却"
 "role.schrodingersCat.killCooldownO" : "（天启）击杀冷却时间"
 "role.schrodingersCat.fixCamera" : "修复猫被刀后的视角偏移\n（可能导致猫在最后被刀无法获胜）"
+"role.schrodingersCat.maxChangeCnt" : "最多更换阵营次数"
 
 "role.madman.name" : "疯子"
 "role.madman.short" : "疯"
@@ -2203,7 +2215,7 @@
 "role.infectedSidekick.tips" : "注：被感染者击杀初始冷却和冷却同步感染者"
 "role.infectedSidekick.VentCooldown" : "使用管道冷却时间"
 "role.infectedSidekick.VentDuring" : "最长管道停留时间"
-"role.infectedSidekick.killCooldown" : "击杀冷却时间"
+"role.infectedSidekick.killcooldown" : "击杀冷却时间"
 
 "role.officer.name" : "长官"
 "role.officer.short" : "长"
@@ -2218,6 +2230,7 @@
 "role.follower.hint" : "和你信任的人一起获胜"
 "role.follower.info" : "类似与打工人。\n你可以选择一个人并跟随他一起胜利。\n（没有测试）目标掉线后可以重新选择。"
 "role.follower.additionalEndText" : " <color=#ffffffff>+</color> 跟随者胜利"
+"role.follower.maxDeadPeriodDuration" : "最大空档期(轮)"
 
 "role.highRoller.name" : "狂赌徒"
 "role.highRoller.short" : "狂"
@@ -2245,6 +2258,18 @@
 "role.challenged.name" : "被挑战者"
 "role.challenged.short" : "被"
 "role.challenged.info" : "你被挑战者选中了。\n尝试逃离挑战者...或是击杀他。\n若挑战者被票出，则你连带死亡。"
+
+"role.yellowTeamCat.name" : "黄队队员(C)"
+"role.yellowTeamCat.short" : "C"
+"role.yellowTeamCat.description" : "取得战争的胜利"
+"role.yellowTeamCat.hint" : "取得战争的胜利"
+"role.yellowTeamCat.info" : "取得战争的胜利"
+
+"role.greenTeamCat.name" : "绿队队员(C)"
+"role.greenTeamCat.short" : "C"
+"role.greenTeamCat.description" : "取得战争的胜利"
+"role.greenTeamCat.hint" : "取得战争的胜利"
+"role.greenTeamCat.info" : "取得战争的胜利"
 
 "option.display.random" : "随机"
 

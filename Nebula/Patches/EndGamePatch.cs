@@ -188,7 +188,7 @@ public class FinalPlayerData
             if (name.Equals(""))
                 name = player.name;
             else
-                name = player.name + " " + name;
+                name = Helpers.cs(Palette.PlayerColors[player.id],player.name) + " " + name;
 
 
             string shortHistory = "";
@@ -545,7 +545,7 @@ public class EndGameManagerSetUpPatch
 
         foreach (FinalPlayerData.FinalPlayer player in OnGameEndPatch.FinalData.players)
         {
-            playerText.AppendLine("　" + player.name);
+            playerText.AppendLine("　" + Helpers.cs(Palette.PlayerColors[player.id],player.name));
             roleText.AppendLine("　" + player.roleName);
             roleDetailText.AppendLine("　" + player.roleDetail);
             statusText.AppendLine("　" + Language.Language.GetString("status." + player.status.Status));

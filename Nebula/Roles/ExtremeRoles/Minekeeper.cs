@@ -33,7 +33,8 @@ namespace Nebula.Roles.CrewmateRoles{
             set = new CustomButton(
                 () => {
                     Module.VentManager.setBomb(targetVent);
-                    foreach(Vent v in Module.VentManager.bombVents) Debug.LogWarning(v.name);
+                    //foreach(Vent v in Module.VentManager.bombVents) Debug.LogWarning(v.name);
+                    Debug.LogWarning(targetVent.transform.position.x.ToString() + " " + targetVent.transform.position.y.ToString() + " " + targetVent.transform.position.z.ToString());
                     targetVent = null;
                     RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,mineDataId,1);
                     set.Timer = set.MaxTimer;

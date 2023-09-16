@@ -1,4 +1,5 @@
 ﻿using Nebula.Patches;
+using UnityEngine.Lumin;
 
 namespace Nebula.Roles.NeutralRoles;
 
@@ -28,6 +29,9 @@ public class Opportunist : Role
     private Module.CustomOption canWinWithPuppeteerOption;
     private Module.CustomOption canWinWithSpectreOption;
     private Module.CustomOption canWinWithPaparazzoOption;
+    private Module.CustomOption canWinWithHighRollerOption;
+    private Module.CustomOption taskDuringTimeOption;
+    private Module.CustomOption useSpecialTasksOption;
 
     //オポチュタスク割り当て用
     private List<int> stayingTaskOrder;
@@ -35,6 +39,10 @@ public class Opportunist : Role
 
     public override void OnSetTasks(ref List<GameData.TaskInfo> initialTasks, ref List<GameData.TaskInfo>? actualTasks)
     {
+        if(!useSpecialTasksOption.getBool()){
+            RPCEventInvoker.RefreshTasks(PlayerControl.LocalPlayer.PlayerId, (int)numOfTasksOption.getFloat(), 0, 0.1f);
+            return;
+        }
         stayingTaskOrder = new List<int>(Helpers.GetRandomArray(Map.MapData.GetCurrentMapData().Objects.Count));
         taskCount = 0;
 
@@ -57,6 +65,9 @@ public class Opportunist : Role
         base.LoadOptionData();
 
         numOfTasksOption = CreateOption(Color.white, "numOfTasks", 4f, 1f, 6f, 1f);
+        useSpecialTasksOption = CreateOption(Color.white,"useSpecialTasks",false);
+        taskDuringTimeOption = CreateOption(Color.white,"taskDuring",60f,10f,120f,5f).AddPrerequisite(useSpecialTasksOption);
+        taskDuringTimeOption.suffix = "second";
 
         canUseVentsOption = CreateOption(Color.white, "canUseVents", true);
         ventCoolDownOption = CreateOption(Color.white, "ventCoolDown", 20f, 5f, 60f, 2.5f);
@@ -83,6 +94,7 @@ public class Opportunist : Role
         canWinWithPuppeteerOption = CreateOption(Color.white, "canWinWithPuppeteer", true);
         canWinWithSpectreOption = CreateOption(Color.white, "canWinWithSpectre", true);
         canWinWithPaparazzoOption = CreateOption(Color.white, "canWinWithPaparazzo", true);
+        canWinWithHighRollerOption = CreateOption(Color.white, "canWinWithHighRoller", true);
     }
 
     public override void Initialize(PlayerControl __instance)
@@ -118,6 +130,7 @@ public class Opportunist : Role
         if (condition == EndCondition.PuppeteerWin && !canWinWithPuppeteerOption.getBool()) return false;
         if (condition == EndCondition.SpectreWin && !canWinWithSpectreOption.getBool()) return false;
         if (condition == EndCondition.PaparazzoWin && !canWinWithPaparazzoOption.getBool()) return false;
+        if (condition == EndCondition.HighRollerWin && !canWinWithHighRollerOption.getBool()) return false;
 
 
         if (player.GetModData().Tasks.AllTasks <= player.GetModData().Tasks.Completed)
@@ -159,7 +172,7 @@ public class Opportunist : Role
         task.objName = objData.Name;
         task.StartAt = objData.Room;
         task.maxTime = objData.MaxTime;
-        task.distance = objData.Distance;
+        task.distance = taskDuringTimeOption.getFloat();
         task.name = "OpportunistTask" + taskCount;
 
         taskCount++;

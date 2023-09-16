@@ -244,10 +244,10 @@ static public class GuesserSystem
                     UnityEngine.Object.Destroy(container.gameObject);
 
                     ulong data = PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.SecondaryGuesser.id);
-                    data--;
+                    if(PlayerControl.LocalPlayer.GetModData().role != Roles.HighRoller) data--;
                     RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.SecondaryGuesser.id, data);
 
-                    if (Roles.F_Guesser.canShotSeveralTimesInTheSameMeeting.getBool() &&
+                    if ((Roles.F_Guesser.canShotSeveralTimesInTheSameMeeting.getBool() || PlayerControl.LocalPlayer.GetModData().role == Roles.HighRoller) &&
                     Game.GameData.data.myData.getGlobalData().GetExtraRoleData(Roles.SecondaryGuesser) >= 1 && dyingTarget != PlayerControl.LocalPlayer)
                         __instance.playerStates.ToList().ForEach(x => { if (x.TargetPlayerId == dyingTarget.PlayerId && x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
                     else
@@ -371,10 +371,10 @@ static public class GuesserSystem
                             UnityEngine.Object.Destroy(container.gameObject);
 
                             ulong data = PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.SecondaryGuesser.id);
-                            data--;
+                            if(PlayerControl.LocalPlayer.GetModData().role != Roles.HighRoller) data--;
                             RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.SecondaryGuesser.id, data);
 
-                            if (Roles.F_Guesser.canShotSeveralTimesInTheSameMeeting.getBool() &&
+                            if ((Roles.F_Guesser.canShotSeveralTimesInTheSameMeeting.getBool() || PlayerControl.LocalPlayer.GetModData().role == Roles.HighRoller) &&
                             Game.GameData.data.myData.getGlobalData().GetExtraRoleData(Roles.SecondaryGuesser) >= 1 && dyingTarget != PlayerControl.LocalPlayer)
                                 __instance.playerStates.ToList().ForEach(x => { if (x.TargetPlayerId == dyingTarget.PlayerId && x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
                             else
@@ -437,7 +437,8 @@ static public class GuesserSystem
     {
         ulong left = Game.GameData.data.myData.getGlobalData().GetExtraRoleData(Roles.SecondaryGuesser);
         if (left <= 0) return;
-        meetingInfo.text = Language.Language.GetString("role.guesser.guessesLeft") + ": " + left;
+        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        meetingInfo.text += Language.Language.GetString("role.guesser.guessesLeft") + ": " + left;
         meetingInfo.gameObject.SetActive(true);
         if(PlayerControl.LocalPlayer.GetModData().GetRoleData(guessId) >= Roles.F_Guesser.guessCountToWinOption.getFloat() && Roles.F_Guesser.canWinAloneOption.getBool()){
             RPCEventInvoker.WinTrigger(Roles.F_Guesser);
@@ -621,7 +622,7 @@ public class SecondaryGuesser : ExtraRole
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
     {
-        if(role == Roles.WiseMan || role == Roles.F_Swapper || role == Roles.HighRoller) return null;
+        //if(role == Roles.WiseMan || role == Roles.F_Swapper || role == Roles.HighRoller) return null;
         Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeGuesser", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeGuesser");
         option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         option.AddCustomPrerequisite(() => { return Roles.SecondaryGuesser.IsSpawnable(); });

@@ -1744,7 +1744,7 @@ static class RPCEvents
     }
 
     public static void FakeKill(byte murderId,byte targetId){
-        if(PlayerControl.LocalPlayer.PlayerId == murderId) PlayerControl.LocalPlayer.transform.position = Helpers.playerById(targetId).transform.position;
+        Helpers.playerById(murderId).transform.position = Helpers.playerById(targetId).transform.position;
     }
 
     public static void FixedRevive(byte playerId){

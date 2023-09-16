@@ -87,7 +87,7 @@ public class Tracker : Template.BilateralnessRole
     {
         if (!Roles.F_Tracker.canUseMeetingActionOption.getBool()) return;
 
-        if (!PlayerControl.LocalPlayer.Data.IsDead && !Game.GameData.data.myData.getGlobalData().HasExtraRole(Roles.SecondaryGuesser))
+        if (!PlayerControl.LocalPlayer.Data.IsDead)
         {
             List<GameObject> allButton = new List<GameObject>();
 
@@ -99,7 +99,7 @@ public class Tracker : Template.BilateralnessRole
                 GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
                 GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
                 targetBox.name = "TrackButton";
-                targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1f);
+                targetBox.transform.localPosition = new Vector3(0.95f, 0.03f, -1f);
                 SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
                 renderer.sprite = FTracker.meetingButtonSprite.GetSprite();
                 PassiveButton button = targetBox.GetComponent<PassiveButton>();
@@ -339,5 +339,13 @@ public class Tracker : Template.BilateralnessRole
 
         targetIndicator.transform.localPosition = MapBehaviourExpansion.ConvertMapLocalPosition(pos.Value, 16);
 
+    }
+
+    public override void MeetingUpdate(MeetingHud __instance, TMPro.TextMeshPro meetingInfo)
+    {
+        if(trackTarget == null) return;
+        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        meetingInfo.text += Language.Language.GetString("role.tracker.prefix") + ": " + trackTarget.control.name;
+        meetingInfo.gameObject.SetActive(true);
     }
 }

@@ -41,11 +41,6 @@ public class HighRoller : Role,Template.HasWinTrigger{
         GuesserSystem.SetupMeetingButton(__instance);
     }
 
-    public override void MeetingUpdate(MeetingHud __instance, TMPro.TextMeshPro meetingInfo)
-    {
-        GuesserSystem.MeetingUpdate(__instance, meetingInfo);
-    }
-
     public override void OnRoleRelationSetting()
     {
         RelatedRoles.Add(Roles.Agent);
@@ -104,7 +99,7 @@ public class HighRoller : Role,Template.HasWinTrigger{
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
 
                     //まだ占っていなければ占う
-                    if (!divineResult.ContainsKey(target.PlayerId))
+                if (!divineResult.ContainsKey(target.PlayerId))
                 {
                     divineResult[target.PlayerId] = Divine(target);
                 }
@@ -153,16 +148,27 @@ public class HighRoller : Role,Template.HasWinTrigger{
     private List<Role> Divine(PlayerControl target)
     {
         List<Role> result = new List<Role>();
-        Role role = null;
 
         var data = target.GetModData();
-        result.Add(data.role.GetActualRole(data));
+        var originalRole = data.role.GetActualRole(data);
+        result.Add(originalRole);
 
-        for (int i = 1; i < (int)CandidatesOption.getFloat(); i++)
+        List<Role> UsableRoles = new();
+        foreach(var r in Roles.AllRoles){
+            if(r.IsSpawnable() && r != originalRole) UsableRoles.Add(r);
+        }
+
+        Debug.LogWarning(UsableRoles.Count);
+        if(UsableRoles.Count < CandidatesOption.getFloat()){
+            UsableRoles.Add(originalRole);
+            return UsableRoles.OrderBy(a => Guid.NewGuid()).ToList();
+        }
+
+        for (int i = 1; i < CandidatesOption.getFloat(); i++)
         {
-            do{
-                role = Roles.AllRoles[NebulaPlugin.rnd.Next(Roles.AllRoles.Count)];
-            }while(role.IsSpawnable() && !result.Contains(role));
+            int idx = NebulaPlugin.rnd.Next(UsableRoles.Count);
+            result.Add(UsableRoles[idx]);
+            UsableRoles.RemoveAt(idx);
         }
 
         //ランダムに並び替えたものを返す

@@ -158,6 +158,7 @@ public class CustomOptionHolder
     public static CustomOption limiterOptions;
     public static CustomOption timeLimitOption;
     public static CustomOption timeLimitSecondOption;
+    public static CustomOption winnerIfTimesUpOption;
 
     public static CustomOption DevicesOption;
     public static CustomOption RestrictModeOption;
@@ -587,6 +588,7 @@ public class CustomOptionHolder
         timeLimitSecondOption = CustomOption.Create(Color.white, "option.timeLimitSecondOption", 0f, 0f, 55f, 5f, limiterOptions).SetGameMode(CustomGameMode.ActuallyAll);
         timeLimitOption.suffix = "minute";
         timeLimitSecondOption.suffix = "second";
+        winnerIfTimesUpOption =  CustomOption.Create(Color.white, "option.winnerIfTimesUpOption", new string[] { "option.winnerIfTimesUpOption.Survival","option.winnerIfTimesUpOption.Infected" }, "option.winnerIfTimesUpOption.Infected", limiterOptions).SetGameMode(CustomGameMode.VirusCrisis);
 
         DevicesOption = CustomOption.Create(Color.white, "option.devicesOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.All);
         CustomOption.RegisterTopOption(DevicesOption);
@@ -648,16 +650,16 @@ public class CustomOptionHolder
         };
 
 
-        TasksOption = CustomOption.Create(Color.white, "option.tasksOption", false, null, true, false, "", CustomOptionTab.Settings);
+        TasksOption = CustomOption.Create(Color.white, "option.tasksOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
         CustomOption.RegisterTopOption(TasksOption);
-        additionalWirings = CustomOption.Create(Color.white, "option.additionalWirings", false, TasksOption).SetGameMode(CustomGameMode.All);
-        RandomizedWiringOption = CustomOption.Create(Color.white, "option.randomizedWiring", false, TasksOption).SetGameMode(CustomGameMode.All);
-        StepsOfWiringOption = CustomOption.Create(Color.white, "option.stepsOfWiring", 3f, 1f, 10f, 1f, TasksOption).SetGameMode(CustomGameMode.All);
-        MeistersManifoldsOption = CustomOption.Create(Color.white, "option.meistersManifolds", false, TasksOption).SetGameMode(CustomGameMode.All);
-        MeistersFilterOption = CustomOption.Create(Color.white, "option.meistersO2Filter", false, TasksOption).SetGameMode(CustomGameMode.All);
-        MeistersFuelEnginesOption = CustomOption.Create(Color.white, "option.meistersFuelEngines", false, TasksOption).SetGameMode(CustomGameMode.All);
-        DangerousDownloadSpotOption = CustomOption.Create(Color.white, "option.dangerousDownloadSpot", false, TasksOption).SetGameMode(CustomGameMode.All);
-        UseVanillaSafeTaskOption = CustomOption.Create(Color.white, "option.useVanillaSafeTask", true, TasksOption).SetGameMode(CustomGameMode.All);
+        additionalWirings = CustomOption.Create(Color.white, "option.additionalWirings", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
+        RandomizedWiringOption = CustomOption.Create(Color.white, "option.randomizedWiring", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
+        StepsOfWiringOption = CustomOption.Create(Color.white, "option.stepsOfWiring", 3f, 1f, 10f, 1f, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
+        MeistersManifoldsOption = CustomOption.Create(Color.white, "option.meistersManifolds", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
+        MeistersFilterOption = CustomOption.Create(Color.white, "option.meistersO2Filter", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
+        MeistersFuelEnginesOption = CustomOption.Create(Color.white, "option.meistersFuelEngines", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
+        DangerousDownloadSpotOption = CustomOption.Create(Color.white, "option.dangerousDownloadSpot", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
+        UseVanillaSafeTaskOption = CustomOption.Create(Color.white, "option.useVanillaSafeTask", true, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
 
         SabotageOption = CustomOption.Create(Color.white, "option.sabotageOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.AllStandard);
         CustomOption.RegisterTopOption(SabotageOption);
