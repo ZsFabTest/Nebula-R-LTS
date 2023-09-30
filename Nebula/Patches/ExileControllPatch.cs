@@ -214,7 +214,8 @@ class ExileControllerPatch
                             p.GetModData().HasExtraRole(Roles.Roles.SecondarySidekick) || 
                             p.GetModData().role.side == Roles.Side.Jester ||
                             p.GetModData().role.side == Roles.Side.Challenger || 
-                            p.GetModData().role.side == Roles.Side.Oracle
+                            p.GetModData().role.side == Roles.Side.Oracle || 
+                            p.GetModData().role.side == Roles.Side.HighRoller
                             )) sums++;
                             //Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
                         }
@@ -237,7 +238,8 @@ class ExileControllerPatch
                             player.GetModData().role.side == Roles.Side.Challenger || 
                             player.GetModData().role.side == Roles.Side.Oracle ||
                             player.GetModData().role.side == Roles.Side.SantaClaus ||
-                            player.GetModData().role.side == Roles.Side.Ghost
+                            player.GetModData().role.side == Roles.Side.Ghost || 
+                            player.GetModData().role.side == Roles.Side.HighRoller
                         )) sums--;
                         //__result.Remove('.');
                         //__result.Remove('。');
@@ -276,7 +278,10 @@ class ExileControllerPatch
                             __result = Helpers.cs(Roles.NeutralRoles.Jester.RoleColor,Language.Language.GetString("text.exile.jesterAddition"));
                             return;
                         }
-                        else if (player.PlayerId == Roles.Roles.Cascrubinter.target.PlayerId) __result = Helpers.cs(Roles.NeutralRoles.Cascrubinter.RoleColor,Language.Language.GetString("text.exile.cascrubinterAddition"));
+                        else if (PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => { return !p.Data.IsDead && p.GetModData().role == Roles.Roles.Cascrubinter; }) != null && player.PlayerId == Roles.Roles.Cascrubinter.target.PlayerId){
+                            __result = Helpers.cs(Roles.NeutralRoles.Cascrubinter.RoleColor,Language.Language.GetString("text.exile.cascrubinterAddition"));
+                            RPCEventInvoker.WinTrigger(Roles.Roles.Cascrubinter);
+                        }
                     } 
                 }else{
                     if((id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS) && 

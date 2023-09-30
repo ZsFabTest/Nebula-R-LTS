@@ -1387,6 +1387,8 @@
 "gamemode.battle" : "小游戏：战争模式"
 "gamemode.viruscrisis" : "小游戏：感染对抗"
 
+"option.connectCacheTime" : "连接缓冲基数"
+
 "option.winnerIfTimesUpOption" : "时间结束时的胜利阵营"
 "option.winnerIfTimesUpOption.Survival" : "幸存者"
 "option.winnerIfTimesUpOption.Infected" : "感染者"
@@ -1420,6 +1422,8 @@
 "option.canBeSinger" : "可以成为歌姬"
 "option.canBeWanted" : "可以成为通缉犯"
 "option.canBeVoter" : "可以成为破平者"
+"option.canBeProfessionalAssassin" : "可以成为专业刺客"
+"option.canBeRadar" : "可以成为雷达"
 "option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
 "option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
 "option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
@@ -1451,6 +1455,7 @@
 "role.bountyHunter.changeTargetCoolDown" : "手动更换目标冷却"
 
 "role.jackal.createSidekickCoolDown" : "豺狼招募冷却时间"
+"role.jackal.jackalCanChooseNextSidekick" : "豺狼可以选定下下个跟班"
 
 "role.jester.isGuessable" : "是否可以被猜测"
 
@@ -1729,6 +1734,8 @@
 "role.dog.info" : "来个鸡腿~"
 "role.dog.dogKillCooldown" : "击杀冷却"
 "role.dog.dogCanUseVent" : "可以使用管道"
+"role.dog.madDogSuicideMaxTime" : "疯狗自杀冷却时间"
+"role.dog.madDogKillCooldown" : "疯狗击杀冷却"
 
 "role.evilBusker.name" : "灵界杀手"
 "role.evilBusker.short" : "邪灵"
@@ -2221,8 +2228,9 @@
 "role.officer.short" : "长"
 "role.officer.description" : "给我过来！"
 "role.officer.hint" : "阻止别人移动"
-"role.officer.info" : "通过技能，你可以让目标强制跟随你。(不锁定技能冷却)"
+"role.officer.info" : "通过技能，你可以让目标强制定身。(不锁定技能冷却)"
 "role.officer.orderCooldown" : "命令冷却时间"
+"role.officer.orderDuration" : "定身持续时间"
 
 "role.follower.name" : "跟随者"
 "role.follower.short" : "随"
@@ -2270,6 +2278,60 @@
 "role.greenTeamCat.description" : "取得战争的胜利"
 "role.greenTeamCat.hint" : "取得战争的胜利"
 "role.greenTeamCat.info" : "取得战争的胜利"
+
+"role.grenadier.name" : "掷弹兵"
+"role.grenadier.short" : "掷"
+"role.grenadier.description" : "闪瞎他们的眼"
+"role.grenadier.hint" : "使用闪光弹遮挡船员视线"
+"role.grenadier.info" : "你可以使用闪光弹。\n在范围内的船员会强制白屏(可以使用按键)，\n伪装者可以看见被闪的船员。\n当关门或重大破坏时，你无法使用技能。\n同样的，在闪光期间，无法破坏。"
+"role.grenadier.flashDuration" : "闪光持续时间"
+"role.grenadier.flashRange" : "闪光半径"
+"role.grenadier.flashCooldown" : "闪光冷却时间"
+
+"role.hitman.name" : "杀手"
+"role.hitman.short" : "杀"
+"role.hitman.description" : "只是杀戮"
+"role.hitman.hint" : "悄无声息得干掉船员"
+"role.hitman.info" : "你拥有特殊的击杀冷却。\n在击杀后，你不会留下尸体，但会获得一段时间的血语者效果。"
+"role.hitman.killCooldown" : "击杀冷却时间"
+"role.hitman.bleedDuration" : "脚印持续时间"
+
+"role.timeManager.name" : "时间管理者"
+"role.timeManager.short" : "时"
+"role.timeManager.description" : "「The World!」"
+"role.timeManager.hint" : "通过暂停时间找出伪装者"
+"role.timeManager.info" : "你可以暂停时间。\n在时间停止期间，别人的屏幕将黑屏且不能移动。"
+"role.timeManager.abilityCooldown" : "技能冷却时间"
+"role.timeManager.abilityDuration" : "技能持续时间"
+
+"role.enchanter.name" : "魔法师"
+"role.enchanter.short" : "法"
+"role.enchanter.description" : "时空穿梭！"
+"role.enchanter.hint" : "创建一个时空通道"
+"role.enchanter.info" : "你可以放置2个装置，他们可以互相连通。"
+"role.enchanter.teleportCooldown" : "传送装置冷却时间"
+"role.enchanter.setCooldown" : "设置冷却时间"
+"role.enchanter.maxPairNum" : "最大对数"
+
+"role.radar.name" : "雷达"
+"role.radar.short" : "雷"
+"role.radar.description" : "侦测身边的人"
+"role.radar.info" : "你拥有一个指向最近的人的箭头"
+
+"role.extortionist.name" : "勒索者"
+"role.extortionist.short" : "勒"
+"role.extortionist.description" : "再动一下我就撅了你"
+"role.extortionist.hint" : "锁定一个人的行动"
+"role.extortionist.info" : "你的技能可以锁定一个人的技能且不能开会。"
+"role.extortionist.abilityCooldown" : "勒索冷却时间"
+"role.extortionist.abilityDuration" : "勒索持续时间"
+
+"role.evilGhost.name" : "恶鬼"
+"role.evilGhost.short" : "恶"
+"role.evilGhost.hint" : "骚扰船员"
+"role.evilGhost.info" : "你拥有低配版的勒索，可以短时间骚扰船员。"
+"role.evilGhost.abilityCooldown" : "技能冷却时间"
+"role.evilGhost.abilityDuration" : "技能持续时间"
 
 "option.display.random" : "随机"
 
@@ -2356,8 +2418,15 @@
 "button.label.choose" : "选择"
 "button.label.order" : "命令"
 "button.label.treat" : "治疗"
+"button.label.flash" : "闪光"
+"button.label.control" : "控制"
+"button.label.extort" : "勒索"
 
 "meeting.seb" : "特殊会议"
 "meeting.forbid" : "你不能召开紧急会议"
 "meeting.locked" : "紧急会议锁定"
 "meeting.total" : "剩余"
+"meeting.timeIsStopped" : "时间停止期间不能召开紧急会议"
+"meeting.isLocked" : "你被锁定了"
+
+"locations.specimen" : "样本室"

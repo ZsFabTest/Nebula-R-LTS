@@ -88,6 +88,7 @@ public class GlobalEvent
 
     static public void Update()
     {
+        if(Game.GameData.data.IsTimeStopped) return;
         foreach (GlobalEvent globalEvent in Events)
         {
             globalEvent.duration -= Time.deltaTime;

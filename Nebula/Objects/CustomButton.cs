@@ -99,7 +99,8 @@ public class CustomButton
 
     public bool IsValid { get { return activeFlag; } }
     public bool IsShown { get { return activeFlag && !hideFlag; } }
-    public bool timeInVent = false;
+
+    public SpriteRenderer lockRenderer;
 
     private static Sprite spriteKeyBindBackGround;
     private static Sprite spriteKeyBindOption;
@@ -211,6 +212,8 @@ public class CustomButton
         Expansion.GridArrangeExpansion.AddGridArrangeContent(button.gameObject,GridParam);
 
         setActive(true);
+
+        this.lockRenderer = null;
     }
 
     public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, Expansion.GridArrangeExpansion.GridArrangeParameter GridParam, HudManager hudManager, KeyCode? hotkey, string buttonText = "", ImageNames labelType = ImageNames.UseButton)
@@ -315,7 +318,7 @@ public class CustomButton
 
     public void onClickEvent()
     {
-        if (HasButton() && CouldUse())
+        if (HasButton() && CouldUse() && !Game.GameData.data.IsTimeStopped && !Game.GameData.data.IsLocked)
         {
             if (this.Timer < 0f)
             {
@@ -462,15 +465,23 @@ public class CustomButton
 
     public void Update()
     {
+        if(Game.GameData.data.IsLocked && !lockRenderer){
+            lockRenderer = this.AddOverlay(lockedButtonSprite.GetSprite(),0f);
+        }
+        if(!Game.GameData.data.IsLocked && lockRenderer != null){
+            lockRenderer.gameObject.SetActive(false);
+            lockRenderer = null;
+        }
+
         if (actionButton.cooldownTimerText.color.a != 1f)
         {
             Color c = actionButton.cooldownTimerText.color;
             actionButton.cooldownTimerText.color = new Color(c.r, c.g, c.b, 1f);
         }
 
-        if (Timer >= 0)
+        if (Timer >= 0 && !Game.GameData.data.IsTimeStopped)
         {
-            if ((HasEffect && isEffectActive) || (timeInVent && !MeetingHud.Instance))
+            if (HasEffect && isEffectActive)
                 Timer -= Time.deltaTime;
             else if (Helpers.ProceedTimer(isImpostorKillButton))
                 Timer -= Time.deltaTime;

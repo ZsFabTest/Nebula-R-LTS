@@ -52,6 +52,7 @@ public class EndCondition
     public static EndCondition InfectedWin = new EndCondition(141,Palette.ImpostorRed,"infected",1,Module.CustomGameMode.VirusCrisis);
     public static EndCondition SurvivalWin = new EndCondition(142,Palette.CrewmateBlue,"survival",1,Module.CustomGameMode.VirusCrisis);
     public static EndCondition HighRollerWin = new EndCondition(143,Roles.NeutralRoles.HighRoller.RoleColor,"highRoller",1,Module.CustomGameMode.Standard);
+    public static EndCondition UndeadMasterWin = new EndCondition(144,Roles.NeutralRoles.UndeadMaster.RoleColor,"undeadMaster",1,Module.CustomGameMode.Standard);
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
@@ -113,6 +114,7 @@ public class EndCondition
 
 public class FinalPlayerData
 {
+    public const string chars = "αβγδεζηθικλμνξοπρστυφχψ";
     public class FinalPlayer
     {
         public string name { get; private set; }
@@ -125,6 +127,7 @@ public class FinalPlayerData
         public int totalTasks { get; private set; }
         public int completedTasks { get; private set; }
         public Game.PlayerData.PlayerStatus status { get; set; }
+        public string additionChar { get; private set; }
 
         public FinalPlayer(byte id, string name, string roleName, string roleDetail, bool hasFakeTask, bool hasExecutableFakeTask, Game.PlayerData.PlayerStatus status, int totalTasks, int completedTasks, string killer = "")
         {
@@ -138,6 +141,7 @@ public class FinalPlayerData
             this.completedTasks = completedTasks;
             this.status = status;
             this.killer = killer;
+            this.additionChar = Helpers.cs(Palette.PlayerColors[id],"" + chars[id % 24]) + "-";
         }
 
         public void SetKiller(string killer)
@@ -272,6 +276,8 @@ public class OnGameEndPatch
 
         __instance.StopAllCoroutines();
         __instance.StartCoroutine(GetEnumerator().WrapToIl2Cpp());
+
+        //if(Module.AssetLoader.audioSource.isPlaying) Module.AssetLoader.audioSource.Stop();
     }
 }
 
@@ -439,6 +445,8 @@ public class EndGameNavigationShowProgressionPatch
 [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
 public class EndGameManagerSetUpPatch
 {
+    //public const string chars = "αβγδεζηθικλμνξοπρστυφχψ";
+
     static HashSet<string> AdditionalTextSet = new HashSet<string>();
 
     public static void AddEndText(string text) { AdditionalTextSet.Add(text); }
@@ -546,8 +554,8 @@ public class EndGameManagerSetUpPatch
         foreach (FinalPlayerData.FinalPlayer player in OnGameEndPatch.FinalData.players)
         {
             playerText.AppendLine("　" + Helpers.cs(Palette.PlayerColors[player.id],player.name));
-            roleText.AppendLine("　" + player.roleName);
-            roleDetailText.AppendLine("　" + player.roleDetail);
+            roleText.AppendLine("　" + player.additionChar + player.roleName);
+            roleDetailText.AppendLine("　" + player.additionChar + player.roleDetail);
             statusText.AppendLine("　" + Language.Language.GetString("status." + player.status.Status));
             murdererText.AppendLine("　" + (player.killer != "" ? $"<color=#FF5555FF>by " + player.killer + "</color>" : ""));
 
@@ -756,6 +764,8 @@ public class PlayerStatistics
     public int AliveInfected;
     public int AliveSurvivals;
 
+    public int AliveUndeadMaster;
+
     public bool IsValid;
 
     //
@@ -830,6 +840,8 @@ public class PlayerStatistics
 
         AliveInfected = 0;
         AliveSurvivals = 0;
+
+        AliveUndeadMaster = 0;
 
         Roles.Side side;
         
@@ -1107,6 +1119,7 @@ public class PlayerStatistics
         AliveGreenTeam = GetAlivePlayers(Roles.Side.GreenTeam);
         //AliveInfected = GetAlivePlayers(Roles.Side.Infected);
         AliveSurvivals = GetAlivePlayers(Roles.Side.Survival);
+        AliveUndeadMaster = GetAlivePlayers(Roles.Side.UndeadMaster);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {

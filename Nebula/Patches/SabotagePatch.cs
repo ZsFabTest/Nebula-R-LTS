@@ -6,9 +6,21 @@ class CanUseDoorPatch
 {
     static void Postfix(InfectedOverlay __instance, ref bool __result)
     {
+        __result &= !Roles.Roles.Grenadier.isFlashing;
         if (GameOptionsManager.Instance.CurrentGameOptions.MapId != 4) return;
 
         __result |= CustomOptionHolder.CanUseDoorDespiteSabotageOption.getBool();
+        __result &= !Roles.Roles.Grenadier.isFlashing;
+    }
+}
+
+[HarmonyPatch(typeof(InfectedOverlay), nameof(InfectedOverlay.CanUseSpecial), MethodType.Getter)]
+class CanUseSpecialPatch
+{
+    static void Postfix(InfectedOverlay __instance, ref bool __result)
+    {
+        //if (GameOptionsManager.Instance.CurrentGameOptions.MapId != 4) return;
+        __result &= !Roles.Roles.Grenadier.isFlashing;
     }
 }
 

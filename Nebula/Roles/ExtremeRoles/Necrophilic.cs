@@ -32,6 +32,9 @@ public class Necrophilic : Role
                 RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
                 Vector3 pos = body.transform.position;
                 PlayerControl.LocalPlayer.transform.position = pos;
+                var data = Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId];
+                data.Property.SetUnderTheFloorForcely(true);
+                data.Property.UnderTheFloor = false;
                 SnapToBody.Timer = SnapToBody.MaxTimer;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },

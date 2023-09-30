@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.NeutralRoles;
+﻿using Mono.Cecil;
+
+namespace Nebula.Roles.NeutralRoles;
 
 public class Pavlov : Role
 {
@@ -128,13 +130,21 @@ public class Dog : Role
 {
     public Module.CustomOption dogKillCooldownOption;
     public Module.CustomOption dogCanUseVentOption;
+    public Module.CustomOption madDogSuicideMaxTimeOption;
+    public Module.CustomOption madDogKillCooldownOption;
+
+    private SpriteLoader SuicideButtonSprite = new SpriteLoader("Nebula.Resources.SuicideButton.png", 115f);
 
     public override bool IsSpawnable()
     {
         return Roles.Pavlov.IsSpawnable();
     }
 
-    private CustomButton killButton;
+    private bool isMadDog = false;
+    private double suicideTime;
+    private bool isGaming;
+
+    private CustomButton killButton,suicideButton;
     public override void ButtonInitialize(HudManager __instance)
     {
         if (killButton != null)
@@ -146,6 +156,7 @@ public class Dog : Role
             {
                 var r = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
                 killButton.Timer = killButton.MaxTimer;
+                suicideTime = madDogSuicideMaxTimeOption.getFloat();
                 Game.GameData.data.myData.currentTarget = null;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
@@ -159,6 +170,24 @@ public class Dog : Role
         killButton.MaxTimer = dogKillCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
         VentPermission = dogCanUseVentOption.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
+
+        if (suicideButton != null)
+        {
+            suicideButton.Destroy();
+        }
+        suicideButton = new CustomButton(
+            () => { },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead && isMadDog; },
+            () => { return true; },
+            () => { 
+                suicideTime = madDogSuicideMaxTimeOption.getFloat();
+            },
+            SuicideButtonSprite.GetSprite(),
+            Expansion.GridArrangeExpansion.GridArrangeParameter.None,
+            __instance,
+            KeyCode.None,
+            "button.label.suicideLeft"
+        ).SetTimer(114514f);
     }
 
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
@@ -184,6 +213,38 @@ public class Dog : Role
             });
 
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
+
+        if(!isMadDog && PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => { return !p.Data.IsDead && p.GetModData().role == Roles.Pavlov; }) == null){
+            isMadDog = true;
+            suicideTime = madDogSuicideMaxTimeOption.getFloat();
+            killButton.MaxTimer = madDogKillCooldownOption.getFloat();
+            killButton.Timer = 0f;
+        }
+        if(isMadDog && suicideTime <= 0 && !PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance)
+        {
+            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id,true);
+        }
+        if(isGaming && !Game.GameData.data.IsTimeStopped){
+            suicideTime -= Time.deltaTime;
+            suicideButton.Timer = (float)suicideTime;
+        }
+    }
+
+    public override void Initialize(PlayerControl __instance){
+        isGaming = true;
+        isMadDog = false;
+    }
+
+    public override void OnMeetingStart(){
+        isGaming = false;
+    }
+
+    public override void OnMeetingEnd(){
+        isGaming = true;
+    }
+
+    public override void OnRevived(byte playerId){
+        if(playerId == PlayerControl.LocalPlayer.PlayerId) suicideTime = madDogSuicideMaxTimeOption.getFloat();
     }
 
     public override void CleanUp()
@@ -193,6 +254,10 @@ public class Dog : Role
             killButton.Destroy();
             killButton = null;
         }
+        if(suicideButton != null){
+            suicideButton.Destroy();
+            suicideButton = null;
+        }
     }
 
     public override void LoadOptionData()
@@ -201,6 +266,10 @@ public class Dog : Role
         dogKillCooldownOption = CreateOption(Color.white, "dogKillCooldown", 25f, 5f, 60f, 5f);
         dogKillCooldownOption.suffix = "second";
         dogCanUseVentOption = CreateOption(Color.white,"dogCanUseVent",true);
+        madDogSuicideMaxTimeOption = CreateOption(Color.white,"madDogSuicideMaxTime",25f,2.5f,60f,2.5f);
+        madDogSuicideMaxTimeOption.suffix = "second";
+        madDogKillCooldownOption = CreateOption(Color.white,"madDogKillCooldown",17.5f,2.5f,45f,2.5f);
+        madDogKillCooldownOption.suffix = "second";
     }
 
     public Dog()

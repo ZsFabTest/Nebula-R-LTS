@@ -18,9 +18,9 @@ public static class AddChat
         if (__instance != HudManager.Instance.Chat) return true;
         var localPlayer = PlayerControl.LocalPlayer;
         if (localPlayer == null) return true;
-        Boolean shouldSeeMessage = localPlayer.Data.IsDead || sourcePlayer.PlayerId == PlayerControl.LocalPlayer.PlayerId;
+        bool shouldSeeMessage = localPlayer.Data.IsDead || sourcePlayer.PlayerId == PlayerControl.LocalPlayer.PlayerId;
         try{
-            shouldSeeMessage = shouldSeeMessage || (localPlayer.GetModData().extraRole.Contains(Roles.Roles.Lover) || localPlayer.GetModData().extraRole.Contains(Roles.Roles.Trilemma));
+            shouldSeeMessage = shouldSeeMessage || localPlayer.GetModData().extraRole.Contains(Roles.Roles.Lover) || localPlayer.GetModData().extraRole.Contains(Roles.Roles.Trilemma);
             shouldSeeMessage = shouldSeeMessage && Roles.Roles.Lover.hasPrivateChatOption.getBool();
         }catch{  }
         if (DateTime.UtcNow - MeetingStart.MeetingStartTime < TimeSpan.FromSeconds(1))
@@ -41,6 +41,11 @@ public static class EnableChat
         try{
             if ((localPlayer.GetModData().extraRole.Contains(Roles.Roles.Lover) || localPlayer.GetModData().extraRole.Contains(Roles.Roles.Trilemma)) && !__instance.Chat.isActiveAndEnabled && Roles.Roles.Lover.hasPrivateChatOption.getBool())
                 __instance.Chat.SetVisible(true);
+        }catch{  }
+
+        try{
+            if (localPlayer.GetModData().role == Roles.Roles.Resurrectionist && !Roles.Roles.Resurrectionist.hasRevived)
+                __instance.Chat.SetVisible(false);
         }catch{  }
     }
 }

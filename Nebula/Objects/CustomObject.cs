@@ -28,12 +28,13 @@ public class UsableCustomObjectBehaviour : MonoBehaviour
 
     public float UsableDistance { get => 0.8f; }
     public float PercentCool { get => 0f; }
+    public bool hasOutLine = true;
 
     public ImageNames UseIcon { get => ImageNames.UseButton; }
 
     public void SetOutline(bool on, bool mainTarget)
     {
-        if (this.CustomObject.Renderer)
+        if (this.CustomObject.Renderer && hasOutLine)
         {
             CustomObject.Renderer.material.SetFloat("_Outline", (float)(on ? 1 : 0));
             CustomObject.Renderer.material.SetColor("_OutlineColor", Color.white);
@@ -119,6 +120,7 @@ public class CustomObject
         public static ObjectTypes.Footprint Footprint = new ObjectTypes.Footprint();
         public static ObjectTypes.TeleportEvidence TeleportEvidence = new ObjectTypes.TeleportEvidence();
         public static ObjectTypes.Leaves Leaves = new ObjectTypes.Leaves();
+        public static ObjectTypes.TeleportField TeleportField = new ObjectTypes.TeleportField();
 
         public byte Id { get; }
         public string ObjectName { get; }

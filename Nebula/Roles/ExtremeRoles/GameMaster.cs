@@ -31,6 +31,7 @@ public class GameMaster : Role
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
                 Events.LocalEvent.Activate(new GMEvent(target));
+                //Roles.Opportunist.OnSetTasks();
             },
             () => { return true; },
             () => { return true; },

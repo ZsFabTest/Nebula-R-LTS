@@ -30,11 +30,11 @@ public class Locksmith : Template.TCrewmate{
         if(open != null) open.Destroy();
         open = new CustomButton(
             () => {
-                target.SetDoorway(true);
+                target.SetDoorway(!target.Open);
                 open.Timer = open.MaxTimer;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-            () => { return target && !target.Open && PlayerControl.LocalPlayer.CanMove; },
+            () => { return target && PlayerControl.LocalPlayer.CanMove; },
             () => { open.Timer = open.MaxTimer; },
             buttonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,

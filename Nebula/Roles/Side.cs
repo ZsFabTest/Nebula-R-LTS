@@ -302,6 +302,7 @@ public class Side
 
     public static Side Yandere = new Side("Yandere","yandere",IntroDisplayOption.Yanderes,NeutralRoles.Yandere.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
         if(statistics.AliveYandere * 2 > statistics.TotalAlive){
+            RPCEventInvoker.SetExtraRole(Roles.Yandere.GetLover(),Roles.SecretCrush,0);
             return EndCondition.YandereWin;
         }
         return null;
@@ -398,6 +399,20 @@ public class Side
     public static Side Survival = new Side("Survival","survival",IntroDisplayOption.STANDARD,Palette.CrewmateBlue,(PlayerStatistics statistics,ShipStatus status) => {
         if(statistics.AliveInfected <= 0 && statistics.AliveSurvivals >= 1) return EndCondition.SurvivalWin;
         return null;
+    });
+
+    public static Side UndeadMaster = new Side("UndeadMaster","undeadMaster",IntroDisplayOption.STANDARD,NeutralRoles.UndeadMaster.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        return null;
+    },(EndCondition condition,PlayerStatistics statistics,ShipStatus status) => {
+        if(statistics.AliveUndeadMaster <= 0) return null;
+
+        if(condition == EndCondition.NobodyWin) return null;
+        if(condition == EndCondition.NobodySkeldWin) return null;
+        if(condition == EndCondition.NobodyMiraWin) return null;
+        if(condition == EndCondition.NobodyPolusWin) return null;
+        if(condition == EndCondition.NobodyAirshipWin) return null;
+
+        return EndCondition.UndeadMasterWin;
     });
 
     public static Side GamePlayer = new Side("GamePlayer", "gamePlayer", IntroDisplayOption.SHOW_ONLY_ME, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>

@@ -40,7 +40,7 @@ public class Dictator : Role{
         }
     }
 
-    public override void onRevived(byte playerId)
+    public override void OnRevived(byte playerId)
     {
         if(playerId == PlayerControl.LocalPlayer.PlayerId) isVoted = false;
     }

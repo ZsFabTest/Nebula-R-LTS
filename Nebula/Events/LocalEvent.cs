@@ -6,6 +6,7 @@ public class LocalEvent
 
     public float duration { get; private set; }
     public bool SpreadOverMeeting { get; protected set; }
+    public bool WillStop = true;
 
     public bool CheckTerminal()
     {
@@ -41,6 +42,7 @@ public class LocalEvent
     {
         foreach (LocalEvent localEvent in Events)
         {
+            if(Game.GameData.data.IsTimeStopped && localEvent.WillStop) continue;
             localEvent.LocalUpdate();
             localEvent.duration -= Time.deltaTime;
         }

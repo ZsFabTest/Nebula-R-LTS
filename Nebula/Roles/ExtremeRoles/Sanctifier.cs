@@ -58,7 +58,9 @@ public class Sanctifier : Role
                     RPCEventInvoker.UnsetExtraRole(target,Roles.DeputyMayor,true);
                     RPCEventInvoker.UnsetExtraRole(target,Roles.Superstar,true);
                     RPCEventInvoker.UnsetExtraRole(target,Roles.OnlineCelebrity,true);
-                    //RPCEventInvoker.UnsetExtraRole(target,Roles.Singer,true);
+                    RPCEventInvoker.UnsetExtraRole(target,Roles.Singer,true);
+                    RPCEventInvoker.UnsetExtraRole(target,Roles.ProfessionalAssassin,true);
+                    RPCEventInvoker.UnsetExtraRole(target,Roles.Radar,true);
                     if(canUnsetMadmateOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryMadmate, true);
                     if(canUnsetGuesserOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryGuesser, true);
                     if(canUnsetSidesickOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondarySidekick, true);

@@ -654,7 +654,7 @@ public class Assignable
     /// </summary>
     /// <param name="displayName"></param>
     [RoleGlobalMethod]
-    public virtual void onRevived(byte playerId)
+    public virtual void OnRevived(byte playerId)
     {
     }
 

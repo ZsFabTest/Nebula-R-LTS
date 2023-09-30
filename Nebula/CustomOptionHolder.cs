@@ -262,6 +262,9 @@ public class CustomOptionHolder
     public static CustomOption BattleShotEffectiveRangeOption;
     public static CustomOption BattleNoticeRangeOption;
 
+
+    //public static CustomOption ConnectCacheTimeOption;
+
     public static void AddExclusiveAssignment(ref List<ExclusiveAssignment> exclusiveAssignments)
     {
         if (!exclusiveAssignmentParent.getBool()) return;
@@ -823,5 +826,7 @@ public class CustomOptionHolder
         BattleShotEffectiveRangeOption.suffix = "cross";
         BattleNoticeRangeOption = CustomOption.Create(Color.white, "option.battleOption.noticeRangeOption", 20f, 2f, 50f, 2f,BattleOption,false,false,"",CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
         BattleNoticeRangeOption.suffix = "cross";
+
+        //ConnectCacheTimeOption = CustomOption.Create(Color.white, "option.connectCacheTime", 10f, 1f, 100f, 1f, roleCountOption, false, false, "", CustomOptionTab.Settings).HiddenOnDisplay(true).SetGameMode(CustomGameMode.ActuallyAll);
     }
 }

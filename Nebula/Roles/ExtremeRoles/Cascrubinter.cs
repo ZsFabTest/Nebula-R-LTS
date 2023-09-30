@@ -60,12 +60,17 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
         if(playerId == target.PlayerId) displayColor = RoleColor;
     }
 
+    public override void CleanUp(){
+        target = null;
+    }
+
     /*
     public override void OnMeetingStart(){
         RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer, 255); //ͶƱ����
     }
     */
 
+    /*
     public override bool OnExiledPost(byte[] voters, byte playerId)
     {
         if (playerId == target.PlayerId && !PlayerControl.LocalPlayer.Data.IsDead)
@@ -73,6 +78,7 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
 
         return false;
     }
+    */
 
     public Cascrubinter()
         : base("Cascrubinter","cascrubinter",RoleColor,RoleCategory.Neutral,Side.Cascrubinter,Side.Cascrubinter,

@@ -136,7 +136,7 @@ public class Puppeteer : Role,Template.HasWinTrigger
         });
     }
 
-    public override void onRevived(byte playerId){
+    public override void OnRevived(byte playerId){
         if(PlayerControl.LocalPlayer.PlayerId == playerId) isDead = false;
     }
 
@@ -301,7 +301,8 @@ public class Puppeteer : Role,Template.HasWinTrigger
             Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId]?.Die();
         }
         if(hasKilled){
-            Objects.SoundPlayer.PlaySound(Module.AudioAsset.PuppeteerLaugh);
+            RPCEventInvoker.PlayStaticSound(Module.AudioAsset.PuppeteerLaugh);
+            //Objects.SoundPlayer.PlaySound(Module.AudioAsset.PuppeteerLaugh);
             hasKilled = false;
         }
     }

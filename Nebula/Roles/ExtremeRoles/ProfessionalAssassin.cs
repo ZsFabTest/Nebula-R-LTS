@@ -32,7 +32,7 @@ public class ProfessionalAssassin : ExtraRole{
     public override void EditSpawnableRoleShower(ref string suffix, Role role)
     {
         if (IsSpawnable() && role.CanHaveExtraAssignable(this))
-            suffix += Helpers.cs(Color, "A");
+            suffix += Helpers.cs(Color, "Ξ");
     }
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
@@ -64,7 +64,7 @@ public class ProfessionalAssassin : ExtraRole{
 
     public override void EditDisplayNameForcely(byte playerId, ref string displayName)
     {
-        displayName += Helpers.cs(Color,"A");
+        displayName += Helpers.cs(Color,"Ξ");
     }
 
     public ProfessionalAssassin() : base("ProfessionalAssassin","professionalAssassin",ComplexRoles.FGuesser.RoleColor,1){

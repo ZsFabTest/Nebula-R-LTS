@@ -122,6 +122,12 @@ public class BomberB : Template.HasHologram{
         player.cosmetics.nameText.transform.localScale *= 5f;
     }
 
+    public override void EditCoolDown(CoolDownType type, float count)
+    {
+        explodeButton.Timer -= count;
+        explodeButton.actionButton.ShowButtonText("+" + count + "s");
+    }
+
     public BomberB() : base("Bomber", "bomber", Palette.ImpostorRed, RoleCategory.Impostor, Side.Impostor, Side.Impostor,
          Impostor.impostorSideSet, Impostor.impostorSideSet, Impostor.impostorEndSet,
          true, VentPermission.CanUseUnlimittedVent, true, true, true){

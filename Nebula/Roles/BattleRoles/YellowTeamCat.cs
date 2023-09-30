@@ -173,6 +173,8 @@ public class YellowTeamCat : Role
     public override void Initialize(PlayerControl __instance)
     {
         equipRifleFlag = false;
+        VentCoolDownMaxTimer = 20f;
+        VentDurationMaxTimer = 10f;
     }
 
 
@@ -198,7 +200,7 @@ public class YellowTeamCat : Role
     }
 
     public override void EditOthersDisplayNameColor(byte playerId,ref Color displayColor){
-        if(Helpers.playerById(playerId).GetModData().role == Roles.YellowTeam) displayColor = RoleColor;
+        if(Helpers.playerById(playerId).GetModData().role.side == Side.YellowTeam) displayColor = RoleColor;
     }
 
     public override void OnMurdered(byte murderId) => Roles.SchrodingersCat.OnMurdered(murderId);
@@ -206,7 +208,7 @@ public class YellowTeamCat : Role
     public YellowTeamCat()
         : base("YellowTeamCat", "yellowTeamCat", RoleColor, RoleCategory.Neutral, Side.YellowTeam, Side.YellowTeam,
              new HashSet<Side>() { Side.YellowTeam }, new HashSet<Side>() { Side.YellowTeam }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.YellowTeamWin },
-             true, VentPermission.CanUseUnlimittedVent, true, true, true)
+             true, VentPermission.CanUseLimittedVent, true, true, true)
     {
         sniperButton = null;
         killButton = null;

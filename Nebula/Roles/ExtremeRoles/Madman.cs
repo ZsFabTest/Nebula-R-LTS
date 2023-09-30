@@ -12,6 +12,7 @@ public class Madman : Role
     {
         isGuessableOption = CreateOption(Color.white, "isGuessable", false);
         killCooldownOption = CreateOption(Color.white, "killCooldown", 25f, 15f, 60f, 5f);
+        killCooldownOption.suffix = "second";
     }
 
     public override bool IsGuessableRole { get => isGuessableOption.getBool(); protected set => base.IsGuessableRole = value; }

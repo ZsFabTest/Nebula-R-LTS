@@ -4,22 +4,23 @@ public class Officer : Template.TCrewmate{
     static public Color RoleColor = new(210f / 255f,214f / 255f,98f / 255f);
 
     private Module.CustomOption orderCooldown;
+    private Module.CustomOption orderDuration;
     public override void LoadOptionData(){
         TopOption.tab = Module.CustomOptionTab.AdvancedSettings;
         orderCooldown = CreateOption(Color.white,"orderCooldown",15f,2.5f,45f,2.5f);
         orderCooldown.suffix = "second";
+        orderDuration = CreateOption(Color.white,"orderDuration",7.5f,2.5f,20f,2.5f);
+        orderDuration.suffix = "second";
     }
 
     private SpriteLoader buttonSprite = new("Nebula.Resources.ArrestButton.png",115f);
 
-    private PlayerControl target;
     private CustomButton order;
-    private Vector3 pos;
     public override void ButtonInitialize(HudManager __instance){
         order?.Destroy();
         order = new CustomButton(
             () => {
-                target = Game.GameData.data.myData.currentTarget;
+                RPCEventInvoker.EmitSpeedFactor(Game.GameData.data.myData.currentTarget,new Game.SpeedFactor(0,3f,0f,false));
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove && Game.GameData.data.myData.currentTarget; },
@@ -28,12 +29,6 @@ public class Officer : Template.TCrewmate{
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.abilityInput.keyCode,
-            true,
-            3f,
-            () => {
-                target = null;
-                order.Timer = order.MaxTimer;
-            },
             "button.label.order"
         ).SetTimer(CustomOptionHolder.InitialAbilityCoolDownOption.getFloat());
         order.MaxTimer = orderCooldown.getFloat();
@@ -43,13 +38,6 @@ public class Officer : Template.TCrewmate{
         if(order != null){
             order.Destroy();
             order = null;
-        }
-    }
-
-    public override void MyPlayerControlUpdate(){
-        base.MyPlayerControlUpdate();
-        if(order.isEffectActive){
-            RPCEventInvoker.FakeKill(target,PlayerControl.LocalPlayer);
         }
     }
 

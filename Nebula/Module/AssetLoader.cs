@@ -1,4 +1,5 @@
-﻿using Nebula.Roles.NeutralRoles;
+﻿using Mono.Cecil;
+using Nebula.Roles.NeutralRoles;
 using Nebula.Tasks;
 using System.Reflection;
 using UnityEngine;
@@ -60,6 +61,8 @@ public static class AssetLoader
     
     public static GameObject MetaObjectPrefab;
 
+    //public static AudioSource audioSource;
+
     static public void Load()
     {
         var resourceStream = assembly.GetManifestResourceStream("Nebula.Resources.Assets.nebula_asset");
@@ -102,6 +105,14 @@ public static class AssetLoader
 
         PuppeteerLaugh = AssetBundle.LoadFromMemory(assembly.GetManifestResourceStream("Nebula.Resources.Assets.audiobundle").ReadFully()).LoadAsset<AudioClip>("PuppeteerLaugh.mp3").DontUnload();
         Uskneko = AssetBundle.LoadFromMemory(assembly.GetManifestResourceStream("Nebula.Resources.Assets.haomingassets").ReadFully()).LoadAsset<AudioClip>("Uskneko.mp3").DontUnload();
+
+        /*
+        audioSource = new();
+        AudioClip clip = Resources.Load<AudioClip>("Sounds/background.mp3");
+        audioSource.clip = clip;
+        audioSource.DontUnload();
+        audioSource.loop = true;
+        */
     }
 
     public static Sprite GetMapSprite(byte mapId,Vector2 size,Int32 mask)

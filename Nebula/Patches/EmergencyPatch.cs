@@ -135,6 +135,23 @@ public static class EmergencyPatch
                 return;
             }
 
+            if (Game.GameData.data.IsTimeStopped){
+                __instance.StatusText.text = Language.Language.GetString("meeting.timeIsStopped");
+                __instance.NumberText.text = string.Empty;
+                __instance.ClosedLid.gameObject.SetActive(true);
+                __instance.OpenLid.gameObject.SetActive(false);
+                __instance.ButtonActive = false;
+                return;
+            }
+
+            if (Game.GameData.data.IsLocked){
+                __instance.StatusText.text = Language.Language.GetString("meeting.isLocked");
+                __instance.NumberText.text = string.Empty;
+                __instance.ClosedLid.gameObject.SetActive(true);
+                __instance.OpenLid.gameObject.SetActive(false);
+                __instance.ButtonActive = false;
+                return;
+            }
 
             int score = 0, require = 0;
             if (Game.GameData.data.GameRule.canUseEmergencyWithoutDeath)

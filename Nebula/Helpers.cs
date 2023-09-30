@@ -499,9 +499,9 @@ public static class Helpers
         return murder;
     }
 
-    public static void PlayCustomFlash(Color color, float fadeIn, float fadeOut, float maxAlpha = 0.5f)
+    public static void PlayCustomFlash(Color color, float fadeIn, float fadeOut, float maxAlpha = 0.5f, float flashDuring = 0f)
     {
-        float duration = fadeIn + fadeOut;
+        float duration = fadeIn + fadeOut + flashDuring;
 
         var flash = GameObject.Instantiate(HudManager.Instance.FullScreen, HudManager.Instance.transform);
         flash.color = color;
@@ -513,14 +513,17 @@ public static class Helpers
             if (p < (fadeIn / duration))
             {
                 if (flash != null)
-                    flash.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(maxAlpha * p / (fadeIn / duration)));
+                    flash.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((PlayerControl.LocalPlayer.Data.IsDead ? Mathf.Min(maxAlpha,0.2f) : maxAlpha) * p / (fadeIn / duration)));
             }
-            else
+            else if(1 - p < (fadeOut / duration))
             {
                 if (flash != null)
-                    flash.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(maxAlpha * (1 - p) / (fadeOut / duration)));
+                    flash.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((PlayerControl.LocalPlayer.Data.IsDead ? Mathf.Min(maxAlpha,0.2f) : maxAlpha) * (1 - p) / (fadeOut / duration)));
+            }else{
+                if (flash != null)
+                    flash.color = new Color(color.r,color.g,color.b,PlayerControl.LocalPlayer.Data.IsDead ? Mathf.Min(maxAlpha,0.2f) : maxAlpha);
             }
-            if (p == 1f && flash != null)
+            if ((p == 1f || MeetingHud.Instance) && flash != null)
             {
                 flash.enabled = false;
                 GameObject.Destroy(flash.gameObject);

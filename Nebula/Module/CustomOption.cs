@@ -150,7 +150,7 @@ public class CustomOption
             int sent = 0;
             while (num > 0)
             {
-                int length = num > 8 ? 8 : num;
+                int length = num > 128 ? 128 : num;
                 var options = new Tuple<int, int>[length];
                 for (int i = 0; i < length; i++)
                 {
@@ -1293,7 +1293,17 @@ public class PlayerJoinedPatch
 {
     public static void Postfix()
     {
-        if(AmongUsClient.Instance.AmHost)CustomOption.ShareAllOptions.Invoke(CustomOption.AllOptions);
+        if(AmongUsClient.Instance.AmHost) CustomOption.ShareAllOptions.Invoke(CustomOption.AllOptions);
+        /*
+        int randomInt = NebulaPlugin.rnd.Next(10000);
+        TMPro.TMP_Text message = new();
+        message.text = "Wait for " + (randomInt / 1000).ToString() + " seconds.";
+        message.color = Color.red;
+        message.transform.position = new Vector3(0f,0f,5f);
+        Thread.Sleep(randomInt);
+        UnityEngine.GameObject.Destroy(message);
+        */
+        //if(AmongUsClient.Instance.AmHost)CustomOption.ShareAllOptions.Invoke(CustomOption.AllOptions);
     }
 }
 

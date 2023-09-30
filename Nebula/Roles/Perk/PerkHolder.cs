@@ -230,7 +230,7 @@ public class PerkHolder : ExtraRole
         }
     }
 
-    public override void onRevived(byte playerId)
+    public override void OnRevived(byte playerId)
     {
         if (playerId == PlayerControl.LocalPlayer.PlayerId) PerkData.MyPerkData.PerkAction((p) => p.Perk.OnRevived(p));
     }

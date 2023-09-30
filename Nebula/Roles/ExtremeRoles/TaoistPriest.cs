@@ -7,7 +7,7 @@ public class TaoistPriest : Template.TCrewmate{
     private SpriteLoader killButtonSprite = new SpriteLoader("Nebula.Resources.SheriffKillButton.png", 100f, "ui.button.sheriff.kill");
 
     public override void LoadOptionData(){
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
+        TopOption.tab = Module.CustomOptionTab.AdvancedSettings;
         killCooldown = CreateOption(Color.white,"killCooldown",15f,2.5f,45f,2.5f);
         killCooldown.suffix = "second";
     }

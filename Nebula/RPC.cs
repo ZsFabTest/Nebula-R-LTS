@@ -1,6 +1,9 @@
 ﻿using Hazel;
+using Nebula.Agent;
+using Nebula.Events;
 using Nebula.Game;
 using Nebula.Module;
+using Nebula.Patches;
 using Nebula.Roles;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -112,6 +115,11 @@ public enum CustomRPC
     SetSmoke,
     SetInfectLives,
     UpdateFollowerData,
+    SetFlash,
+    FixedCleanDeadBody,
+    ResetTeleportField,
+    SetTimeStatus,
+    Extort,
 }
 
 //RPCを受け取ったときのイベント
@@ -436,6 +444,21 @@ class RPCHandlerPatch
             case (byte)CustomRPC.UpdateFollowerData:
                 RPCEvents.UpdateFollowerData(reader.ReadByte());
                 break;
+            case (byte)CustomRPC.SetFlash:
+                RPCEvents.SetFlash(reader.ReadByte(),reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle());
+                break;
+            case (byte)CustomRPC.FixedCleanDeadBody:
+                RPCEvents.FixedCleanDeadBody(reader.ReadByte());
+                break;
+            case (byte)CustomRPC.ResetTeleportField:
+                RPCEvents.ResetTeleportField(reader.ReadInt32());
+                break;
+            case (byte)CustomRPC.SetTimeStatus:
+                RPCEvents.SetTimeStatus(reader.ReadBoolean());
+                break;
+            case (byte)CustomRPC.Extort:
+                RPCEvents.Extort(reader.ReadByte(),reader.ReadSingle());
+                break;
         }
     }
 }
@@ -554,6 +577,7 @@ static class RPCEvents
     /// <param name="playerId"></param>
     public static void SetExtraRole(byte playerId, Roles.ExtraRole role, ulong initializeValue)
     {
+        if(Game.GameData.data.playersArray[playerId] != null && Game.GameData.data.playersArray[playerId].HasExtraRole(role)) return;
         Game.GameData.data.playersArray[playerId]?.extraRole.Add(role);
         Game.GameData.data.playersArray[playerId]?.SetExtraRoleData(role.id, initializeValue);
 
@@ -777,7 +801,7 @@ static class RPCEvents
                 Helpers.RoleAction(target, (role) => { role.OnDied(); });
 
 
-                Events.Schedule.RegisterPostMeetingAction(() =>
+                Events.Schedule.RegisterPreMeetingAction(() =>
                 {
                     if (!PlayerControl.LocalPlayer.GetModData().IsAlive && (PlayerControl.LocalPlayer.GetModData().role != Roles.Roles.Resurrectionist || Roles.Roles.Resurrectionist.hasRevived))
                         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
@@ -1065,7 +1089,7 @@ static class RPCEvents
             data.Property.UnderTheFloor = false;
         }
 
-        Helpers.RoleAction(Game.GameData.data.myData.getGlobalData(),(r)=>r.onRevived(playerId));
+        Helpers.RoleAction(Game.GameData.data.myData.getGlobalData(),(r)=>r.OnRevived(playerId));
 
         if (HnSModificator.IsHnSGame) HudManager.Instance.CrewmatesKilled.OnCrewmateKilled();
     }
@@ -1791,6 +1815,48 @@ static class RPCEvents
 
     public static void UpdateFollowerData(byte data){
         Roles.Roles.Follower.targetId = data;
+    }
+
+    public static void SetFlash(byte playerId,float duration,float visiably,float r,float g,float b){
+        Color FlashColor = new(r,g,b);
+        if(playerId == PlayerControl.LocalPlayer.PlayerId){
+            Helpers.PlayCustomFlash(FlashColor,0.1f,0.4f,visiably,duration);
+        }
+        if(Roles.Roles.Grenadier.flashedId.Count <= 0){
+            LocalEvent.Activate(new Roles.ImpostorRoles.FlashEndEvent(duration));
+            Schedule.RegisterPreMeetingAction(() => {
+                Roles.Roles.Grenadier.flashedId.Clear();
+                Roles.Roles.Grenadier.isFlashing = false;
+            },16);
+        }
+        Roles.Roles.Grenadier.flashedId.Add(playerId);
+        Roles.Roles.Grenadier.isFlashing = true;
+    }
+
+    public static void FixedCleanDeadBody(byte playerId){
+        try{
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            foreach(var DeadBody in array){
+                if(DeadBody.ParentId == playerId){
+                    DeadBody.gameObject.active = false;
+                }
+            }
+        }catch(Exception e) { Debug.LogError(e.StackTrace); }
+    }
+
+    public static void ResetTeleportField(int idx){
+        Objects.ObjectTypes.TeleportField.ResetTime(idx);
+    }
+
+    public static void SetTimeStatus(bool status){
+        Game.GameData.data.IsTimeStopped = status;
+    }
+
+    public static void Extort(byte playerId,float time){
+        if(playerId == PlayerControl.LocalPlayer.PlayerId){
+            Game.GameData.data.IsLocked = true;
+            Events.StandardEvent.SetEvent(() => { Game.GameData.data.IsLocked = false; },time);
+        }
     }
 }
 
@@ -2850,5 +2916,46 @@ public class RPCEventInvoker
         writer.Write(data);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.UpdateFollowerData(data);
+    }
+
+    public static void SetFlash(PlayerControl p,float duration,float visiably,Color c){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetFlash,Hazel.SendOption.Reliable,-1);
+        writer.Write(p.PlayerId);
+        writer.Write(duration);
+        writer.Write(visiably);
+        writer.Write(c.r);
+        writer.Write(c.g);
+        writer.Write(c.b);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetFlash(p.PlayerId,duration,visiably,c.r,c.g,c.b);
+    }
+
+    public static void FixedCleanDeadBody(PlayerControl player){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.FixedCleanDeadBody,Hazel.SendOption.Reliable,-1);
+        writer.Write(player.PlayerId);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.FixedCleanDeadBody(player.PlayerId);
+    }
+
+    public static void ResetTeleportField(int idx){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.ResetTeleportField,Hazel.SendOption.Reliable,-1);
+        writer.Write(idx);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.ResetTeleportField(idx);
+    }
+
+    public static void SetTimeStatus(bool status){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetTimeStatus,Hazel.SendOption.Reliable,-1);
+        writer.Write(status);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetTimeStatus(status);
+    }
+
+    public static void Extort(PlayerControl p,float time){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.Extort,Hazel.SendOption.Reliable,-1);
+        writer.Write(p.PlayerId);
+        writer.Write(time);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.Extort(p.PlayerId,time);
     }
 }   

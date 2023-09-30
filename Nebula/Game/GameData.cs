@@ -1352,6 +1352,11 @@ public class GameData
 
     public bool IsLockedKill;
 
+    public bool IsTimeStopped;
+    public bool IsLocked;
+
+    //public bool isFlashed;
+
     public GameData()
     {
 
@@ -1383,11 +1388,14 @@ public class GameData
         Timer = 300f;
 
         IsCanceled = false;
+        IsLocked = false;
 
         //Reporter = null;
         //Dead = null;
 
         IsLockedKill = false;
+
+        IsTimeStopped = false;
 
         Roles.Perk.PerkHolder.PerkData.InitializePerkData();
     }

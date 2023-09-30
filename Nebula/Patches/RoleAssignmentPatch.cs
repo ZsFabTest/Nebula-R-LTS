@@ -496,6 +496,8 @@ class RoleAssignmentPatch
                 else assignMap.AssignRole(allPlayers[tmp],Roles.Roles.GreenTeam.id);
             }
 
+            //if(!Module.AssetLoader.audioSource.isPlaying) Module.AssetLoader.audioSource.Play();
+
             return;
         }else if(CustomOptionHolder.GetCustomGameMode() == Module.CustomGameMode.VirusCrisis){
             var allPlayers = new List<byte>();
@@ -517,6 +519,8 @@ class RoleAssignmentPatch
             }
             return;
         }
+
+        
 
         if (property.RequireImpostors)
         {

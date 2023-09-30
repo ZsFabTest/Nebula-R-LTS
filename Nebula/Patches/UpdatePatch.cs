@@ -169,13 +169,14 @@ public static class UpdatePatch
                 player.cosmetics.nameText.color = Color.white;
             }
             player.cosmetics.nameText.color = rewriteImpostorColor(playerData, player.cosmetics.nameText.color, (Color)impostorColor);
-
             //ロールによる色の変更
             Color color = player.cosmetics.nameText.color;
             Helpers.RoleAction(player.PlayerId, (role) => { role.EditDisplayNameColor(player.PlayerId, ref color); });
             Helpers.RoleAction(PlayerControl.LocalPlayer.PlayerId, (role) => { role.EditOthersDisplayNameColor(player.PlayerId, ref color); });
             player.cosmetics.nameText.color = color;
-
+            if(Roles.Roles.Grenadier.flashedId.Contains(player.PlayerId))
+                if(PlayerControl.LocalPlayer.GetModData().role.side == Side.Impostor && (player.GetModData().role.side != Side.Impostor && player.GetModData().role != Roles.Roles.ZombieSidekick && player.GetModData().role != Roles.Roles.Spy))
+                    player.cosmetics.nameText.color = Color.black;
 
             bool showNameFlag = !CannotSeeNameTag(player);
 

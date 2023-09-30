@@ -136,6 +136,7 @@ public class DivisibleRemoteProcess<Parameter,DividedParameter> : RemoteProcessB
 
     public void Invoke(Parameter parameter)
     {
+        //int idx = 0;
         void dividedSend(DividedParameter param)
         {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 64, Hazel.SendOption.Reliable, -1);
@@ -143,9 +144,27 @@ public class DivisibleRemoteProcess<Parameter,DividedParameter> : RemoteProcessB
             DividedSender(writer, param);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             Body.Invoke(param, true);
+            /*
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 64, Hazel.SendOption.Reliable, -1);
+            writer.Write(Hash);
+            DividedSender(writer, param);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            Body.Invoke(param, true);
+            idx++;
+            if(idx % (int)CustomOptionHolder.ConnectCacheTimeOption.getFloat() == 0) Thread.Sleep(1);
+            */
         }
 
+        /*
+        void setTask(DividedParameter param){
+            try{
+                Task.Run(() => dividedSend(param));
+            }catch(Exception e){ Debug.LogError(e.StackTrace); }
+        }
+        */
+
         Sender(parameter, dividedSend);
+        //Sender(parameter, dividedSend);
     }
 
     public void LocalInvoke(Parameter parameter)

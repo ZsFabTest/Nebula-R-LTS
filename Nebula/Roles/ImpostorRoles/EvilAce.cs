@@ -34,7 +34,7 @@ public class EvilAce : Role
     }
 
 
-    public override void onRevived(byte playerId)
+    public override void OnRevived(byte playerId)
     {
         //情報を消去する
         try
