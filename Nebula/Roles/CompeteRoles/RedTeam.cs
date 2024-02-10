@@ -1,10 +1,12 @@
-﻿using static Il2CppSystem.Globalization.CultureInfo;
+﻿using Reactor.Utilities.Extensions;
+using TMPro;
+using static Il2CppSystem.Globalization.CultureInfo;
 
 namespace Nebula.Roles.CompeteRoles;
 
 public class RedTeam : Role
 {
-    public static int Point = 0;
+    public int Point = 0;
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
@@ -37,7 +39,7 @@ public class RedTeam : Role
         ).SetTimer(15f);
         killButton.MaxTimer = CustomOptionHolder.CompeteKillCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
-        Debug.LogError(killButton.MaxTimer);
+        //Debug.LogError(killButton.MaxTimer);
     }
 
     public override void CleanUp()
@@ -58,17 +60,25 @@ public class RedTeam : Role
 
     public override void OnDied()
     {
-        Events.StandardEvent.SetEvent(() => { RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, true, false); },time:CustomOptionHolder.CompeteReviveDelayOption.getFloat());
+        Events.StandardEvent.SetEvent(() => { RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, false, false); },time:CustomOptionHolder.CompeteReviveDelayOption.getFloat());
+    }
+
+    public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        if (Helpers.playerById(playerId).GetModData().role.side == Side.RedTeam) displayColor = Color;
+        else displayColor = Color.blue;
     }
 
     public RedTeam() : base("RedTeam","redTeam",Color.red,RoleCategory.Neutral,Side.RedTeam,Side.RedTeam,
         new HashSet<Side> { Side.RedTeam },new HashSet<Side>() { Side.RedTeam },new HashSet<Patches.EndCondition>() { Patches.EndCondition.RedTeamWin },
-        false, VentPermission.CanUseUnlimittedVent, true, true, true)
+        true, VentPermission.CanUseUnlimittedVent, true, true, true)
     {
         canReport = false;
         CanCallEmergencyMeeting = false;
 
         ValidGamemode = Module.CustomGameMode.Compete;
         IsHideRole = true;
+
+        Point = 0;
     }
 }

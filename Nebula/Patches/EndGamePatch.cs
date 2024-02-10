@@ -28,7 +28,7 @@ public class EndCondition
     public static EndCondition TrilemmaWin = new EndCondition(25, new Color(209f / 255f, 63f / 255f, 138f / 255f), "trilemma", 0, Module.CustomGameMode.Standard);
     public static EndCondition SantaWin = new EndCondition(26, Roles.NeutralRoles.SantaClaus.RoleColor, "santa", 4, Module.CustomGameMode.Standard);
 
-    public static EndCondition NobodyWin = new EndCondition(48, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody", 0, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition NobodyWin = new EndCondition(48, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody", 0, Module.CustomGameMode.ExceptCompete).SetNoBodyWin(true);
     public static EndCondition NobodySkeldWin = new EndCondition(49, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.skeld", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
     public static EndCondition NobodyMiraWin = new EndCondition(50, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.mira", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
     public static EndCondition NobodyPolusWin = new EndCondition(51, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.polus", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
@@ -55,7 +55,7 @@ public class EndCondition
     public static EndCondition UndeadMasterWin = new EndCondition(144,Roles.NeutralRoles.UndeadMaster.RoleColor,"undeadMaster",1,Module.CustomGameMode.Standard);
     public static EndCondition RedTeamWin = new EndCondition(145, Color.red, "redTeam", 1, Module.CustomGameMode.Compete);
     public static EndCondition BlueTeamWin = new EndCondition(146, Color.blue, "blueTeam", 1, Module.CustomGameMode.Compete);
-    public static EndCondition Tie = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "tie", 0, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition Tie = new EndCondition(147, new Color(72f / 255f, 78f / 255f, 84f / 255f), "tie", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
@@ -65,7 +65,7 @@ public class EndCondition
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
             PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin,YellowTeamWin,GreenTeamWin,InfectedWin,SurvivalWin,
-            HighRollerWin,RedTeamWin,BlueTeamWin
+            HighRollerWin,RedTeamWin,BlueTeamWin,Tie
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)

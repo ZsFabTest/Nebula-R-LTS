@@ -22,7 +22,8 @@ public enum CustomGameMode
     Battle = 16,
     ActuallyAll = 127,
     VirusCrisis = 32,
-    Compete = 64
+    Compete = 64,
+    ExceptCompete = 63
 }
 
 [Flags]

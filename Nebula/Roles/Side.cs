@@ -452,9 +452,9 @@ public class Side
                 }
                 else if(Game.GameData.data.GameMode == Module.CustomGameMode.Compete)
                 {
-                    int point1 = CompeteRoles.RedTeam.Point;
-                    int point2 = CompeteRoles.BlueTeam.Point;
-                    CompeteRoles.RedTeam.Point = CompeteRoles.BlueTeam.Point = 0;
+                    int point1 = Roles.RedTeam.Point;
+                    int point2 = Roles.BlueTeam.Point;
+                    Roles.RedTeam.Point = Roles.BlueTeam.Point = 0;
                     if (point1 > point2) return EndCondition.RedTeamWin;
                     else if (point1 < point2) return EndCondition.BlueTeamWin;
                     else return EndCondition.Tie;

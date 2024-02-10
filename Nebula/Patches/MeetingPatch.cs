@@ -35,7 +35,7 @@ class MeetingHudPatch
         {
             GameData.PlayerInfo playerById = GameData.Instance.GetPlayerById(srcPlayerId);
             GameData.PlayerInfo playerById2 = GameData.Instance.GetPlayerById(suspectPlayerId);
-            __instance.logger.Debug(playerById.PlayerName + " has voted for " + ((playerById2 != null) ? playerById2.PlayerName : "No one"), null);
+            Debug.Log(playerById.PlayerName + " has voted for " + ((playerById2 != null) ? playerById2.PlayerName : "No one"));
             int num = __instance.playerStates.IndexOf((Il2CppSystem.Predicate<PlayerVoteArea>)((PlayerVoteArea pv) => pv.TargetPlayerId == srcPlayerId));
             PlayerVoteArea playerVoteArea = __instance.playerStates[num];
             if (!playerVoteArea.AmDead && !playerVoteArea.DidVote)

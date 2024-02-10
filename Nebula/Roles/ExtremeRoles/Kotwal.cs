@@ -65,9 +65,9 @@ public class Kotwal : Role
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
                 Events.LocalEvent.Activate(new KotwalEvent(target));
-                RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, appointDataId, -1);
+                appointDataId--;
             },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead && Game.GameData.data.myData.getGlobalData().GetRoleData(appointDataId) > 0; },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead && appointDataId > 0; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { appoint.Timer = appoint.MaxTimer; },
             buttonSprite.GetSprite(),

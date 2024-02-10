@@ -453,13 +453,13 @@ public static class UpdatePatch
 
             Objects.Ghost.Update();
 
-            if (CustomOptionHolder.timeLimitOption.getBool()) Game.GameData.data.TimerUpdate();
+            if (CustomOptionHolder.limiterOptions.getBool()) Game.GameData.data.TimerUpdate();
 
             Module.Information.UpperInformationManager.Update();
 
             if (Game.GameData.data.Ghost != null) Game.GameData.data.Ghost.Update();
         }
-        catch (NullReferenceException excep) { UnityEngine.Debug.Log(excep.StackTrace); }
+        catch (NullReferenceException excep) { Debug.Log(excep.StackTrace); }
 
     }
 

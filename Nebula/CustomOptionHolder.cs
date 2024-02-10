@@ -592,7 +592,7 @@ public class CustomOptionHolder
 
         limiterOptions = CustomOption.Create(Color.white, "option.limitOptions", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.ActuallyAll);
         CustomOption.RegisterTopOption(limiterOptions);
-        timeLimitOption = CustomOption.Create(Color.white, "option.timeLimitOption", 20f, 1f, 80f, 1f, limiterOptions).SetGameMode(CustomGameMode.ActuallyAll);
+        timeLimitOption = CustomOption.Create(Color.white, "option.timeLimitOption", 20f, 0f, 80f, 1f, limiterOptions).SetGameMode(CustomGameMode.ActuallyAll);
         timeLimitSecondOption = CustomOption.Create(Color.white, "option.timeLimitSecondOption", 0f, 0f, 55f, 5f, limiterOptions).SetGameMode(CustomGameMode.ActuallyAll);
         timeLimitOption.suffix = "minute";
         timeLimitSecondOption.suffix = "second";

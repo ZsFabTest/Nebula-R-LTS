@@ -362,7 +362,7 @@ static public class GuesserSystem
                             actualRole == role ||
                             role.GetImplicateRoles().Contains(actualRole) ||
                             role.GetImplicateExtraRoles().Any((r) => focusedTargetData.HasExtraRole(r)) ||
-                            role == Roles.SchrodingersCat && (NeutralRoles.SchrodingersCat.AllCat.Contains(actualRole))
+                            role == Roles.SchrodingersCat && (NeutralRoles.SchrodingersCat.AllCat.Any((ro) => ro.id == actualRole.id))
                             )
                             ? focusedTarget : PlayerControl.LocalPlayer;
 

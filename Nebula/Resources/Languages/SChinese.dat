@@ -2358,6 +2358,20 @@
 "role.blueTeam.hint" : "击杀<color=#FF0000FF>红队</color>队员"
 "role.blueTeam.info" : "击杀红队队员。"
 
+"role.soulEater.name" : "噬魂者"
+"role.soulEater.short" : "噬"
+"role.soulEater.description" : "悄无声息地击杀船员"
+"role.soulEater.hint" : "夺取船员的灵魂"
+"role.soulEater.info" : "噬魂者每轮只能刀一次。\n在指定时间内若没有开会，被标记对象会隐身，开会前暴毙。"
+"role.soulEater.killCooldown" : "击杀冷却时间"
+"role.soulEater.delayOption" : "延迟时间"
+
+"role.deadbeat.name" : "栽赃者"
+"role.deadbeat.short" : "栽"
+"role.deadbeat.description" : "借他人之手击杀船员"
+"role.deadbeat.hint" : "指定击杀船员"
+"role.deadbeat.info" : "栽赃者需要标记一个人。\n使用击杀后将由被标记的人击杀。\n栽赃者会瞬移，而被标记者不会。"
+
 "option.display.random" : "随机"
 
 "side.paparazzo.name" : "摄影师"

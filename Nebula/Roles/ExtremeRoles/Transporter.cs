@@ -36,8 +36,8 @@ public class Transporter : Template.BilateralnessRole{
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.ChainShiftButton.png", 115f);
     private SpriteLoader markSprite = new SpriteLoader("Nebula.Resources.AssassinMarkButton.png", 115f);
 
-    public override Assignable AssignableOnHelp => Roles.F_Mover;
-    public override HelpSprite[] helpSprite => Roles.F_Mover.helpSprite;
+    public override Assignable AssignableOnHelp => Roles.F_Transporter;
+    public override HelpSprite[] helpSprite => Roles.F_Transporter.helpSprite;
 
     PlayerControl target;
 

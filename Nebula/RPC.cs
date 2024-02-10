@@ -1865,8 +1865,17 @@ static class RPCEvents
 
     public static void CompeteGetPoint(byte team)
     {
-        if (team == 0) Roles.CompeteRoles.RedTeam.Point++;
-        else Roles.CompeteRoles.BlueTeam.Point++;
+        if (team == 0)
+        {
+            Roles.Roles.RedTeam.Point++;
+        }
+        else
+        {
+            Roles.Roles.BlueTeam.Point++;
+        }
+
+        Debug.Log($"Red: {Roles.Roles.RedTeam.Point}");
+        Debug.Log($"Blue: {Roles.Roles.BlueTeam.Point}");
     }
 }
 
@@ -2971,7 +2980,7 @@ public class RPCEventInvoker
 
     public static void CompeteGetPoint(byte team)
     {
-        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.Extort, Hazel.SendOption.Reliable, -1);
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CompeteGetPoint, Hazel.SendOption.Reliable, -1);
         writer.Write(team);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.CompeteGetPoint(team);

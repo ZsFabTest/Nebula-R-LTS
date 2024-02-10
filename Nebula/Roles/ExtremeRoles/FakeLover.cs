@@ -39,7 +39,7 @@ public class FakeLover : ExtraRole
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.InvolveButton.png", 115f, "ui.button.lover.involve");
 
-    public virtual bool IsSpawnable()
+    public override bool IsSpawnable()
     {
         return false;
     }

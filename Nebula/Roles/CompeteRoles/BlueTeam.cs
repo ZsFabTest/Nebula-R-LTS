@@ -1,8 +1,11 @@
-﻿namespace Nebula.Roles.CompeteRoles;
+﻿using Reactor.Utilities.Extensions;
+using TMPro;
+
+namespace Nebula.Roles.CompeteRoles;
 
 public class BlueTeam : Role
 {
-    public static int Point = 0;
+    public int Point = 0;
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
@@ -35,7 +38,7 @@ public class BlueTeam : Role
         ).SetTimer(15f);
         killButton.MaxTimer = CustomOptionHolder.CompeteKillCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
-        Debug.LogError(killButton.MaxTimer);
+        //Debug.LogError(killButton.MaxTimer);
     }
 
     public override void CleanUp()
@@ -56,17 +59,25 @@ public class BlueTeam : Role
 
     public override void OnDied()
     {
-        Events.StandardEvent.SetEvent(() => { RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, true, false); },time:CustomOptionHolder.CompeteReviveDelayOption.getFloat());
+        Events.StandardEvent.SetEvent(() => { RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, false, false); },time:CustomOptionHolder.CompeteReviveDelayOption.getFloat());
+    }
+
+    public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        if (Helpers.playerById(playerId).GetModData().role.side == Side.BlueTeam) displayColor = Color;
+        else displayColor = Color.red;
     }
 
     public BlueTeam() : base("BlueTeam","blueTeam",Color.blue,RoleCategory.Neutral,Side.BlueTeam,Side.BlueTeam,
         new HashSet<Side> { Side.BlueTeam },new HashSet<Side>() { Side.BlueTeam },new HashSet<Patches.EndCondition>() { Patches.EndCondition.BlueTeamWin },
-        false, VentPermission.CanUseUnlimittedVent, true, true, true)
+        true, VentPermission.CanUseUnlimittedVent, true, true, true)
     {
         canReport = false;
         CanCallEmergencyMeeting = false;
 
         ValidGamemode = Module.CustomGameMode.Compete;
         IsHideRole = true;
+
+        Point = 0;
     }
 }

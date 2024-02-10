@@ -415,7 +415,7 @@ public class Lover : ExtraRole
     }
 
 
-    public virtual bool IsSpawnable()
+    public override bool IsSpawnable()
     {
         if (maxPairsOption.getFloat() == 0f) return false;
 
