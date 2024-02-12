@@ -56,6 +56,7 @@ public class EndCondition
     public static EndCondition RedTeamWin = new EndCondition(145, Color.red, "redTeam", 1, Module.CustomGameMode.Compete);
     public static EndCondition BlueTeamWin = new EndCondition(146, Color.blue, "blueTeam", 1, Module.CustomGameMode.Compete);
     public static EndCondition Tie = new EndCondition(147, new Color(72f / 255f, 78f / 255f, 84f / 255f), "tie", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition KillingMachineWin = new EndCondition(148, Color.grey, "killingMachine", 1, Module.CustomGameMode.Compete);
 
     public static HashSet<EndCondition> AllEnds = new HashSet<EndCondition>() {
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
@@ -65,7 +66,7 @@ public class EndCondition
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
             PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin,YellowTeamWin,GreenTeamWin,InfectedWin,SurvivalWin,
-            HighRollerWin,RedTeamWin,BlueTeamWin,Tie
+            HighRollerWin,RedTeamWin,BlueTeamWin,Tie,KillingMachineWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)

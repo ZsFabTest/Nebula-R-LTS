@@ -527,6 +527,13 @@ class RoleAssignmentPatch
                 allPlayers.Add(player.PlayerId);
             }
 
+            if ((allPlayers.Count & 1) == 1)
+            {
+                int idx = rnd.Next(allPlayers.Count);
+                assignMap.AssignRole(allPlayers[idx], Roles.Roles.KillingMachine.id);
+                allPlayers.RemoveAt(idx);
+            }
+
             var array = Helpers.GetRandomArray(allPlayers.Count);
 
             for (int tmp = 0; tmp < allPlayers.Count; tmp++)
@@ -534,6 +541,9 @@ class RoleAssignmentPatch
                 if (array[tmp] % 2 == 0) assignMap.AssignRole(allPlayers[tmp], Roles.Roles.RedTeam.id);
                 else assignMap.AssignRole(allPlayers[tmp], Roles.Roles.BlueTeam.id);
             }
+
+            //if(!Module.AssetLoader.audioSource.isPlaying) Module.AssetLoader.audioSource.Play();
+
             return;
         }
 

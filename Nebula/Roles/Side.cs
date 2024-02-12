@@ -423,6 +423,10 @@ public class Side
         return null;
     });
 
+    public static Side KillingMachine = new Side("KillingMachine", "killingMachine", IntroDisplayOption.STANDARD, Color.grey, (PlayerStatistics statistics, ShipStatus status) => {
+        return null;
+    });
+
     public static Side GamePlayer = new Side("GamePlayer", "gamePlayer", IntroDisplayOption.SHOW_ONLY_ME, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
@@ -454,9 +458,11 @@ public class Side
                 {
                     int point1 = Roles.RedTeam.Point;
                     int point2 = Roles.BlueTeam.Point;
-                    Roles.RedTeam.Point = Roles.BlueTeam.Point = 0;
-                    if (point1 > point2) return EndCondition.RedTeamWin;
-                    else if (point1 < point2) return EndCondition.BlueTeamWin;
+                    int point3 = Roles.KillingMachine.Point;
+                    Roles.RedTeam.Point = Roles.BlueTeam.Point = Roles.KillingMachine.Point = 0;
+                    if (point1 > point2 && point1 > point3) return EndCondition.RedTeamWin;
+                    else if (point2 > point1 && point2 > point3) return EndCondition.BlueTeamWin;
+                    else if (point3 > point1 && point3 > point2) return EndCondition.KillingMachineWin;
                     else return EndCondition.Tie;
                 }
                 switch (GameOptionsManager.Instance.CurrentGameOptions.MapId)

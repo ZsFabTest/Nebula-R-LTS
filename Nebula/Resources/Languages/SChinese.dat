@@ -2358,6 +2358,12 @@
 "role.blueTeam.hint" : "击杀<color=#FF0000FF>红队</color>队员"
 "role.blueTeam.info" : "击杀红队队员。"
 
+"role.killingMachine.name" : "杀戮机器"
+"role.killingMachine.short" : "杀"
+"role.killingMachine.description" : "把他们都杀光！"
+"role.killingMachine.hint" : "杀死<color=#ff1919ff>所有人</color>"
+"role.killingMachine.info" : "杀死<color=#ff1919ff>所有人</color>"
+
 "role.soulEater.name" : "噬魂者"
 "role.soulEater.short" : "噬"
 "role.soulEater.description" : "悄无声息地击杀船员"

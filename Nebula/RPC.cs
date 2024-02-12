@@ -1865,17 +1865,24 @@ static class RPCEvents
 
     public static void CompeteGetPoint(byte team)
     {
-        if (team == 0)
+        switch (team)
         {
-            Roles.Roles.RedTeam.Point++;
-        }
-        else
-        {
-            Roles.Roles.BlueTeam.Point++;
+            case 0:
+                Roles.Roles.RedTeam.Point++;
+                break;
+            case 1:
+                Roles.Roles.BlueTeam.Point++;
+                break;
+            case 2:
+                Roles.Roles.KillingMachine.Point++;
+                break;
+            default:
+                break;
         }
 
         Debug.Log($"Red: {Roles.Roles.RedTeam.Point}");
         Debug.Log($"Blue: {Roles.Roles.BlueTeam.Point}");
+        Debug.Log($"KM: {Roles.Roles.KillingMachine.Point}");
     }
 }
 

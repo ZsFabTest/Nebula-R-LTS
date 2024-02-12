@@ -252,6 +252,7 @@ static public class Roles
 
     public static CompeteRoles.RedTeam RedTeam = new();
     public static CompeteRoles.BlueTeam BlueTeam = new();
+    public static CompeteRoles.KillingMachine KillingMachine = new();
 
     public static ImpostorRoles.SoulEater SoulEater = new();
     public static ImpostorRoles.Deadbeat Deadbeat = new();
@@ -282,7 +283,7 @@ static public class Roles
 
             YellowTeam,GreenTeam,YellowTeamCat,GreenTeamCat,
             Infected,Survival,Gunner,InfectedSidekick,DoctorV,
-            RedTeam,BlueTeam
+            RedTeam,BlueTeam,KillingMachine
         };
 
     public static List<ExtraRole> AllExtraRoles = new List<ExtraRole>()

@@ -59,7 +59,17 @@ public class BlueTeam : Role
 
     public override void OnDied()
     {
-        Events.StandardEvent.SetEvent(() => { RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, false, false); },time:CustomOptionHolder.CompeteReviveDelayOption.getFloat());
+        Events.StandardEvent.SetEvent(() => {
+            var pos = PlayerControl.LocalPlayer.transform.position;
+            var mapData = Map.MapData.GetCurrentMapData();
+            do
+            {
+                pos = PlayerControl.LocalPlayer.transform.position;
+                pos += new Vector3(NebulaPlugin.rnd.Next(-10, 10) + (float)NebulaPlugin.rnd.NextDouble(), NebulaPlugin.rnd.Next(-10, 10) + (float)NebulaPlugin.rnd.NextDouble());
+            } while (!mapData.isOnTheShip(pos));
+            PlayerControl.LocalPlayer.transform.position = pos;
+            RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, false, false);
+        }, time: CustomOptionHolder.CompeteReviveDelayOption.getFloat());
     }
 
     public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)

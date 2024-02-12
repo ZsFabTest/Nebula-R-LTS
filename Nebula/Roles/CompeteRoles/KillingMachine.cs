@@ -1,10 +1,10 @@
-﻿using Reactor.Utilities.Extensions;
-using TMPro;
-using static Il2CppSystem.Globalization.CultureInfo;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Nebula.Roles.CompeteRoles;
 
-public class RedTeam : Role
+public class KillingMachine : Role
 {
     public int Point = 0;
 
@@ -16,17 +16,17 @@ public class RedTeam : Role
     private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
         killButton = new CustomButton(
             () =>
             {
-                Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget,Game.PlayerData.PlayerStatus.Dead);
+                Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Alive);
                 Game.GameData.data.myData.currentTarget = null;
                 killButton.Timer = killButton.MaxTimer;
-                RPCEventInvoker.CompeteGetPoint(0);
+                RPCEventInvoker.CompeteGetPoint(2);
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
@@ -37,14 +37,14 @@ public class RedTeam : Role
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.kill"
         ).SetTimer(15f);
-        killButton.MaxTimer = CustomOptionHolder.CompeteKillCooldownOption.getFloat();
+        killButton.MaxTimer = CustomOptionHolder.CompeteKillCooldownOption.getFloat() / 3;
         killButton.SetButtonCoolDownOption(true);
         //Debug.LogError(killButton.MaxTimer);
     }
 
     public override void CleanUp()
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;
@@ -54,7 +54,7 @@ public class RedTeam : Role
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((p) => p.GetModData().role.side != Side.RedTeam);
+        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((p) => p.GetModData().role.side != Side.BlueTeam);
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
     }
 
@@ -70,17 +70,17 @@ public class RedTeam : Role
             } while (!mapData.isOnTheShip(pos));
             PlayerControl.LocalPlayer.transform.position = pos;
             RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, false, false);
-        },time:CustomOptionHolder.CompeteReviveDelayOption.getFloat());
+        }, time: CustomOptionHolder.CompeteReviveDelayOption.getFloat() / 2);
     }
 
     public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
     {
-        if (Helpers.playerById(playerId).GetModData().role.side == Side.RedTeam) displayColor = Color;
-        else displayColor = Color.blue;
+        if (Helpers.playerById(playerId).GetModData().role.side == Side.BlueTeam) displayColor = Color.blue;
+        else if (Helpers.playerById(playerId).GetModData().role.side == Side.RedTeam) displayColor = Color.red;
     }
 
-    public RedTeam() : base("RedTeam","redTeam",Color.red,RoleCategory.Neutral,Side.RedTeam,Side.RedTeam,
-        new HashSet<Side> { Side.RedTeam },new HashSet<Side>() { Side.RedTeam },new HashSet<Patches.EndCondition>() { Patches.EndCondition.RedTeamWin },
+    public KillingMachine() : base("KillingMachine", "killingMachine", Color.grey, RoleCategory.Neutral, Side.KillingMachine, Side.KillingMachine,
+        new HashSet<Side> { Side.KillingMachine }, new HashSet<Side>() { Side.KillingMachine }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.KillingMachineWin },
         true, VentPermission.CanUseUnlimittedVent, true, true, true)
     {
         canReport = false;
