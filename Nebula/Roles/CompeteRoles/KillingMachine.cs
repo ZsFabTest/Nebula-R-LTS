@@ -69,7 +69,7 @@ public class KillingMachine : Role
                 pos += new Vector3(NebulaPlugin.rnd.Next(-10, 10) + (float)NebulaPlugin.rnd.NextDouble(), NebulaPlugin.rnd.Next(-10, 10) + (float)NebulaPlugin.rnd.NextDouble());
             } while (!mapData.isOnTheShip(pos));
             PlayerControl.LocalPlayer.transform.position = pos;
-            RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, false, false);
+            RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, true, false);
         }, time: CustomOptionHolder.CompeteReviveDelayOption.getFloat() / 2);
     }
 
