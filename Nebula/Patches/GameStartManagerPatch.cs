@@ -136,7 +136,8 @@ public class GameStartManagerPatch
                 {
                     
                     int minPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MinPlayers;
-                    int maxPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MaxPlayers ?? 15;
+                    //int maxPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MaxPlayers ?? 15;
+                    int maxPlayers = 127;
                     __instance.MinPlayers = minPlayers;
 
                     bool blockStart = false;
@@ -226,6 +227,8 @@ public class GameStartManagerPatch
     [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.BeginGame))]
     public class GameStartManagerBeginGame
     {
+        public static int VCModeCount;
+
         public static bool Prefix(GameStartManager __instance)
         {
             // Block game start if not everyone has the same mod version
@@ -307,6 +310,13 @@ public class GameStartManagerPatch
                         }
                     }
                 }
+
+                //if (CustomOptionHolder.GetCustomGameMode() is Module.CustomGameMode.VirusCrisis)
+                //{
+                //    if (VCModeCount >= 3) continueStart = false;
+                //    else VCModeCount++;
+                //}
+                //else VCModeCount = 0;
             }
 
             return continueStart;

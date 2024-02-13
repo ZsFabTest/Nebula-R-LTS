@@ -256,6 +256,7 @@ static public class Roles
 
     public static ImpostorRoles.SoulEater SoulEater = new();
     public static ImpostorRoles.Deadbeat Deadbeat = new();
+    public static CrewmateRoles.Philosopher Philosopher = new();
 
 
     //全てのロールはこの中に含まれている必要があります
@@ -270,7 +271,7 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,Officer,/*杀路无法意识,*/TimeManager,Enchanter/*,OppositeMan*/,VentBomber,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,Officer,/*杀路无法意识,*/TimeManager,Enchanter/*,OppositeMan*/,VentBomber,Philosopher,
             Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,BomberA,BomberB,Grenadier,Hitman,Extortionist,SoulEater,Deadbeat,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,Puppeteer,Follower,HighRoller,
             JackalMayor,

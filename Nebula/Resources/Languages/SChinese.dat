@@ -2378,6 +2378,14 @@
 "role.deadbeat.hint" : "指定击杀船员"
 "role.deadbeat.info" : "栽赃者需要标记一个人。\n使用击杀后将由被标记的人击杀。\n栽赃者会瞬移，而被标记者不会。"
 
+"role.philosopher.name" : "哲学家"
+"role.philosopher.short" : "哲"
+"role.philosopher.description" : "人最美的时刻是思考"
+"role.philosopher.hint" : "观察船员们"
+"role.philosopher.info" : "对于所有船员，你可以看到和他靠近的时间。\n时间达到一定长度时，会揭露他的职业。"
+"role.philosopher.rangeOfGettingRole" : "观察范围"
+"role.philosopher.requireTime" : "获取职业所需时间"
+
 "option.display.random" : "随机"
 
 "side.paparazzo.name" : "摄影师"

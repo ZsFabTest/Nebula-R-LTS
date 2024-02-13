@@ -458,6 +458,8 @@ class RoleAssignmentPatch
     }
     */
 
+    private static Dictionary<string, int> playerRoleInfo = new();
+
     private static void assignRoles(AssignMap assignMap)
     {
         //メタ的な割り当てを読み込む
@@ -549,7 +551,8 @@ class RoleAssignmentPatch
 
         if (property.RequireImpostors)
         {
-            //メタ的にインポスターを要求する場合
+
+                //メタ的にインポスターを要求する場合
             foreach (var entry in metaAssignment)
             {
                 if (entry.Value.category != RoleCategory.Impostor) continue;
@@ -566,9 +569,29 @@ class RoleAssignmentPatch
                 //ModでImpostorを選定する場合
 
                 int impostorCount = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
-                if (PlayerControl.AllPlayerControls.Count < 7 && impostorCount > 1) impostorCount = 1;
-                else if (PlayerControl.AllPlayerControls.Count < 9 && impostorCount > 2) impostorCount = 2;
+                //if (PlayerControl.AllPlayerControls.Count < 7 && impostorCount > 1) impostorCount = 1;
+                //else if (PlayerControl.AllPlayerControls.Count < 9 && impostorCount > 2) impostorCount = 2;
                 //インポスターを決定する
+
+                //清理离开的人
+                foreach (var g in playerRoleInfo)
+                {
+                    if (!PlayerControl.AllPlayerControls.GetFastEnumerator().Any((p) => p.FriendCode == g.Key)) playerRoleInfo.Remove(g.Key);
+                }
+                //优先分配
+                while (playerRoleInfo.Count > 0 && impostors.Count < impostorCount && playerRoleInfo.Aggregate((l,r) => l.Value > r.Value ? l : r).Value >= 2)
+                {
+                    var g = playerRoleInfo.Aggregate((l, r) => l.Value > r.Value ? l : r);
+                    playerRoleInfo[g.Key] = 0;
+                    foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+                    {
+                        if(p.FriendCode == g.Key)
+                        {
+                            impostors.Add(p);
+                            break;
+                        }
+                    }
+                }
 
                 var array = Helpers.GetRandomArray(crewmates.Count);
                 int i = 0;
@@ -576,6 +599,12 @@ class RoleAssignmentPatch
                 {
                     impostors.Add(crewmates[array[i]]);
                     i++;
+                }
+
+                //所有没有分配到红狼的计数器加一
+                foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+                {
+                    if (!impostors.Any((pla) => pla.FriendCode == p.FriendCode)) playerRoleInfo[p.FriendCode]++;
                 }
             }
             else

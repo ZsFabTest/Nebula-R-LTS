@@ -382,7 +382,7 @@ public class SecondaryMadmate : ExtraRole
 
     public override bool CheckAdditionalWin(PlayerControl player, Patches.EndCondition condition)
     {
-        return Roles.Impostor.winReasons.Contains(condition);
+        return Roles.Impostor.winReasons.Contains(condition) || condition == Patches.EndCondition.LoversWin;
     }
 
     public override void EditSpawnableRoleShower(ref string suffix, Role role)
