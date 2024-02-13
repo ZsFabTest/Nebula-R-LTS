@@ -152,7 +152,7 @@ public class CustomOption
             int sent = 0;
             while (num > 0)
             {
-                int length = num > 32 ? 32 : num;
+                int length = num > 200 ? 200 : num;
                 var options = new Tuple<int, int>[length];
                 for (int i = 0; i < length; i++)
                 {
