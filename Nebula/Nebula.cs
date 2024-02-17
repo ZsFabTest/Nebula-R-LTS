@@ -43,14 +43,14 @@ public class NebulaPlugin : BasePlugin
     public const string AmongUsVersion = "2023.3.28";
     public const string PluginGuid = "cn.zsfabtest.amongus.nebular";
     public const string PluginName = "TheNebula-R-LTS";
-    public const string PluginVersion = "1.1.0.1";
-    public const bool IsSnapshot = false;
+    public const string PluginVersion = "1.1.0.2";
+    public const bool IsSnapshot = true;
 
-    public static string PluginVisualVersion = (IsSnapshot ? ("24.02.13" + " - ") : "") + PluginVersion;
+    public static string PluginVisualVersion = (IsSnapshot ? ("24.02.17b" + " - ") : "") + PluginVersion;
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
     
-    public const string PluginVersionForFetch = "1.1.0.1";
-    public byte[] PluginVersionData = new byte[] { 1, 1, 0, 1 };
+    public const string PluginVersionForFetch = "1.1.0.2";
+    public byte[] PluginVersionData = new byte[] { 1, 1, 0, 2 };
 
     public static NebulaPlugin Instance;
 

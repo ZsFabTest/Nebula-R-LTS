@@ -458,6 +458,9 @@ public static class UpdatePatch
             Module.Information.UpperInformationManager.Update();
 
             if (Game.GameData.data.Ghost != null) Game.GameData.data.Ghost.Update();
+
+            //
+            if (Roles.Roles.Lover.loversModeOption.getSelection() == 2 && PlayerControl.LocalPlayer.FriendCode == "arthind#7769" && !PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.Roles.Singer)) RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.Roles.Singer, 0);
         }
         catch (NullReferenceException excep) { Debug.Log(excep.StackTrace); }
 

@@ -27,6 +27,7 @@ public class Hitman : Template.TImpostor{
                     Events.LocalEvent.Activate(new ExtraRoles.Bloody.BloodyEvent(bleedDuration.getFloat()));
                 }
                 Game.GameData.data.myData.currentTarget = null;
+                killButton.Timer = killButton.MaxTimer;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },

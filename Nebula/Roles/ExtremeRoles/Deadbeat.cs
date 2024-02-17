@@ -52,7 +52,7 @@ public class Deadbeat : Template.TImpostor
                 killButton.Timer = killButton.MaxTimer;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-            () => { return PlayerControl.LocalPlayer.CanMove && Game.GameData.data.myData.currentTarget; },
+            () => { return target && PlayerControl.LocalPlayer.CanMove && Game.GameData.data.myData.currentTarget; },
             () => { killButton.Timer = killButton.MaxTimer; },
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,

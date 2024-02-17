@@ -566,6 +566,22 @@ class RoleAssignmentPatch
 
             if (GameOptionsManager.Instance.currentGameMode == GameModes.Normal)
             {
+
+                /*
+                string first()
+                {
+                    string s = "\0";
+                    foreach(var g in playerRoleInfo)
+                    {
+                        if((s == "\0" || g.Value > playerRoleInfo[s]) || (g.Value == playerRoleInfo[s] && NebulaPlugin.rnd.Next(100) >= 50))
+                        {
+                            s = g.Key;
+                        }
+                    }
+                    return s;
+                }
+                */
+
                 //ModでImpostorを選定する場合
 
                 int impostorCount = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
@@ -573,25 +589,22 @@ class RoleAssignmentPatch
                 //else if (PlayerControl.AllPlayerControls.Count < 9 && impostorCount > 2) impostorCount = 2;
                 //インポスターを決定する
 
-                //清理离开的人
-                foreach (var g in playerRoleInfo)
-                {
-                    if (!PlayerControl.AllPlayerControls.GetFastEnumerator().Any((p) => p.FriendCode == g.Key)) playerRoleInfo.Remove(g.Key);
-                }
+                /*
                 //优先分配
-                while (playerRoleInfo.Count > 0 && impostors.Count < impostorCount && playerRoleInfo.Aggregate((l,r) => l.Value > r.Value ? l : r).Value >= 2)
+                while (playerRoleInfo.Count > 0 && impostors.Count < impostorCount && playerRoleInfo[first()] >= 2)
                 {
-                    var g = playerRoleInfo.Aggregate((l, r) => l.Value > r.Value ? l : r);
-                    playerRoleInfo[g.Key] = 0;
+                    string s = first();
                     foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                     {
-                        if(p.FriendCode == g.Key)
+                        if(p.FriendCode == s)
                         {
                             impostors.Add(p);
                             break;
                         }
                     }
+                    playerRoleInfo[s] = 0;
                 }
+                */
 
                 var array = Helpers.GetRandomArray(crewmates.Count);
                 int i = 0;
@@ -601,11 +614,13 @@ class RoleAssignmentPatch
                     i++;
                 }
 
+                /*
                 //所有没有分配到红狼的计数器加一
                 foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
                     if (!impostors.Any((pla) => pla.FriendCode == p.FriendCode)) playerRoleInfo[p.FriendCode]++;
                 }
+                */
             }
             else
             {

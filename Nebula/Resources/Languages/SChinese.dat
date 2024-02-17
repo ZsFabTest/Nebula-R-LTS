@@ -2386,6 +2386,18 @@
 "role.philosopher.rangeOfGettingRole" : "观察范围"
 "role.philosopher.requireTime" : "获取职业所需时间"
 
+"role.anJiu.name" : "安安"
+"role.anJiu.short" : "安"
+"role.anJiu.description" : "喜欢长毛<del>猫</del> 喜欢rua猫"
+"role.anJiu.hint" : "rua~~~~~"
+"role.anJiu.info" : "可爱猫猫让我rua！"
+
+"role.tianLao.name" : "天牢"
+"role.tianLao.short" : "牢"
+"role.tianLao.description" : "歌姬"
+"role.tianLao.hint" : "撅人比什么都重要"
+"role.tianLao.info" : "在别的红狼队友身边时击杀冷却减少速度提升为三倍。"
+
 "option.display.random" : "随机"
 
 "side.paparazzo.name" : "摄影师"

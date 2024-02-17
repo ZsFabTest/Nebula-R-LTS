@@ -21,6 +21,7 @@ public class Officer : Template.TCrewmate{
         order = new CustomButton(
             () => {
                 RPCEventInvoker.EmitSpeedFactor(Game.GameData.data.myData.currentTarget,new Game.SpeedFactor(0,3f,0f,false));
+                order.Timer = order.MaxTimer;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove && Game.GameData.data.myData.currentTarget; },
