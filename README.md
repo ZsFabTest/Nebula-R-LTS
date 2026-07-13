@@ -1,7 +1,7 @@
-# Nebula-R LTS版本
-## 一群歌姬
+# Nebula-R LTS-R版本
+## 本模组是由我在凛在Dolly开发的Nebula-OLD-的基础上制作的Nebula-R的基础上制作的Nebula-R-LTS的基础上开发的，我会尝试将它更新到最新的Among Us版本并保证正常的游玩
 
-# 多语言样式声明
+# 多语言声明
 <details>
 <summary> 展开 </summary>
 

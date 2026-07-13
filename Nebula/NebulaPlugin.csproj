@@ -54,7 +54,7 @@
 
 	<Target Name="CopyCustomContent" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
 		<Message Text="Second occurrence" />
-		<Copy SourceFiles="bin\Debug\net6.0\Nebula.dll" DestinationFolder="D:\SteamLibrary\steamapps\common\Among Us BepInEx\BepInEx\plugins\" />
+		<Copy SourceFiles="bin\Debug\net6.0\Nebula.dll" DestinationFolder="C:\Users\26837\Desktop\Among Us-NoS-R-LTS\BepInEx\plugins\" />
 	</Target>
 	
 </Project>

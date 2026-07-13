@@ -26,18 +26,18 @@ public static class CredentialsPatch
         static void Postfix(PingTracker __instance)
         {
             __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
-            __instance.text.text = $"<size=130%><color=#9579ce>Nebula</color></size> v{ NebulaPlugin.PluginVisualVersion }\n由<color=#FFFF00>方块の聚会</color>开发\n<size=80%>{ __instance.text.text }</size>";
+            __instance.text.text = $"<size=130%><color=#9579ce>Nebula</color></size> v{ NebulaPlugin.PluginVisualVersion }\n由<color=#FFFF00>方块の聚会</color>开发\n{ __instance.text.text }";
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started)
             {
                 __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(1.2f, 0.8f, 0f);
             }
             else if (PlayerControl.LocalPlayer != null && PlayerControl.LocalPlayer.Data.IsDead)
             {
-                __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.0f, 0.1f, 0f);
+                __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.2f, 0.1f, 0f);
             }
             else
             {
-                __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(1.2f, 0.1f, 0f);
+                __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = MeetingHud.Instance != null ? new Vector3(2.2f, 0.1f, 0f) : new Vector3(1.2f, 0.1f, 0f);
             }
             __instance.gameObject.GetComponent<AspectPosition>().AdjustPosition();
         }

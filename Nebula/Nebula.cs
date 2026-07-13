@@ -36,7 +36,7 @@ public class NebulaPlugin : BasePlugin
 
     public const string AmongUsVersion = "2023.10.24";
     public const string PluginGuid = "nebularelts.fangkuai.fun";
-    public const string PluginName = "TheNebula-R-LTS";
+    public const string PluginName = "Nebula-R-LTS";
     public const string PluginVersion = "2.0.0.0";
     public const bool IsSnapshot = true;
 
