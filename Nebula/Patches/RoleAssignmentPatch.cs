@@ -584,7 +584,7 @@ class RoleAssignmentPatch
 
                 //ModでImpostorを選定する場合
 
-                int impostorCount = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+                int impostorCount = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
                 //if (PlayerControl.AllPlayerControls.Count < 7 && impostorCount > 1) impostorCount = 1;
                 //else if (PlayerControl.AllPlayerControls.Count < 9 && impostorCount > 2) impostorCount = 2;
                 //インポスターを決定する

@@ -187,7 +187,7 @@ public class Madmate : Role
             if (requireTasks < NumOfTasksRequiredToKnowImpostorsOption[i].getFloat()) requireTasks = (int)NumOfTasksRequiredToKnowImpostorsOption[i].getFloat();
         }
 
-        var gameOptions = GameOptionsManager.Instance.CurrentGameOptions;
+        var gameOptions = GameOptionsManager.Instance.currentNormalGameOptions;
         int taskNum =gameOptions.GetInt(Int32OptionNames.NumCommonTasks) +gameOptions.GetInt(Int32OptionNames.NumLongTasks) + gameOptions.GetInt(Int32OptionNames.NumShortTasks);
 
         while (initialTasks.Count > taskNum && taskNum > 0)

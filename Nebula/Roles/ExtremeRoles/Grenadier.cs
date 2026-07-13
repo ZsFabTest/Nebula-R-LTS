@@ -48,7 +48,7 @@ public class Grenadier : Template.TImpostor{
                 }
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-            () => { return PlayerControl.LocalPlayer.CanMove && !Helpers.SabotageIsActive() && (GameOptionsManager.Instance.CurrentGameOptions.MapId != 1 || !GameObject.FindObjectsOfType<PlainDoor>().ToArray().FirstOrDefault(x =>
+            () => { return PlayerControl.LocalPlayer.CanMove && !Helpers.SabotageIsActive() && (GameOptionsManager.Instance.currentNormalGameOptions.MapId != 1 || !GameObject.FindObjectsOfType<PlainDoor>().ToArray().FirstOrDefault(x =>
                     {
                         if (x == null) return false;
                         return !x.Open;

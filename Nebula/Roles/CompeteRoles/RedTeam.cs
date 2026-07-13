@@ -1,5 +1,4 @@
-﻿using Reactor.Utilities.Extensions;
-using TMPro;
+﻿using TMPro;
 using static Il2CppSystem.Globalization.CultureInfo;
 
 namespace Nebula.Roles.CompeteRoles;

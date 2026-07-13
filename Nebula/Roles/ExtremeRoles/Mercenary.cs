@@ -10,6 +10,7 @@ namespace Nebula.Roles.NeutralRoles{
             if (condition == EndCondition.NobodyMiraWin) return false;
             if (condition == EndCondition.NobodyPolusWin) return false;
             if (condition == EndCondition.NobodyAirshipWin) return false;
+            if (condition == EndCondition.NobodyFungleWin) return false;
 
             if (player.Data.IsDead && player.GetModData().FinalData?.status != Game.PlayerData.PlayerStatus.Burned) return false;
 

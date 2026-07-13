@@ -10,7 +10,7 @@ class KillButtonDoClickPatch
             Helpers.MurderAttemptResult res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, __instance.currentTarget, Game.PlayerData.PlayerStatus.Dead);
             if (res != Helpers.MurderAttemptResult.BlankKill)
             {
-                PlayerControl.LocalPlayer.killTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+                PlayerControl.LocalPlayer.killTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
             }
             __instance.SetTarget(null);
         }

@@ -406,11 +406,12 @@ public class Side
     },(EndCondition condition,PlayerStatistics statistics,ShipStatus status) => {
         if(statistics.AliveUndeadMaster <= 0) return null;
 
-        if(condition == EndCondition.NobodyWin) return null;
-        if(condition == EndCondition.NobodySkeldWin) return null;
-        if(condition == EndCondition.NobodyMiraWin) return null;
-        if(condition == EndCondition.NobodyPolusWin) return null;
-        if(condition == EndCondition.NobodyAirshipWin) return null;
+        if (condition == EndCondition.NobodyWin) return null;
+        if (condition == EndCondition.NobodySkeldWin) return null;
+        if (condition == EndCondition.NobodyMiraWin) return null;
+        if (condition == EndCondition.NobodyPolusWin) return null;
+        if (condition == EndCondition.NobodyAirshipWin) return null;
+        if (condition == EndCondition.NobodyFungleWin) return null;
 
         return EndCondition.UndeadMasterWin;
     });
@@ -465,7 +466,7 @@ public class Side
                     else if (point3 > point1 && point3 > point2) return EndCondition.KillingMachineWin;
                     else return EndCondition.Tie;
                 }
-                switch (GameOptionsManager.Instance.CurrentGameOptions.MapId)
+                switch (GameOptionsManager.Instance.currentNormalGameOptions.MapId)
                 {
                     case 0:
                     case 3:
@@ -476,6 +477,8 @@ public class Side
                         return EndCondition.NobodyPolusWin;
                     case 4:
                         return EndCondition.NobodyAirshipWin;
+                    case 5:
+                        return EndCondition.NobodyFungleWin;
                 }
             }
         }

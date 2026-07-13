@@ -157,7 +157,7 @@ public class Ghost
         SabotageCoolDown = 20f;
         InSabotage = false;
 
-        Map.MapData map = Map.MapData.MapDatabase[GameOptionsManager.Instance.CurrentGameOptions.MapId];
+        Map.MapData map = Map.MapData.MapDatabase[GameOptionsManager.Instance.currentNormalGameOptions.MapId];
 
         foreach (var entry in map.SabotageMap)
         {

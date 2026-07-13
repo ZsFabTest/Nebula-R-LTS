@@ -104,7 +104,7 @@ public class Necromancer : Template.Draggable
 
     public override void OnDragPlayer(byte playerId)
     {
-        string room = Language.Language.GetString("role.necromancer.room." + GetReviveRooomType(playerId).ToString());
+        string room = DestroyableSingleton<TranslationController>.Instance.GetString(GetReviveRooomType(playerId));
         string message = Language.Language.GetString("role.necromancer.phantomMessage").Replace("%ROOM%", room);
 
         Action<float> createMessageAction = null;

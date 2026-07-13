@@ -304,18 +304,30 @@ public static class Helpers
         if (target.Data.IsDead) return;
         if (target.cosmetics.currentPet) UnityEngine.Object.Destroy(target.cosmetics.currentPet.gameObject);
 
-        try
-        {
-            target.cosmetics.currentPet = UnityEngine.Object.Instantiate<PetBehaviour>(FastDestroyableSingleton<HatManager>.Instance.GetPetById(petId).viewData.viewData);
-            target.cosmetics.currentPet.transform.position = target.transform.position;
-            target.cosmetics.currentPet.Source = target;
-            target.cosmetics.currentPet.Visible = target.Visible;
-            target.SetPlayerMaterialColors(target.cosmetics.currentPet.rend);
-        }
-        catch
-        {
-            //ペットが存在しない場合は例外が発生する
-        }
+        SkinViewData nextSkin = null;
+        try { nextSkin = ShipStatus.Instance.CosmeticsCache.GetSkin(skinId); } catch { return; }
+        ;
+
+        PlayerPhysics playerPhysics = target.MyPhysics;
+        AnimationClip clip = null;
+        var spriteAnim = playerPhysics.myPlayer.cosmetics.skin.animator;
+        var currentPhysicsAnim = playerPhysics.Animations.Animator.GetCurrentAnimation();
+
+
+        if (currentPhysicsAnim == playerPhysics.Animations.group.RunAnim) clip = nextSkin.RunAnim;
+        else if (currentPhysicsAnim == playerPhysics.Animations.group.SpawnAnim) clip = nextSkin.SpawnAnim;
+        else if (currentPhysicsAnim == playerPhysics.Animations.group.EnterVentAnim) clip = nextSkin.EnterVentAnim;
+        else if (currentPhysicsAnim == playerPhysics.Animations.group.ExitVentAnim) clip = nextSkin.ExitVentAnim;
+        else if (currentPhysicsAnim == playerPhysics.Animations.group.IdleAnim) clip = nextSkin.IdleAnim;
+        else clip = nextSkin.IdleAnim;
+        float progress = playerPhysics.Animations.Animator.m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        playerPhysics.myPlayer.cosmetics.skin.skin = nextSkin;
+        playerPhysics.myPlayer.cosmetics.skin.UpdateMaterial();
+        spriteAnim.Play(clip, 1f);
+        spriteAnim.m_animator.Play("a", 0, progress % 1);
+        spriteAnim.m_animator.Update(0f);
+
+        target.RawSetPet(petId, colorId);
     }
 
     public static void SetLook(this PlayerControl target, Game.PlayerData.PlayerOutfitData outfit)
@@ -657,26 +669,26 @@ public static class Helpers
             }
             else if (task.TaskType == TaskTypes.RestoreOxy)
             {
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.LifeSupp, 0 | 64);
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.LifeSupp, 1 | 64);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.LifeSupp, 0 | 64);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.LifeSupp, 1 | 64);
             }
             else if (task.TaskType == TaskTypes.ResetReactor)
             {
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 16);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Reactor, 16);
             }
             else if (task.TaskType == TaskTypes.ResetSeismic)
             {
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Laboratory, 16);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Laboratory, 16);
             }
             else if (task.TaskType == TaskTypes.FixComms)
             {
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Comms, 16 | 0);
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Comms, 16 | 1);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Comms, 16 | 0);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Comms, 16 | 1);
             }
             else if (task.TaskType == TaskTypes.StopCharles)
             {
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 0 | 16);
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 1 | 16);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Reactor, 0 | 16);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Reactor, 1 | 16);
             }
         }
     }
@@ -811,7 +823,7 @@ public static class Helpers
         ShipStatus.Instance.AddTasksFromList(ref num, longTasks, tasks, usedTypes, unused);
 
         unused = new Il2CppSystem.Collections.Generic.List<NormalPlayerTask>();
-        foreach (var t in ShipStatus.Instance.NormalTasks)
+        foreach (var t in ShipStatus.Instance.ShortTasks)
         {
             if (t.TaskType == TaskTypes.PickUpTowels) continue;
             unused.Add(t);
@@ -984,5 +996,21 @@ public static class Helpers
     static public bool CanBeCandidate(this string candidate,string text)
     {
         return text.StartsWith(candidate) && candidate != text;
+    }
+
+    public static GameObject CreateObject(string objName, Transform parent, Vector3 localPosition, int? layer = null)
+    {
+        var obj = new GameObject(objName);
+        obj.transform.SetParent(parent);
+        obj.transform.localPosition = localPosition;
+        obj.transform.localScale = new Vector3(1f, 1f, 1f);
+        if (layer.HasValue) obj.layer = layer.Value;
+        else if (parent != null) obj.layer = parent.gameObject.layer;
+        return obj;
+    }
+
+    public static T CreateObject<T>(string objName, Transform parent, Vector3 localPosition, int? layer = null) where T : Component
+    {
+        return CreateObject(objName, parent, localPosition, layer).AddComponent<T>();
     }
 }

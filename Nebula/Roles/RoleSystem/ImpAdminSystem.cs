@@ -76,11 +76,11 @@ namespace Nebula.Roles.RoleSystem
                 jailerCountOverlay.gameObject.name = "JailerCountOverlay";
 
                 Transform roomNames;
-                if (GameOptionsManager.Instance.CurrentGameOptions.MapId == 0)
+                if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 0)
                     roomNames = MapBehaviour.Instance.transform.FindChild("RoomNames (1)");
                 else
                     roomNames = MapBehaviour.Instance.transform.FindChild("RoomNames");
-                Map.MapEditor.MapEditors[GameOptionsManager.Instance.CurrentGameOptions.MapId].MinimapOptimizeForJailer(roomNames, jailerCountOverlay, MapBehaviour.Instance.infectedOverlay);
+                Map.MapEditor.MapEditors[GameOptionsManager.Instance.currentNormalGameOptions.MapId].MinimapOptimizeForJailer(roomNames, jailerCountOverlay, MapBehaviour.Instance.infectedOverlay);
             }
 
             jailerCountOverlay.gameObject.SetActive(true);

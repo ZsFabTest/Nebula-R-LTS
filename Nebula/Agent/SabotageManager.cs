@@ -12,46 +12,46 @@ static public class SabotageManager
         switch (room)
         {
             case SystemTypes.Reactor:
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 3);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 3);
                 break;
             case SystemTypes.Comms:
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 14);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 14);
                 break;
             case SystemTypes.LifeSupp:
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 8);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 8);
                 break;
             case SystemTypes.Electrical:
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 7);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 7);
                 break;
             case SystemTypes.GapRoom:
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 21);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 21);
                 break;
         }
     }
 
     static public void BeginReactorSabotage()
     {
-        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 3);
+        ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 3);
     }
 
     static public void BeginCommsSabotage()
     {
-        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 14);
+        ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 14);
     }
 
     static public void BeginOxygenSabotage()
     {
-        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 8);
+        ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 8);
     }
 
     static public void BeginLightsSabotage()
     {
-        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 7);
+        ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 7);
     }
 
     static public void BeginSeismicSabotage()
     {
-        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Sabotage, 21);
+        ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, 21);
     }
 
     static public void BeginDoorSabotage(SystemTypes room)

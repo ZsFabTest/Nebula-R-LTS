@@ -48,7 +48,7 @@ public class Marksman : Role{
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+        killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
         killButton.SetButtonCoolDownOption(true);
 
         if (saveShootButton != null)

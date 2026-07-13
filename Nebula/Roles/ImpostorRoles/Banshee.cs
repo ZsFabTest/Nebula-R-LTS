@@ -132,7 +132,7 @@ namespace Nebula.Roles.ImpostorRoles
                 __instance,
                 Module.NebulaInputManager.modKillInput.keyCode
             ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-            killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+            killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
             killButton.SetButtonCoolDownOption(true);
 
             if (bansheeButton != null)

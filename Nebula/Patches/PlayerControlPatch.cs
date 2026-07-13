@@ -1,15 +1,5 @@
 ﻿namespace Nebula.Patches;
 
-
-[HarmonyPatch(typeof(CustomNetworkTransform), nameof(CustomNetworkTransform.Awake))]
-public class SyncTransformPatch
-{
-    public static void Postfix(CustomNetworkTransform __instance)
-    {
-        __instance.snapThreshold = 0.5f;
-    }
-}
-
 [HarmonyPatch(typeof(GameData), nameof(GameData.SetTasks))]
 public class PlayerControlSetTaskPatch
 {
@@ -68,25 +58,6 @@ public class PlayerControlSetAlphaPatch
     }
 }
 
-[HarmonyPatch]
-public class PlayerControlGetUsableComponentsPatch
-{
-    static System.Reflection.MethodBase TargetMethod()
-    {
-        string genericMethodName = nameof(GameObject.GetComponents)!;
-        System.Reflection.MethodBase getComponentsMethod = typeof(GameObject).GetMethods().First((m) => m.Name == genericMethodName && m.IsGenericMethodDefinition && m.GetParameters().Length == 0).MakeGenericMethod(typeof(IUsable));
-        return getComponentsMethod;
-    }
-
-    static public void Postfix(ref Il2CppArrayBase<IUsable> __result)
-    {
-        if (__result.Count > 0)
-        {
-            __result = new Il2CppReferenceArray<IUsable>(__result.Reverse().ToArray());
-        }
-    }
-}
-
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 public class PlayerControlPatch
 {
@@ -141,13 +112,13 @@ public class PlayerControlPatch
 
     static public PlayerControl? SetMyTarget(bool onlyWhiteNames = false, bool targetPlayersInVents = false, List<byte> untargetablePlayers = null, PlayerControl targetingPlayer = null)
     {
-        return SetMyTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
+        return SetMyTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
                 onlyWhiteNames, targetPlayersInVents, untargetablePlayers, targetingPlayer);
     }
 
     static public PlayerControl? SetMyTarget(System.Predicate<GameData.PlayerInfo> targetablePlayers, PlayerControl targetingPlayer = null)
     {
-        return SetMyTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
+        return SetMyTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
             targetablePlayers);
     }
 
@@ -196,7 +167,7 @@ public class PlayerControlPatch
         target.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", color);
     }
 
-    static public DeadBody? SetMyDeadTarget() => SetMyDeadTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)]);
+    static public DeadBody? SetMyDeadTarget() => SetMyDeadTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)]);
 
     static public DeadBody? SetMyDeadTarget(float num)
     {
@@ -492,7 +463,7 @@ class BlockSetRolePatch
     }
 }
 
-[HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.HandleAnimation))]
+/*[HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.HandleAnimation))]
 class PlayerPhysicsHandleAnimationPatch
 {
     public static bool Prefix(PlayerPhysics __instance)
@@ -500,7 +471,7 @@ class PlayerPhysicsHandleAnimationPatch
         var currentAnim = __instance.Animations.group.SpriteAnimator.m_currAnim;
         return currentAnim != __instance.Animations.group.ExitVentAnim && currentAnim != __instance.Animations.group.EnterVentAnim;
     }
-}
+}*/ //这个会导致Fungle的人物从绳索下来保持固定的姿势
 
 [HarmonyPatch(typeof(GameData), nameof(GameData.HandleDisconnect), typeof(PlayerControl), typeof(DisconnectReasons))]
 class PlayerDisconnectPatch
@@ -552,7 +523,7 @@ class PlayerControlSetCoolDownPatch
         {
             if (Game.GameData.data == null) return true;
 
-            if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) <= 0f) return false;
+            if (GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown) <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
 
@@ -562,8 +533,8 @@ class PlayerControlSetCoolDownPatch
                 Game.GameData.data.myData.getGlobalData().role.SetKillCoolDown(ref multiplier, ref addition);
             }
 
-            __instance.killTimer = Mathf.Clamp(time, 0f, GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) * multiplier + addition);
-            HudManager.Instance.KillButton.SetCoolDown(__instance.killTimer, GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) * multiplier + addition);
+            __instance.killTimer = Mathf.Clamp(time, 0f, GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown) * multiplier + addition);
+            HudManager.Instance.KillButton.SetCoolDown(__instance.killTimer, GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown) * multiplier + addition);
             return false;
         }
         catch (NullReferenceException excep) { return true; }

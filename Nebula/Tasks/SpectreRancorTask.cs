@@ -310,13 +310,13 @@ namespace Nebula.Tasks
             int count;
 
             count = 0;
-            Roles.Roles.Spectre.letterTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.CurrentGameOptions.MapId, (data) => {
+            Roles.Roles.Spectre.letterTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) => {
                 count++;
             });
             if (count < step) step = count;
 
             count = 0;
-            Roles.Roles.Spectre.statueTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.CurrentGameOptions.MapId, (data) => {
+            Roles.Roles.Spectre.statueTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) => {
                 count++;
             });
             if (count / 2 < step) step = count / 2;

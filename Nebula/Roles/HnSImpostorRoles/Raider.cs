@@ -67,7 +67,7 @@ public class HnSRaider : Role
             Module.NebulaInputManager.modKillInput.keyCode,
              "button.label.throw"
         ).SetTimer(5f);
-        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+        killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
         killButton.FireOnClicked = true;
         killButton.SetButtonCoolDownOption(true);
         killButton.SetUsesIcon(1);

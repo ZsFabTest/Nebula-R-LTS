@@ -511,7 +511,7 @@ static class RPCEvents
 
     public static void SetRandomMap(byte mapId)
     {
-        GameOptionsManager.Instance.CurrentGameOptions.SetByte(ByteOptionNames.MapId, mapId);
+        GameOptionsManager.Instance.currentNormalGameOptions.SetByte(ByteOptionNames.MapId, mapId);
     }
 
     public static void VersionHandshake(byte[] version, Guid guid, int clientId)
@@ -763,7 +763,7 @@ static class RPCEvents
             else
             {
                 //ふつうにMurderPlayerを呼んで問題ない場合
-                source.MurderPlayer(target);
+                source.MurderPlayer(target, MurderResultFlags.Succeeded);
             }
 
             Game.GameData.data.playersArray[target.PlayerId]?.Die(Game.PlayerData.PlayerStatus.GetStatusById(statusId), source.PlayerId);
@@ -2416,7 +2416,7 @@ public class RPCEventInvoker
         ShipStatus.Instance.AddTasksFromList(ref num, longTasks, tasks, usedTypes, unused);
 
         unused = new Il2CppSystem.Collections.Generic.List<NormalPlayerTask>();
-        foreach (var t in ShipStatus.Instance.NormalTasks)
+        foreach (var t in ShipStatus.Instance.ShortTasks)
         {
             if (t.TaskType == TaskTypes.PickUpTowels) continue;
             if (excludeUploadingData && t.TaskType == TaskTypes.UploadData) continue;

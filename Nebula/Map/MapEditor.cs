@@ -14,6 +14,7 @@ public class MapEditor
         new Editors.MIRAEditor();
         new Editors.PolusEditor();
         new Editors.AirshipEditor();
+        new Editors.FungleEditor();
     }
 
     public static void AddVents(int mapId)

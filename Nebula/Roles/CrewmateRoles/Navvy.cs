@@ -1,4 +1,5 @@
 ﻿using Hazel;
+using UnityEngine;
 
 namespace Nebula.Roles.CrewmateRoles;
 
@@ -34,23 +35,26 @@ public class Navvy : Role
     private Sprite ventSealedSprite = null;
     public Sprite getVentSealedSprite()
     {
-        if (ventSealedSprite) return chooseSprite(ventSealedSprite);
+        if (ventSealedSprite) return ventSealedSprite;
         ventSealedSprite = Helpers.loadSpriteFromResources("Nebula.Resources.VentSealed.png", 100f);
-        return chooseSprite(ventSealedSprite);
+        return ventSealedSprite;
     }
+
+    private Sprite fungleVentSprite = null;
+    public Sprite getFungleVentSealedSprite()
+    {
+        if (fungleVentSprite) return fungleVentSprite;
+        fungleVentSprite = Helpers.loadSpriteFromResources("Nebula.Resources.FungleVentSealed.png", 170f);
+        return fungleVentSprite;
+    }
+
 
     private Sprite caveSealedSprite = null;
     public Sprite getCaveSealedSprite()
     {
-        if (caveSealedSprite) return chooseSprite(caveSealedSprite);
+        if (caveSealedSprite) return caveSealedSprite;
         caveSealedSprite = Helpers.loadSpriteFromResources("Nebula.Resources.CaveSealed.png", 100f);
-        return chooseSprite(caveSealedSprite);
-    }
-
-    private Sprite chooseSprite(Sprite s){
-        int r = Nebula.NebulaPlugin.rnd.Next(1,11);
-        if(r <= 5) return s;
-        return Helpers.loadSpriteFromResources("Nebula.Resources.BothSealed.png",85f);;
+        return caveSealedSprite;
     }
 
     public override void MyPlayerControlUpdate()
@@ -112,7 +116,7 @@ public class Navvy : Role
     public void SetSealedVentSprite(Vent vent, float alpha)
     {
         vent.EnterVentAnim = vent.ExitVentAnim = null;
-        if (GameOptionsManager.Instance.CurrentGameOptions.MapId == 2)
+        if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 2)
         {
             //Polus
             vent.myRend.sprite = getCaveSealedSprite();
@@ -120,8 +124,15 @@ public class Navvy : Role
         else
         {
             PowerTools.SpriteAnim animator = vent.GetComponent<PowerTools.SpriteAnim>();
+            if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5)
+            {
+                vent.myRend.sprite = getFungleVentSealedSprite();
+                vent.myRend = vent.transform.GetChild(3).GetComponent<SpriteRenderer>();
+                animator = vent.transform.GetChild(3).GetComponent<PowerTools.SpriteAnim>();
+            }
+            else
+                vent.myRend.sprite = getVentSealedSprite();
             animator?.Stop();
-            vent.myRend.sprite = getVentSealedSprite();
         }
         vent.myRend.color = new Color(1f, 1f, 1f, alpha);
     }

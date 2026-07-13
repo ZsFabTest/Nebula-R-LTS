@@ -123,8 +123,8 @@ public class MetaDialog : MetaScreen
 
     static public MSDesigner OpenMapDialog(byte mapId, bool canChangeMap, Action<GameObject, byte>? mapDecorator)
     {
-        float[] rates = { 0.74f, 0.765f, 0.74f, 1f, 1.005f };
-        string[] mapNames = { "The Skeld", "MIRA HQ", "Polus", "Undefined", "Airship" };
+        float[] rates = { 0.74f, 0.765f, 0.74f, 1f, 1.005f, 0.75f };
+        string[] mapNames = { "The Skeld", "MIRA HQ", "Polus", "Undefined", "Airship", "The Fungle" };
         byte changeMapId(bool incrementFlag)
         {
             int id = mapId;
@@ -132,8 +132,8 @@ public class MetaDialog : MetaScreen
             {
                 id += incrementFlag ? 1 : -1;
 
-                if (id < 0) id = 4;
-                if (id > 4) id = 0;
+                if (id < 0) id = 5;
+                if (id > 5) id = 0;
 
                 if (id != 3) break;
             }
@@ -507,9 +507,9 @@ public class MetaDialog : MetaScreen
                 if (arg == 0)
                 {
                     var subDesigner = designer.Split(1);
-                    subDesigner[0].AddTopic(new MSButton(1.2f, 0.4f, "Spawn Points", TMPro.FontStyles.Bold, () =>
+                    subDesigner[0].AddTopic(new MSButton(1.2f, 0.4f, Language.Language.GetString("help.settings.spawnpoints"), TMPro.FontStyles.Bold, () =>
                     {
-                        OpenMapDialog(GameOptionsManager.Instance.CurrentGameOptions.MapId, AmongUsClient.Instance.GameState != AmongUsClient.GameStates.Started, (obj, id) => Map.MapData.MapDatabase[id].SetUpSpawnPointInfo(obj));
+                        OpenMapDialog(GameOptionsManager.Instance.currentNormalGameOptions.MapId, AmongUsClient.Instance.GameState != AmongUsClient.GameStates.Started, (obj, id) => Map.MapData.MapDatabase[id].SetUpSpawnPointInfo(obj));
                     }));
                 }
                 else

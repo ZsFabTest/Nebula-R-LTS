@@ -25,7 +25,7 @@ public class BruteSabotage : Perk
            },
            (message, isCalledByMe) =>
            {
-               PlainDoor? door = ShipStatus.Instance.AllDoors.FirstOrDefault((door) => door.transform.position.Distance(message.Item1) < 0.2f);
+               PlainDoor? door = (PlainDoor?)ShipStatus.Instance.AllDoors.FirstOrDefault((door) => door.transform.position.Distance(message.Item1) < 0.2f);
                if (door == null) return;
 
                IEnumerator CoDoorOpen()
@@ -64,7 +64,7 @@ public class BruteSabotage : Perk
             if (dis > num) continue;
 
             num= dis;
-            door = d;
+            door = (PlainDoor?)d;
         }
 
         if (door == null) return;

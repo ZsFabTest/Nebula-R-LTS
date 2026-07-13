@@ -18,7 +18,7 @@ public class EndCondition
     public static EndCondition ImpostorWinHnS = new EndCondition(GameOverReason.HideAndSeek_ByKills, Palette.ImpostorRed, "lonelyImpostor", 16, Module.CustomGameMode.StandardHnS);
     public static EndCondition JesterWin = new EndCondition(16, Roles.NeutralRoles.Jester.RoleColor, "jester", 1, Module.CustomGameMode.Standard);
     public static EndCondition JackalWin = new EndCondition(17, Roles.NeutralRoles.Jackal.RoleColor, "jackal", 2, Module.CustomGameMode.Standard);
-    public static EndCondition ArsonistWin = new EndCondition(18, Roles.NeutralRoles.Arsonist.RoleColor, "arsonist", 1, Module.CustomGameMode.Standard, false, (fpData) => { PlayerControl.AllPlayerControls.ForEach((Action<PlayerControl>)((p) => { if (!p.Data.IsDead && Roles.Roles.Arsonist.Winner != p.PlayerId) { p.MurderPlayer(p); fpData.GetPlayer(p.PlayerId).status = Game.PlayerData.PlayerStatus.Burned; } })); });
+    public static EndCondition ArsonistWin = new EndCondition(18, Roles.NeutralRoles.Arsonist.RoleColor, "arsonist", 1, Module.CustomGameMode.Standard, false, (fpData) => { PlayerControl.AllPlayerControls.ForEach((Action<PlayerControl>)((p) => { if (!p.Data.IsDead && Roles.Roles.Arsonist.Winner != p.PlayerId) { p.MurderPlayer(p, MurderResultFlags.Succeeded); fpData.GetPlayer(p.PlayerId).status = Game.PlayerData.PlayerStatus.Burned; } })); });
     public static EndCondition EmpiricWin = new EndCondition(19, Roles.NeutralRoles.Empiric.RoleColor, "empiric", 1, Module.CustomGameMode.Standard);
     public static EndCondition PaparazzoWin = new EndCondition(20, Roles.NeutralRoles.Paparazzo.RoleColor, "paparazzo", 1, Module.CustomGameMode.Standard);
     public static EndCondition SpectreWin = new EndCondition(21, Roles.NeutralRoles.Spectre.RoleColor, "spectre", 1, Module.CustomGameMode.Standard);
@@ -33,6 +33,7 @@ public class EndCondition
     public static EndCondition NobodyMiraWin = new EndCondition(50, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.mira", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
     public static EndCondition NobodyPolusWin = new EndCondition(51, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.polus", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
     public static EndCondition NobodyAirshipWin = new EndCondition(52, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.airship", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition NobodyFungleWin = new EndCondition(52, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.fungle", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
     public static EndCondition NoGame = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "noGame", 0, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
@@ -64,7 +65,7 @@ public class EndCondition
             CrewmateWinHnS,ImpostorWinHnS,
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,SantaWin,
             LoversWin,TrilemmaWin,AvengerWin,
-            NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
+            NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,NobodyFungleWin,
             PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin,WerewolfWin,ChallengerWin,OracleWin,GhostWin,PuppeteerWin,YellowTeamWin,GreenTeamWin,InfectedWin,SurvivalWin,
             HighRollerWin,RedTeamWin,BlueTeamWin,Tie,KillingMachineWin
         };
@@ -492,16 +493,16 @@ public class EndGameManagerSetUpPatch
             float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
             Vector3 vector = new Vector3(num7, num7, 1f);
             poolablePlayer.transform.localScale = vector;
-            poolablePlayer.UpdateFromPlayerOutfit(winningPlayerData2, PlayerMaterial.MaskType.None, winningPlayerData2.IsDead, true);
             if (winningPlayerData2.IsDead)
             {
-                poolablePlayer.SetBodyAsGhost();
+                poolablePlayer.cosmetics.currentBodySprite.BodySprite.sprite = poolablePlayer.cosmetics.currentBodySprite.GhostSprite;
                 poolablePlayer.SetDeadFlipX(i % 2 == 0);
             }
             else
             {
                 poolablePlayer.SetFlipX(i % 2 == 0);
             }
+            poolablePlayer.UpdateFromPlayerOutfit(winningPlayerData2, PlayerMaterial.MaskType.None, winningPlayerData2.IsDead, true);
 
             poolablePlayer.SetName(winningPlayerData2.PlayerName, new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z), Color.white, -15f);
             poolablePlayer.SetNamePosition(new Vector3(0f, -1.31f, -0.5f));

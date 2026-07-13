@@ -60,7 +60,7 @@ public class AdminPatch
         public static bool Prefix(ref float __result, MapConsole __instance, [HarmonyArgument(0)] GameData.PlayerInfo pc, [HarmonyArgument(1)] out bool canUse, [HarmonyArgument(2)] out bool couldUse)
         {
             // temp fix for the admin bug on airship
-            if (GameOptionsManager.Instance.CurrentGameOptions.MapId == 4)
+            if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 4 || GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5)
                 __instance.useIcon = ImageNames.PolusAdminButton;
 
             canUse = couldUse = false;

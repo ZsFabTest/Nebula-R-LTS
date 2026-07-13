@@ -127,7 +127,7 @@ namespace Nebula.Tasks
             int count;
 
             count = 0;
-            Roles.Roles.Spectre.friedTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.CurrentGameOptions.MapId, (data) => {
+            Roles.Roles.Spectre.friedTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) => {
                 count++;
             });
             if (count < MaxStep) MaxStep = count;

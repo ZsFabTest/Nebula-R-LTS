@@ -128,13 +128,20 @@ public class Spectre : Role
 
         public void ForAllValidLoc(byte mapId,Action<CustomTaskData> process)
         {
-            var setting = TaskDic[mapId];
-            for (int i=0;i<setting.Item1.Count;i++) if ((setting.Item2.selection & (1 << i)) != 0) process(setting.Item1[i]);
+            if (TaskDic.TryGetValue(mapId, out var setting))
+            {
+                for (int i=0;i<setting.Item1.Count;i++) if ((setting.Item2.selection & (1 << i)) != 0) process(setting.Item1[i]);
+            }
         }
 
         public System.Tuple<List<CustomTaskData>, CustomOption> GetSetting(byte mapId)
         {
-            return TaskDic[mapId];
+            if (TaskDic.TryGetValue(mapId, out var setting))
+            {
+                return setting;
+            }
+            // 返回一个空的设置，避免KeyNotFoundException
+            return new System.Tuple<List<CustomTaskData>, CustomOption>(new List<CustomTaskData>(), Module.CustomOption.Create(Color.white, "", int.MaxValue, null, false, true).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
         }
     }
 
@@ -398,7 +405,7 @@ public class Spectre : Role
         }, CreateMetaOption(Color.white, "spectreTask.eatTheFried.polus", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
 
         friedTaskSetting.AddSetting(4,
-            new List<CustomTaskData>(){
+            new List<CustomTaskData>{
             new CustomTaskData("MainHall0", new Vector2(13.17f, -2.20f)),
             new CustomTaskData("MainHall1", new Vector2(8.43f, 1.85f)),
             new CustomTaskData("MainHall2", new Vector2(5.14f, 3.31f)),
@@ -416,6 +423,23 @@ public class Spectre : Role
             new CustomTaskData("Lounge", new Vector2(24.41f, 6.34f)),
             new CustomTaskData("Shower", new Vector2(21.27f, 0.06f),0f),
         }, CreateMetaOption(Color.white, "spectreTask.eatTheFried.airship", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
+
+        friedTaskSetting.AddSetting(5,
+            new List<CustomTaskData>{
+            new CustomTaskData("Cafeteria", new Vector2(-19.1f, 7.0f)),
+            new CustomTaskData("Campfire", new Vector2(-9.72f, 1.39f)),
+            new CustomTaskData("MeetingRoom", new Vector2(-1.875f, -1.944f)),
+            new CustomTaskData("Storage", new Vector2(2.417f, 4.063f)),
+            new CustomTaskData("Laboratory", new Vector2(-5.42f, -9.20f)),
+            new CustomTaskData("Greenhouse", new Vector2(9.07f, -11.00f)),
+            new CustomTaskData("Reactor", new Vector2(16.75f, -6.68f)),
+            new CustomTaskData("Comms", new Vector2(22.87f, 13.55f)),
+            new CustomTaskData("Kicken", new Vector2(-22.96f, -7.154f)),
+            new CustomTaskData("Dropship", new Vector2(-8.29f, 10f)),
+            new CustomTaskData("Lookout", new Vector2(7.751f, 1.013f)),
+            new CustomTaskData("MiningPit", new Vector2(11.314f, 9.349f)),
+            new CustomTaskData("UpperEngine", new Vector2(22.627f, 3.563f)),
+        }, CreateMetaOption(Color.white, "spectreTask.eatTheFried.fungle", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
 
         letterTaskSetting.AddSetting(0,
             new List<CustomTaskData>{
@@ -449,7 +473,7 @@ public class Spectre : Role
         }, CreateMetaOption(Color.white, "spectreTask.letter.polus", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
 
         letterTaskSetting.AddSetting(4,
-            new List<CustomTaskData>(){
+            new List<CustomTaskData>{
             new CustomTaskData("Engine", new Vector2(1.49f, -2.17f)).SetUsableDistance(0.2f),
             new CustomTaskData("Cockpit", new Vector2(-20.2177f, -0.4666f)),
             new CustomTaskData("Armory", new Vector2(-15.04f, -9.26f)),
@@ -460,6 +484,19 @@ public class Spectre : Role
             new CustomTaskData("Shower", new Vector2(21.27f, 0.06f),0f),
             new CustomTaskData("MainHall2", new Vector2(5.14f, 3.31f))
         }, CreateMetaOption(Color.white, "spectreTask.letter.airship", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
+
+        letterTaskSetting.AddSetting(5,
+            new List<CustomTaskData>{
+            new CustomTaskData("Cafeteria", new Vector2(-19.1f, 7.0f)),
+            new CustomTaskData("Campfire", new Vector2(-9.72f, 1.39f)),
+            new CustomTaskData("MeetingRoom", new Vector2(-1.875f, -1.944f)),
+            new CustomTaskData("Storage", new Vector2(2.417f, 4.063f)),
+            new CustomTaskData("Laboratory", new Vector2(-5.42f, -9.20f)),
+            new CustomTaskData("Greenhouse", new Vector2(9.07f, -11.00f)),
+            new CustomTaskData("Reactor", new Vector2(16.75f, -6.68f)),
+            new CustomTaskData("Comms", new Vector2(22.87f, 13.55f)),
+            new CustomTaskData("Kicken", new Vector2(-22.96f, -7.154f)),
+        }, CreateMetaOption(Color.white, "spectreTask.letter.fungle", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
 
         statueTaskSetting.AddSetting(0,
             new List<CustomTaskData>{
@@ -499,7 +536,7 @@ public class Spectre : Role
         }, CreateMetaOption(Color.white, "spectreTask.statue.polus", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
 
         statueTaskSetting.AddSetting(4,
-            new List<CustomTaskData>(){
+            new List<CustomTaskData>{
             new CustomTaskData("Comms", new Vector2(-12.1675f, 0.9115f)),
             new CustomTaskData("Cockpit", new Vector2(-17.51f, 0.92f)),
             new CustomTaskData("ViewingDeck", new Vector2(-13.0425f, -14.714f)),
@@ -514,6 +551,22 @@ public class Spectre : Role
             new CustomTaskData("MeetingRoom1", new Vector2(3.6384f, 14.8067f)),
             new CustomTaskData("MeetingRoom2", new Vector2(17.0308f, 14.6693f)),
         }, CreateMetaOption(Color.white, "spectreTask.statue.airship", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
+
+        statueTaskSetting.AddSetting(5,
+            new List<CustomTaskData>{
+            new CustomTaskData("Cafeteria", new Vector2(-19.1f, 7.0f)),
+            new CustomTaskData("Campfire", new Vector2(-9.72f, 1.39f)),
+            new CustomTaskData("MeetingRoom", new Vector2(-1.875f, -1.944f)),
+            new CustomTaskData("Storage", new Vector2(2.417f, 4.063f)),
+            new CustomTaskData("Laboratory", new Vector2(-5.42f, -9.20f)),
+            new CustomTaskData("Greenhouse", new Vector2(9.07f, -11.00f)),
+            new CustomTaskData("Reactor", new Vector2(16.75f, -6.68f)),
+            new CustomTaskData("Comms", new Vector2(22.87f, 13.55f)),
+            new CustomTaskData("Kicken", new Vector2(-22.96f, -7.154f)),
+            new CustomTaskData("Dropship", new Vector2(-8.29f, 10f)),
+            new CustomTaskData("Lookout", new Vector2(7.751f, 1.013f)),
+            new CustomTaskData("MiningPit", new Vector2(11.314f, 9.349f)),
+        }, CreateMetaOption(Color.white, "spectreTask.statue.fungle", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
     }
 
     public override void LoadOptionData()
@@ -534,13 +587,13 @@ public class Spectre : Role
                     return new MSButton(1.6f, 0.4f, "Customize", TMPro.FontStyles.Bold, () =>
                     {
                         Action<byte> refresher = getRefresher(new Tuple<CustomTaskSetting, Sprite?>(friedTaskSetting, spectreFriedConsoleSprite.GetSprite()));
-                        refresher(GameOptionsManager.Instance.CurrentGameOptions.MapId);
+                        refresher(GameOptionsManager.Instance.currentNormalGameOptions.MapId);
                     });
                 else if (spectreTaskOption.getSelection() == 2)
                     return new MSButton(1.6f, 0.4f, "Customize", TMPro.FontStyles.Bold, () =>
                     {
                         Action<byte> refresher = getRefresher(new Tuple<CustomTaskSetting, Sprite?>(letterTaskSetting, spectreLetterConsoleSprite.GetSprite()), new Tuple<CustomTaskSetting, Sprite?>(statueTaskSetting, spectreRancorConsoleSprite.GetSprite()));
-                        refresher(GameOptionsManager.Instance.CurrentGameOptions.MapId);
+                        refresher(GameOptionsManager.Instance.currentNormalGameOptions.MapId);
                     });
                 else
                     return new MSMargin(1.7f);

@@ -233,7 +233,6 @@ static public class Roles
     public static VirusCrisisRoles.InfectedSidekick InfectedSidekick = new();
     public static CrewmateRoles.Officer Officer = new();
     public static NeutralRoles.Follower Follower = new();
-    //public static CrewmateRoles.杀路无法意识 杀路无法意识 = new();
     public static VirusCrisisRoles.Doctor DoctorV = new();
     public static NeutralRoles.HighRoller HighRoller = new();
     public static ExtraRoles.Challenged Challenged = new();
@@ -257,8 +256,6 @@ static public class Roles
     public static ImpostorRoles.SoulEater SoulEater = new();
     public static ImpostorRoles.Deadbeat Deadbeat = new();
     public static CrewmateRoles.Philosopher Philosopher = new();
-    public static ImpostorRoles.AnJiu AnJiu = new();
-    public static ImpostorRoles.TianLao TianLao = new();
 
 
     //全てのロールはこの中に含まれている必要があります
@@ -273,8 +270,8 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
-            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,/*Detective,*/ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,Officer,/*杀路无法意识,*/TimeManager,Enchanter/*,OppositeMan*/,VentBomber,Philosopher,
-            Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,BomberA,BomberB,Grenadier,Hitman,Extortionist,SoulEater,Deadbeat,AnJiu,TianLao,
+            Holmes,Kotwal,Necrophilic,Observer,/*OnlineCelebrity,*/Sanctifier,/*Transporter,*/Dictator,/*Bartender,*/LuckyMan,/*Superstar,*/ChivalrousExpert,Programmer,Minekeeper,Locksmith,Resurrectionist,Supporter,ZombieSidekick,TaoistPriest,WiseMan,Paranoiac,Officer,TimeManager,Enchanter/*,OppositeMan*/,VentBomber,Philosopher,
+            Assassin,/*Demagogue,*/Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,HadarS,Zombie,BomberA,BomberB,Grenadier,Hitman,Extortionist,SoulEater,Deadbeat,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,Mercenary,Werewolf,Challenger,OracleN,Ghost,Puppeteer,Follower,HighRoller,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,WerewolfsCat,OraclesCat,

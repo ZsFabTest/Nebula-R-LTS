@@ -47,7 +47,7 @@ namespace Nebula.Roles.ImpostorRoles
                         killButton.Timer = killButton.MaxTimer;
                     Game.GameData.data.myData.currentTarget = null;
 
-                    killButton.Timer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+                    killButton.Timer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
                 },
                 () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
                 () => { return PlayerControl.LocalPlayer.CanMove && Game.GameData.data.myData.currentTarget != null; },

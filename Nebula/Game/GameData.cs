@@ -495,7 +495,7 @@ public class TaskData
         int tasks;
         if (Game.GameModeProperty.GetProperty(Game.GameData.data.GameMode).CountTasks)
         {
-            var gameOption = GameOptionsManager.Instance.CurrentGameOptions;
+            var gameOption = GameOptionsManager.Instance.currentNormalGameOptions;
             tasks = gameOption.GetInt(Int32OptionNames.NumCommonTasks) + gameOption.GetInt(Int32OptionNames.NumLongTasks) + gameOption.GetInt(Int32OptionNames.NumShortTasks);
             ActualTasks = tasks;
         }
@@ -556,7 +556,7 @@ public class PlayerProperty
             player.cosmetics.skin.SetEnterVent(player.cosmetics.FlipX);
             player.moveable = false;
         })));
-        sequence.Add(player.MyPhysics.Animations.CoPlayEnterVentAnimation());
+        sequence.Add(player.MyPhysics.Animations.CoPlayEnterVentAnimation(4));
         sequence.Add(Effects.Action(new System.Action(() =>
         {
             player.MyPhysics.myPlayer.Visible = false;
@@ -1492,14 +1492,15 @@ public class GameData
             VentMap.Add(vent.gameObject.name, new VentData(vent));
         }
 
-        var mapId = GameOptionsManager.Instance.CurrentGameOptions.MapId;
+        var mapId = GameOptionsManager.Instance.currentNormalGameOptions.MapId;
         Map.MapEditor.FixTasks(mapId);
 
 
         if (CustomOptionHolder.mapOptions.getBool())
         {
             Map.MapEditor.OptimizeMap(mapId);
-            Map.MapEditor.AddVents(mapId);
+            if (CustomOptionHolder.additionalVents.getBool())
+                Map.MapEditor.AddVents(mapId);
             Map.MapEditor.MapCustomize(mapId);
         }
 
@@ -1519,8 +1520,8 @@ public class GameData
 
     public void ModifyShipStatus()
     {
-        Map.MapEditor.ModifyMap(GameOptionsManager.Instance.CurrentGameOptions.MapId);
-        Map.MapEditor.ModifySabotage(GameOptionsManager.Instance.CurrentGameOptions.MapId);
+        Map.MapEditor.ModifyMap(GameOptionsManager.Instance.currentNormalGameOptions.MapId);
+        Map.MapEditor.ModifySabotage(GameOptionsManager.Instance.currentNormalGameOptions.MapId);
     }
 
     public PlayerData? GetPlayerData(byte playerId)

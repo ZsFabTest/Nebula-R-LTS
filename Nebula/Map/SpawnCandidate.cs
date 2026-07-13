@@ -10,6 +10,7 @@ public class SpawnCandidate
     public Texture2D Texture;
     public Sprite[] Sprites;
     public string TextureAddress;
+    public bool UseNewAssets;
     public string LocationKey;
     public AudioClip? AudioClip;
     public string? AudioClipName;
@@ -19,14 +20,21 @@ public class SpawnCandidate
     public Texture2D GetTexture()
     {
         if (Texture) return Texture;
-        Texture = AssetLoader.NebulaMainAsset.assetBundle.LoadAsset<Texture2D>(TextureAddress);
+        if (UseNewAssets)
+            Texture = AssetLoader.NebulaNewMainAsset.assetBundle.LoadAsset<Texture2D>(TextureAddress);
+        else
+            Texture = AssetLoader.NebulaMainAsset.assetBundle.LoadAsset<Texture2D>(TextureAddress);
         ReloadSprites();
         return Texture;
     }
 
     public void ReloadTexture()
     {
-        if (!Texture) Texture = AssetLoader.NebulaMainAsset.assetBundle.LoadAsset<Texture2D>(TextureAddress);
+        if (!Texture)
+            if (UseNewAssets)
+                Texture = AssetLoader.NebulaNewMainAsset.assetBundle.LoadAsset<Texture2D>(TextureAddress);
+            else
+                Texture = AssetLoader.NebulaMainAsset.assetBundle.LoadAsset<Texture2D>(TextureAddress);
         ReloadSprites();
     }
 
@@ -74,11 +82,12 @@ public class SpawnCandidate
         }));
     }
 
-    public SpawnCandidate(string locationKey, Vector2 location, string textureAddress, string? audioClip, float pixelsPerUnit = 100f,int spriteWidth = 200)
+    public SpawnCandidate(string locationKey, Vector2 location, string textureAddress, string? audioClip, float pixelsPerUnit = 100f, int spriteWidth = 200, bool useNewAssets = false)
     {
         SpawnLocation = location;
         LocationKey = locationKey;
         TextureAddress = textureAddress;
+        UseNewAssets = useNewAssets;
         Sprites = new Sprite[0];
 
         AudioClip = null;

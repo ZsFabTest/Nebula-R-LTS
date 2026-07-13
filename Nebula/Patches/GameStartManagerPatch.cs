@@ -270,11 +270,13 @@ public class GameStartManagerPatch
                     // 2 = Polus
                     // 3 = Dleks - deactivated
                     // 4 = Airship
+                    // 5 = Fungle
                     List<byte> possibleMaps = new List<byte>();
                     if (!CustomOptionHolder.exceptSkeld.getBool()) possibleMaps.Add(0);
                     if (!CustomOptionHolder.exceptMIRA.getBool()) possibleMaps.Add(1);
                     if (!CustomOptionHolder.exceptPolus.getBool()) possibleMaps.Add(2);
                     if (!CustomOptionHolder.exceptAirship.getBool()) possibleMaps.Add(4);
+                    if (!CustomOptionHolder.exceptFungle.getBool()) possibleMaps.Add(5);
 
                     //候補が無い場合はSkeldにする
                     if (possibleMaps.Count == 0) possibleMaps.Add(0);

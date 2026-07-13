@@ -49,7 +49,7 @@ class PolusEditor : MapEditor
 
         infectedOverlay.transform.GetChild(0).localPosition += new Vector3(0f, 0.4f, 0f);
         //infectedOverlay.transform.GetChild(0).GetChild(1).localPosition += new Vector3(-0.05f, 0f, 0f);
-        infectedOverlay.transform.GetChild(1).localPosition += new Vector3(-1f, 0.4f, 0f);
+        infectedOverlay.transform.GetChild(1).localPosition += new Vector3(0.1f, -0.2f, 0f);
         infectedOverlay.transform.GetChild(3).localPosition += new Vector3(0.6f, 0.3f, 0f);
         infectedOverlay.transform.GetChild(4).localPosition += new Vector3(-0.5f, 0.3f, 0f);
         infectedOverlay.transform.GetChild(5).localPosition += new Vector3(0f, 0.28f, 0f);

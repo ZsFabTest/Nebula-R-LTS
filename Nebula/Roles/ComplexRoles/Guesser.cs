@@ -272,11 +272,8 @@ static public class GuesserSystem
             i++;
         }
 
-        FastDestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate").CoLoadViewData((Il2CppSystem.Action<NamePlateViewData>)((n) =>
-        {
-            foreach (var b in buttons)
-                b.GetComponent<SpriteRenderer>().sprite = n.Image;
-        }));
+        foreach (var b in buttons)
+            b.GetComponent<SpriteRenderer>().sprite = ShipStatus.Instance.CosmeticsCache.GetNameplate("nameplate_NoPlate").Image;
 
         container.transform.localScale *= 0.85f * 0.85f;
 
@@ -288,7 +285,7 @@ static public class GuesserSystem
             Teambutton.FindChild("ControllerHighlight").gameObject.SetActive(false);
             Transform TeambuttonMask = UnityEngine.Object.Instantiate(maskTemplate, TeambuttonParent);
             TMPro.TextMeshPro Teamlabel = UnityEngine.Object.Instantiate(textTemplate, Teambutton);
-            Teambutton.GetComponent<SpriteRenderer>().sprite = FastDestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
+            Teambutton.GetComponent<SpriteRenderer>().sprite = ShipStatus.Instance.CosmeticsCache.GetNameplate("nameplate_NoPlate").Image;
             TeambuttonParent.localPosition = new(-2.75f + (index * 1.75f), 2.225f, -200);
             TeambuttonParent.localScale = new(0.55f, 0.55f, 1f);
             Teamlabel.color = index is 0 ? Palette.CrewmateBlue : index is 1 ? Palette.ImpostorRed : Roles.ChainShifter.Color;
@@ -400,11 +397,8 @@ static public class GuesserSystem
                     i++;
                 }
 
-                FastDestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate").CoLoadViewData((Il2CppSystem.Action<NamePlateViewData>)((n) =>
-                {
-                    foreach (var b in buttons)
-                        b.GetComponent<SpriteRenderer>().sprite = n.Image;
-                }));
+                foreach (var b in buttons)
+                    b.GetComponent<SpriteRenderer>().sprite = ShipStatus.Instance.CosmeticsCache.GetNameplate("nameplate_NoPlate").Image;
             }));
         }
     }

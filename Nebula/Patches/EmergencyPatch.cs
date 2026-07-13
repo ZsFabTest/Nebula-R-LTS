@@ -26,16 +26,16 @@ public static class EmergencyPatch
 
     static public float GetPenaltyVotingTime()
     {
-        if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.Normal)
+        if (GameOptionsManager.Instance.currentNormalGameOptions.GameMode == GameModes.Normal)
         {
             float penalty = (Game.GameData.data.deadPlayers.Count * Game.GameData.data.GameRule.deathPenaltyForDiscussionTime);
-            int total = GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.VotingTime) - (int)(Game.GameData.data.deadPlayers.Count * Game.GameData.data.GameRule.deathPenaltyForDiscussionTime);
+            int total = GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.VotingTime) - (int)(Game.GameData.data.deadPlayers.Count * Game.GameData.data.GameRule.deathPenaltyForDiscussionTime);
 
             if (total > 10)
             {
                 return penalty;
             }
-            return (float)(GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.VotingTime) - 10);
+            return (float)(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.VotingTime) - 10);
         }
         else
         {

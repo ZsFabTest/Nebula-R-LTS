@@ -318,7 +318,7 @@ public class AirshipEditor : MapEditor
 }
 
 //これだけ定数なのでパッチで対応
-[HarmonyPatch(typeof(HeliSabotageSystem), nameof(HeliSabotageSystem.RepairDamage))]
+[HarmonyPatch(typeof(HeliSabotageSystem), nameof(HeliSabotageSystem.UpdateSystem))]
 class HeliSabotageSystemPatch
 {
     static void Postfix(HeliSabotageSystem __instance, [HarmonyArgument(1)] byte amount)

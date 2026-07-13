@@ -57,7 +57,7 @@ public static class MapBehaviourExpansion
         }
         else if (!divSprite.TryGetValue(mask, out sprite))
         {
-            sprite = AssetLoader.GetMapSprite(GameOptionsManager.Instance.CurrentGameOptions.MapId, defaultSprite.pivot * 2, mask);
+            sprite = AssetLoader.GetMapSprite(GameOptionsManager.Instance.currentNormalGameOptions.MapId, defaultSprite.pivot * 2, mask);
             divSprite[mask] = sprite;
         }
         if (sprite != null)

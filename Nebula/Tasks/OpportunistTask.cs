@@ -43,7 +43,7 @@ public class OpportunistTask : NebulaPlayerTask
         sb.Append(DestroyableSingleton<TranslationController>.Instance.GetString(StartAt));
         sb.Append(": ");
 
-        sb.Append(Language.Language.GetString("role.opportunist.task.staying").Replace("%OBJ%", Language.Language.GetString("role.opportunist.task.staying." + objName)));
+        sb.Append(Language.Language.GetString("role.opportunist.task.staying") + DestroyableSingleton<TranslationController>.Instance.GetString(room));
 
         if (progress > 0f && !this.IsComplete)
         {
@@ -152,7 +152,7 @@ public class OpportunistTask : NebulaPlayerTask
 
     //Staying
     public Vector2 objPos;
-    public string objName;
+    public SystemTypes room;
     public float progress;
     public float maxTime; //要求される滞在時間
     public float distance;

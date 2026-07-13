@@ -71,7 +71,7 @@ public class Executioner : Role
             if (!killExecuted) killButton.Timer *= killCoolDownOddsOnFailedOption.getFloat();
         }
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+        killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
         killButton.SetButtonCoolDownOption(true);
     }
     public override void CleanUp()

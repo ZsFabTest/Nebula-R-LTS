@@ -1,20 +1,17 @@
-﻿using JetBrains.Annotations;
-using Nebula.Module;
+﻿using Nebula.Module;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Nebula.Map;
 public class ObjectData
 {
-    public string Name;
     public Vector2 Position;
     public SystemTypes Room;
     public float MaxTime;
     public float Distance;
 
-    public ObjectData(string name, Vector2 pos, SystemTypes room, float time, float distance)
+    public ObjectData(Vector2 pos, SystemTypes room, float time, float distance)
     {
-        Name = name;
         Position = pos;
         Room = room;
         MaxTime = time;
@@ -125,7 +122,7 @@ public class PointData
         this.point = point;
     }
 
-    public static string[] mapNames = { "skeld", "mira", "polus", "undefined", "airship" };
+    public static string[] mapNames = { "skeld", "mira", "polus", "undefined", "airship", "fungle" };
 }
 
 public class SpawnPointData : PointData
@@ -142,7 +139,7 @@ public class SpawnPointData : PointData
 
 public class MapData
 {
-    //Skeld=0,MIRA=1,Polus=2,AirShip=4
+    //Skeld=0,MIRA=1,Polus=2,AirShip=4,TheFungle=5
 
     public ShipStatus Assets;
     public int MapId { get; }
@@ -192,11 +189,11 @@ public class MapData
     public Dictionary<SystemTypes, int> AdminSystemTypeMap;
     public int ClassicAdminMask;
 
-    public List<Vector2> ValidSpawnPoints
+    public List<Vector3> ValidSpawnPoints
     {
         get
         {
-            List<Vector2> list = new List<Vector2>();
+            List<Vector3> list = new List<Vector3>();
             foreach (var sPoint in SpawnPoints)
                 if (sPoint.option.getBool()) list.Add(sPoint.point);
 
@@ -355,9 +352,9 @@ public class MapData
         }
     }
 
-    public void RegisterObjectPosition(string objectName, Vector2 pos, SystemTypes room, float maxTime, float distance = 0.6f)
+    public void RegisterObjectPosition(Vector2 pos, SystemTypes room, float maxTime, float distance = 0.6f)
     {
-        Objects.Add(new ObjectData(objectName, pos, room, maxTime, distance));
+        Objects.Add(new ObjectData(pos, room, maxTime, distance));
     }
 
 
@@ -367,6 +364,7 @@ public class MapData
         new Database.MIRAData();
         new Database.PolusData();
         new Database.AirshipData();
+        new Database.FungleData();
         //new MapData(5);
     }
 
@@ -385,13 +383,13 @@ public class MapData
     }
     public static Map.MapData GetCurrentMapData()
     {
-        if (MapDatabase.ContainsKey(GameOptionsManager.Instance.CurrentGameOptions.MapId))
+        if (MapDatabase.ContainsKey(GameOptionsManager.Instance.currentNormalGameOptions.MapId))
         {
-            return MapDatabase[GameOptionsManager.Instance.CurrentGameOptions.MapId];
+            return MapDatabase[GameOptionsManager.Instance.currentNormalGameOptions.MapId];
         }
         else
         {
-            return MapDatabase[5];
+            return MapDatabase[6];
         }
     }
 
@@ -516,7 +514,7 @@ public class MapData
         ShipName = shipName;
         MapDatabase[mapId] = this;
 
-        IsModMap = mapId >= 5;
+        IsModMap = mapId >= 6;
 
         SabotageMap = new Dictionary<SystemTypes, SabotageData>();
         MapPositions = new HashSet<Vector2>();

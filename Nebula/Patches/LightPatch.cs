@@ -93,9 +93,9 @@ class LightPatch
             if (__instance.IsFlashlightEnabled())
             {
                 if (__instance.Data.Role.IsImpostor)
-                    GameOptionsManager.Instance.CurrentGameOptions.TryGetFloat(FloatOptionNames.ImpostorFlashlightSize, out num);
+                    GameOptionsManager.Instance.currentNormalGameOptions.TryGetFloat(FloatOptionNames.ImpostorFlashlightSize, out num);
                 else
-                    GameOptionsManager.Instance.CurrentGameOptions.TryGetFloat(FloatOptionNames.CrewmateFlashlightSize, out num);
+                    GameOptionsManager.Instance.currentNormalGameOptions.TryGetFloat(FloatOptionNames.CrewmateFlashlightSize, out num);
             }
             else if (__instance.lightSource.useFlashlight)
             {

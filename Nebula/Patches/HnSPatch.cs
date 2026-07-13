@@ -337,7 +337,7 @@ public static class HnsPatch
 
         __instance.timerBar.StartFinalHide();
         SoundManager.Instance.PlaySound(__instance.hideAndSeekManager.FinalHideAlertSFX, false, 1f, null);
-        DestroyableSingleton<HudManager>.Instance.SetAlertFlash(true);
+        DestroyableSingleton<HudManager>.Instance.SetAlertOverlay(true);
 
         return false;
     }

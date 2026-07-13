@@ -164,7 +164,7 @@ public class HardTaskPatch
                             filledHalf = __instance.MyNormTask.TaskStep % 2 == 1;
 
 
-                        __instance.MyNormTask.UpdateArrow();
+                        __instance.MyNormTask.UpdateArrowAndLocation();
                     }
                 }
             }
@@ -183,7 +183,7 @@ public class HardTaskPatch
     }
 
     //配線タスクの順番ランダム化
-    [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.PickRandomConsoles))]
+    [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.PickRandomConsoles), typeof(TaskTypes), typeof(Il2CppStructArray<byte>))]
     public static class RandomTaskPatch
     {
         static public void Postfix(NormalPlayerTask __instance, [HarmonyArgument(0)] TaskTypes taskType, [HarmonyArgument(1)] ref Il2CppStructArray<byte> consoleIds)

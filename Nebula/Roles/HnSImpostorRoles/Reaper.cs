@@ -41,7 +41,7 @@ public static class HnSImpostorSystem
                 __instance,
                 Module.NebulaInputManager.modKillInput.keyCode
             ).SetTimer(5f);
-        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+        killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
         killButton.SetButtonCoolDownOption(true);
 
         return killButton;
@@ -51,7 +51,7 @@ public static class HnSImpostorSystem
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
 
-        float range = GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)];
+        float range = GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)];
         float additional = 0f, ratio = 1f;
         Perk.PerkHolder.PerkData.MyPerkData.PerkAction((p) => p.Perk.SetKillRange(p, ref additional, ref ratio));
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((range + additional) * ratio, true);

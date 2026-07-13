@@ -48,7 +48,7 @@ public class CustomOptionPreset
 
     private void LoadVanillaOption(string option, int value)
     {
-        var data = GameOptionsManager.Instance.CurrentGameOptions;
+        var data = GameOptionsManager.Instance.currentNormalGameOptions;
         switch (option)
         {
             case "vanilla.map":
@@ -110,7 +110,7 @@ public class CustomOptionPreset
 
     private void OutputVanillaOptions(StreamWriter writer)
     {
-        var data = GameOptionsManager.Instance.CurrentGameOptions;
+        var data = GameOptionsManager.Instance.currentNormalGameOptions;
 
         writer.WriteLine("vanilla.map:" + data.MapId);
         writer.WriteLine("vanilla.impostors:" + data.NumImpostors);
@@ -143,7 +143,7 @@ public class CustomOptionPreset
 
                 option.selection = option.defaultSelection;
             }
-            GameOptionsManager.Instance.CurrentGameOptions.SetRecommendations(PlayerControl.AllPlayerControls.Count, true);
+            GameOptionsManager.Instance.currentNormalGameOptions.SetRecommendations(PlayerControl.AllPlayerControls.Count, true);
         }
 
         //読み込み
@@ -237,7 +237,7 @@ public class CustomOptionPreset
 
             var players = PlayerControl.AllPlayerControls.Count.ToString();
 
-            var mapId = GameOptionsManager.Instance.CurrentGameOptions.MapId.ToString();
+            var mapId = GameOptionsManager.Instance.currentNormalGameOptions.MapId.ToString();
 
             masterVariables["Players"] = players;
             masterVariables["P"] = players;

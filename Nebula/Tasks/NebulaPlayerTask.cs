@@ -105,7 +105,7 @@ public class NormalPlayerTaskPatch
         }
     }
 
-    [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.UpdateArrow))]
+    [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.UpdateArrowAndLocation))]
     class UpdateArrowPatch
     {
         static public bool Prefix(NormalPlayerTask __instance)

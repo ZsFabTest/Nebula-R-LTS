@@ -1,6 +1,5 @@
 ﻿using TMPro;
 using PowerTools;
-using UnityEngine.Playables;
 
 namespace Nebula.Patches;
 
@@ -126,7 +125,7 @@ class PrespawnPatch
         {
             SpawnInMinigame.Instance = __instance;
 
-            if (GameOptionsManager.Instance.CurrentGameOptions.MapId != 4) return true;
+            if (GameOptionsManager.Instance.currentNormalGameOptions.MapId != 4) return true;
 
             SpawnInMinigame.SpawnLocation[] array = Enumerable.ToArray<SpawnInMinigame.SpawnLocation>(__instance.Locations);
             array = array.OrderBy((i) => Guid.NewGuid()).ToArray();

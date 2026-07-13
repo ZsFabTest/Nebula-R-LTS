@@ -28,7 +28,7 @@ namespace Nebula.Roles.ImpostorRoles{
 	    public override void OnMurdered(byte murderId) {
 	    	if(isMurdered){
 	    		isMurdered = false;
-	    		killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+	    		killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
 	    		return;
 	    	}
 			/*
@@ -79,7 +79,7 @@ namespace Nebula.Roles.ImpostorRoles{
 	            Module.NebulaInputManager.modKillInput.keyCode,
 	            "button.label.kill"
 	        ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-	        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+	        killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
 	        killButton.SetButtonCoolDownOption(true);
 	    }
 

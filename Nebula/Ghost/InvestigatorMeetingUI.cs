@@ -50,7 +50,7 @@ static public class InvestigatorMeetingUI
             Transform button = UnityEngine.Object.Instantiate(buttonTemplate, buttonParent);
             Transform buttonMask = UnityEngine.Object.Instantiate(maskTemplate, buttonParent);
             TMPro.TextMeshPro label = UnityEngine.Object.Instantiate(textTemplate, button);
-            button.GetComponent<SpriteRenderer>().sprite = FastDestroyableSingleton<HatManager>.Instance.AllNamePlates[0].viewData.viewData.Image;
+            button.GetComponent<SpriteRenderer>().sprite = FastDestroyableSingleton<HatManager>.Instance.AllNamePlates[0].SpritePreview;
             buttons.Add(button);
             button.gameObject.active = false;
             int row = i / 4, col = i % 4;

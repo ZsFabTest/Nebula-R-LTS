@@ -165,7 +165,7 @@ public class Trapper : Template.BilateralnessRole
                         RPCEventInvoker.ObjectUpdate(obj, 0);
                         Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, player, Game.PlayerData.PlayerStatus.Trapped, false, false);
 
-                        PlayerControl.LocalPlayer.killTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+                        PlayerControl.LocalPlayer.killTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);
                     }
 
                 }

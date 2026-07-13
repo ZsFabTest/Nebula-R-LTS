@@ -119,7 +119,7 @@ public class CustomOption
 
         if (optionId == int.MaxValue)
         {
-            GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, selection);
+            GameOptionsManager.Instance.currentNormalGameOptions.SetInt(Int32OptionNames.NumImpostors, selection);
         }
         else
         {
@@ -1286,7 +1286,7 @@ public class RpcSyncSettingsPatch
 {
     public static void Postfix()
     {
-        CustomOption.ShareOption.Invoke(new(int.MaxValue, GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.NumImpostors)));
+        CustomOption.ShareOption.Invoke(new(int.MaxValue, GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.NumImpostors)));
     }
 }
 
@@ -1457,7 +1457,7 @@ public static class GameOptionStringGenerator
     public static List<string> GenerateString(int maxLines = 28)
     {
         List<string> pages = new List<string>();
-        pages.Add(GameOptionsManager.Instance.CurrentGameOptions.ToHudString(PlayerControl.AllPlayerControls.Count));
+        pages.Add(GameOptionsManager.Instance.currentGameOptions.ToHudString(PlayerControl.AllPlayerControls.Count));
 
         StringBuilder entry = new StringBuilder();
         List<string> entries = new List<string>();
@@ -1534,7 +1534,7 @@ public class GameOptionsDataPatch
 
     private static void Postfix()
     {
-        if (GameOptionsManager.Instance.CurrentGameOptions == null) return;
+        if (GameOptionsManager.Instance.currentNormalGameOptions == null) return;
 
         CustomOption.CurrentGameMode = CustomOptionHolder.GetCustomGameMode();
 
@@ -1553,10 +1553,10 @@ public class GameOptionsDataPatch
 [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.Deserialize))]
 public static class GameOptionsDeserializePatch
 {
-    static private int NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+    static private int NumImpostors = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
     public static bool Prefix(GameOptionsData __instance)
     {
-        NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+        NumImpostors = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
         return true;
     }
 
@@ -1564,7 +1564,7 @@ public static class GameOptionsDeserializePatch
     {
         try
         {
-            GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, NumImpostors);
+            GameOptionsManager.Instance.currentNormalGameOptions.SetInt(Int32OptionNames.NumImpostors, NumImpostors);
         }
         catch{ }
     }
@@ -1573,19 +1573,19 @@ public static class GameOptionsDeserializePatch
 [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.Serialize))]
 public static class GameOptionsSerializePatch
 {
-    static private int NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+    static private int NumImpostors = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
     public static bool Prefix(GameOptionsData __instance)
     {
         try
         {
-            NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+            NumImpostors = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
             if (NumImpostors == 0)
             {
-                GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, 1);
+                GameOptionsManager.Instance.currentNormalGameOptions.SetInt(Int32OptionNames.NumImpostors, 1);
             }
             else if (NumImpostors > 3)
             {
-                GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, 3);
+                GameOptionsManager.Instance.currentNormalGameOptions.SetInt(Int32OptionNames.NumImpostors, 3);
             }
         }
         catch { }
@@ -1596,7 +1596,7 @@ public static class GameOptionsSerializePatch
     {
         try
         {
-            GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, NumImpostors);
+            GameOptionsManager.Instance.currentNormalGameOptions.SetInt(Int32OptionNames.NumImpostors, NumImpostors);
         }
         catch { }
     }

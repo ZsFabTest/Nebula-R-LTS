@@ -16,14 +16,9 @@ global using Il2CppInterop.Runtime.InteropTypes.Fields;
 global using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 using BepInEx;
-using System.Text;
 using System.Reflection;
 using BepInEx.Unity.IL2CPP;
 using Nebula.Patches;
-using UnityEngine.SceneManagement;
-using Il2CppSystem.Xml;
-using Nebula.Module;
-using Reactor;
 
 namespace Nebula;
 
@@ -34,38 +29,36 @@ public static class RuntimePrefabs
 }
 
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
-[BepInDependency(ReactorPlugin.Id)]
 [BepInProcess("Among Us.exe")]
 public class NebulaPlugin : BasePlugin
 {
     public static Module.Random rnd = new Module.Random();
 
-    public const string AmongUsVersion = "2023.3.28";
-    public const string PluginGuid = "cn.zsfabtest.amongus.nebular";
+    public const string AmongUsVersion = "2023.10.24";
+    public const string PluginGuid = "nebularelts.fangkuai.fun";
     public const string PluginName = "TheNebula-R-LTS";
-    public const string PluginVersion = "1.1.0.2";
+    public const string PluginVersion = "2.0.0.0";
     public const bool IsSnapshot = true;
 
-    public static string PluginVisualVersion = (IsSnapshot ? ("24.02.17b" + " - ") : "") + PluginVersion;
+    public static string PluginVisualVersion = (IsSnapshot ? ("25.0.0.0a" + " - ") : "") + PluginVersion;
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
-    
-    public const string PluginVersionForFetch = "1.1.0.2";
-    public byte[] PluginVersionData = new byte[] { 1, 1, 0, 2 };
+
+    public const string PluginVersionForFetch = "2.0.0.0";
+    public byte[] PluginVersionData = new byte[] { 2, 0, 0, 0 };
 
     public static NebulaPlugin Instance;
 
     public Harmony Harmony = new Harmony(PluginGuid);
 
-    //public static Sprite ModStamp;
-
     public Logger.Logger Logger;
 
     public static bool isFoolDay = false;
 
-    private void InstallTools()
+    internal void InstallTools()
     {
         InstallTool("CPUAffinityEditor");
     }
+
     private void InstallTool(string name)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
@@ -96,67 +89,9 @@ public class NebulaPlugin : BasePlugin
 
         Instance = this;
 
-        //初期の変更
-        InitialModification();
-
-        //CPUAffinityEditorを生成
-        InstallTools();
-
-        //アセットバンドルを読み込む
-        Module.AssetLoader.Load();
-
-        //キー入力情報を読み込む
-        Module.NebulaInputManager.Load();
-
-        //サーバー情報を読み込む
-        //Patches.RegionMenuOpenPatch.Initialize();
-
-        //クライアントオプションを読み込む
-        Patches.StartOptionMenuPatch.LoadOption();
-
-        //色データを読み込む
-        Module.DynamicColors.Load();
-
-        //ゲームモードデータを読み込む
-        Game.GameModeProperty.Load();
-
-        //マップ関連のデータを読み込む
-        Map.MapEditor.Load();
-        Map.MapData.Load();
-
-        //オプションを読み込む
-        CustomOptionHolder.Load();
-
-        //GlobalEventデータを読み込む
-        Events.Events.Load();
-
-        //ヘルプを読み込む
-        Module.HelpContent.Load();
-
-        //ゴースト情報を読み込む
-        //Ghost.GhostInfo.Load();
-        //Ghost.Ghost.Load();
-
-        // Harmonyパッチ全てを適用する
-        Harmony.PatchAll();
-
-        //RPC情報を読み込む
-        RemoteProcessBase.Load();
-
-
-        SceneManager.sceneLoaded += (Action<Scene,LoadSceneMode>)((scene,loadMode) =>
-        {
-            new GameObject("NebulaManager").AddComponent<NebulaManager>();
-        });
+        // 加载加载界面
+        Harmony.PatchAll(typeof(LoadPatch));
     }
-
-    /*
-    public static Sprite GetModStamp()
-    {
-        if (ModStamp) return ModStamp;
-        return ModStamp = Helpers.loadSpriteFromResources("Nebula.Resources.ModStamp.png", 150f);
-    }
-    */
 }
 
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.Awake))]

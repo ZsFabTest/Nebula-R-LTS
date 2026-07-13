@@ -23,6 +23,7 @@ public static class AssetLoader
     private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
 
     public static NebulaAssetBundle NebulaMainAsset;
+    public static NebulaAssetBundle NebulaNewMainAsset;
 
     public static AudioClip HadarDive;
     public static AudioClip HadarReappear;
@@ -52,6 +53,7 @@ public static class AssetLoader
     public static GameObject MIRADivMap;
     public static GameObject PolusDivMap;
     public static GameObject AirshipDivMap;
+    public static GameObject FungleDivMap;
 
     public static GameObject SpectreFriedMinigamePrefab;
     public static GameObject SpectreRancorMinigamePrefab;
@@ -71,7 +73,7 @@ public static class AssetLoader
 
         HadarDive = assetBundleBundle.LoadAsset<AudioClip>("HadarDive.wav").DontUnload();
         HadarReappear = assetBundleBundle.LoadAsset<AudioClip>("HadarReappear.wav").DontUnload();
-        HadarReappear = assetBundleBundle.LoadAsset<AudioClip>("HadarFear.wav").DontUnload();
+        HadarFear = assetBundleBundle.LoadAsset<AudioClip>("HadarFear.wav").DontUnload();
 
         PlaceTrap2s = assetBundleBundle.LoadAsset<AudioClip>("PlaceTrap2s.wav").DontUnload();
         PlaceTrap3s = assetBundleBundle.LoadAsset<AudioClip>("PlaceTrap3s.wav").DontUnload();
@@ -103,8 +105,11 @@ public static class AssetLoader
 
         Paparazzo = assetBundleBundle.LoadAsset<AudioClip>("Camera").DontUnload();
 
-        PuppeteerLaugh = AssetBundle.LoadFromMemory(assembly.GetManifestResourceStream("Nebula.Resources.Assets.audiobundle").ReadFully()).LoadAsset<AudioClip>("PuppeteerLaugh.mp3").DontUnload();
-        Uskneko = AssetBundle.LoadFromMemory(assembly.GetManifestResourceStream("Nebula.Resources.Assets.haomingassets").ReadFully()).LoadAsset<AudioClip>("Uskneko.mp3").DontUnload();
+        var newResourceStream = assembly.GetManifestResourceStream("Nebula.Resources.Assets.nosrlts_assets");
+        var newAssetBundleBundle = AssetBundle.LoadFromMemory(newResourceStream.ReadFully());
+        NebulaNewMainAsset = new(newAssetBundleBundle);
+        FungleDivMap = newAssetBundleBundle.LoadAsset<GameObject>("FungleDivMap").DontUnload();
+        PuppeteerLaugh = newAssetBundleBundle.LoadAsset<AudioClip>("PuppeteerLaugh.ogg").DontUnload();
 
         /*
         audioSource = new();
@@ -131,6 +136,9 @@ public static class AssetLoader
                 break;
             case 4:
                 prefab = AirshipDivMap;
+                break;
+            case 5:
+                prefab = FungleDivMap;
                 break;
             default:
                 prefab= null;

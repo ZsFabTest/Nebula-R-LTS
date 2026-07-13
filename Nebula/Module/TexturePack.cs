@@ -450,6 +450,9 @@ public static class TexturePack
                 case "airship":
                     Decorate(ref availableId, MapData.MapDatabase[4].Assets, asset!);
                     break;
+                case "fungle":
+                    Decorate(ref availableId, MapData.MapDatabase[5].Assets, asset!);
+                    break;
             }
         }
     }

@@ -214,7 +214,7 @@ public class Assignable
 
         if (!FixedRoleCount && Allocation != AllocationType.None)
         {
-            RoleCountOption = Module.CustomOption.Create(Color.white, "option.roleCount", 1f, 1f, 15f, 1f, TopOption, false).SetIdentifier("role." + LocalizeName + ".roleCount");
+            RoleCountOption = Module.CustomOption.Create(Color.white, "option.roleCount.assignment", 1f, 1f, 15f, 1f, TopOption, false).SetIdentifier("role." + LocalizeName + ".roleCount");
             RoleCountOption.GameMode = ValidGamemode | Module.CustomGameMode.FreePlay;
         }
 

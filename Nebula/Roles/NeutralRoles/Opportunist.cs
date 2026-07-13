@@ -109,6 +109,7 @@ public class Opportunist : Role
         if (condition == EndCondition.NobodyMiraWin) return false;
         if (condition == EndCondition.NobodyPolusWin) return false;
         if (condition == EndCondition.NobodyAirshipWin) return false;
+        if (condition == EndCondition.NobodyFungleWin) return false;
 
         if (player.Data.IsDead && player.GetModData().FinalData?.status != Game.PlayerData.PlayerStatus.Burned) return false;
         if (condition == EndCondition.ArsonistWin && !canWinWithArsonistOption.getBool()) return false;
@@ -169,7 +170,7 @@ public class Opportunist : Role
             objData = Map.MapData.GetCurrentMapData().Objects[0];
         }
         task.objPos = objData.Position;
-        task.objName = objData.Name;
+        task.room = objData.Room;
         task.StartAt = objData.Room;
         task.maxTime = objData.MaxTime;
         task.distance = taskDuringTimeOption.getFloat();

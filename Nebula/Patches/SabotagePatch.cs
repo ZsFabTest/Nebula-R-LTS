@@ -7,24 +7,24 @@ class CanUseDoorPatch
     static void Postfix(InfectedOverlay __instance, ref bool __result)
     {
         __result &= !Roles.Roles.Grenadier.isFlashing;
-        if (GameOptionsManager.Instance.CurrentGameOptions.MapId != 4) return;
+        if (GameOptionsManager.Instance.currentNormalGameOptions.MapId != 4) return;
 
         __result |= CustomOptionHolder.CanUseDoorDespiteSabotageOption.getBool();
         __result &= !Roles.Roles.Grenadier.isFlashing;
     }
 }
 
-[HarmonyPatch(typeof(InfectedOverlay), nameof(InfectedOverlay.CanUseSpecial), MethodType.Getter)]
+[HarmonyPatch(typeof(InfectedOverlay), nameof(InfectedOverlay.CanUseSabotage), MethodType.Getter)]
 class CanUseSpecialPatch
 {
     static void Postfix(InfectedOverlay __instance, ref bool __result)
     {
-        //if (GameOptionsManager.Instance.CurrentGameOptions.MapId != 4) return;
+        //if (GameOptionsManager.Instance.currentNormalGameOptions.MapId != 4) return;
         __result &= !Roles.Roles.Grenadier.isFlashing;
     }
 }
 
-[HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.RpcRepairSystem))]
+[HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.RpcUpdateSystem), typeof(SystemTypes), typeof(byte))]
 class InvokeSabotagePatch
 {
     static void Postfix(ShipStatus __instance, [HarmonyArgument(0)] SystemTypes systemType)
@@ -44,7 +44,7 @@ class InvokeDoorSabotagePatch
 }
 
 //サボクールダウン
-[HarmonyPatch(typeof(SabotageSystemType), nameof(SabotageSystemType.RepairDamage))]
+[HarmonyPatch(typeof(SabotageSystemType), nameof(SabotageSystemType.UpdateSystem))]
 class SabotageCoolDownPatch
 {
     static bool flag = false;

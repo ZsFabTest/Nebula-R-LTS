@@ -24,7 +24,7 @@ public class ShipStatusPatch
             return true;
         }
 
-        ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.Electrical) ? __instance.Systems[SystemTypes.Electrical] : null;
+        ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.Electrical) && (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5) ? __instance.Systems[SystemTypes.Electrical] : null;
         if (systemType == null) return true;
         SwitchSystem switchSystem = systemType.TryCast<SwitchSystem>();
         if (switchSystem == null) return true;
@@ -76,11 +76,11 @@ public class ShipStatusPatch
 
         if (role.UseImpostorLightRadius)
         {
-            __result = rate * GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.ImpostorLightMod);
+            __result = rate * GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.ImpostorLightMod);
         }
         else
         {
-            __result = rate * GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.CrewLightMod);
+            __result = rate * GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.CrewLightMod);
         }
         return false;
     }
@@ -116,6 +116,13 @@ public class ShipStatusPatch
     [HarmonyPostfix]
     [HarmonyPatch(typeof(AirshipStatus), nameof(AirshipStatus.OnEnable))]
     public static void Postfix5(AirshipStatus __instance)
+    {
+        Game.GameData.data.ModifyShipStatus();
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(FungleShipStatus), nameof(FungleShipStatus.OnEnable))]
+    public static void Postfix6(FungleShipStatus __instance)
     {
         Game.GameData.data.ModifyShipStatus();
     }

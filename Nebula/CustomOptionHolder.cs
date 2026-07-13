@@ -19,9 +19,9 @@ public class GameRule
 
     public GameRule()
     {
-        if (GameOptionsManager.Instance.CurrentGameOptions.GameMode == GameModes.Normal)
+        if (GameOptionsManager.Instance.currentNormalGameOptions.GameMode == GameModes.Normal)
         {
-            vanillaVotingTime = GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.VotingTime);
+            vanillaVotingTime = GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.VotingTime);
         }
         else
         {
@@ -113,6 +113,7 @@ public class CustomOptionHolder
     public static CustomOption exceptMIRA;
     public static CustomOption exceptPolus;
     public static CustomOption exceptAirship;
+    public static CustomOption exceptFungle;
     public static CustomOption additionalVents;
     public static CustomOption additionalWirings;
     public static CustomOption spawnMethod;
@@ -174,7 +175,7 @@ public class CustomOptionHolder
 
     public static CustomOption? GetUnlimitedCameraOption()
     {
-        switch (GameOptionsManager.Instance.CurrentGameOptions.MapId)
+        switch (GameOptionsManager.Instance.currentNormalGameOptions.MapId)
         {
             case 0:
                 return UnlimitedCameraSkeldOption;
@@ -202,6 +203,8 @@ public class CustomOptionHolder
     public static CustomOption SkeldO2TimeLimitOption;
     public static CustomOption MIRAReactorTimeLimitOption;
     public static CustomOption MIRAO2TimeLimitOption;
+    public static CustomOption FungleReactorTimeLimitOption;
+    public static CustomOption FungleMushroomMixupTimeLimitOption;
     public static CustomOption SeismicStabilizersTimeLimitOption;
     public static CustomOption AvertCrashTimeLimitOption;
     public static CustomOption BlackOutStrengthOption;
@@ -518,6 +521,7 @@ public class CustomOptionHolder
         exceptMIRA = CustomOption.Create(Color.white, "option.exceptMIRA", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
         exceptPolus = CustomOption.Create(Color.white, "option.exceptPolus", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
         exceptAirship = CustomOption.Create(Color.white, "option.exceptAirship", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
+        exceptFungle = CustomOption.Create(Color.white, "option.exceptFungle", false, dynamicMap).SetGameMode(CustomGameMode.ActuallyAll);
         additionalVents = CustomOption.Create(Color.white, "option.additionalVents", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
         spawnMethod = CustomOption.Create(Color.white, "option.spawnMethod", new string[] { "option.spawnMethod.default", "option.spawnMethod.selectable", "option.spawnMethod.random" }, "option.spawnMethod.default", mapOptions).SetGameMode(CustomGameMode.ActuallyAll);
         respawnNearbyFinalPosition = CustomOption.Create(Color.white, "option.respawnNearbyFinalPosition", false, mapOptions).SetGameMode(CustomGameMode.ActuallyAll).AddCustomPrerequisite(() => spawnMethod.getSelection() == 2);
@@ -559,7 +563,7 @@ public class CustomOptionHolder
                                       refresher(id);
                                   }));
                         }
-                        refresher(GameOptionsManager.Instance.CurrentGameOptions.MapId);
+                        refresher(GameOptionsManager.Instance.currentNormalGameOptions.MapId);
                     });
                 }
                 else
@@ -627,7 +631,7 @@ public class CustomOptionHolder
                             MetaDialog.EraseDialog(1);
                             refresher(id);
                         }));
-                        refresher(GameOptionsManager.Instance.CurrentGameOptions.MapId);
+                        refresher(GameOptionsManager.Instance.currentNormalGameOptions.MapId);
                     });
                 else
                     return new MSMargin(1.7f);
@@ -681,6 +685,10 @@ public class CustomOptionHolder
         MIRAReactorTimeLimitOption.suffix = "second";
         MIRAO2TimeLimitOption = CustomOption.Create(Color.white, "option.MIRAO2TimeLimit", 45f, 20f, 80f, 5f, SabotageOption).SetGameMode(CustomGameMode.All);
         MIRAO2TimeLimitOption.suffix = "second";
+        FungleReactorTimeLimitOption = CustomOption.Create(Color.white, "option.fungleReactorTimeLimit", 30f, 15f, 60f, 5f, SabotageOption).SetGameMode(CustomGameMode.All);
+        FungleReactorTimeLimitOption.suffix = "second";
+        FungleMushroomMixupTimeLimitOption = CustomOption.Create(Color.white, "option.fungleMushroomMixupTimeLimitOption", 10f, 10f, 60f, 5f, SabotageOption).SetGameMode(CustomGameMode.All);
+        FungleMushroomMixupTimeLimitOption.suffix = "second";
         SeismicStabilizersTimeLimitOption = CustomOption.Create(Color.white, "option.seismicStabilizersTimeLimit", 60f, 20f, 120f, 5f, SabotageOption).SetGameMode(CustomGameMode.All);
         SeismicStabilizersTimeLimitOption.suffix = "second";
         AvertCrashTimeLimitOption = CustomOption.Create(Color.white, "option.avertCrashTimeLimit", 90f, 20f, 180f, 5f, SabotageOption).SetGameMode(CustomGameMode.All);
