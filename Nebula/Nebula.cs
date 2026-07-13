@@ -52,8 +52,6 @@ public class NebulaPlugin : BasePlugin
 
     public Logger.Logger Logger;
 
-    public static bool isFoolDay = false;
-
     internal void InstallTools()
     {
         InstallTool("CPUAffinityEditor");
@@ -129,15 +127,5 @@ public static class AmBannedPatch
     public static void Postfix(out bool __result)
     {
         __result = false;
-    }
-}
-
-[HarmonyPatch(typeof(Constants), nameof(Constants.ShouldHorseAround))]
-public static class AprilFoolPatch
-{
-    public static bool Prefix(out bool __result)
-    {
-        __result = NebulaPlugin.isFoolDay;
-        return false;
     }
 }

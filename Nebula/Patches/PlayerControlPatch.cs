@@ -377,14 +377,11 @@ public class PlayerControlPatch
                 player.cosmetics.hat.BackLayer.color = data.TransColor;
         }
 
-        if (player.cosmetics.currentPet)
-        {
-            if (player.cosmetics.currentPet.rend != null)
-                player.cosmetics.currentPet.rend.color = data.TransColor;
+        foreach (var rend in player.cosmetics.currentPet.renderers)
+            rend.color = rend.color.SetAlpha(alpha);
 
-            if (player.cosmetics.currentPet.shadowRend != null)
-                player.cosmetics.currentPet.shadowRend.color = data.TransColor;
-        }
+        foreach (var shadowRend in player.cosmetics.currentPet.shadows)
+            shadowRend.color = shadowRend.color.SetAlpha(alpha);
 
         if (player.cosmetics.visor != null)
             player.cosmetics.visor.Image.color = data.TransColor;
