@@ -238,13 +238,13 @@ public class OnGameEndPatch
 
         FinalData = new FinalPlayerData();
         //勝利者を消去する
-        TempData.winners.Clear();
+        EndGameResult.CachedWinners.Clear();
 
         foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if (Game.GameData.data.playersArray[player.PlayerId].role.CheckWin(player, EndCondition))
             {
-                TempData.winners.Add(new WinningPlayerData(player.Data));
+                EndGameResult.CachedWinners.Add(new CachedPlayerData(player.Data));
             }
         }
 
@@ -252,14 +252,14 @@ public class OnGameEndPatch
         bool addedFlag = false;
         foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
-            if (TempData.winners.FindAll((Il2CppSystem.Predicate<WinningPlayerData>)((data) => { return data.PlayerName == player.name; })).Count > 0) continue;
+            if (EndGameResult.CachedWinners.FindAll((Il2CppSystem.Predicate<CachedPlayerData>)((data) => { return data.PlayerName == player.name; })).Count > 0) continue;
 
             addedFlag = false;
             Helpers.RoleAction(player, (role) =>
             {
                 if ((!addedFlag) && role.CheckAdditionalWin(player, EndCondition))
                 {
-                    TempData.winners.Add(new WinningPlayerData(player.Data));
+                    EndGameResult.CachedWinners.Add(new CachedPlayerData(player.Data));
                     addedFlag = true;
                 }
             });
@@ -471,18 +471,18 @@ public class EndGameManagerSetUpPatch
 
         //勝利メンバーを載せる
         int num = Mathf.CeilToInt(7.5f);
-        List<WinningPlayerData> list = TempData.winners.ToArray().ToList().OrderBy(delegate (WinningPlayerData b)
+        List<CachedPlayerData> list = EndGameResult.CachedWinners.ToArray().ToList().OrderBy(delegate (CachedPlayerData b)
         {
             if (!b.IsYou)
             {
                 return 0;
             }
             return -1;
-        }).ToList<WinningPlayerData>();
+        }).ToList<CachedPlayerData>();
 
         for (int i = 0; i < list.Count; i++)
         {
-            WinningPlayerData winningPlayerData2 = list[i];
+            CachedPlayerData cachedPlayerData2 = list[i];
             int num2 = (i % 2 == 0) ? -1 : 1;
             int num3 = (i + 1) / 2;
             float num4 = (float)num3 / (float)num;
@@ -493,7 +493,7 @@ public class EndGameManagerSetUpPatch
             float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
             Vector3 vector = new Vector3(num7, num7, 1f);
             poolablePlayer.transform.localScale = vector;
-            if (winningPlayerData2.IsDead)
+            if (cachedPlayerData2.IsDead)
             {
                 poolablePlayer.cosmetics.currentBodySprite.BodySprite.sprite = poolablePlayer.cosmetics.currentBodySprite.GhostSprite;
                 poolablePlayer.SetDeadFlipX(i % 2 == 0);
@@ -502,9 +502,9 @@ public class EndGameManagerSetUpPatch
             {
                 poolablePlayer.SetFlipX(i % 2 == 0);
             }
-            poolablePlayer.UpdateFromPlayerOutfit(winningPlayerData2, PlayerMaterial.MaskType.None, winningPlayerData2.IsDead, true);
+            poolablePlayer.UpdateFromPlayerOutfit(cachedPlayerData2.Outfit, PlayerMaterial.MaskType.None, cachedPlayerData2.IsDead, true);
 
-            poolablePlayer.SetName(winningPlayerData2.PlayerName, new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z), Color.white, -15f);
+            poolablePlayer.SetName(cachedPlayerData2.PlayerName, new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z), Color.white, -15f);
             poolablePlayer.SetNamePosition(new Vector3(0f, -1.31f, -0.5f));
         }
 
@@ -857,7 +857,7 @@ public class PlayerStatistics
         Roles.Side side;
         
 
-        foreach (GameData.PlayerInfo playerInfo in GameData.Instance.AllPlayers.GetFastEnumerator())
+        foreach (NetworkedPlayerInfo playerInfo in GameData.Instance.AllPlayers.GetFastEnumerator())
         {
             try
             {

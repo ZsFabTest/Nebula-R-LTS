@@ -6,10 +6,8 @@ namespace Nebula.Patches;
 public class GameStartManagerPatch
 {
     public static Dictionary<int, PlayerVersion> playerVersions = new Dictionary<int, PlayerVersion>();
-    private static float timer = 600f;
     private static float kickingTimer = 0f;
     private static bool versionSent = false;
-    private static string lobbyCodeText = "";
 
     public class PlayerVersion
     {
@@ -45,7 +43,6 @@ public class GameStartManagerPatch
         }
     }
 
-    //[HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
     [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.CoSpawnPlayer))]
     public class AmongUsClientOnPlayerJoinedPatch
     {
@@ -58,12 +55,10 @@ public class GameStartManagerPatch
                 RPCEventInvoker.SetMyColor();
             }
 
-
             foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
                 player.SetColor(player.PlayerId);
             }
-
         }
     }
 
@@ -74,23 +69,20 @@ public class GameStartManagerPatch
         {
             // Trigger version refresh
             versionSent = false;
-            // Reset lobby countdown timer
-            timer = 600f;
             // Reset kicking timer
             kickingTimer = 0f;
             // Copy lobby code
             string code = InnerNet.GameCode.IntToGameName(AmongUsClient.Instance.GameId);
             GUIUtility.systemCopyBuffer = code;
-            lobbyCodeText = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.RoomCode, new Il2CppReferenceArray<Il2CppSystem.Object>(0)) + "\r\n" + code;
         }
     }
-
 
     [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
     public class GameStartManagerUpdatePatch
     {
         private static bool update = false;
         private static string currentText = "";
+        private static int lastSetMinPlayers = -1;
 
         public static void Prefix(GameStartManager __instance)
         {
@@ -107,7 +99,15 @@ public class GameStartManagerPatch
                         player.SetColor(player.PlayerId);
                     }
                 }
-                if (!AmongUsClient.Instance.AmHost) return; // Not host or no instance
+                if (!AmongUsClient.Instance.AmHost) return;
+                __instance.MinPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MinPlayers;
+
+                if (__instance.MinPlayers != lastSetMinPlayers)
+                {
+                    lastSetMinPlayers = __instance.MinPlayers;
+                    __instance.LastPlayerCount = -1;
+                }
+
                 update = GameData.Instance.PlayerCount != __instance.LastPlayerCount;
             }
             catch { }
@@ -115,7 +115,6 @@ public class GameStartManagerPatch
 
         public static void Postfix(GameStartManager __instance)
         {
-
             try
             {
                 // Send version as soon as PlayerControl.LocalPlayer exists
@@ -129,19 +128,12 @@ public class GameStartManagerPatch
                     RPCEventInvoker.SetMyColor();
                 }
 
-                if (!AmongUsClient.Instance) return;
-
                 // Host update with version handshake infos
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    
-                    int minPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MinPlayers;
-                    //int maxPlayers = Game.GameModeProperty.GetProperty(CustomOptionHolder.GetCustomGameMode()).MaxPlayers ?? 15;
-                    int maxPlayers = 127;
-                    __instance.MinPlayers = minPlayers;
-
                     bool blockStart = false;
                     string message = "";
+
                     foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.ToArray())
                     {
                         if (client.Character == null) continue;
@@ -152,9 +144,8 @@ public class GameStartManagerPatch
                         {
                             blockStart = true;
                             message += $"<color=#FF0000FF>{Language.Language.GetString("lobby.hasNoNebula").Replace("%NAME%", client.Character.Data.PlayerName)}</color>\n";
-
                         }
-                        else if(!NebulaOption.configDontCareMismatchedNoS.Value)
+                        else if (!NebulaOption.configDontCareMismatchedNoS.Value)
                         {
                             PlayerVersion version = playerVersions[client.Id];
                             if (!version.Matches())
@@ -164,16 +155,23 @@ public class GameStartManagerPatch
                             }
                         }
                     }
+
                     if (blockStart)
                     {
-                        __instance.StartButton.color = __instance.startLabelText.color = Palette.DisabledClear;
                         __instance.GameStartText.text = message;
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
+                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 5;
+                        __instance.GameStartText.transform.localScale = new Vector3(2f, 2f, 1f);
+                        __instance.GameStartTextParent.SetActive(true);
                     }
                     else
                     {
-                        __instance.StartButton.color = __instance.startLabelText.color = ((__instance.LastPlayerCount >= minPlayers && __instance.LastPlayerCount <= maxPlayers) ? Palette.EnabledColor : Palette.DisabledClear);
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition;
+                        __instance.GameStartText.transform.localPosition = Vector3.zero;
+                        __instance.GameStartText.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+                        if (!__instance.GameStartText.text.Contains(FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.GameStarting).Replace("{0}", "")))
+                        {
+                            __instance.GameStartText.text = String.Empty;
+                            __instance.GameStartTextParent.SetActive(false);
+                        }
                     }
                 }
 
@@ -211,16 +209,9 @@ public class GameStartManagerPatch
 
                 if (update) currentText = __instance.PlayerCounter.text;
 
-                timer = Mathf.Max(0f, timer -= Time.deltaTime);
-                int minutes = (int)timer / 60;
-                int seconds = (int)timer % 60;
-                string suffix = $" ({minutes:00}:{seconds:00})";
-
-                __instance.PlayerCounter.text = currentText + suffix;
                 __instance.PlayerCounter.autoSizeTextContainer = true;
             }
             catch (Exception e) { }
-
         }
     }
 
@@ -249,6 +240,7 @@ public class GameStartManagerPatch
                     if (dummyComponent != null && dummyComponent.enabled)
                         continue;
 
+#if !DEBUG
                     if (!playerVersions.ContainsKey(client.Id))
                     {
                         continueStart = false;
@@ -260,8 +252,8 @@ public class GameStartManagerPatch
                         continueStart = false;
                         break;
                     }
+#endif
                 }
-
 
                 if (CustomOptionHolder.dynamicMap.getBool() && CustomOptionHolder.mapOptions.getBool())
                 {
@@ -291,25 +283,9 @@ public class GameStartManagerPatch
                         int num = 6;
                         if (CustomOptionHolder.GetCustomGameMode() is Module.CustomGameMode.FreePlay)
                             num = (int)CustomOptionHolder.CountOfDummiesOption.getFloat();
-                        
+
                         for (int n = 0; n < num; n++)
-                        {
-                            var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-                            var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
-
-                            GameData.Instance.AddPlayer(playerControl);
-
-                            playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
-                            playerControl.GetComponent<DummyBehaviour>().enabled = true;
-                            playerControl.isDummy = true;
-                            playerControl.SetName(Patches.RandomNamePatch.GetRandomName());
-                            playerControl.SetColor(i);
-
-                            AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
-                            GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
-
-                            //playerControl.StartCoroutine(playerControl.CoPlayerAppear().WrapToIl2Cpp());
-                        }
+                            Helpers.SpawnDummy();
                     }
                 }
 

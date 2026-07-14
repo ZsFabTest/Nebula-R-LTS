@@ -161,6 +161,8 @@
 "option.respawnNearbyFinalPosition" : "Respawn Nearby Final Position" 
 "option.shuffledElectrical" : "Shuffled Electrical (Airship)" 
 
+"option.alternativeOptionScreenBuilder.customize" : "Customize"
+
 "option.sabotageOption" : "Sabotage Option"
 "option.sabotageCoolDown" : "Sabotage Cool Down"
 "option.skeldReactorTimeLimit" : "Time Limit (Skeld Reactor)"
@@ -2636,9 +2638,3 @@
 "meeting.isLocked" : "You're Locked In"
 
 "locations.specimen" : "Specimens"
-
-"mainmenu.creditsMenu.titleText" : "Contributors List"
-"mainmenu.creditsMenu.modDev" : "Mod Dev"
-"mainmenu.creditsMenu.translator" : "Translators"
-"mainmenu.creditsMenu.designer" : "Designers"
-"mainmenu.creditsMenu.tester" : "Testers"

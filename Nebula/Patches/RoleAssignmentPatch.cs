@@ -795,7 +795,7 @@ class SetRolePatch
         {
             return false;
         }
-        GameData.PlayerInfo data = targetPlayer.Data;
+        NetworkedPlayerInfo data = targetPlayer.Data;
         if (data == null)
         {
             return false;

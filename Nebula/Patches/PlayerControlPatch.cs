@@ -1,20 +1,24 @@
 ﻿namespace Nebula.Patches;
 
-[HarmonyPatch(typeof(GameData), nameof(GameData.SetTasks))]
+// 2024.6.18: GameData.SetTasks(playerId, taskTypeIds) was removed.
+// Each NetworkedPlayerInfo now owns a private SetTasks(byte[] taskTypeIds) method,
+// invoked via NetworkedPlayerInfo.RpcSetTasks. We patch the private instance method directly.
+[HarmonyPatch(typeof(NetworkedPlayerInfo), nameof(NetworkedPlayerInfo.SetTasks))]
 public class PlayerControlSetTaskPatch
 {
-    public static bool Prefix(GameData __instance, [HarmonyArgument(0)] byte playerId, [HarmonyArgument(1)] Il2CppStructArray<byte> taskTypeIds)
+    public static bool Prefix(NetworkedPlayerInfo __instance, [HarmonyArgument(0)] Il2CppStructArray<byte> taskTypeIds)
     {
+        byte playerId = __instance.PlayerId;
         if (playerId != PlayerControl.LocalPlayer.PlayerId) return true;
 
-        GameData.PlayerInfo playerById = __instance.GetPlayerById(playerId);
+        NetworkedPlayerInfo playerById = __instance;
         if (playerById == null || playerById.Disconnected || !playerById.Object) return false;
 
 
-        var initialTasks = new List<GameData.TaskInfo>();
-        List<GameData.TaskInfo>? actualTasks = null;
+        var initialTasks = new List<NetworkedPlayerInfo.TaskInfo>();
+        List<NetworkedPlayerInfo.TaskInfo>? actualTasks = null;
 
-        for (int i = 0; i < taskTypeIds.Length; i++) initialTasks.Add(new GameData.TaskInfo(taskTypeIds[i], (uint)i));
+        for (int i = 0; i < taskTypeIds.Length; i++) initialTasks.Add(new NetworkedPlayerInfo.TaskInfo(taskTypeIds[i], (uint)i));
 
         Game.GameData.data.myData.InitialTasks = initialTasks;
 
@@ -116,13 +120,13 @@ public class PlayerControlPatch
                 onlyWhiteNames, targetPlayersInVents, untargetablePlayers, targetingPlayer);
     }
 
-    static public PlayerControl? SetMyTarget(System.Predicate<GameData.PlayerInfo> targetablePlayers, PlayerControl targetingPlayer = null)
+    static public PlayerControl? SetMyTarget(System.Predicate<NetworkedPlayerInfo> targetablePlayers, PlayerControl targetingPlayer = null)
     {
         return SetMyTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
             targetablePlayers);
     }
 
-    static public PlayerControl? SetMyTarget(float range, System.Predicate<GameData.PlayerInfo> targetablePlayers, PlayerControl? targetingPlayer = null)
+    static public PlayerControl? SetMyTarget(float range, System.Predicate<NetworkedPlayerInfo> targetablePlayers, PlayerControl? targetingPlayer = null)
     {
         PlayerControl result = null;
         float num = range;
@@ -132,10 +136,10 @@ public class PlayerControlPatch
              !(targetingPlayer.GetModData().ghostRole == Roles.Roles.EvilGhost)) return result;
 
         Vector2 truePosition = targetingPlayer.GetTruePosition();
-        Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
+        Il2CppSystem.Collections.Generic.List<NetworkedPlayerInfo> allPlayers = GameData.Instance.AllPlayers;
         for (int i = 0; i < allPlayers.Count; i++)
         {
-            GameData.PlayerInfo playerInfo = allPlayers[i]; 
+            NetworkedPlayerInfo playerInfo = allPlayers[i]; 
 
             if (playerInfo == null || (PlayerControl.LocalPlayer.PlayerId == playerInfo.PlayerId) || (playerInfo.Object == null))
                 continue;
@@ -366,26 +370,26 @@ public class PlayerControlPatch
         if (player.cosmetics.currentBodySprite.BodySprite != null)
             player.cosmetics.currentBodySprite.BodySprite.color = data.TransColor;
 
-        if (player.cosmetics.skin.layer != null)
+        if (player.cosmetics.skin?.layer != null)
             player.cosmetics.skin.layer.color = data.TransColor;
 
-        if (player.cosmetics.hat)
+        if (player.cosmetics.hat != null)
         {
-            if (player.cosmetics.hat.FrontLayer != null)
-                player.cosmetics.hat.FrontLayer.color = data.TransColor;
-            if (player.cosmetics.hat.BackLayer != null)
-                player.cosmetics.hat.BackLayer.color = data.TransColor;
+            player.cosmetics.hat.FrontLayer?.color = data.TransColor;
+            player.cosmetics.hat.BackLayer?.color = data.TransColor;
         }
 
-        foreach (var rend in player.cosmetics.currentPet.renderers)
-            rend.color = rend.color.SetAlpha(alpha);
-
-        foreach (var shadowRend in player.cosmetics.currentPet.shadows)
-            shadowRend.color = shadowRend.color.SetAlpha(alpha);
+        if (player.cosmetics.currentPet != null)
+            player.cosmetics.currentPet.SetAlpha(alpha);
 
         if (player.cosmetics.visor != null)
             player.cosmetics.visor.Image.color = data.TransColor;
 
+        if (player.cosmetics.colorBlindText != null)
+            player.cosmetics.colorBlindText.color = data.TransColor;
+
+        if (player.cosmetics.PettingHand != null)
+            player.cosmetics.PettingHand.SetAlpha(alpha);
     }
 
     public static void Prefix(PlayerControl __instance)
@@ -441,7 +445,11 @@ public class PlayerControlPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole))]
 class BlockRPCSetRolePatch
 {
-    public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)]RoleTypes roleType)
+    // Outgoing path: PlayerControl.RpcSetRole used to call the private SetRole(RoleTypes)
+    // directly; in 2024.6.18 it instead starts the CoSetRole(role, canOverrideRole) coroutine.
+    // We keep blocking here so the vanilla flow never runs and RoleManager.SetRole is
+    // invoked synchronously with our own Engineer->Crewmate remap, exactly like before.
+    public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] RoleTypes roleType)
     {
         if (roleType is RoleTypes.CrewmateGhost or RoleTypes.ImpostorGhost) return false;
 
@@ -451,7 +459,7 @@ class BlockRPCSetRolePatch
     }
 }
 
-[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetRole))]
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoSetRole))]
 class BlockSetRolePatch
 {
     public static bool Prefix(PlayerControl __instance)
@@ -667,7 +675,7 @@ class MyWalkPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.ReportDeadBody))]
 class ReportDeadBodyPatch
 {
-    public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
+    public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo target)
     {
         if (AmongUsClient.Instance.IsGameOver || MeetingHud.Instance || __instance.Data.IsDead)
         {
@@ -785,12 +793,12 @@ class PlayerIsKillTimerEnabledPatch
 [HarmonyPatch(typeof(OverlayKillAnimation), nameof(OverlayKillAnimation.Initialize))]
 class OverlayKillAnimationPatch
 {
-    public static bool Prefix(OverlayKillAnimation __instance, [HarmonyArgument(0)] GameData.PlayerInfo kInfo, [HarmonyArgument(1)] GameData.PlayerInfo vInfo)
+    public static bool Prefix(OverlayKillAnimation __instance, [HarmonyArgument(0)] NetworkedPlayerInfo kInfo, [HarmonyArgument(1)] NetworkedPlayerInfo vInfo)
     {
         if (__instance.killerParts)
         {
             PlayerControl playerControl = Helpers.playerById(kInfo.PlayerId);
-            GameData.PlayerOutfit currentOutfit = playerControl.GetModData().CurrentOutfit.toPlayerOutfit();
+            NetworkedPlayerInfo.PlayerOutfit currentOutfit = playerControl.GetModData().CurrentOutfit.toPlayerOutfit();
             __instance.killerParts.SetBodyType(playerControl.BodyType);
             __instance.killerParts.UpdateFromPlayerOutfit(currentOutfit, PlayerMaterial.MaskType.None, false, false);
             __instance.killerParts.ToggleName(false);
@@ -800,7 +808,7 @@ class OverlayKillAnimationPatch
         if (vInfo != null && __instance.victimParts)
         {
             PlayerControl playerControl2 = Helpers.playerById(vInfo.PlayerId);
-            GameData.PlayerOutfit currentOutfit2 = playerControl2.GetModData().CurrentOutfit.toPlayerOutfit();
+            NetworkedPlayerInfo.PlayerOutfit currentOutfit2 = playerControl2.GetModData().CurrentOutfit.toPlayerOutfit();
             __instance.victimHat = currentOutfit2.HatId;
             __instance.victimParts.SetBodyType(playerControl2.BodyType);
             __instance.victimParts.UpdateFromPlayerOutfit(currentOutfit2, PlayerMaterial.MaskType.None, false, false);

@@ -7,7 +7,7 @@ namespace Nebula.Roles.CrewmateRoles{
 
         public Dictionary<byte,float> reportTime;
 
-        public GameData.PlayerInfo info;
+        public NetworkedPlayerInfo info;
         public bool ismereport = false;
 
         public Module.CustomOption timeToGetMurder;

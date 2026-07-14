@@ -6,7 +6,7 @@ public static class EmergencyPatch
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.ReportDeadBody))]
     class ReportDeadBodyPatch
     {
-        static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
+        static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo target)
         {
             if (__instance.GetModData().role != Roles.Roles.VOID) return true;
 
@@ -203,7 +203,7 @@ public static class EmergencyPatch
 /*
     [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.CmdReportDeadBody))]
     public class PlayerReportPatch{
-        private static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo info)
+        private static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo info)
         {
             Game.GameData.data.Reporter = __instance;
             Game.GameData.data.Dead = Helpers.playerById(info.PlayerId);

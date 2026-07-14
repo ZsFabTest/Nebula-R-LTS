@@ -50,23 +50,7 @@ public class NebulaManager : MonoBehaviour
         {
             // Spawn dummys
             if (Input.GetKeyDown(KeyCode.F1))
-            {
-                var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-
-                var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
-
-                GameData.Instance.AddPlayer(playerControl);
-
-                //playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
-                playerControl.GetComponent<DummyBehaviour>().enabled = true;
-                playerControl.isDummy = true;
-                playerControl.SetName(Patches.RandomNamePatch.GetRandomName());
-                playerControl.SetColor(NebulaPlugin.rnd.Next(15));
-
-                AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
-
-                GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
-            }
+                Helpers.SpawnDummy();
 
             // Suiside
             if (Input.GetKeyDown(KeyCode.F9))

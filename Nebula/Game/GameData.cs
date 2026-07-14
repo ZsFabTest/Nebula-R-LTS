@@ -1,6 +1,6 @@
 ﻿using Nebula.Roles;
 
-using static GameData;
+using static NetworkedPlayerInfo;
 using Hazel;
 using AmongUs.Data.Player;
 using Nebula.Map;

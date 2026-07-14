@@ -20,7 +20,7 @@ public enum CustomRPC
 {
     // Main Controls
 
-    ResetVaribles = 65,
+    ResetVaribles = 100,
     RequireCustomData,
     SendCustomData,
     SetRandomMap,
@@ -79,7 +79,7 @@ public enum CustomRPC
 
     // Role functionality
 
-    SealVent = 129,
+    SealVent = 200,
     MultipleVote,
     SniperSettleRifle,
     SniperShot,
@@ -730,7 +730,7 @@ static class RPCEvents
             if (cutOverlay)
             {
                 //MurderPlayerから必要な処理を抜粋
-                GameData.PlayerInfo data = target.Data;
+                NetworkedPlayerInfo data = target.Data;
 
                 target.gameObject.layer = LayerMask.NameToLayer("Ghost");
                 if (source.AmOwner)
@@ -2348,12 +2348,12 @@ public class RPCEventInvoker
         RPCEvents.MultipleVote(player.PlayerId, count);
     }
 
-    public static void ChangeTasks(List<GameData.TaskInfo> tasks, bool resetTasks)
+    public static void ChangeTasks(List<NetworkedPlayerInfo.TaskInfo> tasks, bool resetTasks)
     {
         ChangeTasks(tasks, tasks.Count, tasks.Count, resetTasks);
     }
 
-    public static void ChangeTasks(List<GameData.TaskInfo> tasks, int allQuota)
+    public static void ChangeTasks(List<NetworkedPlayerInfo.TaskInfo> tasks, int allQuota)
     {
         ChangeTasks(tasks, allQuota, tasks.Count, false);
     }
@@ -2369,7 +2369,7 @@ public class RPCEventInvoker
         RPCEvents.SetTasks(PlayerControl.LocalPlayer.PlayerId, allTasks, isCrewmateTask, isInfiniteQuota);
     }
 
-    public static void ChangeTasks(List<GameData.TaskInfo> tasks, int allQuota, int allTasks, bool resetTasks)
+    public static void ChangeTasks(List<NetworkedPlayerInfo.TaskInfo> tasks, int allQuota, int allTasks, bool resetTasks)
     {
         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ChangeTasks, Hazel.SendOption.Reliable, -1);
         writer.Write(PlayerControl.LocalPlayer.PlayerId);
@@ -2425,19 +2425,19 @@ public class RPCEventInvoker
         Extensions.Shuffle<NormalPlayerTask>(unused.Cast<Il2CppSystem.Collections.Generic.IList<NormalPlayerTask>>(), 0);
         ShipStatus.Instance.AddTasksFromList(ref num, shortTasks, tasks, usedTypes, unused);
 
-        GameData.PlayerInfo p = PlayerControl.LocalPlayer.Data;
+        NetworkedPlayerInfo p = PlayerControl.LocalPlayer.Data;
 
         //GameData.Instance.SetTasksは初期設定のパッチが通るため使用しない
-        p.Tasks = new Il2CppSystem.Collections.Generic.List<GameData.TaskInfo>(tasks.Count);
+        p.Tasks = new Il2CppSystem.Collections.Generic.List<NetworkedPlayerInfo.TaskInfo>(tasks.Count);
 
         int n = 0;
         foreach (var t in tasks)
         {
-            p.Tasks.Add(new GameData.TaskInfo(t, (uint)n));
+            p.Tasks.Add(new NetworkedPlayerInfo.TaskInfo(t, (uint)n));
             n++;
         }
         p.Object.SetTasks(p.Tasks);
-        GameData.Instance.SetDirtyBit(1U << (int)PlayerControl.LocalPlayer.PlayerId);
+        GameManager.Instance.SetDirtyBit(1U << (int)PlayerControl.LocalPlayer.PlayerId);
     }
 
     public static void CompleteTask(byte playerId)

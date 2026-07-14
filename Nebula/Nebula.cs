@@ -35,7 +35,7 @@ public class NebulaPlugin : BasePlugin
     public static Module.Random rnd = new Module.Random();
 
     public const string AmongUsVersion = "2023.10.24";
-    public const string PluginGuid = "nebularelts.fangkuai.fun";
+    public const string PluginGuid = "nosrlts.amonguscn.club";
     public const string PluginName = "Nebula-R-LTS";
     public const string PluginVersion = "2.0.0.0";
     public const bool IsSnapshot = true;

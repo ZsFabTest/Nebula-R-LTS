@@ -1,6 +1,7 @@
 ﻿using AmongUs.GameOptions;
 using Cpp2IL.Core;
 using Cpp2IL.Core.Extensions;
+using Nebula.Language;
 using Nebula.Module;
 using TMPro;
 
@@ -542,7 +543,7 @@ public class CustomOptionHolder
                 if (spawnMethod.getSelection() is 1 or 2)
                 {
                     int selection = spawnMethod.getSelection();
-                    return new MSButton(1.6f, 0.4f, "Customize", TMPro.FontStyles.Bold, () =>
+                    return new MSButton(1.6f, 0.4f, Language.Language.GetString("option.alternativeOptionScreenBuilder.customize"), TMPro.FontStyles.Bold, () =>
                     {
                         Action<byte> refresher = null;
                         if (selection == 1)
@@ -623,7 +624,7 @@ public class CustomOptionHolder
             MetaScreenContent getSuitableContent()
             {
                 if (LimitedAdmin.getSelection() == 1)
-                    return new MSButton(1.6f, 0.4f, "Customize", TMPro.FontStyles.Bold, () =>
+                    return new MSButton(1.6f, 0.4f, Language.Language.GetString("option.alternativeOptionScreenBuilder.customize"), TMPro.FontStyles.Bold, () =>
                     {
                         Action<byte> refresher = null;
                         refresher = (mapId) => MetaDialog.OpenMapDialog(mapId, true, (obj, id) => Map.MapData.MapDatabase[id].SetUpAdminRoomButton(obj, () =>

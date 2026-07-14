@@ -108,7 +108,7 @@ public class Side
             (statistics.AliveImpostorCouple + statistics.AliveImpostorTrilemma == 0 ||
             statistics.AliveImpostorCouple * 2 + statistics.AliveImpostorTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
             {
-                if (TempData.LastDeathReason == DeathReason.Kill)
+                if (GameData.LastDeathReason == DeathReason.Kill)
                 {
                     return EndCondition.ImpostorWinByKill;
                 }

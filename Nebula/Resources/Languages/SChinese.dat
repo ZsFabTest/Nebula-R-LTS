@@ -161,6 +161,8 @@
 "option.respawnNearbyFinalPosition" : "在会议前所处位置附近出生" 
 "option.shuffledElectrical" : "每轮会议都改变电气房结构(Airship)"
 
+"option.alternativeOptionScreenBuilder.customize" : "自定义"
+
 "option.sabotageOption" : "破坏设置"
 "option.sabotageCoolDown" : "破坏冷却"
 "option.skeldReactorTimeLimit" : "破坏时长 (Skeld反应堆)"
@@ -2636,9 +2638,3 @@
 "meeting.isLocked" : "你被锁定了"
 
 "locations.specimen" : "样本室"
-
-"mainmenu.creditsMenu.titleText" : "贡献者列表"
-"mainmenu.creditsMenu.modDev" : "模组开发"
-"mainmenu.creditsMenu.translator" : "语言翻译"
-"mainmenu.creditsMenu.designer" : "艺术设计"
-"mainmenu.creditsMenu.tester" : "测试人员"
