@@ -1,5 +1,5 @@
-# Nebula-R LTS-R版本
-## 本模组是由我在凛在Dolly开发的Nebula-OLD-的基础上制作的Nebula-R的基础上制作的Nebula-R-LTS的基础上开发的，我会尝试将它更新到最新的Among Us版本并保证正常的游玩
+# Nebula-Reactivated
+## This mod was developed base on [凛's Nebula-R-LTS](https://github.com/ZsFabTest/Nebula-R-LTS) and [Dolly's Nebula-OLD](https://github.com/Dolly1016/Nebula-OLD-)，We try to support it run on the latest Among Us version and deal the basical playing
 
 # 多语言声明
 <details>
