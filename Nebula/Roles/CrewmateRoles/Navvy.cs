@@ -148,10 +148,10 @@ public class Navvy : Role
             {
                 if (ventTarget != null)
                 { // Seal vent
-                        MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SealVent, Hazel.SendOption.Reliable);
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SealVent, Hazel.SendOption.Reliable);
                     writer.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer.Write(ventTarget.Id);
-                    writer.EndMessage();
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCEvents.SealVent(PlayerControl.LocalPlayer.PlayerId, ventTarget.Id);
 
                     SetSealedVentSprite(ventTarget, 0.5f);
@@ -208,7 +208,7 @@ public class Navvy : Role
         repairButton.MaxTimer = repairButton.Timer = 0;
 
         var ventButton = FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton;
-        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.First(r => r.Role == RoleTypes.Engineer).Ability.Image;
+        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.ToArray().First(r => r.Role == RoleTypes.Engineer).Ability.Image;
         ventButton.transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().outlineColor = Palette.CrewmateBlue;
     }
     public override void CleanUp()

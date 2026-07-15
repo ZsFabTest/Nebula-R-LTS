@@ -8,6 +8,7 @@ using Nebula.Module;
 using Nebula.Patches;
 using TMPro;
 using UnityEngine;
+using static NetworkedPlayerInfo;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -479,7 +480,7 @@ public static class Helpers
         }
 
         //GlobalMethod
-        return targetData.role.OnMurdered(killer.PlayerId, target.PlayerId); ;
+        return targetData.role.OnMurdered(killer.PlayerId, target.PlayerId);
 
     }
 
@@ -1091,5 +1092,27 @@ public static class Helpers
         if (dummy != null) dummy.enabled = true;
 
         return playerControl;
+    }
+
+    public static PlayerControl getPlayerByPlayerOutfit(NetworkedPlayerInfo.PlayerOutfit playerOutfit)
+    {
+        foreach (var p in PlayerControl.AllPlayerControls)
+        {
+            if (p.Data.DefaultOutfit == playerOutfit)
+            {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Destroys the <paramref name="obj"/>.
+    /// </summary>
+    /// <param name="obj">The object to destroy.</param>
+    public static void Destroy(this UnityEngine.Object obj)
+    {
+        UnityEngine.Object.Destroy(obj);
     }
 }

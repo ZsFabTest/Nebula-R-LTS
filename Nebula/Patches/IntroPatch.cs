@@ -1,6 +1,5 @@
 ﻿namespace Nebula.Patches;
 
-
 [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]
 static class HudManagerStartPatch
 {
@@ -180,119 +179,165 @@ class IntroPatch
         Roles.Role.ExtractDisplayPlayers(ref yourTeam);
     }
 
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
-    class SetUpRoleTextPatch
+    private static void PreparePlayerAppearances()
     {
-        private static void setUpRoleText(IntroCutscene __instance)
+        foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
-            Roles.Role role = Game.GameData.data.AllPlayers[PlayerControl.LocalPlayer.PlayerId].role;
-
-            string roleNames = Language.Language.GetString("role." + role.LocalizeName + ".name");
-            Helpers.RoleAction(PlayerControl.LocalPlayer.PlayerId, (role) => { role.EditDisplayRoleName(PlayerControl.LocalPlayer.PlayerId, ref roleNames, true); });
-
-            __instance.RoleText.text = roleNames;
-            __instance.RoleText.color = role.Color;
-            __instance.RoleBlurbText.text = Language.Language.GetString("role." + role.LocalizeName + ".description");
-            __instance.RoleBlurbText.color = role.Color;
-            __instance.YouAreText.color = role.side.color;
-            
-
-            //追加ロールの情報を付加
-            string description = __instance.RoleBlurbText.text;
-            foreach (Roles.ExtraRole exRole in Game.GameData.data.myData.getGlobalData().extraRole)
+            if (Game.GameData.data.AllPlayers[player.PlayerId].role.category == Roles.RoleCategory.Impostor)
             {
-                exRole.EditDescriptionString(ref description);
+                DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Impostor);
             }
-            __instance.RoleBlurbText.text = description;
-
-            __instance.YouAreText.gameObject.SetActive(true);
-            __instance.RoleText.gameObject.SetActive(true);
-            __instance.RoleBlurbText.gameObject.SetActive(true);
-
-            SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);
-
-            if (__instance.ourCrewmate == null)
+            else
             {
-                __instance.ourCrewmate = __instance.CreatePlayer(0, 1, PlayerControl.LocalPlayer.Data, false);
-                __instance.ourCrewmate.gameObject.SetActive(false);
+                DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
             }
-            __instance.ourCrewmate.gameObject.SetActive(true);
-            __instance.ourCrewmate.transform.localPosition = new Vector3(0f, -1.05f, -18f);
-            __instance.ourCrewmate.transform.localScale = new Vector3(1f, 1f, 1f);
-            __instance.ourCrewmate.ToggleName(false);
+            Game.GameData.data.AllPlayers[player.PlayerId].role.ReflectRoleEyesight(player.Data.Role);
         }
+    }
 
-        public static bool Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
+    private static void SetUpRoleText(IntroCutscene __instance)
+    {
+        Roles.Role role = Game.GameData.data.AllPlayers[PlayerControl.LocalPlayer.PlayerId].role;
+
+        string roleNames = Language.Language.GetString("role." + role.LocalizeName + ".name");
+        Helpers.RoleAction(PlayerControl.LocalPlayer.PlayerId, (role) => { role.EditDisplayRoleName(PlayerControl.LocalPlayer.PlayerId, ref roleNames, true); });
+
+        __instance.RoleText.text = roleNames;
+        __instance.RoleText.color = role.Color;
+        __instance.RoleBlurbText.text = Language.Language.GetString("role." + role.LocalizeName + ".description");
+        __instance.RoleBlurbText.color = role.Color;
+        __instance.YouAreText.color = role.side.color;
+        
+
+        //追加ロールの情報を付加
+        string description = __instance.RoleBlurbText.text;
+        foreach (Roles.ExtraRole exRole in Game.GameData.data.myData.getGlobalData().extraRole)
         {
-            var list = new List<Il2CppSystem.Collections.IEnumerator>();
+            exRole.EditDescriptionString(ref description);
+        }
+        __instance.RoleBlurbText.text = description;
 
-            list.Add(Effects.Action((Il2CppSystem.Action)(() =>
-            {
-                if (GameOptionsManager.Instance.currentGameMode == GameModes.Normal)
-                {
+        __instance.YouAreText.gameObject.SetActive(true);
+        __instance.RoleText.gameObject.SetActive(true);
+        __instance.RoleBlurbText.gameObject.SetActive(true);
 
-                    setUpRoleText(__instance);
-                }
-            })));
-            list.Add(Effects.Wait(2.5f));
-            list.Add(Effects.Action((Il2CppSystem.Action)(() =>
-            {
-                __instance.YouAreText.gameObject.SetActive(false);
-                __instance.RoleText.gameObject.SetActive(false);
-                __instance.RoleBlurbText.gameObject.SetActive(false);
-                __instance.ourCrewmate.gameObject.SetActive(false);
-            })));
+        SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);
 
-            __result = Effects.Sequence(list.ToArray());
+        if (__instance.ourCrewmate == null)
+        {
+            __instance.ourCrewmate = __instance.CreatePlayer(0, 1, PlayerControl.LocalPlayer.Data, false);
+            __instance.ourCrewmate.gameObject.SetActive(false);
+        }
+        __instance.ourCrewmate.gameObject.SetActive(true);
+        __instance.ourCrewmate.transform.localPosition = new Vector3(0f, -1.05f, -18f);
+        __instance.ourCrewmate.transform.localScale = new Vector3(1f, 1f, 1f);
+        __instance.ourCrewmate.ToggleName(false);
+    }
+
+    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.CoBegin))]
+    class CoBeginPatch
+    {
+        static bool Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
+        {
+            __result = CustomCoBegin(__instance).WrapToIl2Cpp();
             return false;
         }
-    }
 
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowTeam))]
-    class BeginPatch
-    {
-        public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToShow)
+        static IEnumerator CustomCoBegin(IntroCutscene __instance)
         {
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
-            {
-                if (Game.GameData.data.AllPlayers[player.PlayerId].role.category == Roles.RoleCategory.Impostor)
-                {
-                    DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Impostor);
-                }
-                else
-                {
-                    DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-                }
-                Game.GameData.data.AllPlayers[player.PlayerId].role.ReflectRoleEyesight(player.Data.Role);
+            IntroCutscene.Instance = __instance;
+            HudManager.Instance.HideGameLoader();
+            SoundManager.Instance.PlaySound(__instance.IntroStinger, false, 1f, null);
 
-            }
-            //isImpostor = (Game.GameData.data.myData.getGlobalData().role.category == Roles.RoleCategory.Impostor);
-        }
-    }
+            __instance.HideAndSeekPanels.SetActive(false);
+            __instance.CrewmateRules.SetActive(false);
+            __instance.ImpostorRules.SetActive(false);
+            __instance.ImpostorName.gameObject.SetActive(false);
+            __instance.ImpostorTitle.gameObject.SetActive(false);
+            __instance.ImpostorText.gameObject.SetActive(false);
 
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
-    class BeginCrewmatePatch
-    {
-        public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
-        {
-            setupIntroTeamMembers(__instance, ref teamToDisplay);
-        }
-        public static void Postfix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
-        {
-            setupIntroTeamText(__instance, ref teamToDisplay);
-        }
-    }
+            PreparePlayerAppearances();
 
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginImpostor))]
-    class BeginImpostorPatch
-    {
-        public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
-        {
+            var yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             setupIntroTeamMembers(__instance, ref yourTeam);
-        }
-        public static void Postfix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
-        {
             setupIntroTeamText(__instance, ref yourTeam);
+
+            if (__instance.overlayHandle == null)
+            {
+                __instance.overlayHandle = DestroyableSingleton<DualshockLightManager>.Instance.AllocateLight();
+            }
+            yield return ShipStatus.Instance.CosmeticsCache.PopulateFromPlayers();
+
+            Roles.Role myRole = Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId].role;
+            bool isImpostor = myRole.category == Roles.RoleCategory.Impostor;
+
+            if (!isImpostor)
+            {
+                Vector3 position = __instance.BackgroundBar.transform.position;
+                position.y -= 0.25f;
+                __instance.BackgroundBar.transform.position = position;
+            }
+            __instance.BackgroundBar.material.SetColor("_Color", myRole.introMainDisplaySide.color);
+            __instance.TeamTitle.color = myRole.introMainDisplaySide.color;
+            __instance.overlayHandle.color = myRole.introMainDisplaySide.color;
+
+            int maxDepth = isImpostor ? 1 : Mathf.CeilToInt(7.5f);
+            for (int i = 0; i < yourTeam.Count; i++)
+            {
+                PlayerControl player = yourTeam[i];
+                if (player && player.Data != null)
+                {
+                    PoolablePlayer p = __instance.CreatePlayer(i, maxDepth, player.Data, isImpostor);
+                    if (i == 0 && player.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+                        __instance.ourCrewmate = p;
+                }
+            }
+
+            Color c = __instance.TeamTitle.color;
+            Color fade = Color.black;
+            Color impColor = Color.white;
+            Vector3 titlePos = __instance.TeamTitle.transform.localPosition;
+            float teamDuration = 3f;
+            float timer = 0f;
+            while (timer < teamDuration)
+            {
+                timer += Time.deltaTime;
+                float num = Mathf.Min(1f, timer / teamDuration);
+                __instance.Foreground.material.SetFloat("_Rad", __instance.ForegroundRadius.ExpOutLerp(num * 2f));
+                fade.a = Mathf.Lerp(1f, 0f, num * 3f);
+                __instance.FrontMost.color = fade;
+                c.a = Mathf.Clamp(FloatRange.ExpOutLerp(num, 0f, 1f), 0f, 1f);
+                __instance.TeamTitle.color = c;
+                __instance.RoleText.color = c;
+                impColor.a = Mathf.Lerp(0f, 1f, (num - 0.3f) * 3f);
+                __instance.ImpostorText.color = impColor;
+                titlePos.y = 2.7f - num * 0.3f;
+                __instance.TeamTitle.transform.localPosition = titlePos;
+                __instance.overlayHandle.color = new Color(__instance.overlayHandle.color.r, __instance.overlayHandle.color.g, __instance.overlayHandle.color.b, Mathf.Min(1f, timer * 2f));
+                yield return null;
+            }
+
+            timer = 0f;
+            while (timer < 1f)
+            {
+                timer += Time.deltaTime;
+                float num2 = timer / 1f;
+                fade.a = Mathf.Lerp(0f, 1f, num2 * 3f);
+                __instance.FrontMost.color = fade;
+                __instance.overlayHandle.color = new Color(__instance.overlayHandle.color.r, __instance.overlayHandle.color.g, __instance.overlayHandle.color.b, 1f - fade.a);
+                yield return null;
+            }
+
+            SetUpRoleText(__instance);
+            yield return new WaitForSeconds(2.5f);
+
+            __instance.YouAreText.gameObject.SetActive(false);
+            __instance.RoleText.gameObject.SetActive(false);
+            __instance.RoleBlurbText.gameObject.SetActive(false);
+            __instance.ourCrewmate.gameObject.SetActive(false);
+
+            ShipStatus.Instance.StartSFX();
+            GameObject.Destroy(__instance.gameObject);
         }
     }
 }

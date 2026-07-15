@@ -27,7 +27,7 @@ public class Crewmate : Role
         catch { leftCanUseVent = 1; }
         ventButtonUsesObject = ventButton.ShowUsesIcon(0, out ventButtonUsesString);
         ventButtonUsesString.text = leftCanUseVent.ToString();
-        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.First(r=>r.Role==RoleTypes.Engineer).Ability.Image;
+        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.ToArray().First(r=>r.Role==RoleTypes.Engineer).Ability.Image;
         ventButton.transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().outlineColor = Palette.CrewmateBlue;
         VentDurationMaxTimer= GameOptionsManager.Instance.currentHideNSeekGameOptions.GetFloat(FloatOptionNames.CrewmateTimeInVent);
 

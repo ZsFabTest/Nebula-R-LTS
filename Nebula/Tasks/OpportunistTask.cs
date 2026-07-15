@@ -1,5 +1,7 @@
 ﻿
 
+using AmongUs.Data;
+
 namespace Nebula.Tasks;
 
 public class OpportunistTask : NebulaPlayerTask
@@ -66,11 +68,11 @@ public class OpportunistTask : NebulaPlayerTask
             if (DestroyableSingleton<HudManager>.InstanceExists)
             {
                 DestroyableSingleton<HudManager>.Instance.ShowTaskComplete();
-                StatsManager.Instance.IncrementStat(StringNames.StatsTasksCompleted);
+                DataManager.Player.Stats.IncrementStat(StatID.TasksCompleted);
                 DestroyableSingleton<AchievementManager>.Instance.OnTaskComplete(this.TaskType);
                 if (PlayerTask.AllTasksCompleted(PlayerControl.LocalPlayer))
                 {
-                    StatsManager.Instance.IncrementStat(StringNames.StatsAllTasksCompleted);
+                    DataManager.Player.Stats.IncrementStat(StatID.AllTasksCompleted);
                 }
             }
             PlayerControl.LocalPlayer.RpcCompleteTask(base.Id);

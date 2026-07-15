@@ -7,15 +7,15 @@ public delegate void EndAction(FinalPlayerData finalPlayerData);
 
 public class EndCondition
 {
-    public static EndCondition CrewmateWinByVote = new EndCondition(GameOverReason.HumansByVote, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.Standard);
-    public static EndCondition CrewmateWinByTask = new EndCondition(GameOverReason.HumansByTask, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.Standard);
-    public static EndCondition CrewmateWinDisconnect = new EndCondition(GameOverReason.HumansDisconnect, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.Standard);
-    public static EndCondition ImpostorWinByKill = new EndCondition(GameOverReason.ImpostorByKill, Palette.ImpostorRed, "impostor", 16, Module.CustomGameMode.Standard);
-    public static EndCondition ImpostorWinBySabotage = new EndCondition(GameOverReason.ImpostorBySabotage, Palette.ImpostorRed, "impostor", 16, Module.CustomGameMode.Standard);
-    public static EndCondition ImpostorWinByVote = new EndCondition(GameOverReason.ImpostorByVote, Palette.ImpostorRed, "impostor", 16, Module.CustomGameMode.Standard);
+    public static EndCondition CrewmateWinByVote = new EndCondition(GameOverReason.CrewmatesByVote, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.Standard);
+    public static EndCondition CrewmateWinByTask = new EndCondition(GameOverReason.CrewmatesByTask, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.Standard);
+    public static EndCondition CrewmateWinDisconnect = new EndCondition(GameOverReason.CrewmateDisconnect, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.Standard);
+    public static EndCondition ImpostorWinByKill = new EndCondition(GameOverReason.ImpostorsByKill, Palette.ImpostorRed, "impostor", 16, Module.CustomGameMode.Standard);
+    public static EndCondition ImpostorWinBySabotage = new EndCondition(GameOverReason.ImpostorsBySabotage, Palette.ImpostorRed, "impostor", 16, Module.CustomGameMode.Standard);
+    public static EndCondition ImpostorWinByVote = new EndCondition(GameOverReason.ImpostorsByVote, Palette.ImpostorRed, "impostor", 16, Module.CustomGameMode.Standard);
     public static EndCondition ImpostorWinDisconnect = new EndCondition(GameOverReason.ImpostorDisconnect, Palette.ImpostorRed, "impostor", 16, Module.CustomGameMode.Standard);
-    public static EndCondition CrewmateWinHnS = new EndCondition(GameOverReason.HideAndSeek_ByTimer, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.StandardHnS);
-    public static EndCondition ImpostorWinHnS = new EndCondition(GameOverReason.HideAndSeek_ByKills, Palette.ImpostorRed, "lonelyImpostor", 16, Module.CustomGameMode.StandardHnS);
+    public static EndCondition CrewmateWinHnS = new EndCondition(GameOverReason.HideAndSeek_CrewmatesByTimer, Palette.CrewmateBlue, "crewmate", 16, Module.CustomGameMode.StandardHnS);
+    public static EndCondition ImpostorWinHnS = new EndCondition(GameOverReason.HideAndSeek_ImpostorsByKills, Palette.ImpostorRed, "lonelyImpostor", 16, Module.CustomGameMode.StandardHnS);
     public static EndCondition JesterWin = new EndCondition(16, Roles.NeutralRoles.Jester.RoleColor, "jester", 1, Module.CustomGameMode.Standard);
     public static EndCondition JackalWin = new EndCondition(17, Roles.NeutralRoles.Jackal.RoleColor, "jackal", 2, Module.CustomGameMode.Standard);
     public static EndCondition ArsonistWin = new EndCondition(18, Roles.NeutralRoles.Arsonist.RoleColor, "arsonist", 1, Module.CustomGameMode.Standard, false, (fpData) => { PlayerControl.AllPlayerControls.ForEach((Action<PlayerControl>)((p) => { if (!p.Data.IsDead && Roles.Roles.Arsonist.Winner != p.PlayerId) { p.MurderPlayer(p, MurderResultFlags.Succeeded); fpData.GetPlayer(p.PlayerId).status = Game.PlayerData.PlayerStatus.Burned; } })); });
@@ -33,7 +33,7 @@ public class EndCondition
     public static EndCondition NobodyMiraWin = new EndCondition(50, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.mira", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
     public static EndCondition NobodyPolusWin = new EndCondition(51, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.polus", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
     public static EndCondition NobodyAirshipWin = new EndCondition(52, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.airship", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
-    public static EndCondition NobodyFungleWin = new EndCondition(52, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.fungle", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
+    public static EndCondition NobodyFungleWin = new EndCondition(53, new Color(72f / 255f, 78f / 255f, 84f / 255f), "nobody.fungle", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
     public static EndCondition NoGame = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "noGame", 0, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
@@ -272,7 +272,7 @@ public class OnGameEndPatch
     public static void Prefix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
     {
         EndCondition = EndCondition.GetEndCondition(endGameResult.GameOverReason);
-        if ((int)endGameResult.GameOverReason >= 10) endGameResult.GameOverReason = EndCondition.IsPeaceful ? GameOverReason.HumansByTask : GameOverReason.ImpostorByKill;
+        if ((int)endGameResult.GameOverReason >= 10) endGameResult.GameOverReason = EndCondition.IsPeaceful ? GameOverReason.CrewmatesByTask : GameOverReason.ImpostorsByKill;
     }
 
     public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)

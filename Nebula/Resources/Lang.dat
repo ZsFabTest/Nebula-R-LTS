@@ -70,6 +70,8 @@
 "preset.dialog.loadFailed" : "Failed to load preset..."
 
 "option.tab.settings" : "Settings"
+"option.miscellaneousOption" : "Others Option"
+"option.anyPlayerCanStopStart" : "Any Player Can Stop Start"
 "option.tab.crewmateRoles" : "Crewmate <color=#ffffffff>Roles</color>"
 "option.tab.impostorRoles" : "Impostor <color=#ffffffff>Roles</color>"
 "option.tab.neutralRoles" : "Neutral <color=#ffffffff>Roles</color>"

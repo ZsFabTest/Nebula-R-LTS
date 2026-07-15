@@ -5,8 +5,8 @@ namespace Nebula.Patches;
 [HarmonyPatch]
 class ExileControllerPatch
 {
-    [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
-    class ExileControllerBeginPatch
+    [HarmonyPatch(typeof(ExileController), nameof(ExileController.BeginForGameplay))]
+    class ExileControllerBeginForGameplayPatch
     {
 
         public static void Postfix(ExileController __instance, [HarmonyArgument(0)] ref NetworkedPlayerInfo exiled, [HarmonyArgument(1)] bool tie)
@@ -76,14 +76,14 @@ class ExileControllerPatch
         }
     }
 
-    [HarmonyPatch(typeof(AirshipExileController), nameof(AirshipExileController.WrapUpAndSpawn))]
+    [HarmonyPatch(typeof(AirshipExileController._WrapUpAndSpawn_d__11), nameof(AirshipExileController._WrapUpAndSpawn_d__11.MoveNext))]
     class AirshipExileControllerPatch
     {
-        public static void Prefix(AirshipExileController __instance)
+        public static void Prefix(AirshipExileController._WrapUpAndSpawn_d__11 __instance)
         {
-            WrapUpPrefix(__instance);
+            WrapUpPrefix(__instance.__4__this);
         }
-        public static void Postfix(AirshipExileController __instance)
+        public static void Postfix(AirshipExileController._WrapUpAndSpawn_d__11 __instance)
         {
             WrapUpPostfix();
         }
@@ -155,7 +155,7 @@ class ExileControllerPatch
 
     static void WrapUpPrefix(ExileController __instance)
     {
-        __instance.exiled = null;
+        __instance.initData.networkedPlayer = null;
     }
 
     static void WrapUpPostfix()
@@ -184,9 +184,9 @@ class ExileControllerPatch
             if(!CustomOptionHolder.useSpecialRoleExiledText.getBool()) return;
             try
             {
-                if (ExileController.Instance != null && ExileController.Instance.exiled != null)
+                if (ExileController.Instance != null && ExileController.Instance.initData != null)
                 {
-                    PlayerControl player = Helpers.playerById(ExileController.Instance.exiled.Object.PlayerId);
+                    PlayerControl player = ExileController.Instance.initData.networkedPlayer.Object;
                     if (player == null){
                         if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS){
                             if(CustomOptionHolder.dontShowImpostorCountIfDidntExile.getBool()) __result = "";

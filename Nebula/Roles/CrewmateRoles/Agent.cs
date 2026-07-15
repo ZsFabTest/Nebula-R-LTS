@@ -88,7 +88,7 @@ public class Agent : Template.ExemptTasks
         var ventButton = FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton;
         ventButtonUsesObject = ventButton.ShowUsesIcon(0,out ventButtonUsesString);
         ventButtonUsesString.text = maxVentsOption.getFloat().ToString();
-        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.First(r => r.Role == RoleTypes.Engineer).Ability.Image;
+        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.ToArray().First(r => r.Role == RoleTypes.Engineer).Ability.Image;
         ventButton.transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().outlineColor = Palette.CrewmateBlue;
 
     }

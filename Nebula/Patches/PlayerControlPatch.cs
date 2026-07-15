@@ -1,8 +1,8 @@
-﻿namespace Nebula.Patches;
+﻿using System.Reflection;
+using Object = UnityEngine.Object;
 
-// 2024.6.18: GameData.SetTasks(playerId, taskTypeIds) was removed.
-// Each NetworkedPlayerInfo now owns a private SetTasks(byte[] taskTypeIds) method,
-// invoked via NetworkedPlayerInfo.RpcSetTasks. We patch the private instance method directly.
+namespace Nebula.Patches;
+
 [HarmonyPatch(typeof(NetworkedPlayerInfo), nameof(NetworkedPlayerInfo.SetTasks))]
 public class PlayerControlSetTaskPatch
 {
@@ -116,13 +116,13 @@ public class PlayerControlPatch
 
     static public PlayerControl? SetMyTarget(bool onlyWhiteNames = false, bool targetPlayersInVents = false, List<byte> untargetablePlayers = null, PlayerControl targetingPlayer = null)
     {
-        return SetMyTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
+        return SetMyTarget(LegacyGameOptions.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
                 onlyWhiteNames, targetPlayersInVents, untargetablePlayers, targetingPlayer);
     }
 
     static public PlayerControl? SetMyTarget(System.Predicate<NetworkedPlayerInfo> targetablePlayers, PlayerControl targetingPlayer = null)
     {
-        return SetMyTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
+        return SetMyTarget(LegacyGameOptions.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)],
             targetablePlayers);
     }
 
@@ -171,7 +171,7 @@ public class PlayerControlPatch
         target.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", color);
     }
 
-    static public DeadBody? SetMyDeadTarget() => SetMyDeadTarget(GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)]);
+    static public DeadBody? SetMyDeadTarget() => SetMyDeadTarget(LegacyGameOptions.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)]);
 
     static public DeadBody? SetMyDeadTarget(float num)
     {
@@ -406,7 +406,7 @@ public class PlayerControlPatch
 
     public static void Postfix(PlayerControl __instance)
     {
-        if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
+		if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
         if (Game.GameData.data == null)
         {
             return;
@@ -445,10 +445,6 @@ public class PlayerControlPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole))]
 class BlockRPCSetRolePatch
 {
-    // Outgoing path: PlayerControl.RpcSetRole used to call the private SetRole(RoleTypes)
-    // directly; in 2024.6.18 it instead starts the CoSetRole(role, canOverrideRole) coroutine.
-    // We keep blocking here so the vanilla flow never runs and RoleManager.SetRole is
-    // invoked synchronously with our own Engineer->Crewmate remap, exactly like before.
     public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] RoleTypes roleType)
     {
         if (roleType is RoleTypes.CrewmateGhost or RoleTypes.ImpostorGhost) return false;
@@ -546,13 +542,13 @@ class PlayerControlSetCoolDownPatch
     }
 }
 
-[HarmonyPatch(typeof(KillAnimation), nameof(KillAnimation.CoPerformKill))]
+/*[HarmonyPatch(typeof(KillAnimation), nameof(KillAnimation.CoPerformKill))]
 class KillAnimationCoPerformKillPatch
 {
     public static bool hideNextAnimation = true;
     public static bool Prefix(KillAnimation __instance, ref Il2CppSystem.Collections.IEnumerator __result , [HarmonyArgument(0)] PlayerControl source, [HarmonyArgument(1)] PlayerControl target)
     {
-        bool hideAnimation = hideNextAnimation;
+		bool hideAnimation = hideNextAnimation;
         IEnumerator GetEnumerator()
         {
             FollowerCamera cam = Camera.main.GetComponent<FollowerCamera>();
@@ -560,8 +556,8 @@ class KillAnimationCoPerformKillPatch
             PlayerPhysics sourcePhys = source.MyPhysics;
             KillAnimation.SetMovement(source, false);
             KillAnimation.SetMovement(target, false);
-            DeadBody deadBody = GameObject.Instantiate<DeadBody>(GameManager.Instance.DeadBodyPrefab);
-            deadBody.enabled = false;
+			DeadBody deadBody = Object.Instantiate<DeadBody>(GameManager.Instance.GetDeadBody(source.Data.Role));
+			deadBody.enabled = false;
             deadBody.ParentId = target.PlayerId;
             foreach (var r in deadBody.bodyRenderers) target.SetPlayerMaterialColors(r);
             target.SetPlayerMaterialColors(deadBody.bloodSplatter);
@@ -593,11 +589,22 @@ class KillAnimationCoPerformKillPatch
             }
         }
         __result = GetEnumerator().WrapToIl2Cpp();
-        hideNextAnimation = false;
+		hideNextAnimation = false;
         return false;
     }
-}
+}*/
 
+[HarmonyPatch(typeof(KillAnimation._CoPerformKill_d__2), nameof(KillAnimation._CoPerformKill_d__2.MoveNext))]
+class KillAnimationCoPerformKillPatch
+{
+	public static bool hideNextAnimation = false;
+	public static void Prefix(KillAnimation._CoPerformKill_d__2 __instance)
+	{
+		if (hideNextAnimation)
+			__instance.source = __instance.target;
+		hideNextAnimation = false;
+	}
+}
 
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
 public static class CompleteTaskPatch
@@ -790,32 +797,26 @@ class PlayerIsKillTimerEnabledPatch
     }
 }
 
-[HarmonyPatch(typeof(OverlayKillAnimation), nameof(OverlayKillAnimation.Initialize))]
-class OverlayKillAnimationPatch
+[HarmonyPatch(typeof(KillOverlayInitData), MethodType.Constructor, typeof(NetworkedPlayerInfo), typeof(NetworkedPlayerInfo))]
+class KillOverlayInitDataPatch
 {
-    public static bool Prefix(OverlayKillAnimation __instance, [HarmonyArgument(0)] NetworkedPlayerInfo kInfo, [HarmonyArgument(1)] NetworkedPlayerInfo vInfo)
+    public static void Postfix(KillOverlayInitData __instance, [HarmonyArgument(0)] NetworkedPlayerInfo killer, [HarmonyArgument(1)] NetworkedPlayerInfo victim)
     {
-        if (__instance.killerParts)
+        PlayerControl killerControl = Helpers.playerById(killer.PlayerId);
+        if (killerControl != null)
         {
-            PlayerControl playerControl = Helpers.playerById(kInfo.PlayerId);
-            NetworkedPlayerInfo.PlayerOutfit currentOutfit = playerControl.GetModData().CurrentOutfit.toPlayerOutfit();
-            __instance.killerParts.SetBodyType(playerControl.BodyType);
-            __instance.killerParts.UpdateFromPlayerOutfit(currentOutfit, PlayerMaterial.MaskType.None, false, false);
-            __instance.killerParts.ToggleName(false);
-            __instance.LoadKillerSkin(currentOutfit);
-            __instance.LoadKillerPet(currentOutfit);
+            __instance.killerOutfit = killerControl.GetModData()?.CurrentOutfit.toPlayerOutfit();
+            __instance.killerBodyType = killerControl.BodyType;
         }
-        if (vInfo != null && __instance.victimParts)
+
+        if (victim != null)
         {
-            PlayerControl playerControl2 = Helpers.playerById(vInfo.PlayerId);
-            NetworkedPlayerInfo.PlayerOutfit currentOutfit2 = playerControl2.GetModData().CurrentOutfit.toPlayerOutfit();
-            __instance.victimHat = currentOutfit2.HatId;
-            __instance.victimParts.SetBodyType(playerControl2.BodyType);
-            __instance.victimParts.UpdateFromPlayerOutfit(currentOutfit2, PlayerMaterial.MaskType.None, false, false);
-            __instance.victimParts.ToggleName(false);
-            __instance.LoadVictimSkin(currentOutfit2);
-            __instance.LoadVictimPet(currentOutfit2);
+            PlayerControl victimControl = Helpers.playerById(victim.PlayerId);
+            if (victimControl != null)
+            {
+                __instance.victimOutfit = victimControl.GetModData()?.CurrentOutfit.toPlayerOutfit();
+                __instance.victimBodyType = victimControl.BodyType;
+            }
         }
-        return false;
     }
 }

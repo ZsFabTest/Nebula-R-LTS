@@ -1,12 +1,10 @@
-﻿using Hazel;
-using Nebula.Agent;
+﻿using AmongUs.Data;
+using Hazel;
 using Nebula.Events;
 using Nebula.Game;
 using Nebula.Module;
 using Nebula.Patches;
 using Nebula.Roles;
-using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Nebula;
 
@@ -20,7 +18,7 @@ public enum CustomRPC
 {
     // Main Controls
 
-    ResetVaribles = 100,
+    ResetVaribles = 110,
     RequireCustomData,
     SendCustomData,
     SetRandomMap,
@@ -76,10 +74,12 @@ public enum CustomRPC
     UpdatePlayerVisibility,
     EditCoolDown,
     KillGuard,
+	SetGameStarting,
+	StopStart,
 
-    // Role functionality
+	// Role functionality
 
-    SealVent = 200,
+	SealVent = 200,
     MultipleVote,
     SniperSettleRifle,
     SniperShot,
@@ -135,7 +135,7 @@ class RPCHandlerPatch
         {
             case 2:
                 //標準の設定同期
-                GameOptionsDataPatch.dirtyFlag = true;
+                LegacyGameOptionsPatch.dirtyFlag = true;
                 break;
             case (byte)CustomRPC.ResetVaribles:
                 RPCEvents.ResetVaribles();
@@ -335,8 +335,14 @@ class RPCHandlerPatch
             case (byte)CustomRPC.KillGuard:
                 RPCEvents.KillGuard(reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
                 break;
+			case (byte)CustomRPC.SetGameStarting:
+				RPCEvents.setGameStarting();
+				break;
+			case (byte)CustomRPC.StopStart:
+				RPCEvents.stopStart(reader.ReadByte());
+				break;
 
-            case (byte)CustomRPC.SealVent:
+			case (byte)CustomRPC.SealVent:
                 RPCEvents.SealVent(reader.ReadByte(), reader.ReadInt32());
                 break;
             case (byte)CustomRPC.MultipleVote:
@@ -742,7 +748,7 @@ static class RPCEvents
                 }
                 if (target.AmOwner)
                 {
-                    StatsManager.Instance.IncrementStat(StringNames.StatsTimesMurdered);
+					DataManager.Player.Stats.IncrementStat(StatID.TimesMurdered);
                     if (Minigame.Instance)
                     {
                         try
@@ -1313,6 +1319,23 @@ static class RPCEvents
         }
     }
 
+	public static void setGameStarting()
+	{
+		GameStartManagerPatch.GameStartManagerUpdatePatch.startingTimer = 5f;
+	}
+
+	public static void stopStart(byte playerId)
+	{
+		if (!CustomOptionHolder.anyPlayerCanStopStart.getBool())
+			return;
+		SoundManager.Instance.StopSound(GameStartManager.Instance.gameStartSound);
+		if (AmongUsClient.Instance.AmHost)
+		{
+			GameStartManager.Instance.ResetStartState();
+			PlayerControl.LocalPlayer.RpcSendChat ($"{Helpers.playerById(playerId).Data.PlayerName} stopped game start !");
+		}
+	}
+	
     public static void SealVent(byte playerId, int ventId)
     {
         Events.Schedule.RegisterPostMeetingAction(() =>
@@ -1632,8 +1655,8 @@ static class RPCEvents
     static public void InstantiateDeadBody(byte targetId, Vector3 position)
     {
         var p = Helpers.playerById(targetId);
-        DeadBody deadBody = GameObject.Instantiate<DeadBody>(GameManager.Instance.deadBodyPrefab);
-        deadBody.enabled = false;
+		DeadBody deadBody = GameObject.Instantiate<DeadBody>(GameManager.Instance.GetDeadBody(p.Data.Role));
+		deadBody.enabled = false;
         deadBody.ParentId = targetId;
         foreach (var r in deadBody.bodyRenderers) p.SetPlayerMaterialColors(r);
         p.SetPlayerMaterialColors(deadBody.bloodSplatter);

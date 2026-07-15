@@ -51,7 +51,7 @@ public static class HnSImpostorSystem
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
 
-        float range = GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)];
+        float range = LegacyGameOptions.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.currentNormalGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)];
         float additional = 0f, ratio = 1f;
         Perk.PerkHolder.PerkData.MyPerkData.PerkAction((p) => p.Perk.SetKillRange(p, ref additional, ref ratio));
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((range + additional) * ratio, true);

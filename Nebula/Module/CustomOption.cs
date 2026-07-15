@@ -128,7 +128,7 @@ public class CustomOption
             option.updateSelection(selection);
         }
 
-        GameOptionsDataPatch.dirtyFlag = true;
+        LegacyGameOptionsPatch.dirtyFlag = true;
     }
 
     public static RemoteProcess<Tuple<int, int>> ShareOption = new("ShareGameOption",
@@ -682,12 +682,12 @@ public class CustomOptionBlank : CustomOption
 
 }
 
-[HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.CoSpawnPlayer))]
+[HarmonyPatch(typeof(PlayerPhysics._CoSpawnPlayer_d__42), nameof(PlayerPhysics._CoSpawnPlayer_d__42.MoveNext))]
 public static class CoSpawnPlayerPatch
 {
-    public static void Postfix(PlayerPhysics __instance)
+    public static void Postfix(PlayerPhysics._CoSpawnPlayer_d__42 __instance)
     {
-        GameOptionsDataPatch.dirtyFlag = true;
+        LegacyGameOptionsPatch.dirtyFlag = true;
     }
 }
 
@@ -1306,7 +1306,7 @@ public class KeyValueOptionEnablePatch
 {
     public static void Postfix(KeyValueOption __instance)
     {
-        GameOptionsData gameOptions = PlayerControl.GameOptions;
+        LegacyGameOptions gameOptions = PlayerControl.GameOptions;
         if (__instance.Title == StringNames.GameMapName)
         {
             __instance.Selected = gameOptions.MapId;
@@ -1347,7 +1347,7 @@ public class RpcSyncSettingsPatch
     }
 }
 
-[HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.CoSpawnPlayer))]
+[HarmonyPatch(typeof(PlayerPhysics._CoSpawnPlayer_d__42), nameof(PlayerPhysics._CoSpawnPlayer_d__42.MoveNext))]
 public class PlayerJoinedPatch
 {
     public static void Postfix()
@@ -1424,7 +1424,7 @@ public static class GameOptionStringGenerator
 
     private static IEnumerable<MethodBase> TargetMethods()
     {
-        return typeof(GameOptionsData).GetMethods().Where(x => x.ReturnType == typeof(string) && x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(int));
+        return typeof(LegacyGameOptions).GetMethods().Where(x => x.ReturnType == typeof(string) && x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(int));
     }
 
     public static string optionToString(CustomOption option)
@@ -1563,7 +1563,7 @@ public static class GameOptionStringGenerator
 }
 
 [HarmonyPatch(typeof(LobbyBehaviour), nameof(LobbyBehaviour.FixedUpdate))]
-public class GameOptionsDataPatch
+public class LegacyGameOptionsPatch
 {
     public static bool dirtyFlag = true;
     static List<String> pages = new List<string>();
@@ -1587,17 +1587,17 @@ public class GameOptionsDataPatch
     }
 }
 
-[HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.Deserialize))]
+[HarmonyPatch(typeof(LegacyGameOptions), nameof(LegacyGameOptions.Deserialize))]
 public static class GameOptionsDeserializePatch
 {
     static private int NumImpostors = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
-    public static bool Prefix(GameOptionsData __instance)
+    public static bool Prefix(LegacyGameOptions __instance)
     {
         NumImpostors = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
         return true;
     }
 
-    public static void Postfix(GameOptionsData __instance)
+    public static void Postfix(LegacyGameOptions __instance)
     {
         try
         {
@@ -1607,11 +1607,11 @@ public static class GameOptionsDeserializePatch
     }
 }
 
-[HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.Serialize))]
+[HarmonyPatch(typeof(LegacyGameOptions), nameof(LegacyGameOptions.Serialize))]
 public static class GameOptionsSerializePatch
 {
     static private int NumImpostors = GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors;
-    public static bool Prefix(GameOptionsData __instance)
+    public static bool Prefix(LegacyGameOptions __instance)
     {
         try
         {
@@ -1629,7 +1629,7 @@ public static class GameOptionsSerializePatch
         return true;
     }
 
-    public static void Postfix(GameOptionsData __instance)
+    public static void Postfix(LegacyGameOptions __instance)
     {
         try
         {
@@ -1688,6 +1688,6 @@ public static class RpcSyncSettingPatch
 {
     public static void Postfix(LogicOptions __instance)
     {
-        GameOptionsDataPatch.dirtyFlag = true;
+        LegacyGameOptionsPatch.dirtyFlag = true;
     }
 }

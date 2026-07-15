@@ -39,7 +39,7 @@ public class AssignMap
     }
 }
 
-[HarmonyPatch(typeof(AmongUs.GameOptions.RoleOptionsData), nameof(AmongUs.GameOptions.RoleOptionsData.GetNumPerGame))]
+[HarmonyPatch(typeof(AmongUs.GameOptions.RoleOptionsCollectionV10), nameof(AmongUs.GameOptions.RoleOptionsCollectionV10.GetNumPerGame))]
 class RoleOptionsDataGetNumPerGamePatch
 {
     public static void Postfix(ref int __result)
@@ -805,7 +805,7 @@ class SetRolePatch
             data.Role.Deinitialize(targetPlayer);
             GameObject.Destroy(data.Role.gameObject);
         }
-        RoleBehaviour roleBehaviour = GameObject.Instantiate<RoleBehaviour>(__instance.AllRoles.First((RoleBehaviour r) => r.Role == roleType), GameData.Instance.transform);
+        RoleBehaviour roleBehaviour = GameObject.Instantiate<RoleBehaviour>(__instance.AllRoles.ToArray().First((RoleBehaviour r) => r.Role == roleType), GameData.Instance.transform);
         roleBehaviour.Initialize(targetPlayer);
         targetPlayer.Data.Role = roleBehaviour;
         targetPlayer.Data.RoleType = roleType;

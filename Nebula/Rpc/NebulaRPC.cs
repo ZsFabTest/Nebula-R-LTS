@@ -1,14 +1,5 @@
 ﻿using Hazel;
-using Il2CppSystem.Security.Cryptography;
-using Nebula.Module;
-using Nebula.Roles.NeutralRoles;
-using Nebula.Tasks;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Nebula;
 
@@ -76,7 +67,7 @@ public class RemoteProcess<Parameter> : RemoteProcessBase
     }
 
     public void Invoke(Parameter parameter) {
-        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 64, Hazel.SendOption.Reliable, -1);
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 100, Hazel.SendOption.Reliable, -1);
         writer.Write(Hash);
         Sender(writer,parameter);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -104,7 +95,7 @@ public class RemoteProcess : RemoteProcessBase
 
     public void Invoke()
     {
-        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 64, Hazel.SendOption.Reliable, -1);
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 100, Hazel.SendOption.Reliable, -1);
         writer.Write(Hash);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         Body.Invoke(true);
@@ -139,13 +130,13 @@ public class DivisibleRemoteProcess<Parameter,DividedParameter> : RemoteProcessB
         //int idx = 0;
         void dividedSend(DividedParameter param)
         {
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 64, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 100, Hazel.SendOption.Reliable, -1);
             writer.Write(Hash);
             DividedSender(writer, param);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             Body.Invoke(param, true);
             /*
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 64, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 100, Hazel.SendOption.Reliable, -1);
             writer.Write(Hash);
             DividedSender(writer, param);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -184,7 +175,7 @@ class NebulaRPCHandlerPatch
 {
     static void Postfix([HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
     {
-        if (callId != 64) return;
+        if (callId != 100) return;
 
         RemoteProcessBase.AllNebulaProcess[reader.ReadInt32()].Receive(reader);
     }

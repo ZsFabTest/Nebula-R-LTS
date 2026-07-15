@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Hazel;
+using TMPro;
 
 namespace Nebula.Patches;
 
@@ -43,8 +44,8 @@ public class GameStartManagerPatch
         }
     }
 
-    [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.CoSpawnPlayer))]
-    public class AmongUsClientOnPlayerJoinedPatch
+    [HarmonyPatch(typeof(PlayerPhysics._CoSpawnPlayer_d__42), nameof(PlayerPhysics._CoSpawnPlayer_d__42.MoveNext))]
+    public class CoSpawnPlayerPatch
     {
         public static void Postfix()
         {
@@ -83,6 +84,8 @@ public class GameStartManagerPatch
         private static bool update = false;
         private static string currentText = "";
         private static int lastSetMinPlayers = -1;
+        public static float startingTimer = 0;
+        private static GameObject copiedStartButton;
 
         public static void Prefix(GameStartManager __instance)
         {
@@ -172,6 +175,40 @@ public class GameStartManagerPatch
                             __instance.GameStartText.text = String.Empty;
                             __instance.GameStartTextParent.SetActive(false);
                         }
+
+                        // Make starting info available to clients:
+                        if (startingTimer <= 0 && __instance.startState == GameStartManager.StartingStates.Countdown)
+                        {
+                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetGameStarting, Hazel.SendOption.Reliable, -1);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            RPCEvents.setGameStarting();
+
+                            // Activate Stop-Button
+                            copiedStartButton = GameObject.Instantiate(__instance.StartButton.gameObject, __instance.StartButton.gameObject.transform.parent);
+                            copiedStartButton.transform.localPosition = __instance.StartButton.transform.localPosition;
+                            copiedStartButton.SetActive(true);
+                            var startButtonText = copiedStartButton.GetComponentInChildren<TMPro.TextMeshPro>();
+                            startButtonText.text = "";
+                            startButtonText.fontSize *= 0.8f;
+                            startButtonText.fontSizeMax = startButtonText.fontSize;
+                            startButtonText.gameObject.transform.localPosition = Vector3.zero;
+                            PassiveButton startButtonPassiveButton = copiedStartButton.GetComponent<PassiveButton>();
+
+                            void StopStartFunc()
+                            {
+                                __instance.ResetStartState();
+                                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.StopStart, Hazel.SendOption.Reliable, -1);
+                                writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                                copiedStartButton.Destroy();
+                                startingTimer = 0;
+                                SoundManager.Instance.StopSound(GameStartManager.Instance.gameStartSound);
+                            }
+                            startButtonPassiveButton.OnClick.AddListener((Action)(() => StopStartFunc()));
+                            __instance.StartCoroutine(Effects.Lerp(.1f, new System.Action<float>((p) => {
+                                startButtonText.text = "";
+                            })));
+                        }
                     }
                 }
 
@@ -189,16 +226,59 @@ public class GameStartManagerPatch
                         }
 
                         __instance.GameStartText.text = $"<color=#FF0000FF>{Language.Language.GetString("lobby.willEliminatedByMismatchVersion").Replace("%STAY%", Math.Round(10 - kickingTimer).ToString())}</color>\n";
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
+                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 5;
+                        __instance.GameStartText.transform.localScale = new Vector3(2f, 2f, 1f);
+                        __instance.GameStartTextParent.SetActive(true);
                     }
                     else
                     {
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition;
-                        if (__instance.startState != GameStartManager.StartingStates.Countdown)
+                        __instance.GameStartText.transform.localPosition = Vector3.zero;
+                        __instance.GameStartText.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+                        if (!__instance.GameStartText.text.Contains(FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.GameStarting).Replace("{0}", "")))
                         {
                             __instance.GameStartText.text = String.Empty;
+                            __instance.GameStartTextParent.SetActive(false);
                         }
                     }
+                    if (!__instance.GameStartText.text.Contains(FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.GameStarting).Replace("{0}", "")) || !CustomOptionHolder.anyPlayerCanStopStart.getBool())
+                        copiedStartButton?.Destroy();
+                    if (CustomOptionHolder.anyPlayerCanStopStart.getBool() && copiedStartButton == null && __instance.GameStartText.text.Contains(FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.GameStarting).Replace("{0}", "")))
+                    {
+                        // Activate Stop-Button
+                        copiedStartButton = GameObject.Instantiate(__instance.StartButton.gameObject, __instance.StartButton.gameObject.transform.parent);
+                        copiedStartButton.transform.localPosition = __instance.StartButton.transform.localPosition;
+                        copiedStartButton.SetActive(true);
+                        var startButtonText = copiedStartButton.GetComponentInChildren<TMPro.TextMeshPro>();
+                        startButtonText.text = "";
+                        startButtonText.fontSize *= 0.8f;
+                        startButtonText.fontSizeMax = startButtonText.fontSize;
+                        startButtonText.gameObject.transform.localPosition = Vector3.zero;
+                        PassiveButton startButtonPassiveButton = copiedStartButton.GetComponent<PassiveButton>();
+                        startButtonPassiveButton.SetButtonEnableState(true);
+
+                        void StopStartFunc()
+                        {
+                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.StopStart, Hazel.SendOption.Reliable, -1);
+                            writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            copiedStartButton.Destroy();
+                            __instance.GameStartText.text = String.Empty;
+                            startingTimer = 0;
+                            SoundManager.Instance.StopSound(GameStartManager.Instance.gameStartSound);
+                            startButtonPassiveButton.gameObject.SetActive(false);
+                        }
+                        startButtonPassiveButton.OnClick.AddListener((Action)(() => StopStartFunc()));
+                        __instance.StartCoroutine(Effects.Lerp(.1f, new System.Action<float>((p) => {
+                            startButtonText.text = "";
+                        })));
+
+                    }
+                }
+
+                // Start Timer
+                if (startingTimer > 0)
+                {
+                    startingTimer -= Time.deltaTime;
                 }
 
                 // Lobby code replacement
@@ -212,6 +292,24 @@ public class GameStartManagerPatch
                 __instance.PlayerCounter.autoSizeTextContainer = true;
             }
             catch (Exception e) { }
+        }
+    }
+
+    [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.SetStartCounter))]
+    public static class SetStartCounterPatch
+    {
+        public static void Postfix(GameStartManager __instance, sbyte sec)
+        {
+            if (sec > 0)
+            {
+                __instance.startState = GameStartManager.StartingStates.Countdown;
+                GameStartManagerUpdatePatch.startingTimer = sec;
+            }
+            else
+            {
+                __instance.startState = GameStartManager.StartingStates.NotStarting;
+                GameStartManagerUpdatePatch.startingTimer = 0;
+            }
         }
     }
 
@@ -298,23 +396,6 @@ public class GameStartManagerPatch
             }
 
             return continueStart;
-        }
-    }
-
-    [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.SetStartCounter))]
-    public static class SetStartCounterPatch
-    {
-        public static void Postfix(GameStartManager __instance, sbyte sec)
-        {
-            if (sec > 0)
-            {
-                __instance.startState = GameStartManager.StartingStates.Countdown;
-            }
-
-            if (sec <= 0)
-            {
-                __instance.startState = GameStartManager.StartingStates.NotStarting;
-            }
         }
     }
 }
