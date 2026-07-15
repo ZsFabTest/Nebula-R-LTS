@@ -1,12 +1,17 @@
-namespace Nebula.Roles.ImpostorRoles;
+using Nebula.Roles.ImpostorRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
+
 using Nebula.Events;
 
-public class Moda : Role{
-    public class ModaEvent : LocalEvent{
-        public ModaEvent() : base(0.1f) {}
+public class Moda : Role
+{
+    public class ModaEvent : LocalEvent
+    {
+        public ModaEvent() : base(0.1f) { }
         public override void OnActivate()
         {
-            if(Helpers.AllDeadBodies().Count() == 1) return;
+            if (Helpers.AllDeadBodies().Count() == 1) return;
             RPCEventInvoker.CleanDeadBody(Helpers.AllDeadBodies()[0].ParentId);
         }
     }
@@ -28,7 +33,7 @@ public class Moda : Role{
             {
                 var r = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
                 killButton.Timer = killButton.MaxTimer;
-                if(r != Helpers.MurderAttemptResult.PerformKill) return;
+                if (r != Helpers.MurderAttemptResult.PerformKill) return;
                 Game.GameData.data.myData.currentTarget = null;
                 LocalEvent.Activate(new ModaEvent());
             },
@@ -41,7 +46,7 @@ public class Moda : Role{
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown);;
+        killButton.MaxTimer = GameOptionsManager.Instance.currentNormalGameOptions.GetFloat(FloatOptionNames.KillCooldown); ;
         killButton.SetButtonCoolDownOption(true);
     }
 
@@ -58,17 +63,20 @@ public class Moda : Role{
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
     }
 
-    public override void CleanUp(){
-        if(killButton != null){
+    public override void CleanUp()
+    {
+        if (killButton != null)
+        {
             killButton.Destroy();
             killButton = null;
         }
     }
 
     public Moda()
-        : base("Moda","moda",Palette.ImpostorRed,RoleCategory.Impostor,Side.Impostor,Side.Impostor,
-        Impostor.impostorSideSet,Impostor.impostorSideSet,Impostor.impostorEndSet,
-        true,VentPermission.CanUseUnlimittedVent,true,true,true){
+        : base("Moda", "moda", Palette.ImpostorRed, RoleCategory.Impostor, Side.Impostor, Side.Impostor,
+        Impostor.impostorSideSet, Impostor.impostorSideSet, Impostor.impostorEndSet,
+        true, VentPermission.CanUseUnlimittedVent, true, true, true)
+    {
         HideKillButtonEvenImpostor = true;
     }
 }

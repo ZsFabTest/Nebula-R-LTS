@@ -84,8 +84,8 @@ public class Alien : Role
     public override void ButtonInitialize(HudManager __instance)
     {
         sabotageCount = (int)countOfCallingSabotageOption.getFloat();
-        sabotageUsesObject = HudManager.Instance.SabotageButton.ShowUsesIcon(0,out sabotageUsesString);
-        
+        sabotageUsesObject = HudManager.Instance.SabotageButton.ShowUsesIcon(0, out sabotageUsesString);
+
 
         if (emiButton != null)
         {

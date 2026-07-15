@@ -16,7 +16,7 @@ public class VOID : Role
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
-        __instance.Die(DeathReason.Exile,false);
+        __instance.Die(DeathReason.Exile, false);
         __instance.GetModData().Die(Game.PlayerData.PlayerStatus.Exiled);
     }
 

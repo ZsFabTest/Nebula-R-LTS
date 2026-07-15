@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Logger;
+
 public class Logger
 {
     private string Path;
@@ -31,7 +32,7 @@ public class Logger
         }
     }
 
-    public void Print(string prefix,string message)
+    public void Print(string prefix, string message)
     {
         Print("[" + prefix + "] " + message);
     }

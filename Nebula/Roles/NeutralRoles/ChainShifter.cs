@@ -17,8 +17,8 @@ public class ChainShifter : Role
     {
         isGuessableOption = CreateOption(Color.white, "isGuessable", false);
         secondaryGuesserShiftOption = CreateOption(Color.white, "guesserMode", new string[] { "role.chainShifter.guesserMode.dontShift", "role.chainShifter.guesserMode.erase", "role.chainShifter.guesserMode.shift" });
-        cleanTasksOption = CreateOption(Color.white,"cleanTasks",true);
-        canShiftEvenDiedOption = CreateOption(Color.white,"canShiftEvenDied",false);
+        cleanTasksOption = CreateOption(Color.white, "cleanTasks", true);
+        canShiftEvenDiedOption = CreateOption(Color.white, "canShiftEvenDied", false);
     }
 
     public override bool IsGuessableRole { get => isGuessableOption.getBool(); protected set => base.IsGuessableRole = value; }
@@ -101,7 +101,7 @@ public class ChainShifter : Role
 
     public override void FinalizeInGame(PlayerControl __instance)
     {
-        if(cleanTasksOption.getBool()) RPCEventInvoker.ExemptAllTask(__instance.PlayerId);
+        if (cleanTasksOption.getBool()) RPCEventInvoker.ExemptAllTask(__instance.PlayerId);
     }
 
     public override void CleanUp()

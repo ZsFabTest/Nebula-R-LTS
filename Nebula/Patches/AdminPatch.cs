@@ -1,5 +1,5 @@
-﻿using Nebula.Map;
-using Sentry;
+﻿using Nebula.Expansion;
+using Nebula.Map;
 
 namespace Nebula.Patches;
 
@@ -115,7 +115,7 @@ public class AdminPatch
 
             if (CustomOptionHolder.mapOptions.getBool() && CustomOptionHolder.useClassicAdmin.getBool())
                 divMaskByConsole &= ~Map.MapData.GetCurrentMapData().ClassicAdminMask;
-            
+
 
             divMaskFinally = divMaskByConsole;
             MapBehaviourExpansion.EnmaskMap(divMaskFinally);

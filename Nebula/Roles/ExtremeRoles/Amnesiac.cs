@@ -1,28 +1,31 @@
-namespace Nebula.Roles.NeutralRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public class Amnesiac : Role{
-    public class AmnesiacEvent : Events.LocalEvent{
+public class Amnesiac : Role
+{
+    public class AmnesiacEvent : Events.LocalEvent
+    {
         PlayerControl target;
         public AmnesiacEvent(byte targetId) : base(0.1f) { target = Helpers.playerById(targetId); }
         public override void OnActivate()
         {
-            switch (Amnesiac.targetsRoleModeOption.getSelection()){
+            switch (Amnesiac.targetsRoleModeOption.getSelection())
+            {
                 case 0:
-                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
+                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, target.GetModData().role);
                     break;
                 case 1:
-                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
-                    if(target.GetModData().role.side == Side.Crewmate) RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Crewmate);
-                    else if(target.GetModData().role.side == Side.Impostor) RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Impostor);
-                    else RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Opportunist);
+                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, target.GetModData().role);
+                    if (target.GetModData().role.side == Side.Crewmate) RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Crewmate);
+                    else if (target.GetModData().role.side == Side.Impostor) RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Impostor);
+                    else RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Opportunist);
                     break;
                 case 2:
-                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
-                    RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Amnesiac);
+                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, target.GetModData().role);
+                    RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Amnesiac);
                     break;
                 case 3:
-                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
-                    RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Opportunist);
+                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, target.GetModData().role);
+                    RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Opportunist);
                     break;
             }
         }
@@ -39,12 +42,13 @@ public class Amnesiac : Role{
 
     public override void LoadOptionData()
     {
-        targetsRoleModeOption = CreateOption(Color.white,"targetsRoleMode",new string[] { "role.amnesiac.targetsRoleMode.dontShift","role.amnesiac.targetsRoleMode.erase","role.amnesiac.targetsRoleMode.toAmnesiac","role.amnesiac.targetsRoleMode.toOpportunist" });
-        rememberCoolDownOption = CreateOption(Color.white,"rememberCoolDown",27.5f,15f,40f,2.5f);
+        targetsRoleModeOption = CreateOption(Color.white, "targetsRoleMode", new string[] { "role.amnesiac.targetsRoleMode.dontShift", "role.amnesiac.targetsRoleMode.erase", "role.amnesiac.targetsRoleMode.toAmnesiac", "role.amnesiac.targetsRoleMode.toOpportunist" });
+        rememberCoolDownOption = CreateOption(Color.white, "rememberCoolDown", 27.5f, 15f, 40f, 2.5f);
         rememberCoolDownOption.suffix = "second";
     }
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         Arrows = new();
     }
 
@@ -91,7 +95,7 @@ public class Amnesiac : Role{
             {
                 if (!Arrows.ContainsKey(body.ParentId))
                 {
-                    Arrows[body.ParentId] = new Arrow(RoleColor,true,arrowSprite.GetSprite());
+                    Arrows[body.ParentId] = new Arrow(RoleColor, true, arrowSprite.GetSprite());
                     Arrows[body.ParentId].arrow.SetActive(true);
                 }
                 Arrows[body.ParentId].Update(body.transform.position);
@@ -111,8 +115,10 @@ public class Amnesiac : Role{
 
 
     private CustomButton remember;
-    public override void ButtonInitialize(HudManager __instance){
-        if(remember != null){
+    public override void ButtonInitialize(HudManager __instance)
+    {
+        if (remember != null)
+        {
             remember.Destroy();
         }
         remember = new CustomButton(
@@ -130,7 +136,7 @@ public class Amnesiac : Role{
             Module.NebulaInputManager.abilityInput.keyCode,
             "button.label.remember"
         ).SetTimer(CustomOptionHolder.InitialAbilityCoolDownOption.getFloat());
-        remember.MaxTimer = rememberCoolDownOption.getFloat();    
+        remember.MaxTimer = rememberCoolDownOption.getFloat();
     }
 
     private void ClearArrows()
@@ -143,8 +149,10 @@ public class Amnesiac : Role{
         Arrows.Clear();
     }
 
-    public override void CleanUp(){
-        if(remember != null){
+    public override void CleanUp()
+    {
+        if (remember != null)
+        {
             remember.Destroy();
             remember = null;
         }
@@ -152,10 +160,11 @@ public class Amnesiac : Role{
     }
 
     public Amnesiac()
-        : base("Amnesiac","amnesiac",RoleColor,RoleCategory.Neutral,Side.Amnesiac,Side.Amnesiac,
-        new HashSet<Side>() { Side.Amnesiac },new HashSet<Side>() { Side.Amnesiac },
-        new HashSet<Patches.EndCondition>() {},
-        true,VentPermission.CanNotUse,false,false,false){
+        : base("Amnesiac", "amnesiac", RoleColor, RoleCategory.Neutral, Side.Amnesiac, Side.Amnesiac,
+        new HashSet<Side>() { Side.Amnesiac }, new HashSet<Side>() { Side.Amnesiac },
+        new HashSet<Patches.EndCondition>() { },
+        true, VentPermission.CanNotUse, false, false, false)
+    {
         remember = null;
         Arrows = new();
     }

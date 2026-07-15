@@ -13,7 +13,7 @@ public class RaidAxe : TypeWithImage
         Crashed
     }
 
-    public RaidAxe() : base(5, "RaidAxe", new SpriteLoader("Nebula.Resources.RaiderAxe.png",150f))
+    public RaidAxe() : base(5, "RaidAxe", new SpriteLoader("Nebula.Resources.RaiderAxe.png", 150f))
     {
     }
 

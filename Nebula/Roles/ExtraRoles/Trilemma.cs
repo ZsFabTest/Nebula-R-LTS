@@ -1,6 +1,7 @@
 ﻿using Nebula.Patches;
 
 namespace Nebula.Roles.ExtraRoles;
+
 public class Trilemma : ExtraRole
 {
 

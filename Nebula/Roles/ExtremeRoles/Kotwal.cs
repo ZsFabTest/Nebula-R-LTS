@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.CrewmateRoles;
+﻿using Nebula.Roles.CrewmateRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Kotwal : Role
 {
@@ -8,18 +10,22 @@ public class Kotwal : Role
         public KotwalEvent(PlayerControl target) : base(0.1f) { this.target = target; }
         public override void OnActivate()
         {
-            if(target.GetModData().role.category == RoleCategory.Impostor)
+            if (target.GetModData().role.category == RoleCategory.Impostor)
             {
                 PlayerControl player = PlayerControl.LocalPlayer;
                 RPCEventInvoker.UncheckedMurderPlayer(player.PlayerId, player.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id, true);
-            }else{
+            }
+            else
+            {
                 RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Sheriff);
-                if(PlayerControl.LocalPlayer.IsMadmate() && !target.IsMadmate()){
-                    RPCEventInvoker.SetExtraRole(target,Roles.SecondaryMadmate,0);
+                if (PlayerControl.LocalPlayer.IsMadmate() && !target.IsMadmate())
+                {
+                    RPCEventInvoker.SetExtraRole(target, Roles.SecondaryMadmate, 0);
                 }
-                if((PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryJackal) || PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondarySidekick))
-                && !(target.GetModData().extraRole.Contains(Roles.SecondarySidekick) || target.GetModData().extraRole.Contains(Roles.SecondaryJackal))){
-                    RPCEventInvoker.SetExtraRole(target,Roles.SecondaryJackal,0);
+                if ((PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryJackal) || PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondarySidekick))
+                && !(target.GetModData().extraRole.Contains(Roles.SecondarySidekick) || target.GetModData().extraRole.Contains(Roles.SecondaryJackal)))
+                {
+                    RPCEventInvoker.SetExtraRole(target, Roles.SecondaryJackal, 0);
                 }
             }
         }
@@ -56,7 +62,7 @@ public class Kotwal : Role
     private CustomButton appoint;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(appoint != null)
+        if (appoint != null)
         {
             appoint.Destroy();
         }
@@ -81,7 +87,7 @@ public class Kotwal : Role
 
     public override void CleanUp()
     {
-        if(appoint != null)
+        if (appoint != null)
         {
             appoint.Destroy();
             appoint = null;

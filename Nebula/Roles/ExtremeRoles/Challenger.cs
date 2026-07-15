@@ -1,9 +1,11 @@
-namespace Nebula.Roles.NeutralRoles{
-    public class Challenger : Role,Template.HasWinTrigger{
+namespace Nebula.Roles.ExtremeRoles
+{
+    public class Challenger : Role, Template.HasWinTrigger
+    {
         public bool WinTrigger { get; set; }
         public byte Winner { get; set; }
 
-        public static Color RoleColor = new Color(106f / 255f,107f / 255f,3f / 255f);
+        public static Color RoleColor = new Color(106f / 255f, 107f / 255f, 3f / 255f);
 
         private Module.CustomOption killCooldown;
         private Module.CustomOption targetCnt;
@@ -17,12 +19,12 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void LoadOptionData()
         {
-            killCooldown = CreateOption(Color.white,"killCooldown",7.5f,0f,15f,2.5f);
+            killCooldown = CreateOption(Color.white, "killCooldown", 7.5f, 0f, 15f, 2.5f);
             killCooldown.suffix = "second";
-            targetCnt = CreateOption(Color.white,"targetCnt",3f,1f,15f,1f);
+            targetCnt = CreateOption(Color.white, "targetCnt", 3f, 1f, 15f, 1f);
         }
 
-        private CustomButton killButton,challenge;
+        private CustomButton killButton, challenge;
         public override void ButtonInitialize(HudManager __instance)
         {
             if (killButton != null)
@@ -53,70 +55,80 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void MyPlayerControlUpdate()
         {
-            if(killed >= targetCnt.getFloat()){
+            if (killed >= targetCnt.getFloat())
+            {
                 RPCEventInvoker.WinTrigger(this);
                 return;
             }
 
             Game.MyPlayerData data = Game.GameData.data.myData;
-            data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((target) => {
-                if(target.GetModData().extraRole.Contains(Roles.Challenged)) return true;
+            data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((target) =>
+            {
+                if (target.GetModData().extraRole.Contains(Roles.Challenged)) return true;
                 return false;
             });
             bool flag = true;
             Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, RoleColor);
-            foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator()){
-                if(p.PlayerId == PlayerControl.LocalPlayer.PlayerId || p.Data.IsDead) continue;
-                if(p.GetModData().extraRole.Contains(Roles.Challenged)){
+            foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+            {
+                if (p.PlayerId == PlayerControl.LocalPlayer.PlayerId || p.Data.IsDead) continue;
+                if (p.GetModData().extraRole.Contains(Roles.Challenged))
+                {
                     flag = false;
                     break;
                 }
             }
-            if(flag && !PlayerControl.LocalPlayer.Data.IsDead){
-                int idx,hasTryCnt = 0;
-                while(PlayerControl.AllPlayerControls[idx = NebulaPlugin.rnd.Next(0,PlayerControl.AllPlayerControls.GetFastEnumerator().Count())].Data.IsDead || PlayerControl.AllPlayerControls[idx].PlayerId == PlayerControl.LocalPlayer.PlayerId)
-                     { if(++hasTryCnt >= 1000){ idx = -1; break; } }
-                if(idx != -1) RPCEventInvoker.SetExtraRole(PlayerControl.AllPlayerControls[idx],Roles.Challenged,0);
+            if (flag && !PlayerControl.LocalPlayer.Data.IsDead)
+            {
+                int idx, hasTryCnt = 0;
+                while (PlayerControl.AllPlayerControls[idx = NebulaPlugin.rnd.Next(0, PlayerControl.AllPlayerControls.GetFastEnumerator().Count())].Data.IsDead || PlayerControl.AllPlayerControls[idx].PlayerId == PlayerControl.LocalPlayer.PlayerId)
+                { if (++hasTryCnt >= 1000) { idx = -1; break; } }
+                if (idx != -1) RPCEventInvoker.SetExtraRole(PlayerControl.AllPlayerControls[idx], Roles.Challenged, 0);
                 else Debug.LogWarning("There's no man can be choosed for challenger!");
             }
         }
 
         public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
         {
-            if(Helpers.playerById(playerId).GetModData().extraRole.Contains(Roles.Challenged)) displayColor = RoleColor;
+            if (Helpers.playerById(playerId).GetModData().extraRole.Contains(Roles.Challenged)) displayColor = RoleColor;
         }
 
         public override void OnKillPlayer(byte targetId)
         {
-            RPCEventInvoker.ImmediatelyUnsetExtraRole(Helpers.playerById(targetId),Roles.Challenged);
+            RPCEventInvoker.ImmediatelyUnsetExtraRole(Helpers.playerById(targetId), Roles.Challenged);
             challenge.Timer = challenge.MaxTimer;
         }
 
-        public override void OnExiledPre(byte[] voters){
-            PlayerControl target = PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => {
+        public override void OnExiledPre(byte[] voters)
+        {
+            PlayerControl target = PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) =>
+            {
                 return !p.Data.IsDead && p.GetModData().extraRole.Contains(Roles.Challenged);
             });
-            if(target == null) return;
-            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,target.PlayerId,
-                Game.PlayerData.PlayerStatus.Dead.Id,false);
+            if (target == null) return;
+            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, target.PlayerId,
+                Game.PlayerData.PlayerStatus.Dead.Id, false);
             RPCEventInvoker.CleanDeadBody(target.PlayerId);
         }
 
         public override void CleanUp()
         {
-            if(killButton != null){
+            if (killButton != null)
+            {
                 killButton.Destroy();
                 killButton = null;
             }
-            if(challenge != null){
+            if (challenge != null)
+            {
                 challenge.Destroy();
                 challenge = null;
             }
         }
 
-        public Challenger() : base("Challenger","challenger",RoleColor,RoleCategory.Neutral,Side.Challenger,Side.Challenger,
-             new HashSet<Side>() { Side.Challenger },new HashSet<Side>() { Side.Challenger },new HashSet<Patches.EndCondition>() { Patches.EndCondition.ChallengerWin },
-             true,VentPermission.CanNotUse,false,true,true){
+        public Challenger() : base("Challenger", "challenger", RoleColor, RoleCategory.Neutral, Side.Challenger, Side.Challenger,
+             new HashSet<Side>() { Side.Challenger }, new HashSet<Side>() { Side.Challenger }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.ChallengerWin },
+             true, VentPermission.CanNotUse, false, true, true)
+        {
             challenge = killButton = null;
         }
     }

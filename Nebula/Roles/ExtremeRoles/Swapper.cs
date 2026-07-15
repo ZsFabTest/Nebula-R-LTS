@@ -1,6 +1,7 @@
-namespace Nebula.Roles.ComplexRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public static class SwapSystem{
+public static class SwapSystem
+{
     public static int swapDataId { get; private set; } = (int)Roles.F_Swapper.swapCountOption.getFloat();
     public static byte swapTargetf = Byte.MaxValue;
     public static byte swapTargets = Byte.MaxValue;
@@ -12,7 +13,7 @@ public static class SwapSystem{
         __instance.GetModData().SetRoleData(swapDataId, (int)Roles.F_Swapper.swapCountOption.getFloat());
     }
 
-    public static void OnMeetingStart(){ swapTargetf = Byte.MaxValue; swapTargets = Byte.MaxValue; isSwapped = false; }
+    public static void OnMeetingStart() { swapTargetf = Byte.MaxValue; swapTargets = Byte.MaxValue; isSwapped = false; }
 
     static void guesserOnClick(int buttonTarget, MeetingHud __instance)
     {
@@ -20,25 +21,32 @@ public static class SwapSystem{
         PlayerControl target = Helpers.playerById((byte)__instance.playerStates[buttonTarget].TargetPlayerId);
         if (target == null || target.Data.IsDead) return;
 
-        if(swapTargetf == target.PlayerId){
+        if (swapTargetf == target.PlayerId)
+        {
             swapTargetf = Byte.MaxValue;
-            if(swapTargets != Byte.MaxValue){
+            if (swapTargets != Byte.MaxValue)
+            {
                 swapTargetf = swapTargets;
                 swapTargets = Byte.MaxValue;
             }
-        }else if(swapTargets == target.PlayerId){
+        }
+        else if (swapTargets == target.PlayerId)
+        {
             swapTargets = Byte.MaxValue;
-        }else{
-            if(swapTargetf != Byte.MaxValue) swapTargets = target.PlayerId;
+        }
+        else
+        {
+            if (swapTargetf != Byte.MaxValue) swapTargets = target.PlayerId;
             else swapTargetf = target.PlayerId;
         }
 
-        if(swapTargetf != Byte.MaxValue && swapTargets != Byte.MaxValue) isSwapped = true;
+        if (swapTargetf != Byte.MaxValue && swapTargets != Byte.MaxValue) isSwapped = true;
         else isSwapped = false;
-        RPCEventInvoker.SetSwapTarget((byte)swapTargetf,(byte)swapTargets);
+        RPCEventInvoker.SetSwapTarget((byte)swapTargetf, (byte)swapTargets);
     }
 
-    public static void OnMeetingEnd(){
+    public static void OnMeetingEnd()
+    {
         int data = Game.GameData.data.myData.getGlobalData().GetRoleData(swapDataId);
         data--;
         RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, swapDataId, data);
@@ -71,7 +79,7 @@ public static class SwapSystem{
     {
         int left = Game.GameData.data.myData.getGlobalData().GetRoleData(swapDataId);
         if (left <= 0) return;
-        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        if (meetingInfo.text != "") meetingInfo.text += "\n";
         meetingInfo.text += Language.Language.GetString("role.swapper.swapLeft") + ": " + left;
         meetingInfo.text += "\n" + Language.Language.GetString("role.swapper.target1") + ": " + (swapTargetf == Byte.MaxValue ? Language.Language.GetString("role.swapper.nobody") : Helpers.playerById((byte)swapTargetf).name);
         meetingInfo.text += "\n" + Language.Language.GetString("role.swapper.target2") + ": " + (swapTargets == Byte.MaxValue ? Language.Language.GetString("role.swapper.nobody") : Helpers.playerById((byte)swapTargets).name);
@@ -101,7 +109,7 @@ public class FSwapper : Template.HasBilateralness
     }
 
     public FSwapper()
-            : base("Swapper","swapper",RoleColor)
+            : base("Swapper", "swapper", RoleColor)
     {
     }
 

@@ -1,6 +1,8 @@
-namespace Nebula.Roles.NeutralRoles{
-    public class Oracle : Role{
-        public static Color RoleColor = new Color(127f / 255f,26f / 255f,140f / 255f);
+namespace Nebula.Roles.ExtremeRoles
+{
+    public class Oracle : Role
+    {
+        public static Color RoleColor = new Color(127f / 255f, 26f / 255f, 140f / 255f);
 
         private Module.CustomOption initKillCooldown;
         private Module.CustomOption reduceKillCooldown;
@@ -8,18 +10,18 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void LoadOptionData()
         {
-            initKillCooldown = CreateOption(Color.white,"initKillCooldown",30f,15f,45f,2.5f);
+            initKillCooldown = CreateOption(Color.white, "initKillCooldown", 30f, 15f, 45f, 2.5f);
             initKillCooldown.suffix = "second";
-            reduceKillCooldown = CreateOption(Color.white,"reduceKillCooldown",5f,1f,10f,1f);
+            reduceKillCooldown = CreateOption(Color.white, "reduceKillCooldown", 5f, 1f, 10f, 1f);
             reduceKillCooldown.suffix = "second";
-            leastKillCooldown = CreateOption(Color.white,"leastKillCooldown",0f,0f,15f,2.5f);
+            leastKillCooldown = CreateOption(Color.white, "leastKillCooldown", 0f, 0f, 15f, 2.5f);
             leastKillCooldown.suffix = "second";
         }
 
         public int killDataId { get; private set; }
         public override void GlobalInitialize(PlayerControl __instance)
         {
-            RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId,killDataId,0);
+            RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, killDataId, 0);
         }
 
         private CustomButton killButton;
@@ -34,7 +36,7 @@ namespace Nebula.Roles.NeutralRoles{
                 {
                     PlayerControl target = Game.GameData.data.myData.currentTarget;
                     var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead, false, true);
-                    RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,killDataId,1);
+                    RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, killDataId, 1);
                     killButton.Timer = killButton.MaxTimer - reduceKillCooldown.getFloat() * PlayerControl.LocalPlayer.GetModData().GetRoleData(killDataId);
                     Game.GameData.data.myData.currentTarget = null;
                 },
@@ -53,7 +55,8 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void CleanUp()
         {
-            if(killButton != null){
+            if (killButton != null)
+            {
                 killButton.Destroy();
                 killButton = null;
             }
@@ -61,7 +64,8 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
         {
-            if(PlayerControl.LocalPlayer.GetModData().role.side == Side.Oracle){
+            if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Oracle)
+            {
                 displayColor = RoleColor;
             }
         }
@@ -73,9 +77,10 @@ namespace Nebula.Roles.NeutralRoles{
             Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
         }
 
-        public Oracle() : base("OracleN","oracleN",RoleColor,RoleCategory.Neutral,Side.Oracle,Side.Oracle,
-         new HashSet<Side>() { Side.Oracle },new HashSet<Side>() { Side.Oracle },new HashSet<Patches.EndCondition>() { Patches.EndCondition.OracleWin },
-         true,VentPermission.CanNotUse,false,true,true){
+        public Oracle() : base("OracleN", "oracleN", RoleColor, RoleCategory.Neutral, Side.Oracle, Side.Oracle,
+         new HashSet<Side>() { Side.Oracle }, new HashSet<Side>() { Side.Oracle }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.OracleWin },
+         true, VentPermission.CanNotUse, false, true, true)
+        {
             killDataId = Game.GameData.RegisterRoleDataId("oracleN.killdataid");
         }
     }

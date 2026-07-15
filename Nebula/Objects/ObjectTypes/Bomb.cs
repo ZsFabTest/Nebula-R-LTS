@@ -2,7 +2,7 @@ namespace Nebula.Objects.ObjectTypes;
 
 public class Bomb : TypeWithImage
 {
-    public Bomb() : base(114, "Bomb", new SpriteLoader("Nebula.Resources.BombEffect.png",165f))
+    public Bomb() : base(114, "Bomb", new SpriteLoader("Nebula.Resources.BombEffect.png", 165f))
     {
     }
 
@@ -10,7 +10,8 @@ public class Bomb : TypeWithImage
 
     public override bool CanSeeInShadow(CustomObject? obj) { return true; }
 
-    public override void OnMeetingEnd(CustomObject obj){
+    public override void OnMeetingEnd(CustomObject obj)
+    {
         RPCEvents.ObjectDestroy(obj.Id);
     }
 }

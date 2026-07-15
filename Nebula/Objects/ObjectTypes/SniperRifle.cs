@@ -2,7 +2,7 @@
 
 public class SniperRifle : TypeWithImage
 {
-    public SniperRifle() : base(4, "SniperRifle", new SpriteLoader("Nebula.Resources.SniperRifle.png",150f))
+    public SniperRifle() : base(4, "SniperRifle", new SpriteLoader("Nebula.Resources.SniperRifle.png", 150f))
     {
 
     }
@@ -37,7 +37,7 @@ public class SniperRifle : TypeWithImage
             else
                 obj.GameObject.active = true;
         }
-        catch(Exception e) 
+        catch (Exception e)
         {
             Debug.LogError(e.Message);
             Debug.LogError(e.StackTrace);

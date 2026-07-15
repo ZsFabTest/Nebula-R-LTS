@@ -1,4 +1,4 @@
-﻿namespace Nebula.Events.Variation;
+﻿namespace Nebula.Events.Variation.Global;
 
 class Camouflage : GlobalEvent
 {

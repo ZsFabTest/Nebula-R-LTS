@@ -1,5 +1,4 @@
 ﻿using Nebula.Expansion;
-using Steamworks;
 
 namespace Nebula.Module;
 
@@ -48,7 +47,7 @@ public class MSString : MetaScreenContent
         this.style = style;
     }
 
-    public MSString(float width, string text, float fontSize, float fontSizeMin, TMPro.TextAlignmentOptions alignment, TMPro.FontStyles style,bool dontAllowWrapping=false,bool omitMargin=false)
+    public MSString(float width, string text, float fontSize, float fontSizeMin, TMPro.TextAlignmentOptions alignment, TMPro.FontStyles style, bool dontAllowWrapping = false, bool omitMargin = false)
         : this(width, text, alignment, style)
     {
         this.fontSize = fontSize;
@@ -57,7 +56,7 @@ public class MSString : MetaScreenContent
         this.omitMargin = omitMargin;
     }
 
-    public MSString EditFontSize(float fontSize,float fontSizeMin)
+    public MSString EditFontSize(float fontSize, float fontSizeMin)
     {
         this.fontSize = fontSize;
         this.fontSizeMin = fontSizeMin;
@@ -221,7 +220,7 @@ public class MSTextInput : MetaScreenContent
     private TMPro.FontStyles fontStyles;
     public float FontSize;
     public TextInputField TextInputField;
-    public MSTextInput(float width, float height, TMPro.TextAlignmentOptions alignment, TMPro.FontStyles style) 
+    public MSTextInput(float width, float height, TMPro.TextAlignmentOptions alignment, TMPro.FontStyles style)
     {
         this.width = width;
         this.height = height;
@@ -233,7 +232,7 @@ public class MSTextInput : MetaScreenContent
     public override void Generate(GameObject obj)
     {
         TextInputField = obj.AddComponent<TextInputField>();
-        TextInputField.SetTextProperty(new Vector2(width,height), FontSize, alignmentOptions,fontStyles);
+        TextInputField.SetTextProperty(new Vector2(width, height), FontSize, alignmentOptions, fontStyles);
     }
 }
 
@@ -250,9 +249,9 @@ public class MSRadioButton : MSString
     public override Vector2 GetSize() => new Vector2(width + 0.36f, 0.5f);
 
     private TMPro.TextMeshPro RadioButton;
-    
-    public MSRadioButton(bool flag,float width, string text,float fontSize,float fontSizeMin, TMPro.TextAlignmentOptions alignment, TMPro.FontStyles style):
-        base(width,text,fontSize,fontSizeMin,alignment,style)
+
+    public MSRadioButton(bool flag, float width, string text, float fontSize, float fontSizeMin, TMPro.TextAlignmentOptions alignment, TMPro.FontStyles style) :
+        base(width, text, fontSize, fontSizeMin, alignment, style)
     {
         this.flag = flag;
     }
@@ -262,7 +261,7 @@ public class MSRadioButton : MSString
     {
         base.Generate(obj);
 
-        text.transform.localPosition += new Vector3(0.15f,0f);
+        text.transform.localPosition += new Vector3(0.15f, 0f);
 
         RadioButton = GameObject.Instantiate(RuntimePrefabs.TextPrefab/*HudManager.Instance.Dialogue.target*/);
         RadioButton.transform.SetParent(obj.transform);
@@ -281,16 +280,19 @@ public class MSRadioButton : MSString
         button.OnMouseOut = new UnityEngine.Events.UnityEvent();
         button.OnMouseOver = new UnityEngine.Events.UnityEvent();
         button.OnClick.RemoveAllListeners();
-        button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => {
+        button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
             Flag = !Flag;
             OnFlagChanged();
             SoundManager.Instance.PlaySound(MetaDialog.getSelectClip(), false, 0.8f);
         }));
-        button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() => {
+        button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
             RadioButton.color = Palette.AcceptedGreen;
             SoundManager.Instance.PlaySound(MetaDialog.getHoverClip(), false, 0.8f);
         }));
-        button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() => {
+        button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
             RadioButton.color = Color.white;
         }));
 
@@ -362,7 +364,7 @@ public class MetaScreen
             renderer.size = size + new Vector2(0.08f, 0.08f);
 
             var collider2D = screen.screen.AddComponent<BoxCollider2D>();
-            collider2D.size = new Vector2(100f,100f);
+            collider2D.size = new Vector2(100f, 100f);
 
             var back = new GameObject("Background").AddComponent<SpriteRenderer>();
             back.sprite = PseudoBackgroundSprite.GetSprite();
@@ -378,7 +380,7 @@ public class MetaScreen
         {
             Color normalColor = (color == null) ? Color.white : color.Value;
 
-            obj.layer = Nebula.LayerExpansion.GetUILayer();
+            obj.layer = LayerExpansion.GetUILayer();
             obj.transform.localScale = new Vector3(1f, 1f, 1f);
             var renderer = obj.AddComponent<SpriteRenderer>();
             var collider = obj.AddComponent<BoxCollider2D>();

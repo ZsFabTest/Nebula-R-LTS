@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class Deadbeat : Template.TImpostor
 {
@@ -16,10 +16,10 @@ public class Deadbeat : Template.TImpostor
     }
 
     private PlayerControl target;
-    private CustomButton markButton,killButton;
+    private CustomButton markButton, killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(markButton != null)
+        if (markButton != null)
         {
             markButton.Destroy();
         }
@@ -39,15 +39,15 @@ public class Deadbeat : Template.TImpostor
         ).SetTimer(0);
         markButton.Timer = markButton.MaxTimer = 0;
 
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
         killButton = new CustomButton(
             () =>
             {
-                RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget);
-                Helpers.checkMuderAttemptAndKill(target,Game.GameData.data.myData.currentTarget,Game.PlayerData.PlayerStatus.Dead,showAnimation:false);
+                RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget);
+                Helpers.checkMuderAttemptAndKill(target, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, showAnimation: false);
                 Game.GameData.data.myData.currentTarget = null;
                 killButton.Timer = killButton.MaxTimer;
             },
@@ -66,12 +66,12 @@ public class Deadbeat : Template.TImpostor
 
     public override void CleanUp()
     {
-        if(markButton != null)
+        if (markButton != null)
         {
             markButton.Destroy();
             markButton = null;
         }
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;

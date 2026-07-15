@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.CrewmateRoles;
+﻿using Nebula.Roles.CrewmateRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Holmes : Role
 {
@@ -26,7 +28,7 @@ public class Holmes : Role
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(surveyButton != null)
+        if (surveyButton != null)
         {
             surveyButton.Destroy();
         }
@@ -40,19 +42,19 @@ public class Holmes : Role
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.GetModData().GetRoleData(surveyDataId) < maxSurveyNumberOption.getFloat(); },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
-            () => { surveyButton.Timer = surveyButton.MaxTimer;},
+            () => { surveyButton.Timer = surveyButton.MaxTimer; },
             surveyButtonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
             Module.NebulaInputManager.abilityInput.keyCode,
             "button.label.survey"
             ).SetTimer(CustomOptionHolder.InitialForcefulAbilityCoolDownOption.getFloat());
-            surveyButton.MaxTimer = surveyCooldownOption.getFloat();
+        surveyButton.MaxTimer = surveyCooldownOption.getFloat();
     }
 
     public override void CleanUp()
     {
-        if(surveyButton != null)
+        if (surveyButton != null)
         {
             surveyButton.Destroy();
             surveyButton = null;
@@ -71,8 +73,8 @@ public class Holmes : Role
     {
         PlayerControl p = Helpers.playerById(playerId);
         var data = p.GetModData();
-        data.RoleInfo = Helpers.cs(checkColor(data.role.GetActualRole(data)),canKnowJobsOption.getBool() ? Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name") : "???");
-        RPCEventInvoker.SendInfo(playerId,data.RoleInfo);
+        data.RoleInfo = Helpers.cs(checkColor(data.role.GetActualRole(data)), canKnowJobsOption.getBool() ? Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name") : "???");
+        RPCEventInvoker.SendInfo(playerId, data.RoleInfo);
     }
 
     private Color checkColor(Role operRole)

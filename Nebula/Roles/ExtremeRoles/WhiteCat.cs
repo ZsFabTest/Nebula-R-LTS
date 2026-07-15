@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.CrewmateRoles;
+﻿using Nebula.Roles.CrewmateRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class WhiteCat : Role
 {

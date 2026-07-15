@@ -1,18 +1,16 @@
 ﻿using Nebula.Patches;
-using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Nebula.Roles.HnSImpostorRoles;
 
-public class HnSHadar : Role 
-{ 
+public class HnSHadar : Role
+{
     public override bool ShowInHelpWindow => false;
 
-    static private CustomButton ventButton,killButton;
+    static private CustomButton ventButton, killButton;
     private float lightRadius = 1f;
-    private SpriteLoader AppearSprite = new SpriteLoader("Nebula.Resources.HadarAppearButton.png", 115f,"ui.button.hadar.appear");
+    private SpriteLoader AppearSprite = new SpriteLoader("Nebula.Resources.HadarAppearButton.png", 115f, "ui.button.hadar.appear");
     private SpriteLoader HideSprite = new SpriteLoader("Nebula.Resources.HadarHideButton.png", 115f, "ui.button.hadar.hide");
-    
+
     /*
     private SpriteLoader ArrowSprite = new SpriteLoader("Nebula.Resources.HadarArrow.png", 115f, "role.hadar.arrow");
     
@@ -59,7 +57,7 @@ public class HnSHadar : Role
     public override void Initialize(PlayerControl __instance)
     {
         lightRadius = 1f;
-}
+    }
 
     public override void ButtonInitialize(HudManager __instance)
     {
@@ -87,7 +85,7 @@ public class HnSHadar : Role
 
                     Objects.SoundPlayer.PlaySound(Module.AudioAsset.HadarDive);
                 }
-                
+
                 ventButton.SetLabel(property.UnderTheFloor ?
                     "button.label.hadar.hide" : "button.label.hadar.appear");
                 ventButton.Sprite = property.UnderTheFloor ?
@@ -116,7 +114,7 @@ public class HnSHadar : Role
     {
         if (killButton != null) killButton.Destroy();
         if (ventButton != null) ventButton.Destroy();
-        
+
         ventButton = null;
         killButton = null;
     }

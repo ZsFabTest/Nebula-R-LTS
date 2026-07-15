@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.NeutralRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class Madman : Role
 {
@@ -81,9 +81,10 @@ public class Madman : Role
                 Game.GameData.data.myData.currentTarget = null;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-            () => {
+            () =>
+            {
                 int killing = PlayerControl.LocalPlayer.GetModData().GetRoleData(killedNumber);
-                return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove && killing == 0 ; 
+                return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove && killing == 0;
             },
             () => { killButton.Timer = killButton.MaxTimer; },
             __instance.KillButton.graphic.sprite,

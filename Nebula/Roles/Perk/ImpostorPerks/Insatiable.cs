@@ -11,7 +11,7 @@ public class Insatiable : Perk
         Vector2 myPos = PlayerControl.LocalPlayer.GetTruePosition();
         Vector2 pos = myPos;
         float dis = 0;
-        foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+        foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if (p.Data.IsDead) continue;
 

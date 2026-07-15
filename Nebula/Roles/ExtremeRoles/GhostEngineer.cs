@@ -1,4 +1,4 @@
-namespace Nebula.Roles.GhostRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
 public class GhostEngineer : GhostRole
 {
@@ -17,7 +17,8 @@ public class GhostEngineer : GhostRole
 
     public int repairId { get; private set; }
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         repairId = (int)maxRepairOption.getFloat();
     }
 

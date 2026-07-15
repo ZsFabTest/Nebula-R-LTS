@@ -1,4 +1,6 @@
-﻿namespace Nebula.Patches;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Patches.VanillaRework;
 
 
 [HarmonyPatch(typeof(AspectPosition), nameof(AspectPosition.OnEnable))]

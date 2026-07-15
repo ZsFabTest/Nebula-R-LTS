@@ -33,13 +33,13 @@ public class Agent : Template.ExemptTasks
             AddCustomPrerequisite(() => { return CanHaveExtraAssignable(Roles.SecondaryMadmate) && Roles.SecondaryMadmate.IsSpawnable(); });
         madmateKillCoolDownOption.suffix = "second";
 
-/*
-        canKnowImpostorAndJackalByTasksOption = CreateOption(Color.white, "canKnowImpostorAndJackal", true);
+        /*
+                canKnowImpostorAndJackalByTasksOption = CreateOption(Color.white, "canKnowImpostorAndJackal", true);
 
-        LeastTasksNumberOption = CreateOption(Color.white, "theLeastCompletedTasks", 10f, 1f, 15f, 1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
+                LeastTasksNumberOption = CreateOption(Color.white, "theLeastCompletedTasks", 10f, 1f, 15f, 1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
 
-        willBeFoundLeftOption = CreateOption(Color.white,"willBeFoundLeft",1f,1f,5f,1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
-*/
+                willBeFoundLeftOption = CreateOption(Color.white,"willBeFoundLeft",1f,1f,5f,1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
+        */
     }
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.AgentButton.png", 115f);
@@ -86,7 +86,7 @@ public class Agent : Template.ExemptTasks
         agentButton.MaxTimer = agentButton.Timer = 0;
 
         var ventButton = FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton;
-        ventButtonUsesObject = ventButton.ShowUsesIcon(0,out ventButtonUsesString);
+        ventButtonUsesObject = ventButton.ShowUsesIcon(0, out ventButtonUsesString);
         ventButtonUsesString.text = maxVentsOption.getFloat().ToString();
         ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.ToArray().First(r => r.Role == RoleTypes.Engineer).Ability.Image;
         ventButton.transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().outlineColor = Palette.CrewmateBlue;
@@ -122,8 +122,8 @@ public class Agent : Template.ExemptTasks
             UnityEngine.Object.Destroy(ventButtonUsesObject);
         }
     }
-    public override void FinalizeInGame(PlayerControl __instance) 
-    { 
+    public override void FinalizeInGame(PlayerControl __instance)
+    {
         if (HudManager.InstanceExists)
         {
             var ventButton = FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton;
@@ -152,40 +152,40 @@ public class Agent : Template.ExemptTasks
         return Game.GameData.data.GetPlayerData(playerId).HasExtraRole(Roles.SecondaryMadmate);
     }
 
-/*
-    public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
-    {
-        if (!canKnowImpostorAndJackalByTasksOption.getBool() || PlayerControl.LocalPlayer.GetModData().Tasks.Completed < LeastTasksNumberOption.getFloat()) return;
-        if (Helpers.playerById(playerId).GetModData().role.side == Side.Impostor)
+    /*
+        public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
         {
-            displayColor = Palette.ImpostorRed;
+            if (!canKnowImpostorAndJackalByTasksOption.getBool() || PlayerControl.LocalPlayer.GetModData().Tasks.Completed < LeastTasksNumberOption.getFloat()) return;
+            if (Helpers.playerById(playerId).GetModData().role.side == Side.Impostor)
+            {
+                displayColor = Palette.ImpostorRed;
+            }
+            else if (Helpers.playerById(playerId).GetModData().role.side == Side.Jackal)
+            {
+                displayColor = Roles.Jackal.Color;
+            }
+            else if (Helpers.playerById(playerId).GetModData().role.side == Side.Pavlov)
+            {
+                displayColor = Roles.Pavlov.Color;
+            }
+            else if(Helpers.playerById(playerId).GetModData().role.side == Side.Moriarty){
+                displayColor = Roles.Moriarty.Color;
+            }
+            else if(Helpers.playerById(playerId).GetModData().role.side != Side.Crewmate)
+            {
+                displayColor = Roles.ChainShifter.Color;
+            }
         }
-        else if (Helpers.playerById(playerId).GetModData().role.side == Side.Jackal)
-        {
-            displayColor = Roles.Jackal.Color;
-        }
-        else if (Helpers.playerById(playerId).GetModData().role.side == Side.Pavlov)
-        {
-            displayColor = Roles.Pavlov.Color;
-        }
-        else if(Helpers.playerById(playerId).GetModData().role.side == Side.Moriarty){
-            displayColor = Roles.Moriarty.Color;
-        }
-        else if(Helpers.playerById(playerId).GetModData().role.side != Side.Crewmate)
-        {
-            displayColor = Roles.ChainShifter.Color;
-        }
-    }
-*/
+    */
 
-/*
-    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
-    {
-        if (canKnowImpostorAndJackalByTasksOption.getBool() || PlayerControl.LocalPlayer.GetModData().Tasks.Completed >= LeastTasksNumberOption.getFloat() - willBeFoundLeftOption.getFloat()){
-            displayColor = RoleColor;
+    /*
+        public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+        {
+            if (canKnowImpostorAndJackalByTasksOption.getBool() || PlayerControl.LocalPlayer.GetModData().Tasks.Completed >= LeastTasksNumberOption.getFloat() - willBeFoundLeftOption.getFloat()){
+                displayColor = RoleColor;
+            }
         }
-    }
-*/
+    */
 
     public Agent()
         : base("Agent", "agent", RoleColor, RoleCategory.Crewmate, Side.Crewmate, Side.Crewmate,

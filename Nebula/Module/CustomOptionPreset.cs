@@ -58,13 +58,13 @@ public class CustomOptionPreset
                 data.SetInt(Int32OptionNames.NumImpostors, value);
                 break;
             case "vanilla.confirmImpostor":
-                data.SetBool(BoolOptionNames.ConfirmImpostor ,(value == 1));
+                data.SetBool(BoolOptionNames.ConfirmImpostor, (value == 1));
                 break;
             case "vanilla.emergencyMeeting":
                 data.SetInt(Int32OptionNames.NumEmergencyMeetings, value);
                 break;
             case "vanilla.anonymousVotes":
-                data.SetBool(BoolOptionNames.AnonymousVotes , (value == 1));
+                data.SetBool(BoolOptionNames.AnonymousVotes, (value == 1));
                 break;
             case "vanilla.emergencyCooldown":
                 data.SetInt(Int32OptionNames.EmergencyCooldown, value);
@@ -82,10 +82,10 @@ public class CustomOptionPreset
                 data.SetFloat(FloatOptionNames.CrewLightMod, value / 4f);
                 break;
             case "vanilla.impostorVision":
-                data.SetFloat(FloatOptionNames.ImpostorLightMod , value / 4f);
+                data.SetFloat(FloatOptionNames.ImpostorLightMod, value / 4f);
                 break;
             case "vanilla.killCooldown":
-                data.SetFloat(FloatOptionNames.KillCooldown , value / 2f);
+                data.SetFloat(FloatOptionNames.KillCooldown, value / 2f);
                 break;
             case "vanilla.killDistance":
                 data.SetInt(Int32OptionNames.KillDistance, value);

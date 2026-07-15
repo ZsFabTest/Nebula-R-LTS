@@ -112,8 +112,8 @@ public class CustomMessage
                 }
                 if (text != null)
                 {
-                        //テキストのランダム入れ替え
-                        if (textSwapDuration > 0f && textSwapGain > 0)
+                    //テキストのランダム入れ替え
+                    if (textSwapDuration > 0f && textSwapGain > 0)
                     {
                         textSwapLeft -= Time.deltaTime;
                         if (textSwapLeft < 0)
@@ -122,8 +122,8 @@ public class CustomMessage
                             char temp;
                             int rnd1, rnd2;
 
-                                //入れ替え
-                                for (int i = 0; i < textSwapGain; i++)
+                            //入れ替え
+                            for (int i = 0; i < textSwapGain; i++)
                             {
                                 rnd1 = NebulaPlugin.rnd.Next(charArray.Length);
                                 rnd2 = NebulaPlugin.rnd.Next(charArray.Length);
@@ -141,7 +141,7 @@ public class CustomMessage
                     if (color2 != null)
                     {
                         bool even = ((int)(p * sum / 0.25f)) % 2 == 0; // Bool flips every 0.25 seconds
-                            text.color = even ? color1 : (Color)color2;
+                        text.color = even ? color1 : (Color)color2;
                     }
                     else
                     {
@@ -158,8 +158,8 @@ public class CustomMessage
 
                 }
 
-                    //消去する
-                    if (p == 1f && text != null && text.gameObject != null)
+                //消去する
+                if (p == 1f && text != null && text.gameObject != null)
                 {
                     UnityEngine.Object.Destroy(text.gameObject);
                     customMessages.Remove(this);

@@ -1,4 +1,4 @@
-namespace Nebula.Roles.ComplexRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
 public class FMover : Template.HasBilateralness
 {
@@ -13,10 +13,10 @@ public class FMover : Template.HasBilateralness
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
 
         base.LoadOptionData();
-        cooldownOption = CreateOption(Color.white,"cooldown",15f,0f,45f,2.5f);
+        cooldownOption = CreateOption(Color.white, "cooldown", 15f, 0f, 45f, 2.5f);
         cooldownOption.suffix = "second";
-        numOfMovingOption = CreateOption(Color.white,"numofMoving",5f,1f,15f,1f);
-        movingDuringOption = CreateOption(Color.white,"movingDuring",5f,1f,30f,1f);
+        numOfMovingOption = CreateOption(Color.white, "numofMoving", 5f, 1f, 15f, 1f);
+        movingDuringOption = CreateOption(Color.white, "movingDuring", 5f, 1f, 30f, 1f);
         movingDuringOption.suffix = "second";
 
         FirstRole = Roles.NiceMover;
@@ -24,7 +24,7 @@ public class FMover : Template.HasBilateralness
     }
 
     public FMover()
-            : base("Mover","mover",RoleColor)
+            : base("Mover", "mover", RoleColor)
     {
     }
 
@@ -54,7 +54,7 @@ public class Mover : Template.BilateralnessRole
     public int moveDataId;
     public Console target;
     public static Console pickUpTarget;
-    private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.RepairButton.png",115f);
+    private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.RepairButton.png", 115f);
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
@@ -69,14 +69,16 @@ public class Mover : Template.BilateralnessRole
     public static bool isMoving;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(move != null){
+        if (move != null)
+        {
             move.Destroy();
         }
         move = new CustomButton(
-            () => {
+            () =>
+            {
                 pickUpTarget = target;
                 Debug.LogWarning(pickUpTarget.ConsoleId.ToString());
-                RPCEventInvoker.SetConsoleStatus(pickUpTarget,false,PlayerControl.LocalPlayer.transform.position);
+                RPCEventInvoker.SetConsoleStatus(pickUpTarget, false, PlayerControl.LocalPlayer.transform.position);
                 target = null;
                 move.SetLabel("button.label.mover.put");
                 isMoving = true;
@@ -117,8 +119,10 @@ public class Mover : Template.BilateralnessRole
         });
     }
 
-    public override void CleanUp(){
-        if(move != null){
+    public override void CleanUp()
+    {
+        if (move != null)
+        {
             move.Destroy();
             move = null;
         }
@@ -126,8 +130,8 @@ public class Mover : Template.BilateralnessRole
 
     public override void OnMeetingStart()
     {
-        if(!isMoving) return;
-        RPCEventInvoker.SetConsoleStatus(pickUpTarget,true,PlayerControl.LocalPlayer.transform.position);
+        if (!isMoving) return;
+        RPCEventInvoker.SetConsoleStatus(pickUpTarget, true, PlayerControl.LocalPlayer.transform.position);
         isMoving = false;
         move.SetLabel("button.label.mover.move");
         move.Timer = move.MaxTimer;

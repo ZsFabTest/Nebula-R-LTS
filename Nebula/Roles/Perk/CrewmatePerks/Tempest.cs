@@ -1,5 +1,4 @@
-﻿using Il2CppSystem.Threading.Tasks;
-using Nebula.Game;
+﻿using Nebula.Game;
 using Nebula.Roles.ComplexRoles;
 
 namespace Nebula.Roles.Perk.CrewmatePerks;
@@ -42,7 +41,7 @@ public class Tempest : Perk
         ).SetTimer(10f);
         button.UsesText.text = "1";
         button.MaxTimer = 10f;
-        button.EffectDuration = IP(0,PerkPropertyType.Second);
+        button.EffectDuration = IP(0, PerkPropertyType.Second);
         button.SetUsesIcon(0);
 
         buttonRegister.Invoke(button);

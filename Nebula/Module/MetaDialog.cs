@@ -1,4 +1,6 @@
-﻿namespace Nebula.Module;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Module;
 
 public class MetaDialog : MetaScreen
 {
@@ -76,7 +78,7 @@ public class MetaDialog : MetaScreen
 
 
 
-    static public MSDesigner GenerateIndependentDialog(Vector2 size,string title,string objName,Transform parent,float offsetZ,bool withBackground)
+    static public MSDesigner GenerateIndependentDialog(Vector2 size, string title, string objName, Transform parent, float offsetZ, bool withBackground)
     {
         DialogueBox dialogue = GameObject.Instantiate(HudManager.Instance.Dialogue);
         dialogue.name = objName;
@@ -116,7 +118,7 @@ public class MetaDialog : MetaScreen
     {
         Transform parent = activeDialogue?.dialog.transform ?? HudManager.Instance.transform;
         float offsetZ = parent == HudManager.Instance.transform ? -500f : 0f;
-        var result = GenerateIndependentDialog(size, title, "Dialogue" + dialogOrder.Count, parent, offsetZ,true);
+        var result = GenerateIndependentDialog(size, title, "Dialogue" + dialogOrder.Count, parent, offsetZ, true);
         dialogOrder.Add((MetaDialog)result.screen);
         return result;
     }
@@ -261,7 +263,7 @@ public class MetaDialog : MetaScreen
         foreach (var hs in assignable.helpSprite)
             designers[1].AddTopic(new MSSprite(hs.sprite, 0.1f, hs.ratio), new MSMultiString(designers[1].size.x - 0.8f, 1.2f, Language.Language.GetString(hs.localizedName), TMPro.TextAlignmentOptions.Left, TMPro.FontStyles.Normal));
         foreach (var hb in assignable.helpButton)
-            designers[1].AddTopic(new MSButton(4f,0.4f,Language.Language.GetString(hb.Item1),TMPro.FontStyles.Bold,hb.Item2));
+            designers[1].AddTopic(new MSButton(4f, 0.4f, Language.Language.GetString(hb.Item1), TMPro.FontStyles.Bold, hb.Item2));
         if ((assignable.AssignableOnHelp?.TopOption ?? null) != null) designers[2].AddTopic(new MSMultiString(designers[2].size.x, 1.4f, Module.GameOptionStringGenerator.optionsToString(assignable.AssignableOnHelp.TopOption), TMPro.TextAlignmentOptions.TopLeft, TMPro.FontStyles.Normal));
     }
 
@@ -282,7 +284,7 @@ public class MetaDialog : MetaScreen
 
         public static bool ShouldShowCategory(Roles.RoleCategory category)
         {
-            if(OnlyImpostor || OnlyCrewmate || OnlyNeutral)
+            if (OnlyImpostor || OnlyCrewmate || OnlyNeutral)
             {
                 if (OnlyImpostor && category == Roles.RoleCategory.Impostor) return true;
                 if (OnlyCrewmate && category == Roles.RoleCategory.Crewmate) return true;
@@ -292,7 +294,7 @@ public class MetaDialog : MetaScreen
             return true;
         }
 
-        public static void AddFilterTopic(MSDesigner designer,Action refresher,bool ShowSideFilter)
+        public static void AddFilterTopic(MSDesigner designer, Action refresher, bool ShowSideFilter)
         {
             List<MetaScreenContent> contents = new();
             contents.Add(new MSButton(1.6f, 0.4f, Language.Language.GetString("help.assignable.filter.gameMode"), TMPro.FontStyles.Bold, () =>

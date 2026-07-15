@@ -1,7 +1,5 @@
-﻿using Nebula.Module;
-using Nebula.Module.Information;
-using Nebula.Tasks;
-using UnityEngine;
+﻿using Nebula.Expansion;
+using Nebula.Module;
 
 namespace Nebula.Roles.MetaRoles;
 
@@ -33,7 +31,7 @@ public class MetaObjectPreviewBehaviour : MonoBehaviour
             gameObject.transform.position += new Vector3(0, 0, Input.mouseScrollDelta.y / 100f);
         }
 
-        if (MetaController.CheckDrag(Collider)==DragState.Dragging)
+        if (MetaController.CheckDrag(Collider) == DragState.Dragging)
         {
             Vector3 pos = MetaController.DragPosition;
             pos.z = gameObject.transform.position.z;
@@ -41,7 +39,7 @@ public class MetaObjectPreviewBehaviour : MonoBehaviour
         }
 
         var text = Roles.MetaRole.MetaObjectManager.MetaInfoText;
-        if (text!=null)
+        if (text != null)
         {
             var pos = gameObject.transform.position;
 
@@ -81,15 +79,15 @@ public class MetaObjectManager
 
     public void EraseMetaObject()
     {
-        if(MetaObject)GameObject.Destroy(MetaObject);
+        if (MetaObject) GameObject.Destroy(MetaObject);
         MetaObject = null;
         MetaRenderer = null;
     }
 
     public GameObject? SpawnMetaObject(string textureId)
     {
-        TexturePack.LoadAsset(textureId,ref MetaTextureAsset);
-        
+        TexturePack.LoadAsset(textureId, ref MetaTextureAsset);
+
 
         Sprite? sprite = null;
         if (MetaTextureAsset != null)
@@ -99,7 +97,7 @@ public class MetaObjectManager
         }
         else
         {
-            sprite = Helpers.loadSpriteFromResources("Nebula.Resources.PuzzlePiece.png",100f);
+            sprite = Helpers.loadSpriteFromResources("Nebula.Resources.PuzzlePiece.png", 100f);
         }
         if (sprite == null) return MetaObject;
 
@@ -124,20 +122,20 @@ public class MetaObjectManager
         collider.size = size;
         MetaRenderer.sprite = sprite;
 
-        
+
         return MetaObject;
     }
 
     public void ShowObjectDetail()
     {
         if (MetaScreenIsShown) return;
-        var size = new Vector2(3f,1f);
+        var size = new Vector2(3f, 1f);
         var designer = MetaScreen.OpenScreen(HudManager.Instance.gameObject, size, new Vector3(0f, -2.2f));
         MetaScreen = designer.screen;
 
         MetaScreen.screen.layer = LayerExpansion.GetUILayer();
         MetaScreen.screen.transform.localPosition -= new Vector3(0, 0, 200f);
-        var renderer = MetaScreen.screen.AddComponent<SpriteRenderer>(); 
+        var renderer = MetaScreen.screen.AddComponent<SpriteRenderer>();
         renderer.sprite = Module.MetaScreen.GetButtonBackSprite();
         renderer.drawMode = SpriteDrawMode.Tiled;
         renderer.size = size + new Vector2(0.4f, 0.4f);
@@ -147,7 +145,7 @@ public class MetaObjectManager
 
         var multiString = new MSMultiString[3];
         for (int i = 0; i < 3; i++) multiString[i] = new MSMultiString(1f, 1.8f, "", TMPro.TextAlignmentOptions.Left, TMPro.FontStyles.Normal);
-            
+
 
         var textInput = new MSTextInput(2.5f, 0.3f, TMPro.TextAlignmentOptions.Left, TMPro.FontStyles.Normal);
         var canSeeInShadow = new MSRadioButton(true, 1f, Language.Language.GetString("metaObject.canSeeInShadow"), 1.4f, 1.4f, TMPro.TextAlignmentOptions.Left, TMPro.FontStyles.Bold);
@@ -158,16 +156,18 @@ public class MetaObjectManager
         designer.CustomUse(-0.1f);
         designer.AddTopic(new MetaScreenContent[] { textInput });
 
-        canSeeInShadow.FlagUpdateAction = (flag) => {
+        canSeeInShadow.FlagUpdateAction = (flag) =>
+        {
             if (flag && canSeeOnlyInShadow.Flag) canSeeOnlyInShadow.Flag = false;
             if (flag)
                 MetaRenderer.gameObject.layer = LayerExpansion.GetObjectsLayer();
             else
                 MetaRenderer.gameObject.layer = LayerExpansion.GetDefaultLayer();
         };
-        canSeeOnlyInShadow.FlagUpdateAction = (flag) => {
+        canSeeOnlyInShadow.FlagUpdateAction = (flag) =>
+        {
             if (flag && canSeeInShadow.Flag) canSeeInShadow.Flag = false;
-            if(flag)
+            if (flag)
                 MetaRenderer.gameObject.layer = LayerExpansion.GetShadowLayer();
             else
                 MetaRenderer.gameObject.layer = LayerExpansion.GetDefaultLayer();
@@ -179,15 +179,15 @@ public class MetaObjectManager
         TextInputField.HintText = "freePlay.metaObject";
         textInput.TextInputField.LoseFocusAction = (id) => SpawnMetaObject(id);
 
-        SpawnMetaObject("freePlay.metaObject");   
+        SpawnMetaObject("freePlay.metaObject");
     }
 
     public void CloseObjectDetail()
     {
         IEnumerator GetEnumerator(Transform screen)
         {
-            
-            while(screen.localScale.x > 0.01f)
+
+            while (screen.localScale.x > 0.01f)
             {
                 yield return null;
                 screen.localScale -= Vector3.one * (7f * Time.deltaTime);

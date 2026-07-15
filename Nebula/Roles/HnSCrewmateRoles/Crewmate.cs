@@ -1,7 +1,4 @@
 ﻿using Nebula.Patches;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Nebula.Roles.HnSCrewmateRoles;
 
@@ -9,7 +6,7 @@ public class Crewmate : Role
 {
     protected TMPro.TextMeshPro ventButtonUsesString;
     protected GameObject ventButtonUsesObject;
-    protected int leftCanUseVent=0;
+    protected int leftCanUseVent = 0;
     public int leftReviveId;
     public override bool ShowInHelpWindow => false;
 
@@ -27,16 +24,17 @@ public class Crewmate : Role
         catch { leftCanUseVent = 1; }
         ventButtonUsesObject = ventButton.ShowUsesIcon(0, out ventButtonUsesString);
         ventButtonUsesString.text = leftCanUseVent.ToString();
-        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.ToArray().First(r=>r.Role==RoleTypes.Engineer).Ability.Image;
+        ventButton.gameObject.GetComponent<SpriteRenderer>().sprite = RoleManager.Instance.AllRoles.ToArray().First(r => r.Role == RoleTypes.Engineer).Ability.Image;
         ventButton.transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().outlineColor = Palette.CrewmateBlue;
-        VentDurationMaxTimer= GameOptionsManager.Instance.currentHideNSeekGameOptions.GetFloat(FloatOptionNames.CrewmateTimeInVent);
+        VentDurationMaxTimer = GameOptionsManager.Instance.currentHideNSeekGameOptions.GetFloat(FloatOptionNames.CrewmateTimeInVent);
 
         if (reviveButton != null)
         {
             reviveButton.Destroy();
         }
         reviveButton = new CustomButton(
-            () => {
+            () =>
+            {
                 float additional = 0f, ratio = 1f;
                 Perk.PerkHolder.PerkData.MyPerkData.PerkAction((p) => p.Perk.SetReviveCost(p, ref additional, ref ratio));
                 reviveButton.Timer = (reviveButton.Timer + additional) * ratio;

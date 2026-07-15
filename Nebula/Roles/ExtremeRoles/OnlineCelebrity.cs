@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.ExtraRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class OnlineCelebrity : ExtraRole
 {
@@ -6,7 +6,7 @@ public class OnlineCelebrity : ExtraRole
 
     public override void OnDied(byte playerId)
     {
-        if(PlayerControl.LocalPlayer.GetModData().role.side == Side.Crewmate) Helpers.PlayQuickFlash(RoleColor);
+        if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Crewmate) Helpers.PlayQuickFlash(RoleColor);
     }
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
@@ -80,6 +80,7 @@ public class OnlineCelebrity : ExtraRole
     }
 
     public OnlineCelebrity()
-        : base("OnlineCelebrity", "onlinecelebrity", RoleColor,0){
+        : base("OnlineCelebrity", "onlinecelebrity", RoleColor, 0)
+    {
     }
 }

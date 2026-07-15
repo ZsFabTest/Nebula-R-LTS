@@ -2,7 +2,7 @@
 
 public class Footprint : TypeWithImage
 {
-    public Footprint() : base(11, "Footprint", new SpriteLoader("Nebula.Resources.BloodyFootprint.png",140f))
+    public Footprint() : base(11, "Footprint", new SpriteLoader("Nebula.Resources.BloodyFootprint.png", 140f))
     {
     }
 

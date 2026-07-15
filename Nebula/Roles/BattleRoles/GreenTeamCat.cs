@@ -2,7 +2,7 @@ namespace Nebula.Roles.BattleRoles;
 
 public class GreenTeamCat : Role
 {
-    public static Color RoleColor = new(181f / 255f,230f / 255f,29f / 255f);
+    public static Color RoleColor = new(181f / 255f, 230f / 255f, 29f / 255f);
 
     private bool equipRifleFlag;
 
@@ -199,8 +199,9 @@ public class GreenTeamCat : Role
         }
     }
 
-    public override void EditOthersDisplayNameColor(byte playerId,ref Color displayColor){
-        if(Helpers.playerById(playerId).GetModData().role.side == Side.GreenTeam) displayColor = RoleColor;
+    public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        if (Helpers.playerById(playerId).GetModData().role.side == Side.GreenTeam) displayColor = RoleColor;
     }
 
     public override void OnMurdered(byte murderId) => Roles.SchrodingersCat.OnMurdered(murderId);

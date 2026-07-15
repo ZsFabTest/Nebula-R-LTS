@@ -42,7 +42,7 @@ public class LocalEvent
     {
         foreach (LocalEvent localEvent in Events)
         {
-            if(Game.GameData.data.IsTimeStopped && localEvent.WillStop) continue;
+            if (Game.GameData.data.IsTimeStopped && localEvent.WillStop) continue;
             localEvent.LocalUpdate();
             localEvent.duration -= Time.deltaTime;
         }

@@ -1,4 +1,7 @@
-﻿namespace Nebula.Roles.CrewmateRoles;
+﻿using Nebula.Roles.CrewmateRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
+
 using NeutralRoles;
 
 public class Sanctifier : Role
@@ -33,13 +36,13 @@ public class Sanctifier : Role
         canUnsetGuesserOption = CreateOption(Roles.NiceGuesser.Color, "canUnsetGuesser", true).AddPrerequisite(Roles.F_Guesser.secondoryRoleOption);
         canUnsetSidesickOption = CreateOption(Roles.Jackal.Color, "canUnsetSidekick", true).AddInvPrerequisite(Sidekick.SidekickTakeOverOriginalRoleOption);
         maxUnsetNumberOption = CreateOption(Color.white, "maxUnsetNumber", 1f, 1f, 5f, 1f);
-        cooldown = CreateOption(Color.white,"cooldown",25f,2.5f,50f,2.5f);
+        cooldown = CreateOption(Color.white, "cooldown", 25f, 2.5f, 50f, 2.5f);
         cooldown.suffix = "second";
     }
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(cleanButton != null)
+        if (cleanButton != null)
         {
             cleanButton.Destroy();
         }
@@ -47,25 +50,27 @@ public class Sanctifier : Role
             () =>
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
-                try{
+                try
+                {
                     RPCEventInvoker.UnsetExtraRole(target, Roles.Drunk, true);
                     RPCEventInvoker.UnsetExtraRole(target, Roles.Bloody, true);
                     RPCEventInvoker.UnsetExtraRole(target, Roles.Confused, true);
                     RPCEventInvoker.UnsetExtraRole(target, Roles.Flash, true);
                     RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryJackal, true);
                     RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryBait, true);
-                    RPCEventInvoker.UnsetExtraRole(target,Roles.Cheater,true);
-                    RPCEventInvoker.UnsetExtraRole(target,Roles.DeputyMayor,true);
-                    RPCEventInvoker.UnsetExtraRole(target,Roles.Superstar,true);
-                    RPCEventInvoker.UnsetExtraRole(target,Roles.OnlineCelebrity,true);
-                    RPCEventInvoker.UnsetExtraRole(target,Roles.Singer,true);
-                    RPCEventInvoker.UnsetExtraRole(target,Roles.ProfessionalAssassin,true);
-                    RPCEventInvoker.UnsetExtraRole(target,Roles.Radar,true);
-                    if(canUnsetMadmateOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryMadmate, true);
-                    if(canUnsetGuesserOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryGuesser, true);
-                    if(canUnsetSidesickOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondarySidekick, true);
-                    if(canUnsetMadmateOption.getBool() && target.GetModData().role == Roles.Madmate) RPCEventInvoker.ChangeRole(target, Roles.Crewmate);
-                }catch(Exception e){ Debug.LogError(e.StackTrace); }
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Cheater, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.DeputyMayor, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Superstar, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.OnlineCelebrity, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Singer, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.ProfessionalAssassin, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Radar, true);
+                    if (canUnsetMadmateOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryMadmate, true);
+                    if (canUnsetGuesserOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryGuesser, true);
+                    if (canUnsetSidesickOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondarySidekick, true);
+                    if (canUnsetMadmateOption.getBool() && target.GetModData().role == Roles.Madmate) RPCEventInvoker.ChangeRole(target, Roles.Crewmate);
+                }
+                catch (Exception e) { Debug.LogError(e.StackTrace); }
                 RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, cleanDataId, 1);
                 cleanButton.Timer = cleanButton.MaxTimer;
             },
@@ -83,7 +88,7 @@ public class Sanctifier : Role
 
     public override void CleanUp()
     {
-        if(cleanButton != null)
+        if (cleanButton != null)
         {
             cleanButton.Destroy();
         }

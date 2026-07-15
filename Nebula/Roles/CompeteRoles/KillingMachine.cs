@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nebula.Roles.CompeteRoles;
+﻿namespace Nebula.Roles.CompeteRoles;
 
 public class KillingMachine : Role
 {
@@ -60,7 +56,8 @@ public class KillingMachine : Role
 
     public override void OnDied()
     {
-        Events.StandardEvent.SetEvent(() => {
+        Events.StandardEvent.SetEvent(() =>
+        {
             var pos = PlayerControl.LocalPlayer.transform.position;
             var mapData = Map.MapData.GetCurrentMapData();
             do

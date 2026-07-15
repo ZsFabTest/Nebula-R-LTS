@@ -1,18 +1,12 @@
-﻿using Nebula.Patches;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static UnityEngine.GraphicsBuffer;
+﻿using Nebula.Rpc;
 
 namespace Nebula.Roles.Perk.ImpostorPerks;
 
 [NebulaRPCHolder]
 public class BruteSabotage : Perk
 {
-    public static RemoteProcess<Tuple<Vector2,float>> DoorSabotageEvent = new RemoteProcess<Tuple<Vector2, float>>(
-        "DoorSabotage",   
+    public static RemoteProcess<Tuple<Vector2, float>> DoorSabotageEvent = new RemoteProcess<Tuple<Vector2, float>>(
+        "DoorSabotage",
         (writer, message) =>
            {
                writer.Write(message.Item1.x);
@@ -63,7 +57,7 @@ public class BruteSabotage : Perk
             float dis = d.transform.position.Distance(myPos);
             if (dis > num) continue;
 
-            num= dis;
+            num = dis;
             door = (PlainDoor?)d;
         }
 
@@ -72,7 +66,7 @@ public class BruteSabotage : Perk
 
         currentDoor = door;
 
-        var renderer = door.animator.GetComponent<SpriteRenderer>(); 
+        var renderer = door.animator.GetComponent<SpriteRenderer>();
         renderer.material.SetColor("_AddColor", Color.yellow);
     }
 
@@ -127,6 +121,6 @@ public class BruteSabotage : Perk
 
     public BruteSabotage(int id) : base(id, "bruteSabotage", false, 40, 0, new Color(0.2f, 0.5f, 0.6f))
     {
-        ImportantProperties = new float[] { 10f,2f,20f };
+        ImportantProperties = new float[] { 10f, 2f, 20f };
     }
 }

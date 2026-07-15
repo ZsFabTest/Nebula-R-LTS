@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Nebula.Utilities;
 
@@ -30,7 +26,8 @@ public interface JsonContent
 public class JsonStringContent : JsonContent
 {
     private string str;
-    public void Generate(JsonStringBuilder builder) { 
+    public void Generate(JsonStringBuilder builder)
+    {
         builder.Append("\"");
         builder.Append(str);
         builder.Append("\"");
@@ -38,7 +35,7 @@ public class JsonStringContent : JsonContent
 
     public JsonStringContent(string content)
     {
-        str= content;
+        str = content;
     }
 }
 
@@ -61,13 +58,13 @@ public class JsonObjectContent : JsonContent
     private List<Tuple<string, JsonContent>> contents = new();
 
     public int Count => contents.Count;
-    public void AddContent(string label,JsonContent content) { contents.Add(new(label, content)); }
+    public void AddContent(string label, JsonContent content) { contents.Add(new(label, content)); }
     public void Generate(JsonStringBuilder builder)
     {
         builder.Append("{");
         builder.IncreaseIndent();
         int i = 0;
-        foreach(var c in contents)
+        foreach (var c in contents)
         {
             if (i != 0) builder.Append(",");
             builder.AppendLine();

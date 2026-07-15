@@ -1,9 +1,10 @@
-namespace Nebula.Roles.ExtraRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public class Wanted : ExtraRole{
+public class Wanted : ExtraRole
+{
     public override void EditDisplayNameForcely(byte playerId, ref string displayName)
     {
-        displayName += Helpers.cs(Color,"☆");
+        displayName += Helpers.cs(Color, "☆");
     }
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
@@ -15,8 +16,9 @@ public class Wanted : ExtraRole{
         return option;
     }
 
-    public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag){
-        if(PlayerControl.LocalPlayer.GetModData().role.category != RoleCategory.Crewmate) EditDisplayNameForcely(playerId,ref displayName);
+    public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
+    {
+        if (PlayerControl.LocalPlayer.GetModData().role.category != RoleCategory.Crewmate) EditDisplayNameForcely(playerId, ref displayName);
     }
 
     private void _sub_Assignment(Patches.AssignMap assignMap, List<byte> players, int count)
@@ -67,6 +69,7 @@ public class Wanted : ExtraRole{
     }
 
     public Wanted()
-         : base("Wanted","wanted",Palette.ImpostorRed,0){
+         : base("Wanted", "wanted", Palette.ImpostorRed, 0)
+    {
     }
 }

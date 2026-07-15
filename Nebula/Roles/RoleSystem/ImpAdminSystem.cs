@@ -1,7 +1,4 @@
 ﻿using Nebula.Patches;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Nebula.Roles.RoleSystem
 {
@@ -13,7 +10,7 @@ namespace Nebula.Roles.RoleSystem
 
         static private CustomButton adminButton = null;
 
-        static public void ButtonInitialize(HudManager __instance,bool canMoveWithLookingMap,bool ignoreComm,bool canIdentifyImpostors)
+        static public void ButtonInitialize(HudManager __instance, bool canMoveWithLookingMap, bool ignoreComm, bool canIdentifyImpostors)
         {
             jailerCountOverlay = null;
 
@@ -63,7 +60,7 @@ namespace Nebula.Roles.RoleSystem
             if (MapBehaviour.Instance) GameObject.Destroy(MapBehaviour.Instance.gameObject);
         }
 
-        public static void OnShowMapTaskOverlay(MapTaskOverlay mapTaskOverlay, Action<Vector2, bool> iconGenerator,bool canMoveWithLookingMap, bool ignoreComm, bool canIdentifyImpostors)
+        public static void OnShowMapTaskOverlay(MapTaskOverlay mapTaskOverlay, Action<Vector2, bool> iconGenerator, bool canMoveWithLookingMap, bool ignoreComm, bool canIdentifyImpostors)
         {
             if (!canMoveWithLookingMap) return;
 

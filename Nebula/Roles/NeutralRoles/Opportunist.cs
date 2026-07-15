@@ -1,5 +1,4 @@
 ﻿using Nebula.Patches;
-using UnityEngine.Lumin;
 
 namespace Nebula.Roles.NeutralRoles;
 
@@ -39,7 +38,8 @@ public class Opportunist : Role
 
     public override void OnSetTasks(ref List<NetworkedPlayerInfo.TaskInfo> initialTasks, ref List<NetworkedPlayerInfo.TaskInfo>? actualTasks)
     {
-        if(!useSpecialTasksOption.getBool()){
+        if (!useSpecialTasksOption.getBool())
+        {
             RPCEventInvoker.RefreshTasks(PlayerControl.LocalPlayer.PlayerId, (int)numOfTasksOption.getFloat(), 0, 0.1f);
             return;
         }
@@ -65,8 +65,8 @@ public class Opportunist : Role
         base.LoadOptionData();
 
         numOfTasksOption = CreateOption(Color.white, "numOfTasks", 4f, 1f, 6f, 1f);
-        useSpecialTasksOption = CreateOption(Color.white,"useSpecialTasks",false);
-        taskDuringTimeOption = CreateOption(Color.white,"taskDuring",60f,10f,120f,5f).AddPrerequisite(useSpecialTasksOption);
+        useSpecialTasksOption = CreateOption(Color.white, "useSpecialTasks", false);
+        taskDuringTimeOption = CreateOption(Color.white, "taskDuring", 60f, 10f, 120f, 5f).AddPrerequisite(useSpecialTasksOption);
         taskDuringTimeOption.suffix = "second";
 
         canUseVentsOption = CreateOption(Color.white, "canUseVents", true);

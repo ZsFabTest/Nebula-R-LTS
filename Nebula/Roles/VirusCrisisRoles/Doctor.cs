@@ -1,32 +1,35 @@
 namespace Nebula.Roles.VirusCrisisRoles;
 
-public class Doctor : Role{
+public class Doctor : Role
+{
     private Module.CustomOption treatCooldown;
 
-    public override bool IsSpawnable(){
+    public override bool IsSpawnable()
+    {
         return CustomOptionHolder.gameModeNormal.getSelection() == 3;
     }
 
     private SpriteLoader treatSprite = new SpriteLoader("Nebula.Resources.ReviveButton.png", 115f);
 
-    public override void LoadOptionData(){
+    public override void LoadOptionData()
+    {
         TopOption.tab = Module.CustomOptionTab.CrewmateRoles;
         TopOption.AddCustomPrerequisite(() => { return CustomOptionHolder.gameModeNormal.getSelection() == 3; });
-        treatCooldown = CreateOption(Color.white,"treatcooldown",35f,2.5f,60f,2.5f);
+        treatCooldown = CreateOption(Color.white, "treatcooldown", 35f, 2.5f, 60f, 2.5f);
         treatCooldown.suffix = "second";
     }
 
     private CustomButton treat;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(treat != null)
+        if (treat != null)
         {
             treat.Destroy();
         }
         treat = new CustomButton(
             () =>
             {
-                RPCEventInvoker.ImmediatelyUnsetExtraRole(Game.GameData.data.myData.currentTarget,Roles.Supportee);
+                RPCEventInvoker.ImmediatelyUnsetExtraRole(Game.GameData.data.myData.currentTarget, Roles.Supportee);
                 Game.GameData.data.myData.currentTarget.ShowFailedMurder();
                 Game.GameData.data.myData.currentTarget = null;
                 treat.Timer = treat.MaxTimer;
@@ -43,14 +46,17 @@ public class Doctor : Role{
         treat.MaxTimer = treatCooldown.getFloat();
     }
 
-    public override void CleanUp(){
-        if(treat != null){
+    public override void CleanUp()
+    {
+        if (treat != null)
+        {
             treat.Destroy();
             treat = null;
         }
     }
 
-    public override void EditDisplayNameColor(byte playerId,ref Color displayColor){
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+    {
         displayColor = Color;
     }
 
@@ -61,13 +67,15 @@ public class Doctor : Role{
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
     }
 
-    public override void OnDied(){
+    public override void OnDied()
+    {
         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
     }
 
-    public Doctor() : base("DoctorV","doctorV",CrewmateRoles.Doctor.RoleColor,RoleCategory.Neutral,Side.Survival,Side.Survival,
-         new HashSet<Side>() { Side.Survival },new HashSet<Side>() { Side.Survival },new HashSet<Patches.EndCondition>() { Patches.EndCondition.SurvivalWin },
-         true,VentPermission.CanNotUse,false,false,false){
+    public Doctor() : base("DoctorV", "doctorV", CrewmateRoles.Doctor.RoleColor, RoleCategory.Neutral, Side.Survival, Side.Survival,
+         new HashSet<Side>() { Side.Survival }, new HashSet<Side>() { Side.Survival }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.SurvivalWin },
+         true, VentPermission.CanNotUse, false, false, false)
+    {
         Allocation = AllocationType.None;
         ValidGamemode = Module.CustomGameMode.VirusCrisis;
         canReport = false;

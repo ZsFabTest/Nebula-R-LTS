@@ -1,5 +1,4 @@
 ﻿using Nebula.Expansion;
-using Nebula.Map;
 using Nebula.Module;
 
 namespace Nebula.Tasks
@@ -39,7 +38,7 @@ namespace Nebula.Tasks
             {
                 var paperTransform = states[1].transform.GetChild(0);
                 var letterTransform = states[1].transform.GetChild(1);
-                Vector2 vec = new Vector2(0.7f,1.58f);
+                Vector2 vec = new Vector2(0.7f, 1.58f);
                 float p = 0f;
 
                 while (p < 1f)
@@ -180,7 +179,7 @@ namespace Nebula.Tasks
                     yield return null;
                 }
                 states[0].transform.localPosition = new Vector3(0, 0, -10f);
-                
+
             }
         }
 
@@ -214,7 +213,7 @@ namespace Nebula.Tasks
             var candidates = PlayerControl.AllPlayerControls.GetFastEnumerator().Where(p => p.PlayerId != PlayerControl.LocalPlayer.PlayerId && !p.Data.IsDead).ToArray();
             if (candidates.Length == 0) return;
             deliveryPlayer = candidates[NebulaPlugin.rnd.Next(candidates.Length)];
-            deliveryConsole = ConsoleExpansion.ConsolizePlayer<AutoTaskConsole>(deliveryPlayer,"DeliveryConsole");
+            deliveryConsole = ConsoleExpansion.ConsolizePlayer<AutoTaskConsole>(deliveryPlayer, "DeliveryConsole");
         }
 
         public void OnMeetingEnd()
@@ -222,7 +221,7 @@ namespace Nebula.Tasks
             if (taskStep % 3 != 1) return;
             if (!deliveryPlayer || !deliveryPlayer.Data.IsDead) return;
             UpdateDeliveryConsole();
-            
+
         }
 
         public override void __AppendTaskText(Il2CppSystem.Text.StringBuilder sb)
@@ -286,7 +285,7 @@ namespace Nebula.Tasks
             int nextStep = (taskStep + 1) % 3;
             if (nextStep == 2) Events.Schedule.RegisterPreMeetingAction(() => deliveryPlayer.AddTask(byte.MaxValue - 4), 0);
             if (nextStep == 1) UpdateDeliveryConsole();
-            
+
 
             UpdateMinigamePrefab();
 
@@ -298,7 +297,7 @@ namespace Nebula.Tasks
             if (LetterMinigamePrefab == null)
                 LetterMinigamePrefab = AssetLoader.SpectreRancorMinigamePrefab.gameObject.AddComponent<SpectreRancorLetterMinigame>();
             if (StatueMinigamePrefab == null)
-                StatueMinigamePrefab = AssetLoader.SpectreStatueMinigamePrefab.gameObject.AddComponent<SpectreRancorStatueMinigame>();            
+                StatueMinigamePrefab = AssetLoader.SpectreStatueMinigamePrefab.gameObject.AddComponent<SpectreRancorStatueMinigame>();
         }
 
         public override void __Initialize()
@@ -310,13 +309,15 @@ namespace Nebula.Tasks
             int count;
 
             count = 0;
-            Roles.Roles.Spectre.letterTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) => {
+            Roles.Roles.Spectre.letterTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) =>
+            {
                 count++;
             });
             if (count < step) step = count;
 
             count = 0;
-            Roles.Roles.Spectre.statueTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) => {
+            Roles.Roles.Spectre.statueTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) =>
+            {
                 count++;
             });
             if (count / 2 < step) step = count / 2;
@@ -334,7 +335,8 @@ namespace Nebula.Tasks
         public override bool __ValidConsole(Console console)
         {
             if (PlayerControl.LocalPlayer.Data.IsDead) return false;
-            switch (taskStep % 3) {
+            switch (taskStep % 3)
+            {
                 case 0:
                     return console.gameObject.name.StartsWith("NoS-SpectreLetter");
                 case 1:
@@ -387,7 +389,7 @@ namespace Nebula.Tasks
                 sb.Append("<color=#00DD00FF>");
                 flag = true;
             }
-            else 
+            else
             {
                 sb.Append("<color=#FF6060FF>");
                 flag = true;
@@ -397,7 +399,7 @@ namespace Nebula.Tasks
             sb.Append("</color>");
 
             sb.AppendLine();
-            
+
         }
 
         public override bool __NextStep()

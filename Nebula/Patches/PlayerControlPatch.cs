@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using Object = UnityEngine.Object;
-
-namespace Nebula.Patches;
+﻿namespace Nebula.Patches;
 
 [HarmonyPatch(typeof(NetworkedPlayerInfo), nameof(NetworkedPlayerInfo.SetTasks))]
 public class PlayerControlSetTaskPatch
@@ -65,7 +62,7 @@ public class PlayerControlSetAlphaPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 public class PlayerControlPatch
 {
-   
+
     static private bool CheckTargetable(Vector2 position, Vector2 myPosition, ref float distanceCondition)
     {
         Vector2 vector = (Vector2)position - myPosition;
@@ -132,14 +129,14 @@ public class PlayerControlPatch
         float num = range;
         if (!ShipStatus.Instance) return result;
         if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
-        if (targetingPlayer.Data.IsDead && !(targetingPlayer.GetModData().role == Roles.Roles.EvilBusker && Roles.Roles.EvilBusker.pseudocideFlag) && !(targetingPlayer.GetModData().role == Roles.Roles.Puppeteer) && 
+        if (targetingPlayer.Data.IsDead && !(targetingPlayer.GetModData().role == Roles.Roles.EvilBusker && Roles.Roles.EvilBusker.pseudocideFlag) && !(targetingPlayer.GetModData().role == Roles.Roles.Puppeteer) &&
              !(targetingPlayer.GetModData().ghostRole == Roles.Roles.EvilGhost)) return result;
 
         Vector2 truePosition = targetingPlayer.GetTruePosition();
         Il2CppSystem.Collections.Generic.List<NetworkedPlayerInfo> allPlayers = GameData.Instance.AllPlayers;
         for (int i = 0; i < allPlayers.Count; i++)
         {
-            NetworkedPlayerInfo playerInfo = allPlayers[i]; 
+            NetworkedPlayerInfo playerInfo = allPlayers[i];
 
             if (playerInfo == null || (PlayerControl.LocalPlayer.PlayerId == playerInfo.PlayerId) || (playerInfo.Object == null))
                 continue;
@@ -406,7 +403,7 @@ public class PlayerControlPatch
 
     public static void Postfix(PlayerControl __instance)
     {
-		if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
+        if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
         if (Game.GameData.data == null)
         {
             return;
@@ -597,19 +594,19 @@ class KillAnimationCoPerformKillPatch
 [HarmonyPatch(typeof(KillAnimation._CoPerformKill_d__2), nameof(KillAnimation._CoPerformKill_d__2.MoveNext))]
 class KillAnimationCoPerformKillPatch
 {
-	public static bool hideNextAnimation = false;
-	public static void Prefix(KillAnimation._CoPerformKill_d__2 __instance)
-	{
-		if (hideNextAnimation)
-			__instance.source = __instance.target;
-		hideNextAnimation = false;
-	}
+    public static bool hideNextAnimation = false;
+    public static void Prefix(KillAnimation._CoPerformKill_d__2 __instance)
+    {
+        if (hideNextAnimation)
+            __instance.source = __instance.target;
+        hideNextAnimation = false;
+    }
 }
 
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
 public static class CompleteTaskPatch
 {
-    public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)]uint idx)
+    public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] uint idx)
     {
         GameData.Instance.RecomputeTaskCounts();
 
@@ -688,10 +685,10 @@ class ReportDeadBodyPatch
         {
             return false;
         }
-        
+
         MeetingRoomManager.Instance.AssignSelf(__instance, target);
         if (!AmongUsClient.Instance.AmHost) return false;
-        
+
         DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(__instance);
         __instance.RpcStartMeeting(target);
 
@@ -783,7 +780,7 @@ class PlayerIsKillTimerEnabledPatch
                     if (CustomOptionHolder.KillCoolDownProceedIgnoringEmergencySabotage.getBool() && (
                         Minigame.Instance.GetIl2CppType() == Il2CppType.Of<AirshipAuthGame>() ||
                         Minigame.Instance.GetIl2CppType() == Il2CppType.Of<ReactorMinigame>() ||
-                        Minigame.Instance.GetIl2CppType() == Il2CppType.Of<KeypadGame>() )) return;
+                        Minigame.Instance.GetIl2CppType() == Il2CppType.Of<KeypadGame>())) return;
                 }
                 __result = false;
             }

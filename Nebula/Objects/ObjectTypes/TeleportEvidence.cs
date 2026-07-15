@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nebula.Objects.ObjectTypes;
+﻿namespace Nebula.Objects.ObjectTypes;
 
 public class TeleportEvidence : TypeWithImage
 {
-    public TeleportEvidence() : base(12, "TeleportEvidence", new SpriteLoader("Nebula.Resources.TeleportEvidence.png",100f))
+    public TeleportEvidence() : base(12, "TeleportEvidence", new SpriteLoader("Nebula.Resources.TeleportEvidence.png", 100f))
     {
     }
 

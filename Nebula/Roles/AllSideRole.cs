@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Roles;
+
 public class AllSideRole : Role
 {
     public AllSideRole(Role templateRole, string name, string localizedName, Color color,

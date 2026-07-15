@@ -1,11 +1,6 @@
-using System.Text;
 using System.Reflection;
-using Hazel;
-using BepInEx.Configuration;
-using AmongUs.GameOptions;
-using UnityEngine;
-using static Nebula.Module.CustomOption;
-using JetBrains.Annotations;
+using System.Text;
+using Nebula.Rpc;
 
 namespace Nebula.Module;
 
@@ -100,13 +95,15 @@ public class CustomOption
             button.OnMouseOut = new UnityEngine.Events.UnityEvent();
             button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
 
-            button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() => {
+            button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() =>
+            {
                 if (!UnderInfo) return;
                 string str = "";
                 if (Language.Language.TryGetString(optionName + ".info", ref str))
                     UnderInfo.text = str;
             }));
-            button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() => {
+            button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() =>
+            {
                 if (!UnderInfo) return;
                 UnderInfo.text = "";
             }));
@@ -132,11 +129,13 @@ public class CustomOption
     }
 
     public static RemoteProcess<Tuple<int, int>> ShareOption = new("ShareGameOption",
-        (writer, message) => {
+        (writer, message) =>
+        {
             writer.WritePacked(message.Item1);
             writer.WritePacked(message.Item2);
         },
-        (reader) => {
+        (reader) =>
+        {
             return new(reader.ReadPackedInt32(), reader.ReadPackedInt32());
         },
         (message, calledByMe) =>

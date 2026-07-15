@@ -7,22 +7,25 @@ public class LastImpostor : ExtraRole
     public Module.CustomOption canSpawnOption;
     public Module.CustomOption GuessCountOption;
 
-    private bool canUse(){
-        if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)) return false;
+    private bool canUse()
+    {
+        if (PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)) return false;
         return true;
     }
 
     public override void LoadOptionData()
     {
         canSpawnOption = CreateOption(Color.white, "canSpawn", false);
-        GuessCountOption = CreateOption(Color.white, "guessCount",5f,1f,15f,1f);
+        GuessCountOption = CreateOption(Color.white, "guessCount", 5f, 1f, 15f, 1f);
     }
 
-    public override void SetupMeetingButton(MeetingHud __instance){
-        if(canUse()) ComplexRoles.GuesserSystem.SetupMeetingButton(__instance);
+    public override void SetupMeetingButton(MeetingHud __instance)
+    {
+        if (canUse()) ComplexRoles.GuesserSystem.SetupMeetingButton(__instance);
     }
 
-    public override void GlobalInitialize(PlayerControl __instance){
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
         __instance.GetModData().SetExtraRoleData(Roles.SecondaryGuesser.id, (ulong)GuessCountOption.getFloat());
     }
 
@@ -39,7 +42,7 @@ public class LastImpostor : ExtraRole
 
     public override void MeetingUpdate(MeetingHud __instance, TextMeshPro meetingInfo)
     {
-        if(canUse()) ComplexRoles.GuesserSystem.MeetingUpdate(__instance, meetingInfo);
+        if (canUse()) ComplexRoles.GuesserSystem.MeetingUpdate(__instance, meetingInfo);
     }
 
     public override bool IsSpawnable()
@@ -49,7 +52,7 @@ public class LastImpostor : ExtraRole
 
     public override void MyPlayerControlUpdate()
     {
-        if(PlayerControl.LocalPlayer.GetModData().role.side != Side.Impostor) RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,this,false);
+        if (PlayerControl.LocalPlayer.GetModData().role.side != Side.Impostor) RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer, this, false);
     }
 
     public LastImpostor() : base("LastImpostor", "lastImpostor", Palette.ImpostorRed, 0)

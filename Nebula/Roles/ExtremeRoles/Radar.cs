@@ -1,9 +1,10 @@
 using Nebula.Roles.RoleSystem;
 
-namespace Nebula.Roles.ExtraRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public class Radar : Template.StandardExtraRole{
-    public static Color RoleColor = new(163f  /255f,29f / 255f,107f / 255f);
+public class Radar : Template.StandardExtraRole
+{
+    public static Color RoleColor = new(163f / 255f, 29f / 255f, 107f / 255f);
 
     public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
     {
@@ -35,22 +36,27 @@ public class Radar : Template.StandardExtraRole{
     private Arrow? arrow;
     SpriteLoader arrowSprite = new SpriteLoader("role.spectre.arrow");
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         base.Initialize(__instance);
         arrow = null;
     }
 
-    public override void MyPlayerControlUpdate(){
+    public override void MyPlayerControlUpdate()
+    {
         PlayerControl target = PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => { return p.PlayerId != PlayerControl.LocalPlayer.PlayerId; });
-        if(!target) return;
-        foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator()){
-            if(p.PlayerId != PlayerControl.LocalPlayer.PlayerId){
-                target = Vector2.Distance(target.transform.position,PlayerControl.LocalPlayer.transform.position) > Vector2.Distance(p.transform.position,PlayerControl.LocalPlayer.transform.position) ? p : target;
+        if (!target) return;
+        foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+        {
+            if (p.PlayerId != PlayerControl.LocalPlayer.PlayerId)
+            {
+                target = Vector2.Distance(target.transform.position, PlayerControl.LocalPlayer.transform.position) > Vector2.Distance(p.transform.position, PlayerControl.LocalPlayer.transform.position) ? p : target;
             }
         }
-        TrackSystem.PlayerTrack_MyControlUpdate(ref arrow,target,RoleColor,arrowSprite);
+        TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, target, RoleColor, arrowSprite);
     }
 
-    public Radar() : base("Radar","radar",RoleColor,0){
+    public Radar() : base("Radar", "radar", RoleColor, 0)
+    {
     }
 }

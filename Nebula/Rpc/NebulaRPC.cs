@@ -1,7 +1,7 @@
-﻿using Hazel;
-using System.Reflection;
+﻿using System.Reflection;
+using Hazel;
 
-namespace Nebula;
+namespace Nebula.Rpc;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
 public class NebulaRPCHolder : Attribute
@@ -12,11 +12,11 @@ public class NebulaRPCHolder : Attribute
 public class RemoteProcessBase
 {
 
-    static public Dictionary<int,RemoteProcessBase> AllNebulaProcess = new();
+    static public Dictionary<int, RemoteProcessBase> AllNebulaProcess = new();
 
     public int Hash { get; private set; } = -1;
     public string Name { get; private set; }
-    
+
     private const int MulPrime = 127;
     private const int SurPrime = 104729;
 
@@ -24,14 +24,14 @@ public class RemoteProcessBase
     {
         int val = 0;
         int mul = 1;
-        foreach(char c in name)
+        foreach (char c in name)
         {
             mul *= MulPrime;
             mul %= SurPrime;
             val += (int)c * mul;
             val %= SurPrime;
         }
-        Hash= val;
+        Hash = val;
         Name = name;
 
         if (AllNebulaProcess.ContainsKey(Hash)) NebulaPlugin.Instance.Logger.Print("NebulaRPC", $"Identifier conflict has been occured at \"{Name}\"");
@@ -44,37 +44,40 @@ public class RemoteProcessBase
         if (types == null) return;
 
         foreach (var type in types)
-            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(type.TypeHandle);            
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(type.TypeHandle);
     }
 
     public virtual void Receive(MessageReader reader) { }
 }
 
 
-public class RemoteProcess<Parameter> : RemoteProcessBase 
+public class RemoteProcess<Parameter> : RemoteProcessBase
 {
-    public delegate void Process(Parameter parameter,bool isCalledByMe);
-    
+    public delegate void Process(Parameter parameter, bool isCalledByMe);
+
     private Action<MessageWriter, Parameter> Sender { get; set; }
     private Func<MessageReader, Parameter> Receiver { get; set; }
     private Process Body { get; set; }
 
-    public RemoteProcess(string name,Action<MessageWriter, Parameter> sender, Func<MessageReader, Parameter> receiver, RemoteProcess<Parameter>.Process process)
-    :base(name){
+    public RemoteProcess(string name, Action<MessageWriter, Parameter> sender, Func<MessageReader, Parameter> receiver, RemoteProcess<Parameter>.Process process)
+    : base(name)
+    {
         Sender = sender;
         Receiver = receiver;
         Body = process;
     }
 
-    public void Invoke(Parameter parameter) {
+    public void Invoke(Parameter parameter)
+    {
         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 100, Hazel.SendOption.Reliable, -1);
         writer.Write(Hash);
-        Sender(writer,parameter);
+        Sender(writer, parameter);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
-        Body.Invoke(parameter,true);
+        Body.Invoke(parameter, true);
     }
 
-    public void LocalInvoke(Parameter parameter) {
+    public void LocalInvoke(Parameter parameter)
+    {
         Body.Invoke(parameter, true);
     }
 
@@ -88,8 +91,9 @@ public class RemoteProcess : RemoteProcessBase
 {
     public delegate void Process(bool isCalledByMe);
     private Process Body { get; set; }
-    public RemoteProcess(string name,Process process)
-    :base(name){
+    public RemoteProcess(string name, Process process)
+    : base(name)
+    {
         Body = process;
     }
 
@@ -107,7 +111,7 @@ public class RemoteProcess : RemoteProcessBase
     }
 }
 
-public class DivisibleRemoteProcess<Parameter,DividedParameter> : RemoteProcessBase
+public class DivisibleRemoteProcess<Parameter, DividedParameter> : RemoteProcessBase
 {
     public delegate void Process(DividedParameter parameter, bool isCalledByMe);
 
@@ -116,7 +120,7 @@ public class DivisibleRemoteProcess<Parameter,DividedParameter> : RemoteProcessB
     private Func<MessageReader, DividedParameter> Receiver { get; set; }
     private Process Body { get; set; }
 
-    public DivisibleRemoteProcess(string name, Action<Parameter, Action<DividedParameter>> sender, Action<MessageWriter, DividedParameter> dividedSender, Func<MessageReader, DividedParameter> receiver, DivisibleRemoteProcess<Parameter,DividedParameter>.Process process)
+    public DivisibleRemoteProcess(string name, Action<Parameter, Action<DividedParameter>> sender, Action<MessageWriter, DividedParameter> dividedSender, Func<MessageReader, DividedParameter> receiver, DivisibleRemoteProcess<Parameter, DividedParameter>.Process process)
     : base(name)
     {
         Sender = sender;

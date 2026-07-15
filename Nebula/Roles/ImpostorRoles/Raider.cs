@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Nebula.Roles.ImpostorRoles;
+﻿namespace Nebula.Roles.ImpostorRoles;
 
 public class Raider : Role
 {
@@ -323,7 +321,7 @@ public class Raider : Role
 
     public override void AfterTeleport(float time)
     {
-        if(killButton.Timer < time) killButton.Timer = time;
+        if (killButton.Timer < time) killButton.Timer = time;
     }
 
     public Raider()

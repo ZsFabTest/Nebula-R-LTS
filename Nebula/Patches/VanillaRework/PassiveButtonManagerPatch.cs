@@ -1,4 +1,6 @@
-﻿namespace Nebula.Patches.VanillaRework;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Patches.VanillaRework;
 
 [HarmonyPatch]
 class PassiveButtonManagerPatch

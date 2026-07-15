@@ -1,4 +1,4 @@
-﻿using AmongUs.GameOptions;
+﻿using Nebula.Events.Variation.Global;
 
 namespace Nebula.Patches;
 
@@ -67,8 +67,8 @@ public class ShipStatusPatch
             rate = Mathf.Lerp(__instance.MaxLightRadius * min * role.LightRadiusMin, __instance.MaxLightRadius * role.LightRadiusMax, rate);
             foreach (var e in Events.GlobalEvent.Events)
             {
-                if (e is Events.Variation.BlackOut)
-                    rate *= (e as Events.Variation.BlackOut).VisionRate;
+                if (e is BlackOut)
+                    rate *= (e as BlackOut).VisionRate;
             }
         }
 

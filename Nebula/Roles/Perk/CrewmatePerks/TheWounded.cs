@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-namespace Nebula.Roles.Perk.CrewmatePerks;
+﻿namespace Nebula.Roles.Perk.CrewmatePerks;
 
 public class TheWounded : Perk
 {
@@ -31,6 +29,6 @@ public class TheWounded : Perk
 
     public TheWounded(int id) : base(id, "theWounded", true, 21, 2, new Color(0.4f, 0.35f, 0.7f))
     {
-        ImportantProperties = new float[] { 100f,40f };
+        ImportantProperties = new float[] { 100f, 40f };
     }
 }

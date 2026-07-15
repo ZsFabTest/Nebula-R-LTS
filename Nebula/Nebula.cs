@@ -1,25 +1,23 @@
-﻿global using UnityEngine;
-global using System.Collections;
+﻿global using System.Collections;
 global using System.Collections.Generic;
 global using System.Linq;
+global using AmongUs.GameOptions;
+global using BepInEx.Unity.IL2CPP.Utils.Collections;
 global using HarmonyLib;
+global using Il2CppInterop.Runtime;
+global using Il2CppInterop.Runtime.Injection;
+global using Il2CppInterop.Runtime.InteropTypes;
+global using Il2CppInterop.Runtime.InteropTypes.Arrays;
+global using Il2CppInterop.Runtime.InteropTypes.Fields;
+global using Nebula.Components;
 global using Nebula.Objects;
 global using Nebula.Utilities;
-global using AmongUs.GameOptions;
-global using Nebula.Components;
-global using Il2CppInterop.Runtime.Injection;
-global using BepInEx.Unity.IL2CPP.Utils.Collections;
-
-global using Il2CppInterop.Runtime;
-global using Il2CppInterop.Runtime.InteropTypes;
-global using Il2CppInterop.Runtime.InteropTypes.Fields;
-global using Il2CppInterop.Runtime.InteropTypes.Arrays;
-
-using BepInEx;
+global using UnityEngine;
 using System.Reflection;
+using AmongUs.Data.Player;
+using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using Nebula.Patches;
-using AmongUs.Data.Player;
 
 namespace Nebula;
 

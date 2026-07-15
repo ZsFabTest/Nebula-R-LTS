@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.ComplexRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class FTransporter : Template.HasBilateralness
 {
@@ -14,8 +14,8 @@ public class FTransporter : Template.HasBilateralness
         base.LoadOptionData();
         teleportCooldownOption = CreateOption(Color.white, "teleportCooldown", 25f, 15f, 45f, 2.5f);
         teleportCooldownOption.suffix = "second";
-        specialSetCooldownAfterTeleportOption = CreateOption(Color.white,"specialSetCooldownAfterTeleport",true);
-        leastCooldownOption = CreateOption(Color.white,"leastCooldown",7.5f,1.5f,15f,1.5f).AddPrerequisite(specialSetCooldownAfterTeleportOption);
+        specialSetCooldownAfterTeleportOption = CreateOption(Color.white, "specialSetCooldownAfterTeleport", true);
+        leastCooldownOption = CreateOption(Color.white, "leastCooldown", 7.5f, 1.5f, 15f, 1.5f).AddPrerequisite(specialSetCooldownAfterTeleportOption);
         leastCooldownOption.suffix = "second";
 
         FirstRole = Roles.NiceTransporter;
@@ -23,7 +23,7 @@ public class FTransporter : Template.HasBilateralness
     }
 
     public FTransporter()
-            : base("Transporter","transporter",RoleColor)
+            : base("Transporter", "transporter", RoleColor)
     {
     }
 
@@ -32,7 +32,8 @@ public class FTransporter : Template.HasBilateralness
 
 }
 
-public class Transporter : Template.BilateralnessRole{
+public class Transporter : Template.BilateralnessRole
+{
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.ChainShiftButton.png", 115f);
     private SpriteLoader markSprite = new SpriteLoader("Nebula.Resources.AssassinMarkButton.png", 115f);
 
@@ -44,7 +45,7 @@ public class Transporter : Template.BilateralnessRole{
     private CustomButton teleport;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(teleport != null)
+        if (teleport != null)
         {
             teleport.Destroy();
         }
@@ -61,7 +62,8 @@ public class Transporter : Template.BilateralnessRole{
                 else
                 {
                     RPCEventInvoker.Teleport(target);
-                    if(Roles.F_Transporter.specialSetCooldownAfterTeleportOption.getBool()){
+                    if (Roles.F_Transporter.specialSetCooldownAfterTeleportOption.getBool())
+                    {
                         RPCEventInvoker.AfterTeleportEvent(Roles.F_Transporter.leastCooldownOption.getFloat());
                     }
                     teleport.Timer = teleport.MaxTimer;
@@ -84,7 +86,7 @@ public class Transporter : Template.BilateralnessRole{
 
     public override void CleanUp()
     {
-        if(teleport != null)
+        if (teleport != null)
         {
             teleport.Destroy();
             teleport = null;
@@ -98,7 +100,7 @@ public class Transporter : Template.BilateralnessRole{
 
     public override void AfterTeleport(float time)
     {
-        if(teleport.Timer < time) teleport.Timer = time;
+        if (teleport.Timer < time) teleport.Timer = time;
     }
 
     public override void MyPlayerControlUpdate()
@@ -106,7 +108,8 @@ public class Transporter : Template.BilateralnessRole{
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color.yellow);
-        if(target != null && target.Data.IsDead){
+        if (target != null && target.Data.IsDead)
+        {
             teleport.Sprite = markSprite.GetSprite();
             target = null;
             teleport.SetLabel("button.label.mark");

@@ -16,7 +16,10 @@ public class Jester : Template.Draggable, Template.HasWinTrigger
     private Module.CustomOption canFireBlankShotsOption;
     private Module.CustomOption isGuessableOption;
 
-    public override bool IsGuessableRole { get {
+    public override bool IsGuessableRole
+    {
+        get
+        {
             if (Game.GameData.data.myData.getGlobalData().role.side == Side.Crewmate)
                 return isGuessableOption.getSelection() > 0;
             else

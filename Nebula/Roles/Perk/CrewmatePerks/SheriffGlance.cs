@@ -1,6 +1,4 @@
-﻿using Il2CppSystem.CodeDom;
-using System;
-using static Nebula.Roles.Perk.PerkHolder;
+﻿using static Nebula.Roles.Perk.PerkHolder;
 
 namespace Nebula.Roles.Perk.CrewmatePerks;
 
@@ -26,7 +24,7 @@ public class SheriffGlance : Perk
         float dis = PlayerControl.LocalPlayer.GetTruePosition().Distance(Game.HnSModificator.Seeker.GetTruePosition());
         dis *= dis;
 
-        if (dis < threthold && perkData.IntegerAry[0] == 0 && !(perkData.DataAry[0]>0f))
+        if (dis < threthold && perkData.IntegerAry[0] == 0 && !(perkData.DataAry[0] > 0f))
         {
             Game.HnSModificator.NoticeSeekerEvent.Invoke();
             perkData.DataAry[0] = IP(0, PerkPropertyType.Second);

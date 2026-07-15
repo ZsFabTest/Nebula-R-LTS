@@ -8,10 +8,10 @@ public class MurderersFame : Perk
     {
         if (perkData.DataAry[0] > 0f) PerkHolder.ShareFloatPerkData.Invoke(new PerkHolder.PerkDataMessage<float>()
         {
-            playerId=PlayerControl.LocalPlayer.PlayerId,
-            perkIndex=perkData.Index,
-            dataIndex=1,
-            value= IP(0, PerkPropertyType.Second)
+            playerId = PlayerControl.LocalPlayer.PlayerId,
+            perkIndex = perkData.Index,
+            dataIndex = 1,
+            value = IP(0, PerkPropertyType.Second)
         });
         perkData.DataAry[0] = IP(1, PerkPropertyType.Second);
     }

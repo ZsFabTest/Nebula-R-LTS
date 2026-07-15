@@ -1,15 +1,18 @@
-namespace Nebula.Roles.ImpostorRoles;
+using Nebula.Roles.ImpostorRoles;
 
-public class Gambler : Role{
+namespace Nebula.Roles.ExtremeRoles;
+
+public class Gambler : Role
+{
     private Module.CustomOption reduceKillCooldownOption;
     private Module.CustomOption addKillCooldownOption;
 
     public override void LoadOptionData()
     {
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
-        reduceKillCooldownOption = CreateOption(Color.white,"reduceKillCooldown",15f,5f,25f,0.5f);
+        reduceKillCooldownOption = CreateOption(Color.white, "reduceKillCooldown", 15f, 5f, 25f, 0.5f);
         reduceKillCooldownOption.suffix = "second";
-        addKillCooldownOption = CreateOption(Color.white,"addKillCooldown",15f,5f,25f,0.5f);
+        addKillCooldownOption = CreateOption(Color.white, "addKillCooldown", 15f, 5f, 25f, 0.5f);
         addKillCooldownOption.suffix = "second";
     }
 
@@ -24,10 +27,10 @@ public class Gambler : Role{
             () =>
             {
                 var r = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
-                int result = NebulaPlugin.rnd.Next(1,11);
-                if(result <= 5) killButton.Timer = killButton.MaxTimer - reduceKillCooldownOption.getFloat();
+                int result = NebulaPlugin.rnd.Next(1, 11);
+                if (result <= 5) killButton.Timer = killButton.MaxTimer - reduceKillCooldownOption.getFloat();
                 else killButton.Timer = killButton.MaxTimer + addKillCooldownOption.getFloat();
-                if(killButton.Timer < 0) killButton.Timer = 0;
+                if (killButton.Timer < 0) killButton.Timer = 0;
                 Game.GameData.data.myData.currentTarget = null;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
@@ -49,8 +52,10 @@ public class Gambler : Role{
         killButton.actionButton.ShowButtonText("+" + count + "s");
     }
 
-    public override void CleanUp(){
-        if(killButton != null){
+    public override void CleanUp()
+    {
+        if (killButton != null)
+        {
             killButton.Destroy();
             killButton = null;
         }
@@ -64,9 +69,10 @@ public class Gambler : Role{
     }
 
     public Gambler()
-         : base("Gambler","gambler",Palette.ImpostorRed,RoleCategory.Impostor,Side.Impostor,Side.Impostor,
-                Impostor.impostorSideSet,Impostor.impostorSideSet,Impostor.impostorEndSet,
-                true,VentPermission.CanUseUnlimittedVent,true,true,true){
+         : base("Gambler", "gambler", Palette.ImpostorRed, RoleCategory.Impostor, Side.Impostor, Side.Impostor,
+                Impostor.impostorSideSet, Impostor.impostorSideSet, Impostor.impostorEndSet,
+                true, VentPermission.CanUseUnlimittedVent, true, true, true)
+    {
         HideKillButtonEvenImpostor = true;
         killButton = null;
     }

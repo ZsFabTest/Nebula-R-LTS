@@ -1,8 +1,8 @@
-namespace Nebula.Roles.CrewmateRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Necrophilic : Role
 {
-    public static Color RoleColor = new Color(221f / 255f,20f / 255f,243f / 255f);
+    public static Color RoleColor = new Color(221f / 255f, 20f / 255f, 243f / 255f);
 
     public Module.CustomOption snapCoolDownOption;
 
@@ -18,18 +18,20 @@ public class Necrophilic : Role
     private CustomButton SnapToBody;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(SnapToBody != null){
+        if (SnapToBody != null)
+        {
             SnapToBody.Destroy();
         }
         SnapToBody = new CustomButton(
-            () => {
-                if(Helpers.AllDeadBodies().Count() == 0)
+            () =>
+            {
+                if (Helpers.AllDeadBodies().Count() == 0)
                 {
                     SnapToBody.Timer = SnapToBody.MaxTimer;
                     return;
                 }
                 DeadBody body = Helpers.AllDeadBodies()[NebulaPlugin.rnd.Next(Helpers.AllDeadBodies().Count())];
-                RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
+                RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence, PlayerControl.LocalPlayer.GetTruePosition());
                 Vector3 pos = body.transform.position;
                 PlayerControl.LocalPlayer.transform.position = pos;
                 var data = Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId];
@@ -51,7 +53,8 @@ public class Necrophilic : Role
 
     public override void CleanUp()
     {
-        if(SnapToBody != null){
+        if (SnapToBody != null)
+        {
             SnapToBody.Destroy();
             SnapToBody = null;
         }

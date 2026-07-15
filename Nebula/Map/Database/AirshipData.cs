@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Map.Database;
+
 public class AirshipData : MapData
 {
     public override IEnumerable<Tuple<GameObject, float>> AllAdmins(ShipStatus shipStatus)
@@ -25,7 +26,7 @@ public class AirshipData : MapData
         AdminNameMap.Add("records_admin_map", 1);
     }
 
-    public AirshipData() : base(4,"Airship")
+    public AirshipData() : base(4, "Airship")
     {
         SabotageMap[SystemTypes.GapRoom] = new SabotageData(SystemTypes.GapRoom, new Vector3(8f, 8.3f), true, true);
         SabotageMap[SystemTypes.Electrical] = new SabotageData(SystemTypes.Electrical, new Vector3(0f, 0f), false, false);
@@ -143,12 +144,12 @@ public class AirshipData : MapData
         HasDefaultPrespawnMinigame = true;
 
         SpawnCandidates.Add(new SpawnCandidate("brig", "assets/SpawnCandidates/Airship/Brig.png", 0, 140));
-        SpawnCandidates.Add(new SpawnCandidate("engineRoom", "assets/SpawnCandidates/Airship/Engine.png", 1,180));
+        SpawnCandidates.Add(new SpawnCandidate("engineRoom", "assets/SpawnCandidates/Airship/Engine.png", 1, 180));
         SpawnCandidates.Add(new SpawnCandidate("mainHall", "assets/SpawnCandidates/Airship/Hallway.png", 2, 226));
         SpawnCandidates.Add(new SpawnCandidate("kitchen", "assets/SpawnCandidates/Airship/Kitchen.png", 3, 140));
-        SpawnCandidates.Add(new SpawnCandidate("record", "assets/SpawnCandidates/Airship/Record.png", 4,173));
+        SpawnCandidates.Add(new SpawnCandidate("record", "assets/SpawnCandidates/Airship/Record.png", 4, 173));
         SpawnCandidates.Add(new SpawnCandidate("cargoBay", "assets/SpawnCandidates/Airship/Storage.png", 5, 188));
-        SpawnCandidates.Add(new SpawnCandidate("armory", new Vector2(-10.141f, -6.3739f), "assets/SpawnCandidates/Airship/Armory.png", null,115f));
+        SpawnCandidates.Add(new SpawnCandidate("armory", new Vector2(-10.141f, -6.3739f), "assets/SpawnCandidates/Airship/Armory.png", null, 115f));
         SpawnCandidates.Add(new SpawnCandidate("cockpit", new Vector2(-23.5643f, -1.4405f), "assets/SpawnCandidates/Airship/Cockpit.png", null, 115f));
         SpawnCandidates.Add(new SpawnCandidate("comms", new Vector2(-12.9433f, 1.4259f), "assets/SpawnCandidates/Airship/Comm.png", null, 115f));
         SpawnCandidates.Add(new SpawnCandidate("electrical", new Vector2(16.3201f, -8.808f), "assets/SpawnCandidates/Airship/Electrical.png", null, 115f));
@@ -202,7 +203,7 @@ public class AirshipData : MapData
         SpawnPoints.Add(new SpawnPointData("meetingRoom", new Vector2(11.1469f, 16.0138f)));
 
         AdminRooms.Add(new PointData("cockpit", new Vector2(-19.5643f, -1.4405f)));
-        AdminSystemTypeMap.Add(SystemTypes.Cockpit,1);
+        AdminSystemTypeMap.Add(SystemTypes.Cockpit, 1);
         AdminRooms.Add(new PointData("armory", new Vector2(-12.141f, -6.3739f)));
         AdminSystemTypeMap.Add(SystemTypes.Armory, 2);
         AdminRooms.Add(new PointData("comms", new Vector2(-12.9433f, 1.4259f)));

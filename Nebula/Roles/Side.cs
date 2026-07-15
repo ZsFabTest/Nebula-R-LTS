@@ -1,5 +1,4 @@
 ﻿using Nebula.Patches;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Nebula.Roles;
 
@@ -21,9 +20,9 @@ public class Side
             statistics.GetAlivePlayers(Jackal) == 0 &&
             statistics.GetAlivePlayers(Pavlov) == 0 &&
             statistics.GetAlivePlayers(Moriarty) == 0 &&
-            statistics.AliveWerewolf == 0 && 
+            statistics.AliveWerewolf == 0 &&
             statistics.AliveOracle == 0 &&
-            statistics.AliveChallenger == 0 && 
+            statistics.AliveChallenger == 0 &&
             statistics.AliveMadmate == 0)
             {
                 return EndCondition.CrewmateWinByVote;
@@ -32,7 +31,8 @@ public class Side
             {
                 return EndCondition.CrewmateWinByTask;
             }
-        }else if (GameOptionsManager.Instance.currentGameMode == GameModes.HideNSeek)
+        }
+        else if (GameOptionsManager.Instance.currentGameMode == GameModes.HideNSeek)
         {
             if (GameManager.Instance.Cast<HideAndSeekManager>().LogicFlowHnS.AllTimersExpired())
                 return EndCondition.CrewmateWinHnS;
@@ -44,10 +44,13 @@ public class Side
 
     public static Side Impostor = new Side("Impostor", "impostor", IntroDisplayOption.STANDARD, Palette.ImpostorRed, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if(statistics.AliveImpostors == 1 && Roles.LastImpostor.TopOption.getBool()){
-            foreach(PlayerControl p in PlayerControl.AllPlayerControls){
-                if(!p.Data.IsDead && p.GetModData().role.side == Side.Impostor && !p.GetModData().extraRole.Contains(Roles.LastImpostor)){
-                    RPCEventInvoker.AddExtraRole(p,Roles.LastImpostor,0);
+        if (statistics.AliveImpostors == 1 && Roles.LastImpostor.TopOption.getBool())
+        {
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
+                if (!p.Data.IsDead && p.GetModData().role.side == Side.Impostor && !p.GetModData().extraRole.Contains(Roles.LastImpostor))
+                {
+                    RPCEventInvoker.AddExtraRole(p, Roles.LastImpostor, 0);
                     break;
                 }
             }
@@ -61,7 +64,7 @@ public class Side
                 {
                     if (p.IsAlive && p.role == Roles.Covert && p.GetRoleData(Roles.Covert.canKillId) == 0) aliveUnawakened++;
                 }
-                if (aliveUnawakened == statistics.AliveImpostors && aliveUnawakened>0)
+                if (aliveUnawakened == statistics.AliveImpostors && aliveUnawakened > 0)
                 {
                     List<Game.PlayerData> candidate = new List<Game.PlayerData>(Game.GameData.data.AllPlayers.Values.Where((p) => p.role == Roles.Covert));
                     RPCEventInvoker.UpdateRoleData(candidate[NebulaPlugin.rnd.Next(candidate.Count)].id, Roles.Covert.canKillId, 1);
@@ -120,7 +123,7 @@ public class Side
         }
         else if (GameOptionsManager.Instance.currentGameMode == GameModes.HideNSeek)
         {
-            if (statistics.AliveCrewmates == 0 && statistics.AliveImpostors>0) return EndCondition.ImpostorWinHnS;
+            if (statistics.AliveCrewmates == 0 && statistics.AliveImpostors > 0) return EndCondition.ImpostorWinHnS;
         }
 
         return null;
@@ -128,7 +131,7 @@ public class Side
 
     public static Side Jackal = new Side("Jackal", "jackal", IntroDisplayOption.STANDARD, NeutralRoles.Jackal.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if ((statistics.AliveJackals - statistics.AliveInLoveJackals - statistics.AliveJackalsWithMadmate + statistics.AliveInLoveJackalsWithMadmate) * 2 >= (statistics.TotalAlive-statistics.AliveSpectre - statistics.AlivePuppeteer) && statistics.GetAlivePlayers(Impostor) - statistics.AliveImpostorsWithSidekick <= 0 && statistics.GetAlivePlayers(Pavlov) - statistics.AlivePavlovWithSidekick <= 0 && statistics.AliveMoriarty - statistics.AliveMoriartyWithSidekick <= 0 && statistics.AliveWerewolf - statistics.AliveWerewolfWithSidekick <= 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle - statistics.AliveOracleWithSidekick == 0 && statistics.AliveMadmate == 0 &&
+        if ((statistics.AliveJackals - statistics.AliveInLoveJackals - statistics.AliveJackalsWithMadmate + statistics.AliveInLoveJackalsWithMadmate) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre - statistics.AlivePuppeteer) && statistics.GetAlivePlayers(Impostor) - statistics.AliveImpostorsWithSidekick <= 0 && statistics.GetAlivePlayers(Pavlov) - statistics.AlivePavlovWithSidekick <= 0 && statistics.AliveMoriarty - statistics.AliveMoriartyWithSidekick <= 0 && statistics.AliveWerewolf - statistics.AliveWerewolfWithSidekick <= 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle - statistics.AliveOracleWithSidekick == 0 && statistics.AliveMadmate == 0 &&
         (statistics.AliveJackalCouple + statistics.AliveJackalTrilemma == 0 ||
         statistics.AliveJackalCouple * 2 + statistics.AliveJackalTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
         {
@@ -215,17 +218,17 @@ public class Side
         {
             if (!player.IsAlive) continue;
             if (player.role != Roles.Spectre) continue;
-            if(player.Tasks==null || player.Tasks?.Completed==player.Tasks?.AllTasks){ flag = true;  break; }
+            if (player.Tasks == null || player.Tasks?.Completed == player.Tasks?.AllTasks) { flag = true; break; }
         }
         if (!flag) return null;
 
-        if(TasksHandler.TotalAlivesTasks > 0 && TasksHandler.CompletedAlivesTasks == TasksHandler.TotalAlivesTasks)return EndCondition.SpectreWin;
+        if (TasksHandler.TotalAlivesTasks > 0 && TasksHandler.CompletedAlivesTasks == TasksHandler.TotalAlivesTasks) return EndCondition.SpectreWin;
         return null;
     }, (EndCondition endCondition, PlayerStatistics statistics, ShipStatus status) =>
     {
         if (endCondition.IsNoBodyWinEnd) return null;
 
-        if (endCondition == EndCondition.CrewmateWinByTask && (Roles.Spectre.canTakeOverTaskWinOption.getBool()||TasksHandler.TotalAlivesTasks==0)) return null;
+        if (endCondition == EndCondition.CrewmateWinByTask && (Roles.Spectre.canTakeOverTaskWinOption.getBool() || TasksHandler.TotalAlivesTasks == 0)) return null;
         if (endCondition == EndCondition.ImpostorWinBySabotage && Roles.Spectre.canTakeOverSabotageWinOption.getBool()) return null;
         if (endCondition == EndCondition.ArsonistWin) return null;
         if (endCondition == EndCondition.EmpiricWin) return null;
@@ -255,17 +258,17 @@ public class Side
         return null;
     });
 
-    public static Side Madman = new Side("Madman", "madman", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Madman.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    public static Side Madman = new Side("Madman", "madman", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.Madman.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
     });
 
-    public static Side SchrodingersCat = new Side("SchrodingersCat", "schrodingersCat", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.SchrodingersCat.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    public static Side SchrodingersCat = new Side("SchrodingersCat", "schrodingersCat", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.SchrodingersCat.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
     });
 
-    public static Side Pavlov = new Side("Pavlov", "pavlov", IntroDisplayOption.STANDARD, NeutralRoles.Pavlov.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    public static Side Pavlov = new Side("Pavlov", "pavlov", IntroDisplayOption.STANDARD, ExtremeRoles.Pavlov.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
         if ((statistics.AlivePavlov - statistics.AliveInLovePavlov - statistics.AlivePavlovWithSidekick + statistics.AliveInLovePavlovWithSidekick - statistics.AlivePavlovWithMadmate + statistics.AliveInLovePavlovWithMadmate) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre - statistics.AlivePuppeteer) && statistics.AliveImpostors == 0 &&
         (statistics.AlivePavlovCouple + statistics.AlivePavlovTrilemma == 0 ||
@@ -277,7 +280,8 @@ public class Side
         return null;
     });
 
-    public static Side Moriarty = new Side("Moriarty","moriarty",IntroDisplayOption.STANDARD, NeutralRoles.Moriarty.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+    public static Side Moriarty = new Side("Moriarty", "moriarty", IntroDisplayOption.STANDARD, ExtremeRoles.Moriarty.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
         if ((statistics.AliveMoriarty - statistics.AliveInLoveMoriarty - statistics.AliveMoriartyWithSidekick - statistics.AliveInLoveMoriartyWithMadmate + statistics.AliveInLoveMoriartyWithMadmate + statistics.AliveInLoveMoriartyWithSidekick) * 2 >= (statistics.TotalAlive - statistics.AlivePuppeteer) && statistics.AliveImpostors == 0 &&
         (statistics.AliveMoriartyCouple + statistics.AliveMoriartyTrilemma == 0 ||
         statistics.AliveMoriartyCouple * 2 + statistics.AliveMoriartyTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
@@ -289,64 +293,77 @@ public class Side
         return null;
     });
 
-    public static Side Cascrubinter = new Side("Cascrubinter","cascrubinter",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Cascrubinter.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(Roles.Cascrubinter.WinTrigger){
+    public static Side Cascrubinter = new Side("Cascrubinter", "cascrubinter", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.Cascrubinter.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (Roles.Cascrubinter.WinTrigger)
+        {
             return EndCondition.CascrubinterWin;
         }
         return null;
     });
 
-    public static Side Amnesiac = new Side("Amnesiac","amnesiac",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Amnesiac.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+    public static Side Amnesiac = new Side("Amnesiac", "amnesiac", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.Amnesiac.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
         return null;
     });
 
-    public static Side Yandere = new Side("Yandere","yandere",IntroDisplayOption.Yanderes,NeutralRoles.Yandere.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveYandere * 2 > statistics.TotalAlive){
-            RPCEventInvoker.SetExtraRole(Roles.Yandere.GetLover(),Roles.SecretCrush,0);
+    public static Side Yandere = new Side("Yandere", "yandere", IntroDisplayOption.Yanderes, ExtremeRoles.Yandere.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (statistics.AliveYandere * 2 > statistics.TotalAlive)
+        {
+            RPCEventInvoker.SetExtraRole(Roles.Yandere.GetLover(), Roles.SecretCrush, 0);
             return EndCondition.YandereWin;
         }
         return null;
     });
 
-    public static Side Guesser = new Side("Guesser","guesser",IntroDisplayOption.STANDARD,ComplexRoles.FGuesser.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(Roles.F_Guesser.WinTrigger){
+    public static Side Guesser = new Side("Guesser", "guesser", IntroDisplayOption.STANDARD, ComplexRoles.FGuesser.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (Roles.F_Guesser.WinTrigger)
+        {
             return EndCondition.GuesserWin;
         }
         return null;
     });
 
 
-    public static Side Werewolf = new Side("Werewolf","werewolf",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Werewolf.RoleColor,(PlayerStatistics statistics,ShipStatus status) => 
+    public static Side Werewolf = new Side("Werewolf", "werewolf", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.Werewolf.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle == 0 && statistics.AliveMadmate == 0 &&
-        (statistics.AliveWerewolf - statistics.AliveInLoveWerewolf - statistics.AliveWerewolfWithSidekick + statistics.AliveInLoveWerewolfWithSidekick - statistics.AliveWerewolfWithMadmate + statistics.AliveInLoveWerewolfWithMadmate) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre - statistics.AlivePuppeteer) && 
+        if (statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveChallenger == 0 && statistics.AliveOracle == 0 && statistics.AliveMadmate == 0 &&
+        (statistics.AliveWerewolf - statistics.AliveInLoveWerewolf - statistics.AliveWerewolfWithSidekick + statistics.AliveInLoveWerewolfWithSidekick - statistics.AliveWerewolfWithMadmate + statistics.AliveInLoveWerewolfWithMadmate) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre - statistics.AlivePuppeteer) &&
         (statistics.AliveWerewolfCouple + statistics.AliveWerewolfTrilemma == 0 ||
-        statistics.AliveWerewolfCouple * 2 + statistics.AliveWerewolfTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3)){
+        statistics.AliveWerewolfCouple * 2 + statistics.AliveWerewolfTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
+        {
             return EndCondition.WerewolfWin;
         }
         return null;
     });
 
-    public static Side Challenger = new Side("Challenger","challenger",IntroDisplayOption.SHOW_ALL,NeutralRoles.Challenger.RoleColor,(PlayerStatistics statistics,ShipStatus status) => 
+    public static Side Challenger = new Side("Challenger", "challenger", IntroDisplayOption.SHOW_ALL, ExtremeRoles.Challenger.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if(statistics.AliveChallenger >= statistics.TotalAlive || Roles.Challenger.WinTrigger){
+        if (statistics.AliveChallenger >= statistics.TotalAlive || Roles.Challenger.WinTrigger)
+        {
             return EndCondition.ChallengerWin;
         }
         return null;
     });
 
-    public static Side Oracle = new Side("Oracle","oracle",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Oracle.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveChallenger == 0 && statistics.AliveWerewolf == 0 && statistics.AliveMadmate == 0 &&
-        (statistics.AliveOracle - statistics.AliveInLoveOracle - statistics.AliveOracleWithMadmate - statistics.AliveOracleWithSidekick + statistics.AliveInLoveOracleWithMadmate + statistics.AliveInLoveOracleWithSidekick) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre - statistics.AlivePuppeteer) && 
+    public static Side Oracle = new Side("Oracle", "oracle", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.Oracle.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (statistics.AliveImpostors == 0 && statistics.AliveJackals == 0 && statistics.AlivePavlov == 0 && statistics.AliveMoriarty == 0 && statistics.AliveChallenger == 0 && statistics.AliveWerewolf == 0 && statistics.AliveMadmate == 0 &&
+        (statistics.AliveOracle - statistics.AliveInLoveOracle - statistics.AliveOracleWithMadmate - statistics.AliveOracleWithSidekick + statistics.AliveInLoveOracleWithMadmate + statistics.AliveInLoveOracleWithSidekick) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre - statistics.AlivePuppeteer) &&
         (statistics.AliveOracleCouple + statistics.AliveOracleTrilemma == 0 ||
-        statistics.AliveOracleCouple * 2 + statistics.AliveOracleTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3)){
+        statistics.AliveOracleCouple * 2 + statistics.AliveOracleTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
+        {
             return EndCondition.OracleWin;
         }
         return null;
     });
 
-    public static Side Ghost = new Side("Ghost","ghost",IntroDisplayOption.SHOW_ONLY_ME,new(1f,1f,1f),(PlayerStatistics statistics,ShipStatus status) => {
-        if(Roles.Ghost.WinTrigger){
+    public static Side Ghost = new Side("Ghost", "ghost", IntroDisplayOption.SHOW_ONLY_ME, new(1f, 1f, 1f), (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (Roles.Ghost.WinTrigger)
+        {
             return EndCondition.GhostWin;
         }
         return null;
@@ -367,44 +384,54 @@ public class Side
         return EndCondition.SantaWin;
     });
 
-    public static Side Puppeteer = new Side("Puppeteer","puppeteer",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Puppeteer.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(Roles.Puppeteer.WinTrigger){
+    public static Side Puppeteer = new Side("Puppeteer", "puppeteer", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.Puppeteer.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (Roles.Puppeteer.WinTrigger)
+        {
             return EndCondition.PuppeteerWin;
         }
         return null;
     });
 
-    public static Side HighRoller = new Side("HighRoller","highRoller",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.HighRoller.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(Roles.HighRoller.WinTrigger){
+    public static Side HighRoller = new Side("HighRoller", "highRoller", IntroDisplayOption.SHOW_ONLY_ME, ExtremeRoles.HighRoller.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (Roles.HighRoller.WinTrigger)
+        {
             return EndCondition.HighRollerWin;
         }
         return null;
     });
 
-    public static Side YellowTeam = new Side("YellowTeam","yellowTeam",IntroDisplayOption.STANDARD,BattleRoles.YellowTeam.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveYellowTeam > 0 && statistics.AliveGreenTeam <= 0) return EndCondition.YellowTeamWin;
+    public static Side YellowTeam = new Side("YellowTeam", "yellowTeam", IntroDisplayOption.STANDARD, BattleRoles.YellowTeam.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (statistics.AliveYellowTeam > 0 && statistics.AliveGreenTeam <= 0) return EndCondition.YellowTeamWin;
         return null;
     });
 
-    public static Side GreenTeam = new Side("GreenTeam","greenTeam",IntroDisplayOption.STANDARD,BattleRoles.GreenTeam.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveGreenTeam > 0 && statistics.AliveYellowTeam <= 0) return EndCondition.GreenTeamWin;
+    public static Side GreenTeam = new Side("GreenTeam", "greenTeam", IntroDisplayOption.STANDARD, BattleRoles.GreenTeam.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (statistics.AliveGreenTeam > 0 && statistics.AliveYellowTeam <= 0) return EndCondition.GreenTeamWin;
         return null;
     });
 
-    public static Side Infected = new Side("Infected","infected",IntroDisplayOption.SHOW_ONLY_ME,Palette.ImpostorRed,(PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveInfected >= 1 && statistics.AliveSurvivals <= 0) return EndCondition.InfectedWin;
+    public static Side Infected = new Side("Infected", "infected", IntroDisplayOption.SHOW_ONLY_ME, Palette.ImpostorRed, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (statistics.AliveInfected >= 1 && statistics.AliveSurvivals <= 0) return EndCondition.InfectedWin;
         return null;
     });
 
-    public static Side Survival = new Side("Survival","survival",IntroDisplayOption.STANDARD,Palette.CrewmateBlue,(PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveInfected <= 0 && statistics.AliveSurvivals >= 1) return EndCondition.SurvivalWin;
+    public static Side Survival = new Side("Survival", "survival", IntroDisplayOption.STANDARD, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (statistics.AliveInfected <= 0 && statistics.AliveSurvivals >= 1) return EndCondition.SurvivalWin;
         return null;
     });
 
-    public static Side UndeadMaster = new Side("UndeadMaster","undeadMaster",IntroDisplayOption.STANDARD,NeutralRoles.UndeadMaster.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+    public static Side UndeadMaster = new Side("UndeadMaster", "undeadMaster", IntroDisplayOption.STANDARD, ExtremeRoles.UndeadMaster.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    {
         return null;
-    },(EndCondition condition,PlayerStatistics statistics,ShipStatus status) => {
-        if(statistics.AliveUndeadMaster <= 0) return null;
+    }, (EndCondition condition, PlayerStatistics statistics, ShipStatus status) =>
+    {
+        if (statistics.AliveUndeadMaster <= 0) return null;
 
         if (condition == EndCondition.NobodyWin) return null;
         if (condition == EndCondition.NobodySkeldWin) return null;
@@ -416,15 +443,18 @@ public class Side
         return EndCondition.UndeadMasterWin;
     });
 
-    public static Side RedTeam = new Side("RedTeam", "redTeam", IntroDisplayOption.STANDARD, Color.red, (PlayerStatistics statistics, ShipStatus status) => {
+    public static Side RedTeam = new Side("RedTeam", "redTeam", IntroDisplayOption.STANDARD, Color.red, (PlayerStatistics statistics, ShipStatus status) =>
+    {
         return null;
     });
 
-    public static Side BlueTeam = new Side("BlueTeam", "blueTeam", IntroDisplayOption.STANDARD, Color.blue, (PlayerStatistics statistics, ShipStatus status) => {
+    public static Side BlueTeam = new Side("BlueTeam", "blueTeam", IntroDisplayOption.STANDARD, Color.blue, (PlayerStatistics statistics, ShipStatus status) =>
+    {
         return null;
     });
 
-    public static Side KillingMachine = new Side("KillingMachine", "killingMachine", IntroDisplayOption.STANDARD, Color.grey, (PlayerStatistics statistics, ShipStatus status) => {
+    public static Side KillingMachine = new Side("KillingMachine", "killingMachine", IntroDisplayOption.STANDARD, Color.grey, (PlayerStatistics statistics, ShipStatus status) =>
+    {
         return null;
     });
 
@@ -445,8 +475,10 @@ public class Side
         {
             if (Game.GameData.data.Timer < 1f)
             {
-                if(Game.GameData.data.GameMode == Module.CustomGameMode.VirusCrisis){
-                    switch(CustomOptionHolder.winnerIfTimesUpOption.getSelection()){
+                if (Game.GameData.data.GameMode == Module.CustomGameMode.VirusCrisis)
+                {
+                    switch (CustomOptionHolder.winnerIfTimesUpOption.getSelection())
+                    {
                         case 0:
                             return EndCondition.SurvivalWin;
                         case 1:
@@ -455,7 +487,7 @@ public class Side
                             return EndCondition.NobodyWin;
                     }
                 }
-                else if(Game.GameData.data.GameMode == Module.CustomGameMode.Compete)
+                else if (Game.GameData.data.GameMode == Module.CustomGameMode.Compete)
                 {
                     int point1 = Roles.RedTeam.Point;
                     int point2 = Roles.BlueTeam.Point;
@@ -483,15 +515,15 @@ public class Side
             }
         }
 
-            //Lovers単独勝利
-            if (statistics.TotalAlive <= 3)
+        //Lovers単独勝利
+        if (statistics.TotalAlive <= 3)
         {
             if (statistics.AliveCouple == 1 && statistics.AliveTrilemma == 0) return EndCondition.LoversWin;
         }
 
 
-            //Trilemma
-            if (statistics.TotalAlive <= 5)
+        //Trilemma
+        if (statistics.TotalAlive <= 5)
         {
             if (statistics.AliveTrilemma == 1 && statistics.AliveCouple == 0) return EndCondition.TrilemmaWin;
         }

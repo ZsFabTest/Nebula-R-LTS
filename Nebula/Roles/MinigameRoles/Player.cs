@@ -5,7 +5,7 @@ namespace Nebula.Roles.MinigameRoles;
 public class Player : Role
 {
     public static HashSet<Side> minigameSideSet = new HashSet<Side>() { Side.Crewmate };
-    
+
 
     public override void MyUpdate()
     {

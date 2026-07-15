@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Map.Database;
+
 public class FungleData : MapData
 {
     public override IEnumerable<Tuple<GameObject, float>> AllVitals(ShipStatus shipStatus)

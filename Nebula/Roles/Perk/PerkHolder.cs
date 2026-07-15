@@ -1,7 +1,6 @@
-﻿using Iced.Intel;
-using LibCpp2IL;
+﻿using LibCpp2IL;
 using Nebula.Expansion;
-using Nebula.Objects;
+using Nebula.Rpc;
 
 namespace Nebula.Roles.Perk;
 
@@ -27,22 +26,22 @@ public class PerkHolder : ExtraRole
             (reader) =>
             {
                 SharePerkMessage message = new SharePerkMessage();
-                
+
                 message.playerId = reader.ReadByte();
 
                 message.choicedSeekerRole = reader.ReadInt32();
 
                 int length = Mathf.Min(reader.ReadInt32(), (int)CustomOptionHolder.ValidPerksOption.getFloat());
                 message.perks = new int[length];
-                
-                for(int i = 0; i < length; i++) message.perks[i]=reader.ReadInt32();
+
+                for (int i = 0; i < length; i++) message.perks[i] = reader.ReadInt32();
                 return message;
             },
             (message, isCalledByMe) =>
             {
                 if (message.perks.Length > (int)CustomOptionHolder.ValidPerksOption.getFloat()) message.perks = message.perks.SubArray(0, (int)CustomOptionHolder.ValidPerksOption.getFloat());
 
-                PerkData.AllPerkData[message.playerId] = new PerkData(message.playerId,message.perks);
+                PerkData.AllPerkData[message.playerId] = new PerkData(message.playerId, message.perks);
 
                 if (Helpers.playerById(message.playerId).Data.Role.IsImpostor)
                 {
@@ -117,7 +116,7 @@ public class PerkHolder : ExtraRole
         public byte PlayerId { get; private set; }
         public int Index { get; private set; }
 
-        public PerkInstance(byte playerId,int dataIndex,Perk perk,PerkDisplay? display=null)
+        public PerkInstance(byte playerId, int dataIndex, Perk perk, PerkDisplay? display = null)
         {
             this.Perk = perk;
             PlayerId = playerId;
@@ -128,7 +127,8 @@ public class PerkHolder : ExtraRole
         }
 
     }
-    public class PerkData {
+    public class PerkData
+    {
         static public Dictionary<byte, PerkData> AllPerkData = new();
         static private PerkData? myPerkData = null;
         static public PerkData MyPerkData
@@ -149,7 +149,8 @@ public class PerkHolder : ExtraRole
         {
             PlayerId = playerId;
             MyPerks = new PerkInstance[perks.Length];
-            for (int i = 0; i < perks.Length; i++) {
+            for (int i = 0; i < perks.Length; i++)
+            {
                 Perk? p = null;
                 Perks.AllPerks.TryGetValue(perks[i], out p);
                 MyPerks[i] = p != null ? new PerkInstance(playerId, i, p) : null;
@@ -157,7 +158,7 @@ public class PerkHolder : ExtraRole
                 if (MyPerks[i] != null)
                 {
                     MyPerks[i].Perk.GlobalInitialize(MyPerks[i], playerId);
-                    if (playerId==PlayerControl.LocalPlayer.PlayerId)MyPerks[i].Perk.Initialize(MyPerks[i],playerId);
+                    if (playerId == PlayerControl.LocalPlayer.PlayerId) MyPerks[i].Perk.Initialize(MyPerks[i], playerId);
                 }
             }
         }
@@ -180,8 +181,8 @@ public class PerkHolder : ExtraRole
 
     PerkDisplay[] MyPerkDisplay;
     GameObject PerkDisplayHolder;
-    List<Objects.CustomButton> CustomButtonList=new List<CustomButton>();
-    
+    List<Objects.CustomButton> CustomButtonList = new List<CustomButton>();
+
 
 
     public override void Assignment(Patches.AssignMap assignMap)
@@ -198,9 +199,9 @@ public class PerkHolder : ExtraRole
     {
         MyPerkDisplay = new PerkDisplay[PerkData.MyPerkData.MyPerks.Length];
         PerkDisplayHolder = new GameObject("PerkDisplayHolder");
-        GridArrangeExpansion.AddGridArrangeContent(PerkDisplayHolder,GridArrangeExpansion.GridArrangeParameter.LeftSideContent);
+        GridArrangeExpansion.AddGridArrangeContent(PerkDisplayHolder, GridArrangeExpansion.GridArrangeParameter.LeftSideContent);
 
-        for(int i = 0; i < MyPerkDisplay.Length; i++)
+        for (int i = 0; i < MyPerkDisplay.Length; i++)
         {
             MyPerkDisplay[i] = new GameObject("PerkDisplay").AddComponent<PerkDisplay>();
             MyPerkDisplay[i].transform.SetParent(PerkDisplayHolder.transform);
@@ -208,13 +209,13 @@ public class PerkHolder : ExtraRole
             MyPerkDisplay[i].transform.localScale = Vector3.one * 0.3f;
             MyPerkDisplay[i].SetPerk(PerkData.MyPerkData.GetPerk(i));
 
-            if(PerkData.MyPerkData.MyPerks[i]!=null) PerkData.MyPerkData.MyPerks[i].Display = MyPerkDisplay[i];
+            if (PerkData.MyPerkData.MyPerks[i] != null) PerkData.MyPerkData.MyPerks[i].Display = MyPerkDisplay[i];
         }
     }
 
     public override void OnTaskComplete(PlayerTask? task)
     {
-        PerkData.MyPerkData.PerkAction((p)=>p.Perk.OnTaskComplete(p,task));
+        PerkData.MyPerkData.PerkAction((p) => p.Perk.OnTaskComplete(p, task));
     }
 
     public override void OnAnyoneDied(byte playerId)
@@ -248,7 +249,7 @@ public class PerkHolder : ExtraRole
 
     public override void CleanUp()
     {
-        foreach(var button in CustomButtonList)
+        foreach (var button in CustomButtonList)
         {
             button.Destroy();
         }
@@ -257,7 +258,7 @@ public class PerkHolder : ExtraRole
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        PerkData.MyPerkData.PerkAction((p) => p.Perk.ButtonInitialize(p, (b)=>RegisterButton(b)));
+        PerkData.MyPerkData.PerkAction((p) => p.Perk.ButtonInitialize(p, (b) => RegisterButton(b)));
     }
 
     private void RegisterButton(Objects.CustomButton button)

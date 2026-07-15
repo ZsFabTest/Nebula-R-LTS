@@ -1,7 +1,4 @@
-﻿using TMPro;
-using static Il2CppSystem.Globalization.CultureInfo;
-
-namespace Nebula.Roles.CompeteRoles;
+﻿namespace Nebula.Roles.CompeteRoles;
 
 public class RedTeam : Role
 {
@@ -15,14 +12,14 @@ public class RedTeam : Role
     private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
         killButton = new CustomButton(
             () =>
             {
-                Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget,Game.PlayerData.PlayerStatus.Dead);
+                Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead);
                 Game.GameData.data.myData.currentTarget = null;
                 killButton.Timer = killButton.MaxTimer;
                 RPCEventInvoker.CompeteGetPoint(0);
@@ -43,7 +40,7 @@ public class RedTeam : Role
 
     public override void CleanUp()
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;
@@ -59,7 +56,8 @@ public class RedTeam : Role
 
     public override void OnDied()
     {
-        Events.StandardEvent.SetEvent(() => {
+        Events.StandardEvent.SetEvent(() =>
+        {
             var pos = PlayerControl.LocalPlayer.transform.position;
             var mapData = Map.MapData.GetCurrentMapData();
             do
@@ -69,7 +67,7 @@ public class RedTeam : Role
             } while (!mapData.isOnTheShip(pos));
             PlayerControl.LocalPlayer.transform.position = pos;
             RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer, true, false);
-        },time:CustomOptionHolder.CompeteReviveDelayOption.getFloat());
+        }, time: CustomOptionHolder.CompeteReviveDelayOption.getFloat());
     }
 
     public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
@@ -78,8 +76,8 @@ public class RedTeam : Role
         else displayColor = Color.blue;
     }
 
-    public RedTeam() : base("RedTeam","redTeam",Color.red,RoleCategory.Neutral,Side.RedTeam,Side.RedTeam,
-        new HashSet<Side> { Side.RedTeam },new HashSet<Side>() { Side.RedTeam },new HashSet<Patches.EndCondition>() { Patches.EndCondition.RedTeamWin },
+    public RedTeam() : base("RedTeam", "redTeam", Color.red, RoleCategory.Neutral, Side.RedTeam, Side.RedTeam,
+        new HashSet<Side> { Side.RedTeam }, new HashSet<Side>() { Side.RedTeam }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.RedTeamWin },
         true, VentPermission.CanUseUnlimittedVent, true, true, true)
     {
         canReport = false;

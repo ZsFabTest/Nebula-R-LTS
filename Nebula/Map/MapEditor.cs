@@ -1,6 +1,7 @@
 ﻿using Nebula.Expansion;
 
 namespace Nebula.Map;
+
 public class MapEditor
 {
     //Skeld=0,MIRA=1,Polus=2,AirShip=4

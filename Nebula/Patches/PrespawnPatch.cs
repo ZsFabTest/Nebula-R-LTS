@@ -1,5 +1,5 @@
-﻿using TMPro;
-using PowerTools;
+﻿using PowerTools;
+using TMPro;
 
 namespace Nebula.Patches;
 
@@ -89,7 +89,7 @@ class PrespawnPatch
 
                     if (__instance.amClosing != Minigame.CloseState.None) return;
 
-                    if (Game.GameData.data.SynchronizeData.Align(Game.SynchronizeTag.PreSpawnMinigame, false,true,false) || p == 1f)
+                    if (Game.GameData.data.SynchronizeData.Align(Game.SynchronizeTag.PreSpawnMinigame, false, true, false) || p == 1f)
                     {
                         PlayerControl.LocalPlayer.gameObject.SetActive(true);
                         __instance.StopAllCoroutines();
@@ -245,14 +245,14 @@ class PrespawnPatch
                     int index = randomArray[i];
 
                     spawnCandidates[index].ReloadTexture();
-                    
+
                     passiveButton.OnClick.RemoveAllListeners();
                     passiveButton.OnClick.AddListener(new System.Action(() =>
                     {
                         PrespawnSpawnAtPatch.SpawnAt(spawnInMinigame, spawnCandidates[index].SpawnLocation);
                     }));
                     passiveButton.OnMouseOver.AddListener(new System.Action(() => HudManager.Instance.StartCoroutine(spawnCandidates[index].GetEnumerator(passiveButton.GetComponent<SpriteRenderer>()))));
-                    
+
                     passiveButton.GetComponent<SpriteAnim>().Stop();
                     passiveButton.GetComponent<SpriteRenderer>().sprite = spawnCandidates[index].GetSprite();
                     passiveButton.GetComponentInChildren<TextMeshPro>().text = Language.Language.GetString("locations." + spawnCandidates[index].LocationKey);
@@ -285,18 +285,18 @@ class PrespawnPatch
                 Vector2? lastPos = Game.GameData.data.myData.getGlobalData().preMeetingPosition;
 
                 Vector2? spawnAt = null;
-                if (lastPos==null || !CustomOptionHolder.respawnNearbyFinalPosition.getBool())
+                if (lastPos == null || !CustomOptionHolder.respawnNearbyFinalPosition.getBool())
                 {
                     spawnAt = points[NebulaPlugin.rnd.Next(points.Count)];
-                    
+
                 }
                 else
                 {
                     float dis = -1f;
-                    foreach(var p in points)
+                    foreach (var p in points)
                     {
                         float t = ((Vector3)p).Distance(lastPos.Value);
-                        if (dis<0f || dis > t)
+                        if (dis < 0f || dis > t)
                         {
                             dis = t;
                             spawnAt = p;

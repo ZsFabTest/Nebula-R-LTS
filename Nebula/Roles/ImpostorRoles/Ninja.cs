@@ -29,10 +29,10 @@
                 {
                     float min = 0f;
                     Vent? vent = null;
-                    foreach(var v in ShipStatus.Instance.AllVents)
+                    foreach (var v in ShipStatus.Instance.AllVents)
                     {
                         float d = PlayerControl.LocalPlayer.transform.position.Distance(v.gameObject.transform.position);
-                        if (vent==null || d < min)
+                        if (vent == null || d < min)
                         {
                             min = d;
                             vent = v;
@@ -40,13 +40,14 @@
                     }
                     if (vent == null) return;
 
-                    RPCEventInvoker.EnterRemoteVent(PlayerControl.LocalPlayer.transform.position,vent);
+                    RPCEventInvoker.EnterRemoteVent(PlayerControl.LocalPlayer.transform.position, vent);
 
                     hideButton.Timer = hideButton.MaxTimer;
                 },
-                () => {
+                () =>
+                {
                     if (PlayerControl.LocalPlayer.Data.IsDead) return false;
-                    if(HudManager.Instance.ImpostorVentButton.currentTarget==null && !(PlayerControl.LocalPlayer.walkingToVent || PlayerControl.LocalPlayer.inVent) && !PlayerControl.LocalPlayer.IsPlaying(PlayerControl.LocalPlayer.MyPhysics.Animations.group.ExitVentAnim))
+                    if (HudManager.Instance.ImpostorVentButton.currentTarget == null && !(PlayerControl.LocalPlayer.walkingToVent || PlayerControl.LocalPlayer.inVent) && !PlayerControl.LocalPlayer.IsPlaying(PlayerControl.LocalPlayer.MyPhysics.Animations.group.ExitVentAnim))
                     {
                         HudManager.Instance.ImpostorVentButton.gameObject.SetActive(false);
                         hideButton.actionButton.transform.position = HudManager.Instance.ImpostorVentButton.gameObject.transform.position;

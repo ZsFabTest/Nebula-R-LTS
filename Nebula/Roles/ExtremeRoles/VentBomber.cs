@@ -1,14 +1,14 @@
-﻿namespace Nebula.Roles.CrewmateRoles
+﻿namespace Nebula.Roles.ExtremeRoles
 {
     public class VentBomber : Template.TCrewmate
     {
-        public static Color RoleColor = new(29f / 255f,150f / 255f,142f / 255f);
+        public static Color RoleColor = new(29f / 255f, 150f / 255f, 142f / 255f);
         private Module.CustomOption bombBombCooldown;
 
         public override void LoadOptionData()
         {
             TopOption.tab = Module.CustomOptionTab.AdvancedSettings;
-            bombBombCooldown = CreateOption(Color.white,"bombBombCooldown",35f,5f,60f,2.5f);
+            bombBombCooldown = CreateOption(Color.white, "bombBombCooldown", 35f, 5f, 60f, 2.5f);
             bombBombCooldown.suffix = "second";
         }
 
@@ -50,7 +50,8 @@
                 vl.Clear();
             }
             set = new CustomButton(
-                () => {
+                () =>
+                {
                     Kill(targetVent);
                     vl.Clear();
                     set.Timer = set.MaxTimer;
@@ -81,15 +82,15 @@
         private void Kill(Vent v)
         {
             if (!v) return;
-            foreach(var vent in vl)
+            foreach (var vent in vl)
             {
                 if (vent && vent.transform.position == v.transform.position) return;
             }
             vl.Add(v);
-            foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+            foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
                 if (!p.Data.IsDead && p.inVent && Vector2.Distance(v.transform.position, p.transform.position) <= 1f)
-                    Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer,p,Game.PlayerData.PlayerStatus.Dead,false,false);
+                    Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, p, Game.PlayerData.PlayerStatus.Dead, false, false);
             }
             Kill(v.Left);
             Kill(v.Right);

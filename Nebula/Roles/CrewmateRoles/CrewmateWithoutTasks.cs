@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Roles.CrewmateRoles;
+
 public class CrewmateWithoutTasks : Crewmate
 {
     public override bool IsGuessableRole { get => false; }

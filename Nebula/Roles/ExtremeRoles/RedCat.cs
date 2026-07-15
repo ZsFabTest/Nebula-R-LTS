@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿using Nebula.Roles.ImpostorRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class RedCat : Role
 {

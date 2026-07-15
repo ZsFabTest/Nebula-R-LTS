@@ -1,13 +1,15 @@
-namespace Nebula.Roles.ExtraRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public class Cheater : ExtraRole{
-	public static Color RoleColor = new Color(66f / 255f,119f / 255f,230f / 255f);
+public class Cheater : ExtraRole
+{
+    public static Color RoleColor = new Color(66f / 255f, 119f / 255f, 230f / 255f);
 
-	private Module.CustomOption maxLoversOption;
+    private Module.CustomOption maxLoversOption;
 
-	public override void LoadOptionData(){
-		maxLoversOption = CreateOption(Color.white,"maxLovers",2f,1f,10f,1f);
-	}
+    public override void LoadOptionData()
+    {
+        maxLoversOption = CreateOption(Color.white, "maxLovers", 2f, 1f, 10f, 1f);
+    }
 
     private void _sub_Assignment(Patches.AssignMap assignMap, List<byte> players, int count)
     {
@@ -30,8 +32,8 @@ public class Cheater : ExtraRole{
     public override void Assignment(Patches.AssignMap assignMap)
     {
         //Debug.LogWarningFormat("SecondaryJackal: " + IsSpawnable().ToString());
-        if(!IsSpawnable()) return;
-        
+        if (!IsSpawnable()) return;
+
         List<byte> players = new List<byte>();
 
         foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
@@ -44,8 +46,9 @@ public class Cheater : ExtraRole{
         _sub_Assignment(assignMap, players, (int)RoleCountOption.getFloat());
     }
 
-	public override void Initialize(PlayerControl __instance){
-		List<PlayerControl> players = PlayerControl.AllPlayerControls.ToArray().ToList();
+    public override void Initialize(PlayerControl __instance)
+    {
+        List<PlayerControl> players = PlayerControl.AllPlayerControls.ToArray().ToList();
         PlayerControl player;
         for (int i = 0; i < maxLoversOption.getFloat(); i++)
         {
@@ -54,14 +57,15 @@ public class Cheater : ExtraRole{
             if (5 <= NebulaPlugin.rnd.Next(10)) continue;
 
             player = players[NebulaPlugin.rnd.Next(players.Count)];
-            if(player.PlayerId == PlayerControl.LocalPlayer.PlayerId){
+            if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+            {
                 players.Remove(player);
                 continue;
             }
-            RPCEventInvoker.AddExtraRole(player,Roles.FakeLover,PlayerControl.LocalPlayer.PlayerId);
+            RPCEventInvoker.AddExtraRole(player, Roles.FakeLover, PlayerControl.LocalPlayer.PlayerId);
             players.Remove(player);
         }
-	}
+    }
 
     public override void EditSpawnableRoleShower(ref string suffix, Role role)
     {
@@ -97,6 +101,7 @@ public class Cheater : ExtraRole{
         return option;
     }
 
-	public Cheater() : base("Cheater","cheater",RoleColor,0){
-	}
+    public Cheater() : base("Cheater", "cheater", RoleColor, 0)
+    {
+    }
 }

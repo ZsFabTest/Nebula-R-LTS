@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Roles.ImpostorRoles;
 
 public class Marionette : Role
 {

@@ -1,13 +1,4 @@
-﻿using Il2CppSystem.Net;
-using Nebula.Expansion;
-using Rewired.HID;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using static Il2CppSystem.Xml.Schema.FacetsChecker.FacetsCompiler;
+﻿using Nebula.Expansion;
 
 namespace Nebula.Objects;
 
@@ -18,13 +9,13 @@ public class PerkDisplay : MonoBehaviour
         PerkBackSprite = new SpriteLoader[9];
         PerkFrontSprite = new SpriteLoader[41];
 
-        for (int i = 0; i < PerkBackSprite.Length; i++) PerkBackSprite[i] = new SpriteLoader("Nebula.Resources.Perks.Back"+i+".png",100f);
+        for (int i = 0; i < PerkBackSprite.Length; i++) PerkBackSprite[i] = new SpriteLoader("Nebula.Resources.Perks.Back" + i + ".png", 100f);
         for (int i = 0; i < PerkFrontSprite.Length; i++) PerkFrontSprite[i] = new SpriteLoader("Nebula.Resources.Perks.Front" + i + ".png", 100f);
 
         ClassInjector.RegisterTypeInIl2Cpp<PerkDisplay>();
     }
 
-    private static SpriteLoader BackSprite = new("Nebula.Resources.Perks.FrameBack.png",100f);
+    private static SpriteLoader BackSprite = new("Nebula.Resources.Perks.FrameBack.png", 100f);
     private static SpriteLoader FrameSprite = new("Nebula.Resources.Perks.Frame.png", 100f);
     private static SpriteLoader FrameRoleSprite = new("Nebula.Resources.Perks.RoleFrame.png", 100f);
     private static SpriteLoader FrameRoleGemSprite = new("Nebula.Resources.Perks.RoleGem.png", 100f);
@@ -32,7 +23,7 @@ public class PerkDisplay : MonoBehaviour
     private static SpriteLoader[] PerkBackSprite;
     private static SpriteLoader[] PerkFrontSprite;
 
-    public SpriteRenderer Frame,FrameSub,PerkBack,PerkFront,Background;
+    public SpriteRenderer Frame, FrameSub, PerkBack, PerkFront, Background;
     private SpriteRenderer? highlight = null;
     private bool hasButtonMaterial = false;
 
@@ -62,9 +53,11 @@ public class PerkDisplay : MonoBehaviour
         CooldownHelpers.SetCooldownNormalizedUvs(PerkFront);
     }
 
-    public SpriteRenderer Highlight { get
+    public SpriteRenderer Highlight
+    {
+        get
         {
-            if(highlight == null)
+            if (highlight == null)
             {
                 var obj = new GameObject("Highlight");
                 obj.layer = LayerExpansion.GetUILayer();
@@ -76,15 +69,16 @@ public class PerkDisplay : MonoBehaviour
                 highlight.sprite = HighlightSprite.GetSprite();
             }
             return highlight;
-        } }
+        }
+    }
 
     public void Awake()
     {
         var frameObj = new GameObject("Frame");
         frameObj.layer = LayerExpansion.GetUILayer();
         frameObj.transform.SetParent(gameObject.transform);
-        frameObj.transform.localPosition= new Vector3(0,0,-1f);
-        frameObj.transform.localScale=Vector3.one;
+        frameObj.transform.localPosition = new Vector3(0, 0, -1f);
+        frameObj.transform.localScale = Vector3.one;
         Frame = frameObj.AddComponent<SpriteRenderer>();
         Frame.sprite = FrameSprite.GetSprite();
         Frame.color = Color.white.RGBMultiplied(0.3f);
@@ -122,7 +116,7 @@ public class PerkDisplay : MonoBehaviour
         PerkFront = perkFObj.AddComponent<SpriteRenderer>();
     }
 
-    public void SetType(bool isNormal = true,Color? gemColor=null)
+    public void SetType(bool isNormal = true, Color? gemColor = null)
     {
         if (isNormal)
         {
@@ -148,7 +142,7 @@ public class PerkDisplay : MonoBehaviour
         else SetPerk(perk.VisualFrontSpriteId, perk.VisualBackSpriteId, perk.VisualBackSpriteColor);
     }
 
-    public void SetPerk(int frontId,int backId,Color backColor)
+    public void SetPerk(int frontId, int backId, Color backColor)
     {
         if (frontId < 0 || backId < 0) Inactivate();
 
@@ -166,15 +160,17 @@ public class PerkDisplay : MonoBehaviour
     public PassiveButton SetUpButton(Color? highlightColor)
     {
         if (highlightColor.HasValue) Highlight.color = highlightColor.Value;
-        
+
         var collider = gameObject.AddComponent<CircleCollider2D>();
         collider.isTrigger = true;
         collider.radius = 0.7f;
         var button = gameObject.SetUpButton(null);
-        button.OnMouseOver.AddListener((Action)(() => {
+        button.OnMouseOver.AddListener((Action)(() =>
+        {
             Highlight.gameObject.SetActive(true);
         }));
-        button.OnMouseOut.AddListener((Action)(() => {
+        button.OnMouseOut.AddListener((Action)(() =>
+        {
             Highlight.gameObject.SetActive(false);
         }));
 

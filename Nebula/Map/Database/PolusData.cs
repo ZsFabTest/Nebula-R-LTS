@@ -1,20 +1,21 @@
 ﻿namespace Nebula.Map.Database;
+
 public class PolusData : MapData
 {
     public override IEnumerable<Tuple<GameObject, float>> AllAdmins(ShipStatus shipStatus)
     {
-        yield return new(shipStatus.transform.GetChild(10).GetChild(5).GetChild(0).gameObject,0.5f);
-        yield return new(shipStatus.transform.GetChild(10).GetChild(5).GetChild(1).gameObject,0.5f);
+        yield return new(shipStatus.transform.GetChild(10).GetChild(5).GetChild(0).gameObject, 0.5f);
+        yield return new(shipStatus.transform.GetChild(10).GetChild(5).GetChild(1).gameObject, 0.5f);
     }
 
     public override IEnumerable<Tuple<GameObject, float>> AllVitals(ShipStatus shipStatus)
     {
-        yield return new(shipStatus.transform.GetChild(9).GetChild(6).gameObject,0.28f);
+        yield return new(shipStatus.transform.GetChild(9).GetChild(6).gameObject, 0.28f);
     }
 
     public override IEnumerable<Tuple<GameObject, float>> AllCameras(ShipStatus shipStatus)
     {
-        yield return new(shipStatus.transform.GetChild(4).GetChild(9).gameObject,0.1f);
+        yield return new(shipStatus.transform.GetChild(4).GetChild(9).gameObject, 0.1f);
     }
 
     public override void CreateOption()
@@ -23,7 +24,7 @@ public class PolusData : MapData
         AdminNameMap.Add("panel_map", 0);
         AdminNameMap.Add("panel_map (1)", 0);
     }
-    public PolusData() : base(2,"PolusShip")
+    public PolusData() : base(2, "PolusShip")
     {
         SabotageMap[SystemTypes.Laboratory] = new SabotageData(SystemTypes.Reactor, new Vector3(18f, -6f), true, true);
         SabotageMap[SystemTypes.Electrical] = new SabotageData(SystemTypes.Electrical, new Vector3(10f, -11f), true, false);

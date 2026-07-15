@@ -1,14 +1,15 @@
 ﻿namespace Nebula.Map.Database;
+
 public class SkeldData : MapData
 {
     public override IEnumerable<Tuple<GameObject, float>> AllAdmins(ShipStatus shipStatus)
     {
-        yield return new(shipStatus.transform.GetChild(2).GetChild(0).GetChild(3).GetChild(1).gameObject,0.5f);
+        yield return new(shipStatus.transform.GetChild(2).GetChild(0).GetChild(3).GetChild(1).gameObject, 0.5f);
     }
 
     public override IEnumerable<Tuple<GameObject, float>> AllCameras(ShipStatus shipStatus)
     {
-        yield return new(shipStatus.transform.GetChild(21).GetChild(0).GetChild(1).gameObject,0.3f);
+        yield return new(shipStatus.transform.GetChild(21).GetChild(0).GetChild(1).gameObject, 0.3f);
     }
 
     public override void CreateOption()
@@ -16,7 +17,7 @@ public class SkeldData : MapData
         LimitedAdmin.Add(0, Module.CustomOption.Create(Color.white, "option.admin." + PointData.mapNames[MapId] + "-0", Int32.MaxValue, CustomOptionHolder.mapOptions, false, true));
         AdminNameMap.Add("MapRoomConsole", 0);
     }
-    public SkeldData() : base(0,"SkeldShip")
+    public SkeldData() : base(0, "SkeldShip")
     {
         SabotageMap[SystemTypes.Reactor] = new SabotageData(SystemTypes.Reactor, new Vector3(-21f, -5.4f), true, true);
         SabotageMap[SystemTypes.LifeSupp] = new SabotageData(SystemTypes.LifeSupp, new Vector3(6.5f, -4.7f), true, true);

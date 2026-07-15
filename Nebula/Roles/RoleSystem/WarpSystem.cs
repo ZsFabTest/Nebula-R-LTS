@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nebula.Roles.RoleSystem
+﻿namespace Nebula.Roles.RoleSystem
 {
     static public class WarpSystem
     {
@@ -94,8 +90,8 @@ namespace Nebula.Roles.RoleSystem
         }
 
         static public IEnumerator CoOrient(LightSource light, float preDuration, float duration, Action<PlayerControl?> nearbyPlayerFunc, Action<PlayerControl?> finalPlayerFunc)
-        => CoOrient(light, preDuration, duration, 
-            (p) =>nearbyPlayerFunc(SearchPlayer(3f + p * 2.5f, 0.1f + p * 0.2f)),
-            ()=> finalPlayerFunc(SearchPlayer(4f, 0.3f)));
+        => CoOrient(light, preDuration, duration,
+            (p) => nearbyPlayerFunc(SearchPlayer(3f + p * 2.5f, 0.1f + p * 0.2f)),
+            () => finalPlayerFunc(SearchPlayer(4f, 0.3f)));
     }
 }

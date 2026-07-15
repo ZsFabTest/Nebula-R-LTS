@@ -43,7 +43,7 @@ public class Assignable
     /// 割り当てを設定しない場合はNoneにしてください。
     /// </summary>
     public AllocationType Allocation { get; protected set; }
-    
+
     public virtual bool IsUnsuitable { get { return false; } }
 
     public Module.CustomGameMode ValidGamemode { get; set; }
@@ -122,7 +122,7 @@ public class Assignable
         }
     }
     public virtual HelpSprite[] helpSprite { get => new HelpSprite[0]; }
-    public virtual Tuple<string,Action>[] helpButton { get => new Tuple<string, Action>[0]; }
+    public virtual Tuple<string, Action>[] helpButton { get => new Tuple<string, Action>[0]; }
 
     /*--------------------------------------------------------------------------------------*/
     /*--------------------------------------------------------------------------------------*/
@@ -421,7 +421,7 @@ public class Assignable
     /// 自身が特別な会議ボタンを押した際に呼び出されます。
     /// </summary>
     [RoleLocalMethod]
-    public virtual void OnCallSpecialMeeting() {}
+    public virtual void OnCallSpecialMeeting() { }
 
     /*--------------------------------------------------------------------------------------*/
 

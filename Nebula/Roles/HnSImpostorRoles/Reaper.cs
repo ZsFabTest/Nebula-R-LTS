@@ -1,7 +1,4 @@
-﻿using static Il2CppSystem.Globalization.CultureInfo;
-using static Rewired.Controller;
-
-namespace Nebula.Roles.HnSImpostorRoles;
+﻿namespace Nebula.Roles.HnSImpostorRoles;
 
 public static class HnSImpostorSystem
 {

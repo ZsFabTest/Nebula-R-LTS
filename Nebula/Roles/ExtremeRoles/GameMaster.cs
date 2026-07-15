@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.AllSideRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class GameMaster : Role
 {
@@ -11,7 +11,7 @@ public class GameMaster : Role
         public GMEvent(PlayerControl target) : base(0.2f) { this.target = target; }
         public override void OnTerminal()
         {
-            RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Challenger);
+            RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Challenger);
         }
     }
 
@@ -25,7 +25,7 @@ public class GameMaster : Role
     private CustomButton testButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(testButton != null) testButton.Destroy();
+        if (testButton != null) testButton.Destroy();
         testButton = new CustomButton(
         () =>
             {
@@ -53,7 +53,7 @@ public class GameMaster : Role
 
     public override void CleanUp()
     {
-        if(testButton != null)
+        if (testButton != null)
         {
             testButton.Destroy();
             testButton = null;
@@ -61,7 +61,7 @@ public class GameMaster : Role
     }
 
     public GameMaster()
-        : base("GM", "gm", ExtraRoles.OnlineCelebrity.RoleColor, RoleCategory.Neutral, Side.ChainShifter, Side.ChainShifter,
+        : base("GM", "gm", OnlineCelebrity.RoleColor, RoleCategory.Neutral, Side.ChainShifter, Side.ChainShifter,
              new HashSet<Side>() { Side.ChainShifter }, new HashSet<Side>() { Side.ChainShifter },
              new HashSet<Patches.EndCondition>() { },
              false, VentPermission.CanUseUnlimittedVent, true, true, true)

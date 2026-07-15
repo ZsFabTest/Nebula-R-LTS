@@ -1,7 +1,4 @@
 ﻿using Nebula.Patches;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Nebula.Roles.NeutralRoles
 {
@@ -63,7 +60,7 @@ namespace Nebula.Roles.NeutralRoles
             {
                 if (!Arrows.ContainsKey(body.ParentId))
                 {
-                    Arrows[body.ParentId] = new Arrow(Color.blue,true,arrowSprite.GetSprite());
+                    Arrows[body.ParentId] = new Arrow(Color.blue, true, arrowSprite.GetSprite());
                     Arrows[body.ParentId].arrow.SetActive(true);
                 }
                 Arrows[body.ParentId].Update(body.transform.position);
@@ -99,7 +96,7 @@ namespace Nebula.Roles.NeutralRoles
         {
             if (targetId == PlayerControl.LocalPlayer.PlayerId) return;
 
-            if(showDeathFlashOption.getBool())Helpers.PlayFlash(Color);
+            if (showDeathFlashOption.getBool()) Helpers.PlayFlash(Color);
         }
 
         private CustomButton suicideButton;
@@ -114,7 +111,7 @@ namespace Nebula.Roles.NeutralRoles
             suicideButton = new CustomButton(
                 () =>
                 {
-                    RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Suicide.Id,false);
+                    RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id, false);
                 },
                 () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
                 () =>

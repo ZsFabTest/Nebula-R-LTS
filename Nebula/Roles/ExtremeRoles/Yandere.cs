@@ -1,7 +1,8 @@
-namespace Nebula.Roles.NeutralRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public class Yandere : Role{
-    public static Color RoleColor = new Color(200f / 255f,22f / 255f,115f / 255f);
+public class Yandere : Role
+{
+    public static Color RoleColor = new Color(200f / 255f, 22f / 255f, 115f / 255f);
 
     public PlayerControl myLover;
     private Dictionary<byte, float> progress;
@@ -16,19 +17,21 @@ public class Yandere : Role{
 
     public override void LoadOptionData()
     {
-        killCoolDownOption = CreateOption(Color.white,"killCooldown",5f,1f,25f,1f);
+        killCoolDownOption = CreateOption(Color.white, "killCooldown", 5f, 1f, 25f, 1f);
         killCoolDownOption.suffix = "second";
-        stayDuringOption = CreateOption(Color.white,"stayDuringTime",15f,5f,30f,2.5f);
+        stayDuringOption = CreateOption(Color.white, "stayDuringTime", 15f, 5f, 30f, 2.5f);
         stayDuringOption.suffix = "second";
-        stayRangeOption = CreateOption(Color.white,"stayRangeTime",1f,0.1f,5f,0.1f);
+        stayRangeOption = CreateOption(Color.white, "stayRangeTime", 1f, 0.1f, 5f, 0.1f);
         stayRangeOption.suffix = "cross";
     }
 
     public override void Initialize(PlayerControl __instance)
     {
         List<PlayerControl> players = PlayerControl.AllPlayerControls.ToArray().ToList();
-        for(int i = 0;i < players.Count;i++){
-            if(players[i].PlayerId == PlayerControl.LocalPlayer.PlayerId){
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (players[i].PlayerId == PlayerControl.LocalPlayer.PlayerId)
+            {
                 players.RemoveAt(i);
                 break;
             }
@@ -44,14 +47,15 @@ public class Yandere : Role{
         arrow = null;
     }
 
-    public PlayerControl GetLover(){ return myLover; }
+    public PlayerControl GetLover() { return myLover; }
 
     private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null) killButton.Destroy();
+        if (killButton != null) killButton.Destroy();
         killButton = new CustomButton(
-            () => { 
+            () =>
+            {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
                 var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead);
                 killButton.Timer = killButton.MaxTimer;
@@ -69,12 +73,15 @@ public class Yandere : Role{
         killButton.MaxTimer = killCoolDownOption.getFloat();
     }
 
-    public override void CleanUp(){
-        if(killButton != null){
+    public override void CleanUp()
+    {
+        if (killButton != null)
+        {
             killButton.Destroy();
             killButton = null;
         }
-        if(arrow != null){
+        if (arrow != null)
+        {
             UnityEngine.GameObject.Destroy(arrow.arrow);
             arrow = null;
         }
@@ -85,52 +92,57 @@ public class Yandere : Role{
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((player) => {
-            if(activePlayer.Contains(player.PlayerId)) return true;
+        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget((player) =>
+        {
+            if (activePlayer.Contains(player.PlayerId)) return true;
             return false;
         });
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, RoleColor);
 
         if (MeetingHud.Instance != null) return;
         float time = Time.deltaTime / stayDuringOption.getFloat();
-        foreach (PlayerControl player in PlayerControl.AllPlayerControls){
-            if(player.Data.IsDead) continue;
-            if(player.PlayerId == PlayerControl.LocalPlayer.PlayerId || player.PlayerId == myLover.PlayerId) continue;
-            if(!player.gameObject.active) continue;
-            if(activePlayer.Contains(player.PlayerId)) continue;
+        foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+        {
+            if (player.Data.IsDead) continue;
+            if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId || player.PlayerId == myLover.PlayerId) continue;
+            if (!player.gameObject.active) continue;
+            if (activePlayer.Contains(player.PlayerId)) continue;
 
-            if(Vector2.Distance(player.transform.position,myLover.transform.position) <= 1f){
+            if (Vector2.Distance(player.transform.position, myLover.transform.position) <= 1f)
+            {
                 if (!progress.ContainsKey(player.PlayerId))
                 {
                     progress.Add(player.PlayerId, 0);
                 }
                 progress[player.PlayerId] += time;
 
-                if(progress[player.PlayerId] > 1){
+                if (progress[player.PlayerId] > 1)
+                {
                     activePlayer.Add(player.PlayerId);
                 }
             }
         }
 
         int i = 0;
-        foreach(byte playerId in activePlayer){
+        foreach (byte playerId in activePlayer)
+        {
             PlayerControl player = Helpers.playerById(playerId);
-            if(player.Data.IsDead) continue;
+            if (player.Data.IsDead) continue;
             if (arrows.Count >= i) arrows.Add(null);
             var arrow = arrows[i];
-            RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow,player,Color.white,arrowSprite);
+            RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, player, Color.white, arrowSprite);
             arrows[i] = arrow;
             i++;
         }
 
-        if(myLover.Data.IsDead && !PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Suicide.Id,true);
-        if(!myLover.gameObject.active) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Suicide.Id,true);
+        if (myLover.Data.IsDead && !PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id, true);
+        if (!myLover.gameObject.active) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id, true);
 
         int removed = arrows.Count - i;
         for (; i < arrows.Count; i++) if (arrows[i] != null) GameObject.Destroy(arrows[i].arrow);
         arrows.RemoveRange(arrows.Count - removed, removed);
 
-        RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, myLover,RoleColor,arrowSprite);
+        RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, myLover, RoleColor, arrowSprite);
     }
 
     public Yandere()

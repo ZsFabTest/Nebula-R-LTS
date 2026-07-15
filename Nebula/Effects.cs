@@ -9,8 +9,8 @@ public static class NebulaEffects
         new("Nebula.Resources.Leaf1.png", 100f),
         new("Nebula.Resources.Leaf2.png", 100f)
     };
-    
-    private static IEnumerator CoPlayEffect(int layer, string name,SpriteLoader sprite,Transform? parent, Vector3 pos, Vector3 velocity, float angVel, float scale,Color color, float maxTime,float fadeInTime,float fadeOutTime)
+
+    private static IEnumerator CoPlayEffect(int layer, string name, SpriteLoader sprite, Transform? parent, Vector3 pos, Vector3 velocity, float angVel, float scale, Color color, float maxTime, float fadeInTime, float fadeOutTime)
     {
         var obj = new GameObject(name);
         if (parent != null) obj.transform.SetParent(parent);
@@ -20,13 +20,13 @@ public static class NebulaEffects
         obj.layer = layer;
         var renderer = obj.AddComponent<SpriteRenderer>();
         renderer.sprite = sprite.GetSprite();
-        
+
         float p = 0f;
         while (p < maxTime)
         {
             obj.transform.localPosition += velocity * Time.deltaTime;
             obj.transform.eulerAngles += new Vector3(0, 0, angVel * Time.deltaTime);
-            
+
             float c = 1f;
             if (fadeInTime > 0f && p < fadeInTime) c = Math.Clamp(p / fadeInTime, 0f, 1f);
             else if (fadeOutTime > 0f) c = Math.Clamp((maxTime - p) / fadeOutTime, 0f, 1f);
@@ -58,7 +58,7 @@ public static class NebulaEffects
         {
             coroutineHolder.StartCoroutine(CoLeafEffect(layer, obj.transform,
                  new Vector3((float)NebulaPlugin.rnd.NextDouble() * 0.8f - 0.4f, (float)NebulaPlugin.rnd.NextDouble() * 1.8f - 0.5f),
-                new Vector3((float)NebulaPlugin.rnd.NextDouble() * 0.6f-0.3f, 0f) + Vector3.down*(0.05f+ (float)NebulaPlugin.rnd.NextDouble() * 0.25f),
+                new Vector3((float)NebulaPlugin.rnd.NextDouble() * 0.6f - 0.3f, 0f) + Vector3.down * (0.05f + (float)NebulaPlugin.rnd.NextDouble() * 0.25f),
                 (float)NebulaPlugin.rnd.NextDouble() * 10, 0.8f + (float)NebulaPlugin.rnd.NextDouble() * 0.2f).WrapToIl2Cpp());
         }
 
@@ -66,7 +66,7 @@ public static class NebulaEffects
         GameObject.Destroy(obj);
     }
 
-    public static IEnumerator CoDisappearEffect(MonoBehaviour coroutineHolder,int layer,Transform? parent, Vector3 pos,float scale=1f)
+    public static IEnumerator CoDisappearEffect(MonoBehaviour coroutineHolder, int layer, Transform? parent, Vector3 pos, float scale = 1f)
     {
         var obj = new GameObject("DisappearEffect");
         if (parent != null) obj.transform.SetParent(parent);

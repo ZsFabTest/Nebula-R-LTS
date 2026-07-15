@@ -1,7 +1,4 @@
-using Il2CppSystem.Data;
-using Nebula.Patches;
-
-namespace Nebula.Roles.ExtraRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
 public class FakeLover : ExtraRole
 {
@@ -22,18 +19,19 @@ public class FakeLover : ExtraRole
     public override Assignable AssignableOnHelp => Roles.Lover;
     public override HelpSprite[] helpSprite => Roles.Lover.helpSprite;
 
-    public override void EditOthersDisplayName(byte playerId, ref string displayName, bool hideFlag){
-        if(playerId == Game.GameData.data.myData.getGlobalData().GetExtraRoleData(this)) displayName += Helpers.cs(iconColor[0],"♥");
+    public override void EditOthersDisplayName(byte playerId, ref string displayName, bool hideFlag)
+    {
+        if (playerId == Game.GameData.data.myData.getGlobalData().GetExtraRoleData(this)) displayName += Helpers.cs(iconColor[0], "♥");
     }
 
     public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
     {
-        if(playerId == PlayerControl.LocalPlayer.PlayerId) displayName += Helpers.cs(iconColor[0],"♥");
+        if (playerId == PlayerControl.LocalPlayer.PlayerId) displayName += Helpers.cs(iconColor[0], "♥");
     }
 
     public override void EditDescriptionString(ref string desctiption)
     {
-        string partner = Helpers.cs(Color,Helpers.playerById((byte)Game.GameData.data.myData.getGlobalData().GetExtraRoleData(this)).name);
+        string partner = Helpers.cs(Color, Helpers.playerById((byte)Game.GameData.data.myData.getGlobalData().GetExtraRoleData(this)).name);
         desctiption += "\n" + Language.Language.GetString("role.lover.description").Replace("%NAME%", partner);
     }
 
@@ -51,12 +49,12 @@ public class FakeLover : ExtraRole
 
     public override void OnMurdered(byte murderId)
     {
-        RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,this,false);
+        RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer, this, false);
     }
 
     public override void MyPlayerControlUpdate()
     {
-        if(PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,this,false);
+        if (PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer, this, false);
     }
 
     public FakeLover() : base("Lover", "lover", iconColor[0], 0)

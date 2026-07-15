@@ -1,6 +1,4 @@
-﻿
-
-using System.Runtime.CompilerServices;
+﻿using Nebula.Rpc;
 
 namespace Nebula.Tasks;
 
@@ -25,7 +23,7 @@ public class NormalPlayerTaskPatch
     [HarmonyPatch(typeof(WeatherNodeTask), nameof(WeatherNodeTask.AppendTaskText))]
     class WeatherNodeAppendTaskTextPatch
     {
-        static public bool Prefix(WeatherNodeTask __instance) => Game.GameData.data.myData.getGlobalData().role.ShowTaskText;   
+        static public bool Prefix(WeatherNodeTask __instance) => Game.GameData.data.myData.getGlobalData().role.ShowTaskText;
     }
 
     [HarmonyPatch(typeof(UploadDataTask), nameof(UploadDataTask.AppendTaskText))]
@@ -182,7 +180,7 @@ public static class PlayerTaskAdder
 
     static public void AddTask(this PlayerControl player, byte taskId)
     {
-        AddTaskProcess.Invoke(new(player.PlayerId,taskId));
+        AddTaskProcess.Invoke(new(player.PlayerId, taskId));
     }
 }
 

@@ -1,4 +1,4 @@
-﻿namespace Nebula;
+﻿namespace Nebula.Expansion;
 
 static public class LayerExpansion
 {

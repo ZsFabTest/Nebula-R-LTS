@@ -299,8 +299,8 @@ public abstract class Role : Assignable
 
         TopOption.NameDecorator = new Module.CustomOptionDecorator((original, option) =>
         {
-                //追加役職化した場合は何もしない
-                if (IsSecondaryGenerator) return original;
+            //追加役職化した場合は何もしない
+            if (IsSecondaryGenerator) return original;
 
             string suffix = "";
 
@@ -440,7 +440,8 @@ public abstract class Role : Assignable
             }
         }
 
-        if(myData.role.introMainDisplaySide.ShowOption == Side.IntroDisplayOption.Yanderes){
+        if (myData.role.introMainDisplaySide.ShowOption == Side.IntroDisplayOption.Yanderes)
+        {
             players.Add(Roles.Yandere.GetLover());
         }
     }
@@ -467,7 +468,7 @@ public abstract class Role : Assignable
         {
             if (!base.ShowInHelpWindow) return false;
             if (!MetaDialog.HelpSearchFilter.ShouldShowCategory(category)) return false;
-            return true;            
+            return true;
         }
     }
 

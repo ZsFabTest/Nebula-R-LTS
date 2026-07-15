@@ -1,8 +1,10 @@
-﻿namespace Nebula.Objects.ObjectTypes;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Objects.ObjectTypes;
 
 public class Decoy : TypeWithImage
 {
-    public Decoy() : base(8, "Decoy", new SpriteLoader("Nebula.Resources.Decoy.png",150f))
+    public Decoy() : base(8, "Decoy", new SpriteLoader("Nebula.Resources.Decoy.png", 150f))
     {
 
     }

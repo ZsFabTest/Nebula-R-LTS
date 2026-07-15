@@ -11,8 +11,10 @@ public class Spy : Role
 
     public bool CanKillImpostor()
     {
-        foreach(var player in PlayerControl.AllPlayerControls.GetFastEnumerator()){
-            if(player.GetModData().role == Roles.Camouflager){
+        foreach (var player in PlayerControl.AllPlayerControls.GetFastEnumerator())
+        {
+            if (player.GetModData().role == Roles.Camouflager)
+            {
                 return true;
             }
         }
@@ -26,7 +28,7 @@ public class Spy : Role
         ventCoolDownOption.suffix = "second";
         ventDurationOption = CreateOption(Color.white, "ventDuration", 10f, 5f, 60f, 2.5f);
         ventDurationOption.suffix = "second";
-        isGuessable = CreateOption(Color.white,"isGuessable",true);
+        isGuessable = CreateOption(Color.white, "isGuessable", true);
     }
 
     public override void Initialize(PlayerControl __instance)

@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class SoulEater : Template.TImpostor
 {
@@ -19,7 +19,7 @@ public class SoulEater : Template.TImpostor
     private bool canKill = false;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
@@ -60,7 +60,7 @@ public class SoulEater : Template.TImpostor
     {
         if (target && canKill)
         {
-            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,target.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
+            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, target.PlayerId, Game.PlayerData.PlayerStatus.Dead.Id, false);
             target = null;
             canKill = false;
         }

@@ -1,4 +1,6 @@
-﻿namespace Nebula.Objects;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Objects;
 
 public class CustomObjectBehaviour : MonoBehaviour
 {
@@ -22,7 +24,7 @@ public class UsableCustomObjectBehaviour : MonoBehaviour
     {
         ClassInjector.RegisterTypeInIl2Cpp<UsableCustomObjectBehaviour>(new RegisterTypeOptions()
         {
-            Interfaces= new[] { typeof(IUsable) }
+            Interfaces = new[] { typeof(IUsable) }
         });
     }
 
@@ -106,7 +108,7 @@ public class CustomObject
 
         static public Dictionary<byte, Type> AllTypes = new Dictionary<byte, Type>();
 
-        public static ObjectTypes.VisibleTrap AccelTrap = new ObjectTypes.VisibleTrap(0, "AccelTrap", new SpriteLoader("Nebula.Resources.AccelTrap.png",150f));
+        public static ObjectTypes.VisibleTrap AccelTrap = new ObjectTypes.VisibleTrap(0, "AccelTrap", new SpriteLoader("Nebula.Resources.AccelTrap.png", 150f));
         public static ObjectTypes.VisibleTrap DecelTrap = new ObjectTypes.VisibleTrap(1, "DecelTrap", new SpriteLoader("Nebula.Resources.DecelTrap.png", 150f));
         public static ObjectTypes.KillTrap KillTrap = new ObjectTypes.KillTrap(2, "KillTrap", new SpriteLoader("Nebula.Resources.KillTrap.png", 150f));
         public static ObjectTypes.InvisibleTrap CommTrap = new ObjectTypes.InvisibleTrap(3, "CommTrap", new SpriteLoader("Nebula.Resources.CommTrap.png", 150f));
@@ -156,7 +158,7 @@ public class CustomObject
         public virtual Color UsableColor { get => Color.white; }
         public virtual bool CanUse(CustomObject obj, PlayerControl player) { return true; }
         public virtual void Use(CustomObject obj) { }
-        
+
 
         public Type(byte id, string objectName)
         {

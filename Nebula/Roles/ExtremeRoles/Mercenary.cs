@@ -1,7 +1,9 @@
 using Nebula.Patches;
-namespace Nebula.Roles.NeutralRoles{
-    public class Mercenary : Role{
-        public static Color RoleColor = new Color(144f / 255f,161f / 255f,74f / 255f);
+namespace Nebula.Roles.ExtremeRoles
+{
+    public class Mercenary : Role
+    {
+        public static Color RoleColor = new Color(144f / 255f, 161f / 255f, 74f / 255f);
 
         public override bool CheckAdditionalWin(PlayerControl player, EndCondition condition)
         {
@@ -23,9 +25,9 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void LoadOptionData()
         {
-            killCooldown = CreateOption(Color.white,"killCooldown",25f,2.5f,45f,2.5f);
+            killCooldown = CreateOption(Color.white, "killCooldown", 25f, 2.5f, 45f, 2.5f);
             killCooldown.suffix = "second";
-            canUseVent = CreateOption(Color.white,"canUseVent",true);
+            canUseVent = CreateOption(Color.white, "canUseVent", true);
         }
 
         public override void GlobalInitialize(PlayerControl __instance)
@@ -64,7 +66,8 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void CleanUp()
         {
-            if(killButton != null){
+            if (killButton != null)
+            {
                 killButton.Destroy();
                 killButton = null;
             }
@@ -76,10 +79,11 @@ namespace Nebula.Roles.NeutralRoles{
             data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
             Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
         }
-//
-        public Mercenary() : base("Mercenary","mercenary",RoleColor,RoleCategory.Neutral,Side.Opportunist,Side.Opportunist,
-        new HashSet<Side>() { Side.Opportunist },new HashSet<Side>() { Side.Opportunist },new HashSet<EndCondition>() {},
-        true,VentPermission.CanUseUnlimittedVent,true,false,true){
+        //
+        public Mercenary() : base("Mercenary", "mercenary", RoleColor, RoleCategory.Neutral, Side.Opportunist, Side.Opportunist,
+        new HashSet<Side>() { Side.Opportunist }, new HashSet<Side>() { Side.Opportunist }, new HashSet<EndCondition>() { },
+        true, VentPermission.CanUseUnlimittedVent, true, false, true)
+        {
             killButton = null;
         }
     }

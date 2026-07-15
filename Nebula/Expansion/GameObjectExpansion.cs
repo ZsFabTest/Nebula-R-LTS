@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nebula.Expansion;
+﻿namespace Nebula.Expansion;
 
 public static class GameObjectExpansion
 {
-    static public PassiveButton SetUpButton(this GameObject obj,Action? onClicked)
+    static public PassiveButton SetUpButton(this GameObject obj, Action? onClicked)
     {
         var button = obj.AddComponent<PassiveButton>();
         button.OnMouseOut = new UnityEngine.Events.UnityEvent();

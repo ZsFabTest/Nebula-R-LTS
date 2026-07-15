@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Hazel;
-using TMPro;
 
 namespace Nebula.Patches;
 
@@ -205,7 +204,8 @@ public class GameStartManagerPatch
                                 SoundManager.Instance.StopSound(GameStartManager.Instance.gameStartSound);
                             }
                             startButtonPassiveButton.OnClick.AddListener((Action)(() => StopStartFunc()));
-                            __instance.StartCoroutine(Effects.Lerp(.1f, new System.Action<float>((p) => {
+                            __instance.StartCoroutine(Effects.Lerp(.1f, new System.Action<float>((p) =>
+                            {
                                 startButtonText.text = "";
                             })));
                         }
@@ -268,7 +268,8 @@ public class GameStartManagerPatch
                             startButtonPassiveButton.gameObject.SetActive(false);
                         }
                         startButtonPassiveButton.OnClick.AddListener((Action)(() => StopStartFunc()));
-                        __instance.StartCoroutine(Effects.Lerp(.1f, new System.Action<float>((p) => {
+                        __instance.StartCoroutine(Effects.Lerp(.1f, new System.Action<float>((p) =>
+                        {
                             startButtonText.text = "";
                         })));
 

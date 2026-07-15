@@ -1,5 +1,7 @@
-namespace Nebula.Roles.ExtraRoles{
-    public class DeputyMayor : Template.StandardExtraRole{
+namespace Nebula.Roles.ExtremeRoles
+{
+    public class DeputyMayor : Template.StandardExtraRole
+    {
         public static Color RoleColor = CrewmateRoles.Mayor.RoleColor;
 
         private Module.CustomOption extraVoteNumOption;
@@ -7,18 +9,18 @@ namespace Nebula.Roles.ExtraRoles{
         public override void LoadOptionData()
         {
             base.LoadOptionData();
-            extraVoteNumOption = CreateOption(Color.white,"extraVoteNum",1f,1f,5f,1f);
+            extraVoteNumOption = CreateOption(Color.white, "extraVoteNum", 1f, 1f, 5f, 1f);
         }
 
         public override void OnMeetingStart()
         {
             Debug.Log((byte)(1 + (int)extraVoteNumOption.getFloat()));
-            RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer,(byte)(1 + (int)extraVoteNumOption.getFloat()));
+            RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer, (byte)(1 + (int)extraVoteNumOption.getFloat()));
         }
 
         public override void OnMeetingEnd()
         {
-            RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer,1);
+            RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer, 1);
         }
 
         public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
@@ -48,7 +50,8 @@ namespace Nebula.Roles.ExtraRoles{
             return option;
         }
 
-        public DeputyMayor() : base("DeputMayor","deputMayor",RoleColor,0){
+        public DeputyMayor() : base("DeputMayor", "deputMayor", RoleColor, 0)
+        {
         }
     }
 }

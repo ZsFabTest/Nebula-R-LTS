@@ -1,12 +1,8 @@
-﻿using Nebula.Roles;
-
-using static NetworkedPlayerInfo;
-using Hazel;
-using AmongUs.Data.Player;
+﻿using Hazel;
+using Nebula.Expansion;
 using Nebula.Map;
-using JetBrains.Annotations;
-using Nebula.Roles.CrewmateRoles;
-using UnityEngine;
+using Nebula.Roles;
+using static NetworkedPlayerInfo;
 
 namespace Nebula.Game;
 
@@ -70,7 +66,7 @@ public class SynchronizeData
         return GetStaticAlignEnumerator(tag, withGhost, withSurvivor).WrapToIl2Cpp();
     }
 
-    public bool Align(SynchronizeTag tag, bool withGhost, bool withSurvivor = true,bool withBot=true)
+    public bool Align(SynchronizeTag tag, bool withGhost, bool withSurvivor = true, bool withBot = true)
     {
         bool result = true;
 
@@ -80,7 +76,7 @@ public class SynchronizeData
         foreach (PlayerControl pc in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if (!withBot && pc.isDummy) continue;
-            if ((withGhost&& withSurvivor) || pc.Data.IsDead ? withGhost : withSurvivor)
+            if ((withGhost && withSurvivor) || pc.Data.IsDead ? withGhost : withSurvivor)
                 result &= ((value & ((ulong)1 << pc.PlayerId)) != 0);
         }
 
@@ -174,23 +170,32 @@ public class MyPlayerData
     private PlayerData globalData { get; set; }
     private bool canSeeEveryoneInfo;
     private bool? canControlOtherPlayers = null;
-    public bool CanSeeEveryoneInfo { get {
+    public bool CanSeeEveryoneInfo
+    {
+        get
+        {
             if (Patches.NebulaOption.configPreventSpoiler.Value) return false;
             if (CustomOptionHolder.streamersOption.getBool() && CustomOptionHolder.enforcePreventingSpoilerOption.getBool()) return false;
-            return canSeeEveryoneInfo;  
-        } set { canSeeEveryoneInfo = value; } }
-    public bool CanControlOtherPlayers { get {
+            return canSeeEveryoneInfo;
+        }
+        set { canSeeEveryoneInfo = value; }
+    }
+    public bool CanControlOtherPlayers
+    {
+        get
+        {
             if (!canControlOtherPlayers.HasValue)
             {
                 if (!ShipStatus.Instance) return false;
                 canControlOtherPlayers = true;
-                foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+                foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
-                    if (!p.isDummy && !p.AmOwner) { canControlOtherPlayers = false;  break; }
+                    if (!p.isDummy && !p.AmOwner) { canControlOtherPlayers = false; break; }
                 }
             }
             return canControlOtherPlayers.Value;
-        } }
+        }
+    }
     public float VentDurationTimer { get; set; }
     public float VentCoolDownTimer { get; set; }
     public List<TaskInfo> InitialTasks { get; set; }
@@ -590,7 +595,7 @@ public class PlayerProperty
             player.moveable = false;
             player.MyPhysics.myPlayer.Visible = true;
             player.cosmetics.AnimateSkinExitVent();
-            
+
             underTheFloor = false;
 
         })));
@@ -606,7 +611,7 @@ public class PlayerProperty
             }));
             if (player.AmOwner)
                 player.MyPhysics.inputHandler.enabled = false;
-            
+
         })));
 
         var refArray = new Il2CppReferenceArray<Il2CppSystem.Collections.IEnumerator>(sequence.ToArray());
@@ -1174,11 +1179,17 @@ public class VentData
 public class UtilityTimer
 {
     float adminTimer, vitalsTimer, cameraTimer;
-    public float AdminTimer { get => adminTimer; set {
+    public float AdminTimer
+    {
+        get => adminTimer; set
+        {
             adminTimer = value;
-            if (value < 1000f) foreach (var text in AdminConsoleShowers)if(text) text.text = String.Format("{0:f1}s", adminTimer);
-        } }
-    public float VitalsTimer { get => vitalsTimer; set
+            if (value < 1000f) foreach (var text in AdminConsoleShowers) if (text) text.text = String.Format("{0:f1}s", adminTimer);
+        }
+    }
+    public float VitalsTimer
+    {
+        get => vitalsTimer; set
         {
             vitalsTimer = value;
             if (value < 1000f) foreach (var text in VitalsConsoleShowers) if (text) text.text = String.Format("{0:f1}s", vitalsTimer);
@@ -1199,7 +1210,7 @@ public class UtilityTimer
 
     public void SearchUpConsoles(ShipStatus shipStatus)
     {
-        TMPro.TextMeshPro createText(Transform parent,float height)
+        TMPro.TextMeshPro createText(Transform parent, float height)
         {
             var result = GameObject.Instantiate(HudManager.Instance.TaskPanel.taskText);
             result.transform.SetParent(parent);
@@ -1216,12 +1227,12 @@ public class UtilityTimer
         }
 
         var mapData = MapData.GetCurrentMapData();
-        foreach (var c in mapData.AllAdmins(shipStatus)) AdminConsoleShowers.Add(createText(c.Item1.transform,c.Item2));
+        foreach (var c in mapData.AllAdmins(shipStatus)) AdminConsoleShowers.Add(createText(c.Item1.transform, c.Item2));
         foreach (var c in mapData.AllVitals(shipStatus)) VitalsConsoleShowers.Add(createText(c.Item1.transform, c.Item2));
         foreach (var c in mapData.AllCameras(shipStatus)) CameraConsoleShowers.Add(createText(c.Item1.transform, c.Item2));
     }
 
-    
+
     public void DetachConsoles()
     {
         AdminConsoleShowers.Clear();
@@ -1229,7 +1240,8 @@ public class UtilityTimer
         CameraConsoleShowers.Clear();
     }
 
-    public UtilityTimer() {
+    public UtilityTimer()
+    {
         adminTimer = 100f;
         vitalsTimer = 100f;
         cameraTimer = 100f;
@@ -1240,17 +1252,18 @@ public class UtilityTimer
 
     public void Initialize()
     {
-        if(CustomOptionHolder.ShowTimeLeftOnConsolesOption.getBool())SearchUpConsoles(ShipStatus.Instance);
+        if (CustomOptionHolder.ShowTimeLeftOnConsolesOption.getBool()) SearchUpConsoles(ShipStatus.Instance);
         AdminTimer = CustomOptionHolder.AdminLimitOption.getBool() ? CustomOptionHolder.AdminLimitOption.getFloat() : 10000f;
         VitalsTimer = CustomOptionHolder.VitalsLimitOption.getBool() ? CustomOptionHolder.VitalsLimitOption.getFloat() : 10000f;
         CameraTimer = CustomOptionHolder.CameraAndDoorLogLimitOption.getBool() ? CustomOptionHolder.CameraAndDoorLogLimitOption.getFloat() : 10000f;
     }
 
-    public void OnMeetingStart(MeetingHud meetingHud) {
+    public void OnMeetingStart(MeetingHud meetingHud)
+    {
         if (CustomOptionHolder.DevicesOption.getBool() && CustomOptionHolder.ShowTimeLeftOnMeetingOption.getBool())
         {
             var result = GameObject.Instantiate(HudManager.Instance.TaskPanel.taskText);
-            
+
             result.transform.SetParent(meetingHud.transform);
             result.transform.localPosition = new Vector3(0f, 0f, -10f);
             result.transform.localScale = new Vector3(1f, 1f, 1f);
@@ -1261,8 +1274,8 @@ public class UtilityTimer
             result.fontStyle = TMPro.FontStyles.Bold;
             result.text = "";
 
-            if(adminTimer<1000f)
-                result.text+= String.Format("Admin: {0:f1}s", adminTimer);
+            if (adminTimer < 1000f)
+                result.text += String.Format("Admin: {0:f1}s", adminTimer);
             if (vitalsTimer < 1000f)
             {
                 if (result.text.Length > 0) result.text += "\n";
@@ -1278,7 +1291,7 @@ public class UtilityTimer
             var pos = result.gameObject.AddComponent<AspectPosition>();
             pos.parentCam = HudManager.Instance.UICamera;
             pos.Alignment = AspectPosition.EdgeAlignments.LeftTop;
-            pos.DistanceFromEdge = new Vector3(0.05f,0.05f,-50f);
+            pos.DistanceFromEdge = new Vector3(0.05f, 0.05f, -50f);
             pos.OnEnable();
         }
     }
@@ -1485,7 +1498,7 @@ public class GameData
     public void LoadMapData()
     {
         if (CustomOptionHolder.DevicesOption.getBool()) Game.GameData.data.UtilityTimer.Initialize();
-        
+
 
         foreach (Vent vent in ShipStatus.Instance.AllVents)
         {

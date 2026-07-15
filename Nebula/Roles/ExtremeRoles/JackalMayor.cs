@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.NeutralRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class JackalMayor : Role
 {
@@ -26,9 +26,9 @@ public class JackalMayor : Role
     public override void OnMeetingStart()
     {
         RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, votesId, 1);
-        if(Game.GameData.data.myData.getGlobalData().GetRoleData(votesId) > maxVoteStockOption.getFloat())
+        if (Game.GameData.data.myData.getGlobalData().GetRoleData(votesId) > maxVoteStockOption.getFloat())
         {
-            RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId,votesId,(int)maxVoteStockOption.getFloat());
+            RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, votesId, (int)maxVoteStockOption.getFloat());
         }
     }
 
@@ -193,7 +193,7 @@ public class JackalMayor : Role
         RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, votesId, 1);
     }
 
-    public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.Jackal.EditDisplayNameColor(playerId,ref displayColor);
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.Jackal.EditDisplayNameColor(playerId, ref displayColor);
     /*
     {
         if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Jackal)
@@ -209,7 +209,7 @@ public class JackalMayor : Role
 
     public override void CleanUp()
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;

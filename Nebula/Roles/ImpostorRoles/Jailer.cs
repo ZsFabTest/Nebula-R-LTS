@@ -1,5 +1,4 @@
-﻿using Nebula.Patches;
-using Nebula.Roles.RoleSystem;
+﻿using Nebula.Roles.RoleSystem;
 
 namespace Nebula.Roles.ImpostorRoles;
 
@@ -7,7 +6,7 @@ public class Jailer : Role
 {
     public class InheritedJailer : ExtraRole
     {
-        public override void Assignment(Patches.AssignMap assignMap){}
+        public override void Assignment(Patches.AssignMap assignMap) { }
 
         public override void ButtonInitialize(HudManager __instance) => ImpAdminSystem.ButtonInitialize(__instance, Roles.Jailer.canMoveWithLookingMapOption.getBool(), Roles.Jailer.ignoreCommSabotageOption.getBool(), Roles.Jailer.canIdentifyImpostorsOption.getBool());
 
@@ -19,7 +18,7 @@ public class Jailer : Role
 
         public override void MyPlayerControlUpdate()
         {
-            if(PlayerControl.LocalPlayer.GetModData().role.side != Side.Impostor) RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,this,false);
+            if (PlayerControl.LocalPlayer.GetModData().role.side != Side.Impostor) RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer, this, false);
         }
 
         public InheritedJailer() : base("InheritedJailer", "inheritedJailer", Palette.ImpostorRed, 0)
@@ -44,12 +43,12 @@ public class Jailer : Role
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
-        if(!PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.InheritedJailer)) RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer,Roles.InheritedJailer,0);
+        if (!PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.InheritedJailer)) RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.InheritedJailer, 0);
     }
 
     /* ボタン */
 
-    public override void ButtonInitialize(HudManager __instance) => ImpAdminSystem.ButtonInitialize(__instance,canMoveWithLookingMapOption.getBool(),ignoreCommSabotageOption.getBool(),canIdentifyImpostorsOption.getBool());
+    public override void ButtonInitialize(HudManager __instance) => ImpAdminSystem.ButtonInitialize(__instance, canMoveWithLookingMapOption.getBool(), ignoreCommSabotageOption.getBool(), canIdentifyImpostorsOption.getBool());
 
     public override void CleanUp() => ImpAdminSystem.CleanUp();
 
@@ -63,9 +62,9 @@ public class Jailer : Role
         RelatedRoles.Add(Roles.Opportunist);
     }
 
-    public override void OnShowMapTaskOverlay(MapTaskOverlay mapTaskOverlay, Action<Vector2, bool> iconGenerator) => ImpAdminSystem.OnShowMapTaskOverlay(mapTaskOverlay,iconGenerator,canMoveWithLookingMapOption.getBool(),ignoreCommSabotageOption.getBool(),canIdentifyImpostorsOption.getBool());
-  
-    public override void OnMapClose(MapBehaviour mapBehaviour)=>ImpAdminSystem.OnMapClose(mapBehaviour);
+    public override void OnShowMapTaskOverlay(MapTaskOverlay mapTaskOverlay, Action<Vector2, bool> iconGenerator) => ImpAdminSystem.OnShowMapTaskOverlay(mapTaskOverlay, iconGenerator, canMoveWithLookingMapOption.getBool(), ignoreCommSabotageOption.getBool(), canIdentifyImpostorsOption.getBool());
+
+    public override void OnMapClose(MapBehaviour mapBehaviour) => ImpAdminSystem.OnMapClose(mapBehaviour);
 
     public override void OnDied()
     {

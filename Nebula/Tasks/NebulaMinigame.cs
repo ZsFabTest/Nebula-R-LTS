@@ -6,11 +6,15 @@ public class MinigamePatch
 {
     static AudioClip? uiAppearClip = null;
     static AudioClip? uiDisappearClip = null;
-    public static AudioClip UIAppearClip { get {
+    public static AudioClip UIAppearClip
+    {
+        get
+        {
             if (uiAppearClip == null) uiAppearClip = Helpers.FindSound("Panel_GenericAppear");
             return uiAppearClip;
-        } }
-    
+        }
+    }
+
     public static AudioClip UIDisappearClip
     {
         get
@@ -31,7 +35,7 @@ public class MinigamePatch
 
             if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(UIAppearClip, false, 1f, null);
             t.CloseSound = UIDisappearClip;
-            
+
             t.__Begin(task);
             return;
         }

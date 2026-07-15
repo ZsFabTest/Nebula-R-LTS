@@ -1,4 +1,4 @@
-namespace Nebula.Roles.ImpostorRoles
+namespace Nebula.Roles.ExtremeRoles
 {
     public class Marker : Template.TImpostor
     {
@@ -126,7 +126,8 @@ namespace Nebula.Roles.ImpostorRoles
                 Teamlabel.autoSizeTextContainer = true;
                 int copiedIndex = index;
                 Teambutton.GetComponent<PassiveButton>().OnClick.RemoveAllListeners();
-                if (!PlayerControl.LocalPlayer.Data.IsDead) Teambutton.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() => {
+                if (!PlayerControl.LocalPlayer.Data.IsDead) Teambutton.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
+                {
                     i = 0;
                     selectedButton = null;
                     foreach (Transform button in buttons) UnityEngine.Object.Destroy(button.gameObject);

@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿using Nebula.Roles.ImpostorRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Vampire : Role
 {
@@ -31,7 +33,7 @@ public class Vampire : Role
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
@@ -57,7 +59,7 @@ public class Vampire : Role
 
     public override void CleanUp()
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;

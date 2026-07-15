@@ -1,5 +1,4 @@
 ﻿using Hazel;
-using UnityEngine;
 
 namespace Nebula.Roles.CrewmateRoles;
 
@@ -148,7 +147,7 @@ public class Navvy : Role
             {
                 if (ventTarget != null)
                 { // Seal vent
-                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SealVent, Hazel.SendOption.Reliable);
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SealVent, Hazel.SendOption.Reliable);
                     writer.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer.Write(ventTarget.Id);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);

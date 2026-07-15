@@ -1,13 +1,4 @@
-﻿using Il2CppSystem.Net;
-using Il2CppSystem.Security.AccessControl;
-using JetBrains.Annotations;
-using MS.Internal.Xml.XPath;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-
-namespace Nebula.Expansion;
+﻿namespace Nebula.Expansion;
 
 public static class ConsoleExpansion
 {
@@ -28,15 +19,15 @@ public static class ConsoleExpansion
         return new Material(highlightMaterial);
     }
 
-    public static Console GenerateConsole<C>(Vector3 pos,string name,Sprite sprite) where C : Console
+    public static Console GenerateConsole<C>(Vector3 pos, string name, Sprite sprite) where C : Console
     {
         var obj = new GameObject(name);
         obj.transform.position = pos;
-        obj.AddComponent<SpriteRenderer>().sprite=sprite;
+        obj.AddComponent<SpriteRenderer>().sprite = sprite;
         return Consolize<C>(obj);
     }
 
-    public static Console Consolize<C>(GameObject obj,SpriteRenderer? renderer = null) where C : Console
+    public static Console Consolize<C>(GameObject obj, SpriteRenderer? renderer = null) where C : Console
     {
         obj.layer = LayerMask.NameToLayer("ShortObjects");
         Console console = obj.GetComponent<Console>();
@@ -84,7 +75,7 @@ public static class ConsoleExpansion
         return console;
     }
 
-    public static Console AddValidTask(this Console console,TaskTypes taskType)
+    public static Console AddValidTask(this Console console, TaskTypes taskType)
     {
         var list = console.TaskTypes.ToList();
         list.Add(taskType);
@@ -92,11 +83,11 @@ public static class ConsoleExpansion
         return console;
     }
 
-    public static Console ConsolizePlayer<C>(this PlayerControl player,string objectName,Sprite? sprite=null) where C :Console
+    public static Console ConsolizePlayer<C>(this PlayerControl player, string objectName, Sprite? sprite = null) where C : Console
     {
         GameObject obj = new GameObject(objectName);
         obj.transform.SetParent(player.transform);
-        obj.transform.localPosition = new Vector3(0,0);
+        obj.transform.localPosition = new Vector3(0, 0);
 
         SpriteRenderer? renderer = null;
         if (sprite != null)

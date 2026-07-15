@@ -73,7 +73,7 @@ public class Avenger : Role
                         {
                             if (Arrow == null)
                             {
-                                Arrow = new Arrow(Color,true,arrowSprite.GetSprite());
+                                Arrow = new Arrow(Color, true, arrowSprite.GetSprite());
                                 Arrow.arrow.SetActive(true);
                                 noticeInterval = 0f;
                             }

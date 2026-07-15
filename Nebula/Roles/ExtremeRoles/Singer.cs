@@ -1,7 +1,8 @@
-
-namespace Nebula.Roles.ExtraRoles{
-    public class Singer : Template.StandardExtraRole{
-        static public Color RoleColor = new Color(240f / 255f,135f / 255f,132f / 255f);
+namespace Nebula.Roles.ExtremeRoles
+{
+    public class Singer : Template.StandardExtraRole
+    {
+        static public Color RoleColor = new Color(240f / 255f, 135f / 255f, 132f / 255f);
 
         private Module.CustomOption showRoleNum;
         //public Module.CustomOption jibaiAlwaysBeSinger;
@@ -9,19 +10,19 @@ namespace Nebula.Roles.ExtraRoles{
         public override void LoadOptionData()
         {
             base.LoadOptionData();
-            showRoleNum = CreateOption(Color.white,"showRoleNum",4f,2f,15f,1f);
+            showRoleNum = CreateOption(Color.white, "showRoleNum", 4f, 2f, 15f, 1f);
             //jibaiAlwaysBeSinger = CreateOption(Color.white,"jibaiAlwaysBeSinger",false).AddInvPrerequisite(Roles.Challenger.ChallengerDieIfMeetingStart).AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         }
 
         public override void MyPlayerControlUpdate()
         {
             Patches.PlayerStatistics statistics = new(new ShipStatus());
-            if(statistics.TotalAlive <= showRoleNum.getFloat()) RPCEventInvoker.SetRoleInfo(PlayerControl.LocalPlayer,Language.Language.GetString("role." + Game.GameData.data.myData.getGlobalData().role.LocalizeName + ".name"),false);
+            if (statistics.TotalAlive <= showRoleNum.getFloat()) RPCEventInvoker.SetRoleInfo(PlayerControl.LocalPlayer, Language.Language.GetString("role." + Game.GameData.data.myData.getGlobalData().role.LocalizeName + ".name"), false);
         }
 
         public override void EditDisplayNameForcely(byte playerId, ref string displayName)
         {
-            displayName += Helpers.cs(RoleColor,"6");
+            displayName += Helpers.cs(RoleColor, "6");
         }
 
         public override Module.CustomOption? RegisterAssignableOption(Role role)
@@ -32,9 +33,10 @@ namespace Nebula.Roles.ExtraRoles{
             return option;
         }
 
-        public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag){
-            if(PlayerControl.LocalPlayer.PlayerId == playerId || Game.GameData.data.myData.CanSeeEveryoneInfo)
-                EditDisplayNameForcely(playerId,ref displayName);
+        public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
+        {
+            if (PlayerControl.LocalPlayer.PlayerId == playerId || Game.GameData.data.myData.CanSeeEveryoneInfo)
+                EditDisplayNameForcely(playerId, ref displayName);
         }
 
         public override void EditSpawnableRoleShower(ref string suffix, Role role)
@@ -42,7 +44,8 @@ namespace Nebula.Roles.ExtraRoles{
             if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "6");
         }
 
-        public Singer() : base("Singer","singer",RoleColor,0){
+        public Singer() : base("Singer", "singer", RoleColor, 0)
+        {
         }
     }
 }

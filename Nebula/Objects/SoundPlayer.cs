@@ -11,9 +11,12 @@ class SoundPlayer
     {
         foreach (var p in players)
         {
-            try{
+            try
+            {
                 GameObject.Destroy(p.audioSource.gameObject);
-            }catch(Exception e){
+            }
+            catch (Exception e)
+            {
                 Debug.LogError(e.StackTrace);
             }
         }
@@ -52,7 +55,7 @@ class SoundPlayer
         }
     }
 
-    static public AudioSource? PlaySound(Module.AudioAsset id,float volume=0.8f)
+    static public AudioSource? PlaySound(Module.AudioAsset id, float volume = 0.8f)
     {
         if (Constants.ShouldPlaySfx())
         {

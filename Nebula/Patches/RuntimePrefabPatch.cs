@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Nebula.Patches;
+﻿namespace Nebula.Patches;
 
 [HarmonyPatch]
-public static class RuntimePrefabPatch {
-    [HarmonyPatch(typeof(AmongUsClient),nameof(AmongUsClient.Awake)),HarmonyPostfix]
-    public static void PlayerDisplayPatch(AmongUsClient __instance) {
+public static class RuntimePrefabPatch
+{
+    [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.Awake)), HarmonyPostfix]
+    public static void PlayerDisplayPatch(AmongUsClient __instance)
+    {
         if (RuntimePrefabs.PlayerDisplayPrefab != null) return;
 
         __instance.PlayerPrefab.gameObject.SetActive(false);

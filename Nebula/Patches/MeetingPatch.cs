@@ -1,5 +1,5 @@
-﻿using Nebula.Module;
-using UnityEngine;
+﻿using Nebula.Expansion;
+using Nebula.Roles.ExtremeRoles;
 
 namespace Nebula.Patches;
 
@@ -107,14 +107,15 @@ class MeetingHudPatch
 
             }
 
-            if(Roles.ComplexRoles.SwapSystem.isSwapped && !PlayerControl.LocalPlayer.Data.IsDead){
-                if(PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.EvilSwapper || PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.NiceSwapper) Roles.ComplexRoles.SwapSystem.OnMeetingEnd();
+            if (SwapSystem.isSwapped && !PlayerControl.LocalPlayer.Data.IsDead)
+            {
+                if (PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.EvilSwapper || PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.NiceSwapper) SwapSystem.OnMeetingEnd();
                 PlayerVoteArea swapped1 = null;
                 PlayerVoteArea swapped2 = null;
                 foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)
                 {
-                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.swapTargetf) swapped1 = playerVoteArea;
-                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.swapTargets) swapped2 = playerVoteArea;
+                    if (playerVoteArea.TargetPlayerId == SwapSystem.swapTargetf) swapped1 = playerVoteArea;
+                    if (playerVoteArea.TargetPlayerId == SwapSystem.swapTargets) swapped2 = playerVoteArea;
                 }
                 if (!dictionary.ContainsKey(swapped1.TargetPlayerId)) dictionary[swapped1.TargetPlayerId] = 0;
                 if (!dictionary.ContainsKey(swapped2.TargetPlayerId)) dictionary[swapped2.TargetPlayerId] = 0;
@@ -318,7 +319,8 @@ class MeetingHudPatch
             EmergencyPatch.MeetingUpdate();
 
             Game.GameData.data.myData.getGlobalData().role.OnMeetingStart();
-            foreach(var role in Game.GameData.data.myData.getGlobalData().extraRole){
+            foreach (var role in Game.GameData.data.myData.getGlobalData().extraRole)
+            {
                 role.OnMeetingStart();
             }
 
@@ -429,10 +431,10 @@ class MeetingHudPatch
             PlayerVoteArea swapped2 = null;
             foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)
             {
-                if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.swapTargetf) swapped1 = playerVoteArea;
-                if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.swapTargets) swapped2 = playerVoteArea;
+                if (playerVoteArea.TargetPlayerId == SwapSystem.swapTargetf) swapped1 = playerVoteArea;
+                if (playerVoteArea.TargetPlayerId == SwapSystem.swapTargets) swapped2 = playerVoteArea;
             }
-            if (Roles.ComplexRoles.SwapSystem.isSwapped)
+            if (SwapSystem.isSwapped)
             {
                 Debug.LogWarning("SwapAniBegan");
                 __instance.StartCoroutine(Effects.Slide3D(swapped1.transform, swapped1.transform.localPosition, swapped2.transform.localPosition, 1.5f));
@@ -445,8 +447,8 @@ class MeetingHudPatch
             {
                 PlayerVoteArea playerVoteArea = __instance.playerStates[i];
                 byte targetPlayerId = playerVoteArea.TargetPlayerId;
-                if (Roles.ComplexRoles.SwapSystem.isSwapped && playerVoteArea.TargetPlayerId == swapped1.TargetPlayerId) playerVoteArea = swapped2;
-                else if (Roles.ComplexRoles.SwapSystem.isSwapped && playerVoteArea.TargetPlayerId == swapped2.TargetPlayerId) playerVoteArea = swapped1;
+                if (SwapSystem.isSwapped && playerVoteArea.TargetPlayerId == swapped1.TargetPlayerId) playerVoteArea = swapped2;
+                else if (SwapSystem.isSwapped && playerVoteArea.TargetPlayerId == swapped2.TargetPlayerId) playerVoteArea = swapped1;
                 playerVoteArea.ClearForResults();
                 int num2 = 0;
                 //bool mayorFirstVoteDisplayed = !CustomOptionHolder.dontShowExtraVotes.getBool();
@@ -473,7 +475,8 @@ class MeetingHudPatch
                         num2++;
                     }
 
-                    if (!votesApplied.ContainsKey(voter.PlayerId)){
+                    if (!votesApplied.ContainsKey(voter.PlayerId))
+                    {
                         votesApplied[voter.PlayerId] = 0;
                     }
 
@@ -481,7 +484,7 @@ class MeetingHudPatch
                 }
             }
 
-            if(Roles.ComplexRoles.SwapSystem.isSwapped) Roles.ComplexRoles.SwapSystem.OnMeetingStart();
+            if (SwapSystem.isSwapped) SwapSystem.OnMeetingStart();
             return false;
         }
     }

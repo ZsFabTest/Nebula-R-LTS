@@ -1,11 +1,5 @@
-﻿using Il2CppSystem.Threading.Tasks;
-using Nebula.Roles.Perk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Nebula.Roles.NeutralRoles.Paparazzo;
+﻿using Nebula.Roles.Perk;
+using Nebula.Rpc;
 
 namespace Nebula.Game;
 

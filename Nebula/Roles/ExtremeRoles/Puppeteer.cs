@@ -1,6 +1,8 @@
-namespace Nebula.Roles.NeutralRoles;
+using Nebula.Roles.NeutralRoles;
 
-public class Puppeteer : Role,Template.HasWinTrigger
+namespace Nebula.Roles.ExtremeRoles;
+
+public class Puppeteer : Role, Template.HasWinTrigger
 {
     private List<Objects.Arrow?> impostorArrows;
     private List<Objects.Arrow?> jackalArrows;
@@ -15,7 +17,7 @@ public class Puppeteer : Role,Template.HasWinTrigger
     public bool WinTrigger { get; set; }
     public byte Winner { get; set; }
 
-    public static Color RoleColor = new(114f / 255f,51f / 255f,114f / 255f);
+    public static Color RoleColor = new(114f / 255f, 51f / 255f, 114f / 255f);
 
     private CustomButton morphButton;
     private bool isDead = false;
@@ -54,7 +56,8 @@ public class Puppeteer : Role,Template.HasWinTrigger
         countToWin = CreateOption(Color.white, "countToWin", 4f, 1f, 10f, 1f);
     }
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         killCount = 0;
     }
 
@@ -84,7 +87,7 @@ public class Puppeteer : Role,Template.HasWinTrigger
                     //Game.GameData.data.myData.Vision.Register(new Game.VisionFactor(morphDurationOption.getFloat(), 1.5f));
                     originPos = PlayerControl.LocalPlayer.transform.position;
                     RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
-                    RPCEventInvoker.Morph(morphOutfit.Clone(morphOutfit.Priority),morphDurationOption.getFloat());
+                    RPCEventInvoker.Morph(morphOutfit.Clone(morphOutfit.Priority), morphDurationOption.getFloat());
                 }
             },
             () => { return true; },//!PlayerControl.LocalPlayer.Data.IsDead; },
@@ -95,8 +98,9 @@ public class Puppeteer : Role,Template.HasWinTrigger
                 morphButton.isEffectActive = false;
                 morphButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
                 RPCEventInvoker.MorphCancel();
-                if(isDead){
-                    PlayerControl.LocalPlayer.Die(DeathReason.Kill,false);
+                if (isDead)
+                {
+                    PlayerControl.LocalPlayer.Die(DeathReason.Kill, false);
                     Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId]?.Die();
                 }
                 //Game.GameData.data.myData.Vision.Factors.Clear();
@@ -107,11 +111,13 @@ public class Puppeteer : Role,Template.HasWinTrigger
             Module.NebulaInputManager.abilityInput.keyCode,
             true,
             morphDurationOption.getFloat(),
-            () => { 
+            () =>
+            {
                 morphButton.Timer = morphButton.MaxTimer;
                 RPCEventInvoker.MorphCancel();
-                if(isDead){
-                    PlayerControl.LocalPlayer.Die(DeathReason.Kill,false);
+                if (isDead)
+                {
+                    PlayerControl.LocalPlayer.Die(DeathReason.Kill, false);
                     Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId]?.Die();
                 }
                 PlayerControl.LocalPlayer.transform.position = originPos;
@@ -127,8 +133,9 @@ public class Puppeteer : Role,Template.HasWinTrigger
             morphButton.isEffectActive = false;
             morphButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
             RPCEventInvoker.MorphCancel();
-            if(isDead){
-                PlayerControl.LocalPlayer.Die(DeathReason.Kill,false);
+            if (isDead)
+            {
+                PlayerControl.LocalPlayer.Die(DeathReason.Kill, false);
                 Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId]?.Die();
             }
             PlayerControl.LocalPlayer.transform.position = originPos;
@@ -136,29 +143,37 @@ public class Puppeteer : Role,Template.HasWinTrigger
         });
     }
 
-    public override void OnRevived(byte playerId){
-        if(PlayerControl.LocalPlayer.PlayerId == playerId) isDead = false;
+    public override void OnRevived(byte playerId)
+    {
+        if (PlayerControl.LocalPlayer.PlayerId == playerId) isDead = false;
     }
 
-    public override void OnMurdered(byte murderId){
-        if(!morphButton.isEffectActive) isDead = true;
-        else{
+    public override void OnMurdered(byte murderId)
+    {
+        if (!morphButton.isEffectActive) isDead = true;
+        else
+        {
             morphButton.Timer = morphButton.MaxTimer;
             morphButton.isEffectActive = false;
             morphButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
             RPCEventInvoker.MorphCancel();
-            if(!morphTarget.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,morphTarget.PlayerId,Game.PlayerData.PlayerStatus.Dead.Id,false);
+            if (!morphTarget.Data.IsDead) RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, morphTarget.PlayerId, Game.PlayerData.PlayerStatus.Dead.Id, false);
             hasKilled = true;
-            if(!isDead) RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
-            else{
-                try{
+            if (!isDead) RPCEventInvoker.FixedRevive(PlayerControl.LocalPlayer);
+            else
+            {
+                try
+                {
                     DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-                    foreach(var DeadBody in array){
-                        if(DeadBody.ParentId == PlayerControl.LocalPlayer.PlayerId){
+                    foreach (var DeadBody in array)
+                    {
+                        if (DeadBody.ParentId == PlayerControl.LocalPlayer.PlayerId)
+                        {
                             DeadBody.gameObject.active = false;
                         }
                     }
-                }catch(Exception e) { Debug.LogError(e.StackTrace); }
+                }
+                catch (Exception e) { Debug.LogError(e.StackTrace); }
             }
             /*
             if(isDead){
@@ -167,7 +182,7 @@ public class Puppeteer : Role,Template.HasWinTrigger
             }
             */
             PlayerControl.LocalPlayer.transform.position = originPos;
-            if(++killCount >= countToWin.getFloat()) RPCEventInvoker.WinTrigger(this);
+            if (++killCount >= countToWin.getFloat()) RPCEventInvoker.WinTrigger(this);
         }
     }
 
@@ -180,7 +195,7 @@ public class Puppeteer : Role,Template.HasWinTrigger
 
         RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, morphTarget, RoleColor, arrowSprite);
 
-        int i = 0,i1 = 0,i2 = 0,i3 = 0,i4 = 0,i5 = 0,i6 = 0,i7 = 0,i8 = 0;
+        int i = 0, i1 = 0, i2 = 0, i3 = 0, i4 = 0, i5 = 0, i6 = 0, i7 = 0, i8 = 0;
         foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if ((p.Data.Role.IsImpostor || p.GetModData().role.DeceiveImpostorInNameDisplay) && !p.Data.IsDead)
@@ -188,79 +203,87 @@ public class Puppeteer : Role,Template.HasWinTrigger
                 if (impostorArrows.Count >= i) impostorArrows.Add(null);
 
                 var arrow = impostorArrows[i];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Palette.ImpostorRed,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Palette.ImpostorRed, arrowSprite);
                 impostorArrows[i] = arrow;
 
                 i++;
             }
-            else if (p.GetModData().role == Roles.Jackal && !p.Data.IsDead){
+            else if (p.GetModData().role == Roles.Jackal && !p.Data.IsDead)
+            {
                 if (jackalArrows.Count >= i1) jackalArrows.Add(null);
 
                 var arrow = jackalArrows[i1];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Jackal.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Jackal.Color, arrowSprite);
                 jackalArrows[i1] = arrow;
 
                 i1++;
             }
-            else if ((p.GetModData().role == Roles.Dog) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Dog) && !p.Data.IsDead)
+            {
                 if (pavlovArrows.Count >= i2) pavlovArrows.Add(null);
 
                 var arrow = pavlovArrows[i2];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Pavlov.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Pavlov.Color, arrowSprite);
                 pavlovArrows[i2] = arrow;
 
                 i2++;
             }
-            else if ((p.GetModData().role.side == Side.Moriarty) && !p.Data.IsDead){
+            else if ((p.GetModData().role.side == Side.Moriarty) && !p.Data.IsDead)
+            {
                 if (moriartyArrows.Count >= i3) moriartyArrows.Add(null);
 
                 var arrow = moriartyArrows[i3];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Moriarty.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Moriarty.Color, arrowSprite);
                 moriartyArrows[i3] = arrow;
 
                 i3++;
             }
-            else if ((p.GetModData().role == Roles.Sheriff) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Sheriff) && !p.Data.IsDead)
+            {
                 if (sheriffArrows.Count >= i4) sheriffArrows.Add(null);
 
                 var arrow = sheriffArrows[i4];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Sheriff.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Sheriff.Color, arrowSprite);
                 sheriffArrows[i4] = arrow;
 
                 i4++;
             }
-            else if ((p.GetModData().role == Roles.Werewolf) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Werewolf) && !p.Data.IsDead)
+            {
                 if (werewolfArrows.Count >= i5) werewolfArrows.Add(null);
 
                 var arrow = werewolfArrows[i5];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Werewolf.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Werewolf.Color, arrowSprite);
                 werewolfArrows[i5] = arrow;
 
                 i5++;
             }
-            else if ((p.GetModData().role == Roles.Challenger) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Challenger) && !p.Data.IsDead)
+            {
                 if (challengerArrows.Count >= i6) challengerArrows.Add(null);
 
                 var arrow = challengerArrows[i6];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Challenger.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Challenger.Color, arrowSprite);
                 challengerArrows[i6] = arrow;
 
                 i6++;
             }
-            else if ((p.GetModData().role == Roles.OracleN) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.OracleN) && !p.Data.IsDead)
+            {
                 if (oracleArrows.Count >= i7) oracleArrows.Add(null);
 
                 var arrow = oracleArrows[i7];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.OracleN.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.OracleN.Color, arrowSprite);
                 oracleArrows[i7] = arrow;
 
                 i7++;
             }
-            else if ((p.GetModData().role == Roles.BlackSanta) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.BlackSanta) && !p.Data.IsDead)
+            {
                 if (santaArrows.Count >= i8) santaArrows.Add(null);
 
                 var arrow = santaArrows[i8];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.BlackSanta.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.BlackSanta.Color, arrowSprite);
                 santaArrows[i8] = arrow;
 
                 i8++;
@@ -295,12 +318,15 @@ public class Puppeteer : Role,Template.HasWinTrigger
         santaArrows.RemoveRange(santaArrows.Count - removed, removed);
     }
 
-    public override void OnMeetingStart(){
-        if(isDead){
-            PlayerControl.LocalPlayer.Die(DeathReason.Kill,false);
+    public override void OnMeetingStart()
+    {
+        if (isDead)
+        {
+            PlayerControl.LocalPlayer.Die(DeathReason.Kill, false);
             Game.GameData.data.playersArray[PlayerControl.LocalPlayer.PlayerId]?.Die();
         }
-        if(hasKilled){
+        if (hasKilled)
+        {
             RPCEventInvoker.PlayStaticSound(Module.AudioAsset.PuppeteerLaugh);
             //Objects.SoundPlayer.PlaySound(Module.AudioAsset.PuppeteerLaugh);
             hasKilled = false;

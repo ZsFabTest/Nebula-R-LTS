@@ -1,4 +1,5 @@
-﻿using Nebula.Module;
+﻿using Nebula.Expansion;
+using Nebula.Module;
 
 namespace Nebula.Roles.CrewmateRoles;
 
@@ -171,7 +172,7 @@ public class Guardian : Role
             killerPingTimer -= Time.deltaTime;
             if (killerPingTimer < 0f)
             {
-                Helpers.Ping(killer.GetTruePosition(),false);
+                Helpers.Ping(killer.GetTruePosition(), false);
                 killerPingTimer = alertIntervalOption.getFloat();
             }
         }
@@ -181,7 +182,7 @@ public class Guardian : Role
     {
         if (guardPlayer == null) return;
 
-        
+
         if (targetId == guardPlayer.PlayerId)
         {
             if (alertModeOption.getBool())
@@ -190,7 +191,7 @@ public class Guardian : Role
                 killerPingTimer = 0f;
                 RPCEventInvoker.RemoveGuardian(guardPlayer, PlayerControl.LocalPlayer);
             }
-            else if(showGuardFlashOption.getBool())
+            else if (showGuardFlashOption.getBool())
                 Helpers.PlayQuickFlash(RoleColor);
         }
     }
@@ -207,7 +208,7 @@ public class Guardian : Role
             () =>
             {
                 var obj = RPCEventInvoker.ObjectInstantiate(CustomObject.Type.Antenna, PlayerControl.LocalPlayer.transform.position);
-                new Objects.EffectCircle(obj.GameObject, Palette.CrewmateBlue,antennaEffectiveRangeOption.getFloat());
+                new Objects.EffectCircle(obj.GameObject, Palette.CrewmateBlue, antennaEffectiveRangeOption.getFloat());
                 RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, remainAntennasId, -1);
                 myAntennaSet.Add(obj);
                 antennaButton.Timer = antennaButton.MaxTimer;

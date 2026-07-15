@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿using Nebula.Roles.ImpostorRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class SerialKiller : Role
 {
@@ -22,20 +24,24 @@ public class SerialKiller : Role
         suicideMaxTimeOption.suffix = "second";
     }
 
-    public override void GlobalInitialize(PlayerControl __instance){
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
         hasKilled = false;
         suicideTime = 0f;
     }
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         isGaming = true;
     }
 
-    public override void OnMeetingStart(){
+    public override void OnMeetingStart()
+    {
         isGaming = false;
     }
 
-    public override void OnMeetingEnd(){
+    public override void OnMeetingEnd()
+    {
         isGaming = true;
     }
 
@@ -75,7 +81,8 @@ public class SerialKiller : Role
             () => { },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && hasKilled; },
             () => { return true; },
-            () => { 
+            () =>
+            {
                 suicideTime = suicideMaxTimeOption.getFloat();
             },
             SuicideButtonSprite.GetSprite(),
@@ -97,12 +104,13 @@ public class SerialKiller : Role
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(true);
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
-        if(hasKilled && suicideTime <= 0 && !PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance)
+        if (hasKilled && suicideTime <= 0 && !PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance)
         {
-            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id,true);
+            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id, true);
             hasKilled = false;
         }
-        if(isGaming && !Game.GameData.data.IsTimeStopped){
+        if (isGaming && !Game.GameData.data.IsTimeStopped)
+        {
             suicideTime -= Time.deltaTime;
             suicideButton.Timer = (float)suicideTime;
         }
@@ -112,12 +120,12 @@ public class SerialKiller : Role
     public override void CleanUp()
     {
         base.CleanUp();
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;
         }
-        if(suicideButton != null)
+        if (suicideButton != null)
         {
             suicideButton.Destroy();
             suicideButton = null;

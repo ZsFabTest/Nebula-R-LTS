@@ -1,16 +1,12 @@
-﻿using BepInEx.Unity.IL2CPP.Utils;
-using Nebula.Utilities;
-using UnityEngine;
-
-namespace Nebula.Objects.ObjectTypes;
+﻿namespace Nebula.Objects.ObjectTypes;
 
 public class ElecPole : DelayedObject
 {
     private DividedSpriteLoader DividedSprite;
-    public ElecPole() : base(6, "ElecPole", new DividedSpriteLoader("Nebula.Resources.DisturbBolt.png", 100f,4,1))
+    public ElecPole() : base(6, "ElecPole", new DividedSpriteLoader("Nebula.Resources.DisturbBolt.png", 100f, 4, 1))
     {
         DividedSprite = Sprite as DividedSpriteLoader;
-         
+
     }
 
     public override bool RequireMonoBehaviour => true;
@@ -27,12 +23,13 @@ public class ElecPole : DelayedObject
         collider.enabled = false;
     }
 
-    public override void Update(CustomObject obj, int command) {
+    public override void Update(CustomObject obj, int command)
+    {
         IEnumerator GetEnumerator(int[] indexAry)
         {
             int i = 0;
             float t = 1f;
-            while(i < indexAry.Length)
+            while (i < indexAry.Length)
             {
                 t += Time.deltaTime;
                 if (t > 0.1f)

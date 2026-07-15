@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static PlayerMaterial;
-using static Rewired.Data.Mapping.CustomCalculation_Accelerometer;
-
-namespace Nebula;
+﻿namespace Nebula.Components;
 
 public class PlayerDisplay : MonoBehaviour
 {
@@ -71,10 +63,10 @@ public class PlayerDisplay : MonoBehaviour
     {
         void SetLayerRecursively(Transform transform)
         {
-            for(int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
-                child.gameObject.layer= layer;
+                child.gameObject.layer = layer;
                 SetLayerRecursively(child);
             }
         }

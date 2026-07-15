@@ -10,7 +10,8 @@ public class EvilAce : Role
     {
         killCoolDownMultiplierOption = CreateOption(Color.white, "killCoolDown", 0.5f, 0.125f, 1f, 0.125f);
         killCoolDownMultiplierOption.suffix = "cross";
-        killCoolDownMultiplierOption.IntimateValueDecorator = (text, option) => {
+        killCoolDownMultiplierOption.IntimateValueDecorator = (text, option) =>
+        {
             float t = GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown * option.getFloat();
             return string.Format(text + Helpers.cs(new Color(0.8f, 0.8f, 0.8f), " ({0:0.##}" + Language.Language.GetString("option.suffix.second") + ")"), t);
         };

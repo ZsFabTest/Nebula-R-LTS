@@ -1,8 +1,11 @@
-namespace Nebula.Roles.CrewmateRoles;
+using Nebula;
 
-public class Locksmith : Template.TCrewmate{
-    public static Color RoleColor = new Color(122f / 255f,146f / 255f,190f / 255f);
-    public static SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.DoorButton.png",115f);
+namespace Nebula.Roles.ExtremeRoles;
+
+public class Locksmith : Template.TCrewmate
+{
+    public static Color RoleColor = new Color(122f / 255f, 146f / 255f, 190f / 255f);
+    public static SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.DoorButton.png", 115f);
 
     private Module.CustomOption unlockDoorCooldownOption;
     PlainDoor target;
@@ -15,7 +18,7 @@ public class Locksmith : Template.TCrewmate{
     public override void LoadOptionData()
     {
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
-        unlockDoorCooldownOption = CreateOption(Color.white,"unlockDoorCooldown",5f,0f,30f,2.5f);
+        unlockDoorCooldownOption = CreateOption(Color.white, "unlockDoorCooldown", 5f, 0f, 30f, 2.5f);
         unlockDoorCooldownOption.suffix = "second";
     }
 
@@ -27,9 +30,10 @@ public class Locksmith : Template.TCrewmate{
     private CustomButton open;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(open != null) open.Destroy();
+        if (open != null) open.Destroy();
         open = new CustomButton(
-            () => {
+            () =>
+            {
                 target.SetDoorway(!target.Open);
                 open.Timer = open.MaxTimer;
             },
@@ -45,8 +49,10 @@ public class Locksmith : Template.TCrewmate{
         open.MaxTimer = unlockDoorCooldownOption.getFloat();
     }
 
-    public override void CleanUp(){
-        if(open != null){
+    public override void CleanUp()
+    {
+        if (open != null)
+        {
             open.Destroy();
             open = null;
         }
@@ -63,7 +69,8 @@ public class Locksmith : Template.TCrewmate{
         });
     }
 
-    public Locksmith() : base("Locksmith","locksmith",RoleColor,false){
+    public Locksmith() : base("Locksmith", "locksmith", RoleColor, false)
+    {
         target = null;
         open = null;
     }

@@ -1,7 +1,6 @@
 ﻿using Nebula.Module;
-using Nebula.Patches;
 
-namespace Nebula;
+namespace Nebula.Expansion;
 
 public static class MeetingHudExpansion
 {
@@ -9,9 +8,9 @@ public static class MeetingHudExpansion
     {
         public Sprite picture { get; private set; }
         public float angle { get; private set; }
-        public DisclosedPicture(Texture2D picture,float angle)
+        public DisclosedPicture(Texture2D picture, float angle)
         {
-            
+
 
             this.picture = Helpers.loadSpriteFromResources(picture, 100f, new Rect(0, 0, picture.width, picture.height));
             this.picture.hideFlags = HideFlags.DontUnloadUnusedAsset;
@@ -28,11 +27,11 @@ public static class MeetingHudExpansion
             GameObject obj = new GameObject("Picture");
             obj.transform.SetParent(MeetingHud.Instance.transform);
             obj.layer = LayerExpansion.GetUILayer();
-            obj.transform.localPosition = new Vector3(-4.8f, 1.8f - 1.2f*(float)index, -40f);
+            obj.transform.localPosition = new Vector3(-4.8f, 1.8f - 1.2f * (float)index, -40f);
             obj.transform.localScale = new Vector3(0f, 0f);
             obj.transform.localEulerAngles = new Vector3(0, 0, angle);
             var renderer = obj.AddComponent<SpriteRenderer>();
-            renderer.sprite=picture;
+            renderer.sprite = picture;
             var frameObj = GameObject.Instantiate(AssetLoader.CameraFinderPrefab.transform.GetChild(0).gameObject);
             frameObj.transform.SetParent(obj.transform);
             frameObj.transform.localScale = new Vector3(1, 1);
@@ -40,17 +39,19 @@ public static class MeetingHudExpansion
             frameObj.transform.localPosition = new Vector3(0, 0, -1);
             frameObj.GetComponent<SpriteRenderer>().size = renderer.size;
 
-            IEnumerator GetEnumerator() {
+            IEnumerator GetEnumerator()
+            {
                 float p = 0f;
-                while (p < 1f) {
+                while (p < 1f)
+                {
                     float r = 1f - p;
-                    r = 1 - Mathf.Pow(r,5);
+                    r = 1 - Mathf.Pow(r, 5);
                     r *= 0.34f;
-                    obj.transform.localScale = new Vector3(r,r);
+                    obj.transform.localScale = new Vector3(r, r);
                     p += Time.deltaTime;
                     yield return null;
                 }
-                obj.transform.localScale=new Vector3(0.34f,0.34f);
+                obj.transform.localScale = new Vector3(0.34f, 0.34f);
             }
             MeetingHud.Instance.StartCoroutine(GetEnumerator().WrapToIl2Cpp());
         }
@@ -60,11 +61,11 @@ public static class MeetingHudExpansion
 
     public static void Initialize()
     {
-        foreach (var p in AllPictures) if(p.picture)GameObject.Destroy(p.picture);
+        foreach (var p in AllPictures) if (p.picture) GameObject.Destroy(p.picture);
         AllPictures.Clear();
     }
 
-    [HarmonyPatch(typeof(MeetingHud),nameof(MeetingHud.OnDestroy))]
+    [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.OnDestroy))]
     public class MeetingHudDestroyPatch
     {
         public static void Postfix(MeetingHud __instance)
@@ -78,7 +79,7 @@ public static class MeetingHudExpansion
     {
         public static void Postfix(MeetingHud __instance)
         {
-            
+
         }
     }
 

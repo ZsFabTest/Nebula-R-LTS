@@ -1,14 +1,10 @@
 ﻿using System.IO.Compression;
 using System.Reflection;
 using System.Text;
-using BepInEx.Unity.IL2CPP.Utils;
 using Hazel;
 using InnerNet;
-using Nebula.Module;
 using Nebula.Patches;
 using TMPro;
-using UnityEngine;
-using static NetworkedPlayerInfo;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 

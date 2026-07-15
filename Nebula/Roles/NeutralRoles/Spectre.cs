@@ -1,15 +1,10 @@
-﻿using Epic.OnlineServices.UI;
-using JetBrains.Annotations;
-using Nebula.Expansion;
+﻿using Nebula.Expansion;
 using Nebula.Game;
 using Nebula.Map;
 using Nebula.Module;
 using Nebula.Patches;
+using Nebula.Roles.ExtremeRoles;
 using Nebula.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static Il2CppSystem.Globalization.CultureInfo;
 
 namespace Nebula.Roles.NeutralRoles;
 
@@ -52,7 +47,7 @@ public class Spectre : Role
     public SpriteLoader spectreRancorConsoleSprite = new SpriteLoader("Nebula.Resources.SpectreMinigameConsoleStatue.png", 100f);
     public SpriteLoader spectreRancorConsoleBrokenSprite = new SpriteLoader("Nebula.Resources.SpectreMinigameConsoleStatueBroken.png", 100f);
 
-    public ISpriteLoader[] spectreFoxAnimationSprites,spectreStatueSprites;
+    public ISpriteLoader[] spectreFoxAnimationSprites, spectreStatueSprites;
 
     public SpriteLoader GetConsoleUnusedSprite()
     {
@@ -102,18 +97,20 @@ public class Spectre : Role
     {
         public float z { get; private set; }
         public float usableDistance { get; private set; }
-        public CustomTaskData(string name, Vector2 pos,float z) : base(name, pos) {
+        public CustomTaskData(string name, Vector2 pos, float z) : base(name, pos)
+        {
             this.z = z;
             usableDistance = 0.7f;
         }
-        public CustomTaskData(string name, Vector2 pos) : base(name, pos) {
+        public CustomTaskData(string name, Vector2 pos) : base(name, pos)
+        {
             z = pos.y / 1000f + 0.001f;
             usableDistance = 0.7f;
         }
 
         public CustomTaskData SetUsableDistance(float distance)
         {
-            usableDistance= distance;
+            usableDistance = distance;
             return this;
         }
     }
@@ -121,16 +118,16 @@ public class Spectre : Role
     public class CustomTaskSetting
     {
         private Dictionary<byte, System.Tuple<List<CustomTaskData>, CustomOption>> TaskDic = new();
-        public void AddSetting(byte mapId,List<CustomTaskData> taskSettings,CustomOption option)
+        public void AddSetting(byte mapId, List<CustomTaskData> taskSettings, CustomOption option)
         {
             TaskDic[mapId] = new(taskSettings, option);
         }
 
-        public void ForAllValidLoc(byte mapId,Action<CustomTaskData> process)
+        public void ForAllValidLoc(byte mapId, Action<CustomTaskData> process)
         {
             if (TaskDic.TryGetValue(mapId, out var setting))
             {
-                for (int i=0;i<setting.Item1.Count;i++) if ((setting.Item2.selection & (1 << i)) != 0) process(setting.Item1[i]);
+                for (int i = 0; i < setting.Item1.Count; i++) if ((setting.Item2.selection & (1 << i)) != 0) process(setting.Item1[i]);
             }
         }
 
@@ -271,14 +268,14 @@ public class Spectre : Role
     //道連れ
     public override void OnExiledPre(byte[] voters)
     {
-        foreach(var p in Game.GameData.data.AllPlayers.Values)
+        foreach (var p in Game.GameData.data.AllPlayers.Values)
             if (p.IsAlive && p.role == Roles.Immoralist) RPCEventInvoker.UncheckedExilePlayer(p.id, Game.PlayerData.PlayerStatus.Suicide.Id);
     }
 
     public override void OnMurdered(byte murderId)
     {
         foreach (var p in Game.GameData.data.AllPlayers.Values)
-            if (p.IsAlive && p.role == Roles.Immoralist) RPCEventInvoker.UncheckedMurderPlayer(p.id, p.id, Game.PlayerData.PlayerStatus.Suicide.Id, false);        
+            if (p.IsAlive && p.role == Roles.Immoralist) RPCEventInvoker.UncheckedMurderPlayer(p.id, p.id, Game.PlayerData.PlayerStatus.Suicide.Id, false);
     }
 
     //上記で殺しきれない場合
@@ -295,14 +292,14 @@ public class Spectre : Role
         foreach (var p in Game.GameData.data.AllPlayers.Values)
             if (p.IsAlive && p.role == Roles.Immoralist)
             {
-                if(MeetingHud.Instance || ExileController.Instance)
+                if (MeetingHud.Instance || ExileController.Instance)
                     RPCEventInvoker.UncheckedExilePlayer(p.id, Game.PlayerData.PlayerStatus.Suicide.Id);
                 else
                     RPCEventInvoker.UncheckedMurderPlayer(p.id, p.id, Game.PlayerData.PlayerStatus.Suicide.Id, false);
             }
     }
 
-    private Action<byte> getRefresher(params Tuple<CustomTaskSetting,Sprite?>[] settings) 
+    private Action<byte> getRefresher(params Tuple<CustomTaskSetting, Sprite?>[] settings)
     {
         Action<byte> refresher = null;
         refresher = (mapId) => MetaDialog.OpenMapDialog(mapId, true, (obj, id) =>
@@ -325,7 +322,7 @@ public class Spectre : Role
 
                     var spriteObj = new GameObject("Icon");
                     spriteObj.transform.SetParent(button.transform, false);
-                    spriteObj.transform.localPosition = new Vector3(0,0,-1f);
+                    spriteObj.transform.localPosition = new Vector3(0, 0, -1f);
                     spriteObj.layer = LayerExpansion.GetUILayer();
                     var iconRenderer = spriteObj.AddComponent<SpriteRenderer>();
                     iconRenderer.sprite = setting.Item2;
@@ -460,7 +457,7 @@ public class Spectre : Role
             new CustomTaskData("Office", new Vector2(15.8369f, 20.2052f)),
             new CustomTaskData("Storage", new Vector2(20.3024f, 4.734f)),
         }, CreateMetaOption(Color.white, "spectreTask.letter.mira", int.MaxValue).HiddenOnDisplay(true).HiddenOnMetaScreen(true));
-        
+
         letterTaskSetting.AddSetting(2,
             new List<CustomTaskData>(){
             new CustomTaskData("Dropship", new Vector2(18.8381f, -1.1588f)),
@@ -574,7 +571,7 @@ public class Spectre : Role
         spawnImmoralistOption = CreateOption(Color.white, "spawnImmoralist", true);
         occupyDoubleRoleCountOption = CreateOption(Color.white, "occupyDoubleRoleCount", true).AddPrerequisite(spawnImmoralistOption);
 
-        spectreTaskOption = CreateOption(Color.white, "spectreTask", new string[] { "option.switch.off","role.spectre.spectreTask.eatTheFried", "role.spectre.spectreTask.deliveryRancor" },(object)"role.spectre.spectreTask.eatTheFried");
+        spectreTaskOption = CreateOption(Color.white, "spectreTask", new string[] { "option.switch.off", "role.spectre.spectreTask.eatTheFried", "role.spectre.spectreTask.deliveryRancor" }, (object)"role.spectre.spectreTask.eatTheFried");
         numOfTheFriedRequireToWinOption = CreateOption(Color.white, "numOfTheFriedRequiredToWin", 5f, 1f, 16f, 1f).AddCustomPrerequisite(() => spectreTaskOption.getSelection() == 1);
 
         SetUpCustomTaskOption();
@@ -637,7 +634,7 @@ public class Spectre : Role
         ventCoolDownOption = CreateOption(Color.white, "ventCoolDown", 20f, 5f, 60f, 2.5f);
         ventCoolDownOption.suffix = "second";
         ventDurationOption = CreateOption(Color.white, "ventDuration", 10f, 5f, 60f, 2.5f);
-        ventDurationOption.suffix = "second";   
+        ventDurationOption.suffix = "second";
     }
 
     public override Role[] AssignedRoles => spawnImmoralistOption.getBool() ? (new Role[] { this, Roles.Immoralist }) : (new Role[] { this });
@@ -674,7 +671,7 @@ public class Spectre : Role
 
     public override void OnMeetingEnd()
     {
-        foreach(var task in PlayerControl.LocalPlayer.myTasks.GetFastEnumerator())
+        foreach (var task in PlayerControl.LocalPlayer.myTasks.GetFastEnumerator())
         {
             var rancor = task.TryCast<SpectreRancorTask>();
             if (rancor)
@@ -685,7 +682,7 @@ public class Spectre : Role
     SpriteLoader arrowSprite = new SpriteLoader("role.spectre.arrow");
     public override void MyPlayerControlUpdate()
     {
-        int i = 0,i1 = 0,i2 = 0,i3 = 0,i4 = 0,i5 = 0,i6 = 0,i7 = 0,i8 = 0;
+        int i = 0, i1 = 0, i2 = 0, i3 = 0, i4 = 0, i5 = 0, i6 = 0, i7 = 0, i8 = 0;
         foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if ((p.Data.Role.IsImpostor || p.GetModData().role.DeceiveImpostorInNameDisplay) && !p.Data.IsDead)
@@ -693,79 +690,87 @@ public class Spectre : Role
                 if (impostorArrows.Count >= i) impostorArrows.Add(null);
 
                 var arrow = impostorArrows[i];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Palette.ImpostorRed,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Palette.ImpostorRed, arrowSprite);
                 impostorArrows[i] = arrow;
 
                 i++;
             }
-            else if (p.GetModData().role == Roles.Jackal && !p.Data.IsDead){
+            else if (p.GetModData().role == Roles.Jackal && !p.Data.IsDead)
+            {
                 if (jackalArrows.Count >= i1) jackalArrows.Add(null);
 
                 var arrow = jackalArrows[i1];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Jackal.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Jackal.Color, arrowSprite);
                 jackalArrows[i1] = arrow;
 
                 i1++;
             }
-            else if ((p.GetModData().role == Roles.Dog) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Dog) && !p.Data.IsDead)
+            {
                 if (pavlovArrows.Count >= i2) pavlovArrows.Add(null);
 
                 var arrow = pavlovArrows[i2];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Pavlov.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Pavlov.Color, arrowSprite);
                 pavlovArrows[i2] = arrow;
 
                 i2++;
             }
-            else if ((p.GetModData().role.side == Side.Moriarty) && !p.Data.IsDead){
+            else if ((p.GetModData().role.side == Side.Moriarty) && !p.Data.IsDead)
+            {
                 if (moriartyArrows.Count >= i3) moriartyArrows.Add(null);
 
                 var arrow = moriartyArrows[i3];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Moriarty.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Moriarty.Color, arrowSprite);
                 moriartyArrows[i3] = arrow;
 
                 i3++;
             }
-            else if ((p.GetModData().role == Roles.Sheriff) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Sheriff) && !p.Data.IsDead)
+            {
                 if (sheriffArrows.Count >= i4) sheriffArrows.Add(null);
 
                 var arrow = sheriffArrows[i4];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Sheriff.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Sheriff.Color, arrowSprite);
                 sheriffArrows[i4] = arrow;
 
                 i4++;
             }
-            else if ((p.GetModData().role == Roles.Werewolf) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Werewolf) && !p.Data.IsDead)
+            {
                 if (werewolfArrows.Count >= i5) werewolfArrows.Add(null);
 
                 var arrow = werewolfArrows[i5];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Werewolf.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Werewolf.Color, arrowSprite);
                 werewolfArrows[i5] = arrow;
 
                 i5++;
             }
-            else if ((p.GetModData().role == Roles.Challenger) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.Challenger) && !p.Data.IsDead)
+            {
                 if (challengerArrows.Count >= i6) challengerArrows.Add(null);
 
                 var arrow = challengerArrows[i6];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Challenger.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Challenger.Color, arrowSprite);
                 challengerArrows[i6] = arrow;
 
                 i6++;
             }
-            else if ((p.GetModData().role == Roles.OracleN) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.OracleN) && !p.Data.IsDead)
+            {
                 if (oracleArrows.Count >= i7) oracleArrows.Add(null);
 
                 var arrow = oracleArrows[i7];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.OracleN.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.OracleN.Color, arrowSprite);
                 oracleArrows[i7] = arrow;
 
                 i7++;
             }
-            else if ((p.GetModData().role == Roles.BlackSanta) && !p.Data.IsDead){
+            else if ((p.GetModData().role == Roles.BlackSanta) && !p.Data.IsDead)
+            {
                 if (santaArrows.Count >= i8) santaArrows.Add(null);
 
                 var arrow = santaArrows[i8];
-                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.BlackSanta.Color,arrowSprite);
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.BlackSanta.Color, arrowSprite);
                 santaArrows[i8] = arrow;
 
                 i8++;
@@ -840,7 +845,7 @@ public class Spectre : Role
 
     //ラストインポスターに推察チャンスを与える
 
-    public IEnumerator CoAnimateFox(SpriteRenderer renderer,float duration)
+    public IEnumerator CoAnimateFox(SpriteRenderer renderer, float duration)
     {
         float t = 0f;
         int i = 0;
@@ -881,7 +886,7 @@ public class Spectre : Role
         santaArrows = new List<Arrow?>();
 
         spectreFoxAnimationSprites = new ISpriteLoader[25];
-        for(int i = 0; i < 25; i++)
+        for (int i = 0; i < 25; i++)
             spectreFoxAnimationSprites[i] = new AssetSpriteLoader(AssetLoader.NebulaMainAsset,
                 string.Format("assets/Animations/Fox/{0:00}.png", i), 115f);
 

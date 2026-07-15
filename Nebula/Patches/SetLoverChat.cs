@@ -19,10 +19,12 @@ public static class AddChat
         var localPlayer = PlayerControl.LocalPlayer;
         if (localPlayer == null) return true;
         bool shouldSeeMessage = localPlayer.Data.IsDead || sourcePlayer.PlayerId == PlayerControl.LocalPlayer.PlayerId;
-        try{
+        try
+        {
             shouldSeeMessage = shouldSeeMessage || localPlayer.GetModData().extraRole.Contains(Roles.Roles.Lover) || localPlayer.GetModData().extraRole.Contains(Roles.Roles.Trilemma);
             shouldSeeMessage = shouldSeeMessage && Roles.Roles.Lover.hasPrivateChatOption.getBool();
-        }catch{  }
+        }
+        catch { }
         if (DateTime.UtcNow - MeetingStart.MeetingStartTime < TimeSpan.FromSeconds(1))
         {
             return shouldSeeMessage;
@@ -37,15 +39,19 @@ public static class EnableChat
     public static void Postfix(HudManager __instance)
     {
         var localPlayer = PlayerControl.LocalPlayer;
-        
-        try{
+
+        try
+        {
             if ((localPlayer.GetModData().extraRole.Contains(Roles.Roles.Lover) || localPlayer.GetModData().extraRole.Contains(Roles.Roles.Trilemma)) && !__instance.Chat.isActiveAndEnabled && Roles.Roles.Lover.hasPrivateChatOption.getBool())
                 __instance.Chat.SetVisible(true);
-        }catch{  }
+        }
+        catch { }
 
-        try{
+        try
+        {
             if (localPlayer.GetModData().role == Roles.Roles.Resurrectionist && !Roles.Roles.Resurrectionist.hasRevived)
                 __instance.Chat.SetVisible(false);
-        }catch{  }
+        }
+        catch { }
     }
 }

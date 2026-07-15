@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using Nebula.Rpc;
+using UnityEngine.SceneManagement;
 
 namespace Nebula.Patches;
 

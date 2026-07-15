@@ -1,4 +1,7 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿using Nebula.Expansion;
+using Nebula.Roles.ImpostorRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Assassin : Role
 {
@@ -44,7 +47,7 @@ public class Assassin : Role
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(chooseTarget != null)
+        if (chooseTarget != null)
         {
             chooseTarget.Destroy();
         }
@@ -55,7 +58,8 @@ public class Assassin : Role
                 assassinateTarget = target;
                 chooseTarget.Timer = 5f;
                 Game.GameData.data.myData.currentTarget.ShowFailedMurder();
-                if(Arrow != null){
+                if (Arrow != null)
+                {
                     UnityEngine.Object.Destroy(Arrow.arrow);
                 }
                 Arrow = new Arrow(Color.black);
@@ -83,7 +87,7 @@ public class Assassin : Role
                 var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead, false, true);
                 if (res != Helpers.MurderAttemptResult.SuppressKill)
                     assassinate.Timer = assassinate.MaxTimer;
-                                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
+                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
                 HudManager.Instance.StartCoroutine(NebulaEffects.CoGroupOfLeavesEffect(HudManager.Instance, LayerExpansion.GetDefaultLayer(), null, PlayerControl.LocalPlayer.transform.position + new Vector3(0, 0, -2)).WrapToIl2Cpp());
                 assassinateTarget = null;
                 assassinate.Timer = assassinateCooldownOption.getFloat();
@@ -108,12 +112,12 @@ public class Assassin : Role
         cameraButton = new CustomButton(
             () =>
             {
-                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);                
+                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer) HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
                 else HudManager.Instance.PlayerCam.SetTargetWithLight(assassinateTarget);
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove && assassinateTarget != null; },
-            () => {},
+            () => { },
             monitorButtonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
@@ -126,22 +130,23 @@ public class Assassin : Role
     public override void CleanUp()
     {
         base.CleanUp();
-        if(chooseTarget != null)
+        if (chooseTarget != null)
         {
             chooseTarget.Destroy();
             chooseTarget = null;
         }
-        if(assassinate != null)
+        if (assassinate != null)
         {
             assassinate.Destroy();
             assassinate = null;
         }
-        if(cameraButton != null)
+        if (cameraButton != null)
         {
             cameraButton.Destroy();
             cameraButton = null;
         }
-        if(Arrow != null){
+        if (Arrow != null)
+        {
             UnityEngine.Object.Destroy(Arrow.arrow);
             Arrow = null;
         }
@@ -152,8 +157,10 @@ public class Assassin : Role
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
-        if(Arrow != null){
-            if(assassinateTarget == null){
+        if (Arrow != null)
+        {
+            if (assassinateTarget == null)
+            {
                 UnityEngine.Object.Destroy(Arrow.arrow);
                 Arrow = null;
                 return;

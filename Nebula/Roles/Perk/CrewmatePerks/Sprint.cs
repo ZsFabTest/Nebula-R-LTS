@@ -1,6 +1,4 @@
-﻿using Il2CppSystem.Threading.Tasks;
-
-namespace Nebula.Roles.Perk.CrewmatePerks;
+﻿namespace Nebula.Roles.Perk.CrewmatePerks;
 
 public class Sprint : Perk
 {
@@ -14,7 +12,7 @@ public class Sprint : Perk
         button = new CustomButton(
             () =>
             {
-                RPCEventInvoker.EmitSpeedFactor(PlayerControl.LocalPlayer, new Game.SpeedFactor(0, IP(1, PerkPropertyType.Second),1f + IP(0, PerkPropertyType.Percentage), false));
+                RPCEventInvoker.EmitSpeedFactor(PlayerControl.LocalPlayer, new Game.SpeedFactor(0, IP(1, PerkPropertyType.Second), 1f + IP(0, PerkPropertyType.Percentage), false));
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove; },
@@ -37,12 +35,12 @@ public class Sprint : Perk
            },
             "button.label.boost"
         ).SetTimer(10f);
-        button.MaxTimer = IP(2,PerkPropertyType.Second);
+        button.MaxTimer = IP(2, PerkPropertyType.Second);
 
         buttonRegister.Invoke(button);
     }
 
-    public Sprint(int id) : base(id, "sprint", true, 0, 6, new Color(0.3f,0.45f,0.7f))
+    public Sprint(int id) : base(id, "sprint", true, 0, 6, new Color(0.3f, 0.45f, 0.7f))
     {
         ImportantProperties = new float[] { 50f, 2f, 40f };
     }

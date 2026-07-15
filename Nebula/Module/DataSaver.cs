@@ -1,10 +1,5 @@
-﻿using AmongUs.Data;
-using Innersloth.IO;
-using JetBrains.Annotations;
+﻿using Innersloth.IO;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Nebula.Module
 {
@@ -14,12 +9,18 @@ namespace Nebula.Module
         string name;
         DataSaver saver;
 
-        public T Value { get { return value; } set {
+        public T Value
+        {
+            get { return value; }
+            set
+            {
                 this.value = value;
                 saver.SetValue(name, value);
-            } }   
+            }
+        }
 
-        public void SetValueWithoutSave(T value) { 
+        public void SetValueWithoutSave(T value)
+        {
             this.value = value;
             saver.SetValue(name, value, true);
         }
@@ -37,7 +38,7 @@ namespace Nebula.Module
     public class StringDataEntry : DataEntry<string>
     {
         public override string Parse(string str) { return str; }
-        public StringDataEntry(string name, DataSaver saver,string defaultValue):base(name, saver, defaultValue) { }
+        public StringDataEntry(string name, DataSaver saver, string defaultValue) : base(name, saver, defaultValue) { }
     }
 
     public class FloatDataEntry : DataEntry<float>
@@ -64,14 +65,14 @@ namespace Nebula.Module
         public BooleanDataEntry(string name, DataSaver saver, bool defaultValue) : base(name, saver, defaultValue) { }
     }
 
-    public class DataSaver 
+    public class DataSaver
     {
         private Dictionary<string, string> contents;
         string filename;
 
         public string GetValue(string name, object defaultValue)
         {
-            if(contents.TryGetValue(name,out string value))
+            if (contents.TryGetValue(name, out string value))
             {
                 return value;
             }
@@ -79,15 +80,15 @@ namespace Nebula.Module
             return res;
         }
 
-        public void SetValue(string name, object value,bool skipSave = false)
+        public void SetValue(string name, object value, bool skipSave = false)
         {
             contents[name] = value.ToString();
-            if(!skipSave)Save();
+            if (!skipSave) Save();
         }
 
         public DataSaver(string filename)
         {
-            this.filename = "Nebula\\"+filename;
+            this.filename = "Nebula\\" + filename;
             Load();
         }
 
@@ -97,12 +98,12 @@ namespace Nebula.Module
 
             if (!FileIO.Exists(dataPathTo))
             {
-                contents=new();
+                contents = new();
                 return;
             }
             contents = new();
             string[] vals = (FileIO.ReadAllText(dataPathTo)).Split("\n");
-            foreach(string val in vals)
+            foreach (string val in vals)
             {
                 string[] str = val.Split(":", 2);
                 if (str.Length != 2) continue;
@@ -115,7 +116,8 @@ namespace Nebula.Module
             Formatting formatting = Application.isEditor ? Formatting.Indented : Formatting.None;
 
             string strContents = "";
-            foreach(var entry in contents){
+            foreach (var entry in contents)
+            {
                 strContents += entry.Key + ":" + entry.Value + "\n";
             }
             FileIO.WriteAllText(FileIO.GetDataPathTo(new string[] { filename }), strContents);

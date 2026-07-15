@@ -1,4 +1,6 @@
-﻿namespace Nebula.Objects;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Objects;
 
 public class PlayerList
 {

@@ -20,7 +20,7 @@ public class FCrewmate : Role
     public override Patches.AssignRoles.RoleAllocation[] GetComplexAllocations()
     {
         if (!TopOption.getBool()) return null;
-    
+
         Patches.AssignRoles.RoleAllocation[] result = new Patches.AssignRoles.RoleAllocation[(int)RoleCountOption!.getFloat()];
 
         int damneds = Helpers.CalcProbabilityCount(ChanceOfDamned(), (int)maxCountOfDamnedOption.getFloat());

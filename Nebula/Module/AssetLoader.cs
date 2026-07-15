@@ -1,8 +1,4 @@
-﻿using Mono.Cecil;
-using Nebula.Roles.NeutralRoles;
-using Nebula.Tasks;
-using System.Reflection;
-using UnityEngine;
+﻿using System.Reflection;
 
 namespace Nebula.Module;
 
@@ -15,7 +11,7 @@ public class NebulaAssetBundle
         this.assetBundle = assetBundle;
     }
 
-    
+
 }
 
 public static class AssetLoader
@@ -60,7 +56,7 @@ public static class AssetLoader
     public static GameObject SpectreStatueMinigamePrefab;
 
     public static GameObject CameraFinderPrefab;
-    
+
     public static GameObject MetaObjectPrefab;
 
     //public static AudioSource audioSource;
@@ -120,7 +116,7 @@ public static class AssetLoader
         */
     }
 
-    public static Sprite GetMapSprite(byte mapId,Vector2 size,Int32 mask)
+    public static Sprite GetMapSprite(byte mapId, Vector2 size, Int32 mask)
     {
         GameObject prefab;
         switch (mapId)
@@ -141,14 +137,14 @@ public static class AssetLoader
                 prefab = FungleDivMap;
                 break;
             default:
-                prefab= null;
+                prefab = null;
                 break;
         }
         if (prefab == null) return null;
         var obj = GameObject.Instantiate(prefab);
         Camera cam = obj.AddComponent<Camera>();
         cam.orthographic = true;
-        cam.orthographicSize = size.y/200;
+        cam.orthographicSize = size.y / 200;
         cam.transform.localScale = Vector3.one;
         cam.clearFlags = CameraClearFlags.SolidColor;
         cam.backgroundColor = Color.clear;
@@ -167,7 +163,8 @@ public static class AssetLoader
                 mask >>= 1;
             }
         }
-        catch{
+        catch
+        {
         }
 
 

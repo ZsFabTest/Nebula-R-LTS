@@ -71,7 +71,7 @@ public static class EmergencyPatch
     }
 
     private static bool isInSpecialEmergency = false;
-    
+
     [HarmonyPatch(typeof(EmergencyMinigame), nameof(EmergencyMinigame.Begin))]
     class SpecialEmergencyMinigamePatch
     {
@@ -102,7 +102,7 @@ public static class EmergencyPatch
             {
                 var onClickEvent = __instance.DefaultButtonSelected.GetComponent<ButtonBehavior>().OnClick;
                 onClickEvent.RemoveAllListeners();
-                onClickEvent.AddListener((UnityEngine.Events.UnityAction)(()=> { CallMeeting(__instance); }));
+                onClickEvent.AddListener((UnityEngine.Events.UnityAction)(() => { CallMeeting(__instance); }));
             }
         }
     }
@@ -135,7 +135,8 @@ public static class EmergencyPatch
                 return;
             }
 
-            if (Game.GameData.data.IsTimeStopped){
+            if (Game.GameData.data.IsTimeStopped)
+            {
                 __instance.StatusText.text = Language.Language.GetString("meeting.timeIsStopped");
                 __instance.NumberText.text = string.Empty;
                 __instance.ClosedLid.gameObject.SetActive(true);
@@ -144,7 +145,8 @@ public static class EmergencyPatch
                 return;
             }
 
-            if (Game.GameData.data.IsLocked){
+            if (Game.GameData.data.IsLocked)
+            {
                 __instance.StatusText.text = Language.Language.GetString("meeting.isLocked");
                 __instance.NumberText.text = string.Empty;
                 __instance.ClosedLid.gameObject.SetActive(true);

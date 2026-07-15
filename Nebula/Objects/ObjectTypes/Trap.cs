@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Nebula.Objects.ObjectTypes;
+﻿namespace Nebula.Objects.ObjectTypes;
 
 public class VisibleTrap : DelayedObject
 {
@@ -14,8 +12,8 @@ public class VisibleTrap : DelayedObject
         canSeeInShadow = true;
         Events.Schedule.RegisterPreMeetingAction(() =>
         {
-                //Trapperを考慮に入れる
-                Game.GameData.data.EstimationAI.DetermineMultiply(new Roles.Role[] { Roles.Roles.NiceTrapper, Roles.Roles.EvilTrapper });
+            //Trapperを考慮に入れる
+            Game.GameData.data.EstimationAI.DetermineMultiply(new Roles.Role[] { Roles.Roles.NiceTrapper, Roles.Roles.EvilTrapper });
         }, 1);
     }
 }

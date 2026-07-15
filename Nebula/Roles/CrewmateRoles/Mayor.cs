@@ -1,14 +1,12 @@
-﻿using UnityEngine;
-
-namespace Nebula.Roles.CrewmateRoles;
+﻿namespace Nebula.Roles.CrewmateRoles;
 
 public class Mayor : Role
 {
     static public Color RoleColor = new Color(3f / 255f, 79f / 255f, 66f / 255f);
 
     public int votesId { get; private set; }
-    public int canCallEmergencyId { get;private set; }
-    public override RelatedRoleData[] RelatedRoleDataInfo { get => new RelatedRoleData[] { new RelatedRoleData(votesId, "Vote Stock", 0, 20), new RelatedRoleData(canCallEmergencyId, "Can Call Special Meeting", 0, 1,new string[] { "False","True"}) }; }
+    public int canCallEmergencyId { get; private set; }
+    public override RelatedRoleData[] RelatedRoleDataInfo { get => new RelatedRoleData[] { new RelatedRoleData(votesId, "Vote Stock", 0, 20), new RelatedRoleData(canCallEmergencyId, "Can Call Special Meeting", 0, 1, new string[] { "False", "True" }) }; }
 
     private Module.CustomOption voteAssignmentOption;
     private Module.CustomOption minVoteOption;

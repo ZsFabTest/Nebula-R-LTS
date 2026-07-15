@@ -1,6 +1,4 @@
-﻿using TMPro;
-
-namespace Nebula.Roles.CompeteRoles;
+﻿namespace Nebula.Roles.CompeteRoles;
 
 public class BlueTeam : Role
 {
@@ -14,14 +12,14 @@ public class BlueTeam : Role
     private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
         killButton = new CustomButton(
             () =>
             {
-                Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget,Game.PlayerData.PlayerStatus.Alive);
+                Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Alive);
                 Game.GameData.data.myData.currentTarget = null;
                 killButton.Timer = killButton.MaxTimer;
                 RPCEventInvoker.CompeteGetPoint(1);
@@ -42,7 +40,7 @@ public class BlueTeam : Role
 
     public override void CleanUp()
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;
@@ -58,7 +56,8 @@ public class BlueTeam : Role
 
     public override void OnDied()
     {
-        Events.StandardEvent.SetEvent(() => {
+        Events.StandardEvent.SetEvent(() =>
+        {
             var pos = PlayerControl.LocalPlayer.transform.position;
             var mapData = Map.MapData.GetCurrentMapData();
             do
@@ -77,8 +76,8 @@ public class BlueTeam : Role
         else displayColor = Color.red;
     }
 
-    public BlueTeam() : base("BlueTeam","blueTeam",Color.blue,RoleCategory.Neutral,Side.BlueTeam,Side.BlueTeam,
-        new HashSet<Side> { Side.BlueTeam },new HashSet<Side>() { Side.BlueTeam },new HashSet<Patches.EndCondition>() { Patches.EndCondition.BlueTeamWin },
+    public BlueTeam() : base("BlueTeam", "blueTeam", Color.blue, RoleCategory.Neutral, Side.BlueTeam, Side.BlueTeam,
+        new HashSet<Side> { Side.BlueTeam }, new HashSet<Side>() { Side.BlueTeam }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.BlueTeamWin },
         true, VentPermission.CanUseUnlimittedVent, true, true, true)
     {
         canReport = false;

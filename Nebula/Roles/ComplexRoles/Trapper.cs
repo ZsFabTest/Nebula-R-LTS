@@ -1,5 +1,4 @@
 ﻿using Nebula.Game;
-using Rewired.Utils.Platforms.Windows;
 
 namespace Nebula.Roles.ComplexRoles;
 
@@ -179,7 +178,7 @@ public class Trapper : Template.BilateralnessRole
 
                         if (player.transform.position.Distance(obj.GameObject.transform.position) < 1.125f / 2f)
                         {
-                            Arrow arrow = new Arrow(Palette.PlayerColors[player.CurrentOutfit.ColorId],true, FTrapper.commArrowSprite.GetSprite());
+                            Arrow arrow = new Arrow(Palette.PlayerColors[player.CurrentOutfit.ColorId], true, FTrapper.commArrowSprite.GetSprite());
                             arrow.arrow.SetActive(true);
                             arrow.Update(obj.GameObject.transform.position);
                             detectedPlayers.Add(player.PlayerId);
@@ -195,8 +194,8 @@ public class Trapper : Template.BilateralnessRole
                                 }
                                 if (p == 1f)
                                 {
-                                        //矢印を消す
-                                        UnityEngine.Object.Destroy(arrow.arrow);
+                                    //矢印を消す
+                                    UnityEngine.Object.Destroy(arrow.arrow);
                                 }
                             })));
                         }

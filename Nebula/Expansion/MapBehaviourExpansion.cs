@@ -1,6 +1,6 @@
 ﻿using Nebula.Module;
 
-namespace Nebula;
+namespace Nebula.Expansion;
 
 [HarmonyPatch]
 public static class MapBehaviourExpansion
@@ -49,7 +49,7 @@ public static class MapBehaviourExpansion
         Sprite? sprite = null;
         Sprite defaultSprite = ShipStatus.Instance.MapPrefab.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
 
-        
+
 
         if (mask == Int32.MaxValue)
         {

@@ -1,4 +1,6 @@
-namespace Nebula.Roles.ComplexRoles;
+using Nebula.Roles.ComplexRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 static public class DecideSystem
 {
@@ -13,7 +15,7 @@ static public class DecideSystem
 
     static void guesserOnClick(int buttonTarget, MeetingHud __instance)
     {
-        if(!decideAble) return;
+        if (!decideAble) return;
         if (__instance.CurrentState == MeetingHud.VoteStates.Discussion) return;
 
         PlayerControl target = Helpers.playerById((byte)__instance.playerStates[buttonTarget].TargetPlayerId);
@@ -23,10 +25,10 @@ static public class DecideSystem
         int data = Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId);
         data--;
         RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, decideDataId, data);
-        if(PlayerControl.LocalPlayer.GetModData().role == Roles.NiceDecider && (
+        if (PlayerControl.LocalPlayer.GetModData().role == Roles.NiceDecider && (
             (
-            FDecider.niceDeciderCannotKillCrewmateOption.getBool() && 
-            target.GetModData().role.side == Side.Crewmate && 
+            FDecider.niceDeciderCannotKillCrewmateOption.getBool() &&
+            target.GetModData().role.side == Side.Crewmate &&
             target.GetModData().role != Roles.Madmate && !target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)
             ) && !(
             PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryMadmate) &&
@@ -36,10 +38,12 @@ static public class DecideSystem
             FDecider.jackalCanKillEveryoneOption.getBool()
             )
         )
-        ){
+        )
+        {
             RPCEventInvoker.Guess(PlayerControl.LocalPlayer.PlayerId);
         }
-        else{
+        else
+        {
             RPCEventInvoker.Guess(target.PlayerId);
         }
         __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("DecideButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("DecideButton").gameObject); });
@@ -68,7 +72,8 @@ static public class DecideSystem
         }
     }
 
-    public static void OnMeetingStart(){
+    public static void OnMeetingStart()
+    {
         decideAble = true;
     }
 
@@ -76,7 +81,7 @@ static public class DecideSystem
     {
         int left = Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId);
         if (left <= 0) return;
-        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        if (meetingInfo.text != "") meetingInfo.text += "\n";
         meetingInfo.text += Language.Language.GetString("role.decider.decideLeft") + ": " + left;
         meetingInfo.gameObject.SetActive(true);
     }
@@ -97,16 +102,16 @@ public class FDecider : Template.HasBilateralness
 
         base.LoadOptionData();
         decideCountOption = CreateOption(Color.white, "decideCount", 1f, 1f, 3f, 1f);
-        niceDeciderCannotKillCrewmateOption = CreateOption(Color.white, "niceDeciderCannotKillCrewmate",true);
-        madmateCanKillEveryoneOption = CreateOption(Color.white,"madmateCanKillEveryone",false);
-        jackalCanKillEveryoneOption = CreateOption(Color.white,"jackalCanKillEveryone",true);
+        niceDeciderCannotKillCrewmateOption = CreateOption(Color.white, "niceDeciderCannotKillCrewmate", true);
+        madmateCanKillEveryoneOption = CreateOption(Color.white, "madmateCanKillEveryone", false);
+        jackalCanKillEveryoneOption = CreateOption(Color.white, "jackalCanKillEveryone", true);
 
         FirstRole = Roles.NiceDecider;
         SecondaryRole = Roles.EvilDecider;
     }
 
     public FDecider()
-            : base("Decider","decider",RoleColor)
+            : base("Decider", "decider", RoleColor)
     {
     }
 

@@ -36,8 +36,8 @@ class IntroCutsceneOnDestroyPatch
         CloseSpawnGUIPatch.Actions.Clear();
 
         PlayerPrefab = __instance.PlayerPrefab;
-        
-        if (CustomButton.OriginalVentButtonSprite) CustomButton.OriginalVentButtonSprite.hideFlags&= ~HideFlags.DontUnloadUnusedAsset;
+
+        if (CustomButton.OriginalVentButtonSprite) CustomButton.OriginalVentButtonSprite.hideFlags &= ~HideFlags.DontUnloadUnusedAsset;
         CustomButton.OriginalVentButtonSprite = HudManager.Instance.ImpostorVentButton.GetComponent<SpriteRenderer>().sprite;
         CustomButton.OriginalVentButtonSprite.hideFlags |= HideFlags.DontUnloadUnusedAsset;
 
@@ -207,7 +207,7 @@ class IntroPatch
         __instance.RoleBlurbText.text = Language.Language.GetString("role." + role.LocalizeName + ".description");
         __instance.RoleBlurbText.color = role.Color;
         __instance.YouAreText.color = role.side.color;
-        
+
 
         //追加ロールの情報を付加
         string description = __instance.RoleBlurbText.text;

@@ -1,34 +1,40 @@
-namespace Nebula.Roles.ImpostorRoles;
-public class Zombie : Template.TImpostor{
+namespace Nebula.Roles.ExtremeRoles;
+
+public class Zombie : Template.TImpostor
+{
     private Module.CustomOption killCooldown;
     private Module.CustomOption ChanceToInfluence;
 
     public override void LoadOptionData()
     {
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
-        killCooldown = CreateOption(Color.white,"killCooldown",25f,5f,45f,2.5f);
+        killCooldown = CreateOption(Color.white, "killCooldown", 25f, 5f, 45f, 2.5f);
         killCooldown.suffix = "second";
-        ChanceToInfluence = CreateOption(Color.white,"chanceToInfluence",10f,10f,100f,10f);
+        ChanceToInfluence = CreateOption(Color.white, "chanceToInfluence", 10f, 10f, 100f, 10f);
         ChanceToInfluence.suffix = "percent";
     }
 
     private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null){
+        if (killButton != null)
+        {
             killButton.Destroy();
         }
         killButton = new CustomButton(
             () =>
             {
-                if(NebulaPlugin.rnd.Next(1,101) <= ChanceToInfluence.getFloat()){
-                    RPCEventInvoker.ImmediatelyChangeRole(Game.GameData.data.myData.currentTarget,Roles.ZombieSidekick);
+                if (NebulaPlugin.rnd.Next(1, 101) <= ChanceToInfluence.getFloat())
+                {
+                    RPCEventInvoker.ImmediatelyChangeRole(Game.GameData.data.myData.currentTarget, Roles.ZombieSidekick);
                     PlayerControl target = Game.GameData.data.myData.currentTarget;
-                    while(target.GetModData().extraRole.Count > 0){
-                        RPCEventInvoker.ImmediatelyUnsetExtraRole(target,target.GetModData().extraRole[0]);
+                    while (target.GetModData().extraRole.Count > 0)
+                    {
+                        RPCEventInvoker.ImmediatelyUnsetExtraRole(target, target.GetModData().extraRole[0]);
                     }
                     target.ShowFailedMurder();
-                }else Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
+                }
+                else Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
                 killButton.Timer = killButton.MaxTimer;
                 Game.GameData.data.myData.currentTarget = null;
             },
@@ -45,14 +51,17 @@ public class Zombie : Template.TImpostor{
         killButton.SetButtonCoolDownOption(true);
     }
 
-    public override void CleanUp(){
-        if(killButton != null){
+    public override void CleanUp()
+    {
+        if (killButton != null)
+        {
             killButton.Destroy();
             killButton = null;
         }
     }
 
-    public Zombie() : base("Zombie","zombie",true){
+    public Zombie() : base("Zombie", "zombie", true)
+    {
         hasRoleUpdate = true;
         HideKillButtonEvenImpostor = true;
     }

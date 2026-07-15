@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-namespace Nebula.Patches;
+﻿namespace Nebula.Patches;
 
 [HarmonyPatch]
 class LightPatch
@@ -58,7 +56,7 @@ class LightPatch
     [HarmonyPatch(typeof(LightSource), nameof(LightSource.Update))]
     public static class LightSourceUpdatePatch
     {
-        
+
         public static bool Prefix(LightSource __instance)
         {
             Vector3 position = __instance.transform.position;
@@ -82,14 +80,14 @@ class LightPatch
 
         public static bool Prefix(PlayerControl __instance)
         {
-            if (PlayerControl.LocalPlayer != __instance)return false;
-            
+            if (PlayerControl.LocalPlayer != __instance) return false;
+
             float num = 0f;
-            bool flashFlag=false;
+            bool flashFlag = false;
             if (FlashlightEnabled.HasValue) flashFlag = FlashlightEnabled.Value;
             else if (__instance.IsFlashlightEnabled()) flashFlag = true;
             else if (__instance.lightSource.useFlashlight) flashFlag = true;
-            
+
             if (__instance.IsFlashlightEnabled())
             {
                 if (__instance.Data.Role.IsImpostor)

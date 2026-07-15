@@ -1,8 +1,5 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
-using Nebula.Patches;
 using Nebula.Roles.Perk;
-using static Nebula.Module.DynamicColors;
 
 namespace Nebula.Roles.HnSImpostorRoles;
 
@@ -42,7 +39,7 @@ public class HnSRaider : Role
                 //周囲のプレイヤーをキルする
                 ImpostorRoles.Raider.BeatenAroundAxe(killPos, 0.9f, true);
 
-                float additional = 0f, ratio = Perks.RoleRaider.IP(0,PerkPropertyType.Percentage);
+                float additional = 0f, ratio = Perks.RoleRaider.IP(0, PerkPropertyType.Percentage);
                 Perk.PerkHolder.PerkData.MyPerkData.PerkAction((p) => p.Perk.SetKillCoolDown(p, true, ref additional, ref ratio));
                 killButton.Timer = (2f + additional) * ratio;
 
@@ -56,7 +53,8 @@ public class HnSRaider : Role
                 leftAxes--;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-            () => {
+            () =>
+            {
                 killButton.UsesText.text = leftAxes.ToString();
                 return PlayerControl.LocalPlayer.CanMove && !reloadButton.isEffectActive && lastAxe != null && lastAxe.Renderer.color.g > 0.5f;
             },
@@ -74,12 +72,13 @@ public class HnSRaider : Role
 
         IEnumerator CoReload(MonoBehaviour coroutineHolder, Vent vent)
         {
-            PlayerControl p=PlayerControl.LocalPlayer;
+            PlayerControl p = PlayerControl.LocalPlayer;
             p.Collider.enabled = false;
             p.moveable = false;
             p.NetTransform.enabled = false;
             p.MyPhysics.inputHandler.enabled = true;
-            yield return NebulaEffects.CoWait(p.MyPhysics.WalkPlayerTo(vent.transform.position + vent.Offset, 0.01f, 1f).WrapToManaged(), () => {
+            yield return NebulaEffects.CoWait(p.MyPhysics.WalkPlayerTo(vent.transform.position + vent.Offset, 0.01f, 1f).WrapToManaged(), () =>
+            {
                 if (reloadButton.isEffectActive) reloadButton.Timer = reloadButton.EffectDuration;
             });
             RPCEventInvoker.EmitSpeedFactor(p, new Game.SpeedFactor(0, reloadButton.EffectDuration, 0f, false));
@@ -91,7 +90,8 @@ public class HnSRaider : Role
 
         if (reloadButton != null) reloadButton.Destroy();
         reloadButton = new CustomButton(
-            () => {
+            () =>
+            {
                 PlayerControl.LocalPlayer.StartCoroutine(CoReload(PlayerControl.LocalPlayer, HudManager.Instance.ImpostorVentButton.currentTarget));
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
@@ -173,7 +173,7 @@ public class HnSRaider : Role
 
     public override void MyPlayerControlUpdate()
     {
-        if (lastAxe == null && !(killButton.Timer > 0) && leftAxes>0)
+        if (lastAxe == null && !(killButton.Timer > 0) && leftAxes > 0)
         {
             lastAxe = RPCEventInvoker.ObjectInstantiate(Objects.ObjectTypes.RaidAxe.Axe, PlayerControl.LocalPlayer.transform.position);
             HudManager.Instance.StartCoroutine(GetGuideEnumrator().WrapToIl2Cpp());
@@ -207,7 +207,7 @@ public class HnSRaider : Role
         }
 
         if (lastAxe != null) RPCEventInvoker.UpdatePlayerControl();
-        
+
     }
 
     public HnSRaider()

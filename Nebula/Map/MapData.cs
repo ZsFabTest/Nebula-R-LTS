@@ -3,6 +3,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Nebula.Map;
+
 public class ObjectData
 {
     public Vector2 Position;
@@ -129,7 +130,7 @@ public class SpawnPointData : PointData
 {
     public Module.CustomOption option;
 
-    public SpawnPointData(string name, Vector2 spawnPoint) :base(name,spawnPoint){ }
+    public SpawnPointData(string name, Vector2 spawnPoint) : base(name, spawnPoint) { }
 
     public void CreateOption(byte mapId)
     {
@@ -274,7 +275,7 @@ public class MapData
     public void SetUpAdminRoomButton(GameObject obj, Action reopener)
     {
         //0番目は外を表すので設定の必要なし
-        int i=1;
+        int i = 1;
         foreach (var point in AdminRooms)
         {
             int index = i;
@@ -299,8 +300,8 @@ public class MapData
                 var option = limitedAdmin.Value;
                 button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
                 {
-                    int selection = option.selection & ~(1<<index);
-                    if(!enabled)selection |= 1 << index;
+                    int selection = option.selection & ~(1 << index);
+                    if (!enabled) selection |= 1 << index;
                     option.updateSelection(selection);
                     reopener();
                 }));
@@ -508,7 +509,7 @@ public class MapData
         yield break;
     }
 
-    public MapData(int mapId,string shipName)
+    public MapData(int mapId, string shipName)
     {
         MapId = mapId;
         ShipName = shipName;
@@ -559,7 +560,7 @@ public class MapData
             }
         }
         */
-        
+
         AssetReference assetReference = __instance.ShipPrefabs.ToArray()[MapId];
         if (assetReference.IsValid()) return;
         AsyncOperationHandle<GameObject> asset = assetReference.LoadAssetAsync<GameObject>();

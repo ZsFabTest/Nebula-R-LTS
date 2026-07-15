@@ -1,6 +1,4 @@
-﻿using Il2CppSystem.Threading.Tasks;
-
-namespace Nebula.Roles.Perk.CrewmatePerks;
+﻿namespace Nebula.Roles.Perk.CrewmatePerks;
 
 public class Patience : Perk
 {
@@ -23,7 +21,7 @@ public class Patience : Perk
         perkData.Display?.SetCool(perkData.IntegerAry[0] == 1 ? 0f : 1f);
     }
 
-    public Patience(int id) : base(id, "patience", true, 34, 4, new Color(0.55f,0.45f,0.1f))
+    public Patience(int id) : base(id, "patience", true, 34, 4, new Color(0.55f, 0.45f, 0.1f))
     {
     }
 }

@@ -8,7 +8,7 @@ public class Cooperativeness : Perk
     {
         var myPos = PlayerControl.LocalPlayer.transform.position;
         bool flag = false;
-        foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+        foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if (p.AmOwner) continue;
             if (p.transform.position.Distance(myPos) < IP(0, PerkPropertyType.Meter))

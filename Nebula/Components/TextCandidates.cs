@@ -1,8 +1,6 @@
 ﻿using Nebula.Expansion;
 using Nebula.Module;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using static Il2CppSystem.Uri;
 
 namespace Nebula.Components;
 
@@ -17,9 +15,9 @@ public class TextCandidate
     public string ShownText { get; private init; }
     public TextCandidateType Type { get; private init; }
 
-    public TextCandidate(TextCandidateType type,string shownText)
+    public TextCandidate(TextCandidateType type, string shownText)
     {
-        ShownText= shownText;
+        ShownText = shownText;
         Type = type;
     }
 }
@@ -38,9 +36,13 @@ public class TextCandidates : MonoBehaviour
 
     private const float Height = 0.3f;
 
-    public Vector2 Offset { set {
+    public Vector2 Offset
+    {
+        set
+        {
             Holder.transform.localPosition = new Vector3(value.x, value.y + (Height + 0.1f) * (ExtendsDownward ? -1f : 1f), -5f);
-        } }
+        }
+    }
 
     public bool ExtendsDownward { get; set; } = true;
 
@@ -59,7 +61,7 @@ public class TextCandidates : MonoBehaviour
         private BoxCollider2D Collider;
         public TextCandidate Candidate;
         public GameObject Content;
-        
+
         public void Hide()
         {
             Content.gameObject.SetActive(false);
@@ -70,7 +72,7 @@ public class TextCandidates : MonoBehaviour
             Content.gameObject.SetActive(true);
         }
 
-        public float SetText(TextCandidate candidate,float y)
+        public float SetText(TextCandidate candidate, float y)
         {
             Content.transform.localPosition = new Vector3(0.1f, y, 0f);
 
@@ -109,16 +111,17 @@ public class TextCandidates : MonoBehaviour
             Collider = obj.AddComponent<BoxCollider2D>();
             Collider.isTrigger = true;
 
-            var button = obj.SetUpButton(() => {
+            var button = obj.SetUpButton(() =>
+            {
                 if (Candidate.Type is TextCandidate.TextCandidateType.Suggestion) Candidates.InputField.Get().SetTextByCandidate(Candidate.ShownText);
-                Candidates.InputField.Get().GetFocus(); 
+                Candidates.InputField.Get().GetFocus();
             });
             button.OnMouseOver.AddListener((UnityAction)(() => Candidates.SetHighlight(this)));
             button.OnMouseOut.AddListener((UnityAction)(() => Candidates.UnsetHighlight(this)));
 
         }
 
-        
+
     }
     private List<CandidateContent> Candidates = new();
 
@@ -153,7 +156,7 @@ public class TextCandidates : MonoBehaviour
     {
         Holder = new GameObject("Holder");
         Holder.transform.SetParent(this.transform);
-        
+
         Offset = Vector2.zero;
 
         var backObj = new GameObject("Background");
@@ -178,7 +181,7 @@ public class TextCandidates : MonoBehaviour
     {
         transform.localPosition = new Vector3(0, 0, 0);
 
-        if (candidates==null || candidates.Length == 0)
+        if (candidates == null || candidates.Length == 0)
         {
             Holder.gameObject.SetActive(false);
             return;
@@ -190,7 +193,7 @@ public class TextCandidates : MonoBehaviour
 
         int i = 0;
         width = 0f;
-        foreach(TextCandidate candidate in candidates)
+        foreach (TextCandidate candidate in candidates)
         {
             if (Candidates.Count <= i) Candidates.Add(new CandidateContent(this));
             Candidates[i].Show();

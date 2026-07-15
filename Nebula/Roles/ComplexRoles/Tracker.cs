@@ -1,5 +1,5 @@
-﻿using Nebula.Objects;
-using Hazel;
+﻿using Hazel;
+using Nebula.Expansion;
 
 namespace Nebula.Roles.ComplexRoles;
 
@@ -73,7 +73,7 @@ public class Tracker : Template.BilateralnessRole
         IsHideRole = true;
         impostorArrows = new List<Arrow?>();
 
-        arrowSprite = new SpriteLoader("role."+localizeName+".arrow");
+        arrowSprite = new SpriteLoader("role." + localizeName + ".arrow");
     }
 
     public override Assignable AssignableOnHelp => Roles.F_Tracker;
@@ -141,7 +141,7 @@ public class Tracker : Template.BilateralnessRole
 
         if (!Roles.F_Tracker.evilTrackerCanTrackImpostorsOption.getBool()) return;
 
-        RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, trackTarget, Roles.F_Tracker.Color,arrowSprite);
+        RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, trackTarget, Roles.F_Tracker.Color, arrowSprite);
 
         int i = 0;
         if (category == RoleCategory.Impostor)
@@ -153,7 +153,7 @@ public class Tracker : Template.BilateralnessRole
                     if (impostorArrows.Count >= i) impostorArrows.Add(null);
 
                     var arrow = impostorArrows[i];
-                    RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Palette.ImpostorRed,arrowSprite);
+                    RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Palette.ImpostorRed, arrowSprite);
                     impostorArrows[i] = arrow;
 
                     i++;
@@ -301,7 +301,7 @@ public class Tracker : Template.BilateralnessRole
         {
             if (!trackTarget.control.Data.IsDead)
             {
-                if (MeetingHud.Instance)                
+                if (MeetingHud.Instance)
                     pos = trackTarget.control.GetModData().preMeetingPosition;
                 else
                     pos = trackTarget.control.transform.position;
@@ -343,8 +343,8 @@ public class Tracker : Template.BilateralnessRole
 
     public override void MeetingUpdate(MeetingHud __instance, TMPro.TextMeshPro meetingInfo)
     {
-        if(trackTarget == null) return;
-        if(meetingInfo.text != "") meetingInfo.text += "\n";
+        if (trackTarget == null) return;
+        if (meetingInfo.text != "") meetingInfo.text += "\n";
         meetingInfo.text += Language.Language.GetString("role.tracker.prefix") + ": " + trackTarget.control.name;
         meetingInfo.gameObject.SetActive(true);
     }

@@ -1,6 +1,4 @@
-﻿using Mono.Cecil;
-
-namespace Nebula.Roles.NeutralRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class Pavlov : Role
 {
@@ -10,7 +8,7 @@ public class Pavlov : Role
         public PavlovEvent(PlayerControl target) : base(0.1f) { this.target = target; }
         public override void OnActivate()
         {
-            RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Dog);
+            RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Dog);
         }
     }
 
@@ -67,9 +65,10 @@ public class Pavlov : Role
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(
-            (player) => {
+            (player) =>
+            {
                 if (player.Object.inVent) return false;
-                if(player.GetModData().role.side == Side.Pavlov) return false;
+                if (player.GetModData().role.side == Side.Pavlov) return false;
                 return true;
             }
         );
@@ -77,7 +76,7 @@ public class Pavlov : Role
         if (hasDog && myDog != 255)
         {
             PlayerControl Dog = Helpers.playerById(myDog);
-            if(Dog.Data.IsDead || Dog.GetModData().role != Roles.Dog) hasDog = false;
+            if (Dog.Data.IsDead || Dog.GetModData().role != Roles.Dog) hasDog = false;
             feed.Timer = feed.MaxTimer;
         }
     }
@@ -86,7 +85,7 @@ public class Pavlov : Role
     {
         hasDog = false;
         myDog = 255;
-        if(feed != null)
+        if (feed != null)
         {
             feed.Destroy();
             feed = null;
@@ -97,7 +96,7 @@ public class Pavlov : Role
     {
         createDogsCooldownOption = CreateOption(Color.white, "createDogsCooldown", 30f, 15f, 35f, 5f);
         createDogsCooldownOption.suffix = "second";
-        dogMaxNumOption = CreateOption(Color.white,"dogMaxNum",3f,1f,5f,1f);
+        dogMaxNumOption = CreateOption(Color.white, "dogMaxNum", 3f, 1f, 5f, 1f);
     }
 
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
@@ -144,7 +143,7 @@ public class Dog : Role
     private double suicideTime;
     private bool isGaming;
 
-    private CustomButton killButton,suicideButton;
+    private CustomButton killButton, suicideButton;
     public override void ButtonInitialize(HudManager __instance)
     {
         if (killButton != null)
@@ -179,7 +178,8 @@ public class Dog : Role
             () => { },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && isMadDog; },
             () => { return true; },
-            () => { 
+            () =>
+            {
                 suicideTime = madDogSuicideMaxTimeOption.getFloat();
             },
             SuicideButtonSprite.GetSprite(),
@@ -214,47 +214,54 @@ public class Dog : Role
 
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
 
-        if(!isMadDog && PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => { return !p.Data.IsDead && p.GetModData().role == Roles.Pavlov; }) == null){
+        if (!isMadDog && PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => { return !p.Data.IsDead && p.GetModData().role == Roles.Pavlov; }) == null)
+        {
             isMadDog = true;
             suicideTime = madDogSuicideMaxTimeOption.getFloat();
             killButton.MaxTimer = madDogKillCooldownOption.getFloat();
             killButton.Timer = 0f;
         }
-        if(isMadDog && suicideTime <= 0 && !PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance)
+        if (isMadDog && suicideTime <= 0 && !PlayerControl.LocalPlayer.Data.IsDead && !MeetingHud.Instance)
         {
-            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id,true);
+            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id, true);
         }
-        if(isGaming && !Game.GameData.data.IsTimeStopped){
+        if (isGaming && !Game.GameData.data.IsTimeStopped)
+        {
             suicideTime -= Time.deltaTime;
             suicideButton.Timer = (float)suicideTime;
         }
     }
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         isGaming = true;
         isMadDog = false;
     }
 
-    public override void OnMeetingStart(){
+    public override void OnMeetingStart()
+    {
         isGaming = false;
     }
 
-    public override void OnMeetingEnd(){
+    public override void OnMeetingEnd()
+    {
         isGaming = true;
     }
 
-    public override void OnRevived(byte playerId){
-        if(playerId == PlayerControl.LocalPlayer.PlayerId) suicideTime = madDogSuicideMaxTimeOption.getFloat();
+    public override void OnRevived(byte playerId)
+    {
+        if (playerId == PlayerControl.LocalPlayer.PlayerId) suicideTime = madDogSuicideMaxTimeOption.getFloat();
     }
 
     public override void CleanUp()
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
             killButton = null;
         }
-        if(suicideButton != null){
+        if (suicideButton != null)
+        {
             suicideButton.Destroy();
             suicideButton = null;
         }
@@ -265,10 +272,10 @@ public class Dog : Role
         TopOption.AddCustomPrerequisite(() => Roles.Pavlov.IsSpawnable());
         dogKillCooldownOption = CreateOption(Color.white, "dogKillCooldown", 25f, 5f, 60f, 5f);
         dogKillCooldownOption.suffix = "second";
-        dogCanUseVentOption = CreateOption(Color.white,"dogCanUseVent",true);
-        madDogSuicideMaxTimeOption = CreateOption(Color.white,"madDogSuicideMaxTime",25f,2.5f,60f,2.5f);
+        dogCanUseVentOption = CreateOption(Color.white, "dogCanUseVent", true);
+        madDogSuicideMaxTimeOption = CreateOption(Color.white, "madDogSuicideMaxTime", 25f, 2.5f, 60f, 2.5f);
         madDogSuicideMaxTimeOption.suffix = "second";
-        madDogKillCooldownOption = CreateOption(Color.white,"madDogKillCooldown",17.5f,2.5f,45f,2.5f);
+        madDogKillCooldownOption = CreateOption(Color.white, "madDogKillCooldown", 17.5f, 2.5f, 45f, 2.5f);
         madDogKillCooldownOption.suffix = "second";
     }
 

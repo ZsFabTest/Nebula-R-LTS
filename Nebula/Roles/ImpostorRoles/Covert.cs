@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nebula.Roles.ImpostorRoles
+﻿namespace Nebula.Roles.ImpostorRoles
 {
     public class Covert : Role
     {
         public int canKillId { get; private set; }
         public override void LoadOptionData()
         {
-            killCooldown = CreateOption(Color.white,"killCooldown",7.5f,0f,25f,2.5f);
+            killCooldown = CreateOption(Color.white, "killCooldown", 7.5f, 0f, 25f, 2.5f);
             killCooldown.suffix = "second";
         }
 
@@ -66,12 +62,12 @@ namespace Nebula.Roles.ImpostorRoles
 
         public override void EditDisplayRoleName(byte playerId, ref string roleName, bool isIntro)
         {
-            if (playerId==PlayerControl.LocalPlayer.PlayerId || Game.GameData.data.myData.CanSeeEveryoneInfo) EditDisplayRoleNameForcely(playerId, ref roleName);
+            if (playerId == PlayerControl.LocalPlayer.PlayerId || Game.GameData.data.myData.CanSeeEveryoneInfo) EditDisplayRoleNameForcely(playerId, ref roleName);
         }
 
         public override void EditDisplayRoleNameForcely(byte playerId, ref string roleName)
         {
-            if (Game.GameData.data.playersArray[playerId].GetRoleData(canKillId)==1)
+            if (Game.GameData.data.playersArray[playerId].GetRoleData(canKillId) == 1)
                 roleName = Helpers.cs(Palette.ImpostorRed, "☉") + roleName;
         }
 

@@ -61,7 +61,7 @@ public class SpawnCandidate
 
     public AudioClip? GetAudioClip()
     {
-        if(AudioClip) return AudioClip;
+        if (AudioClip) return AudioClip;
 
         if (AudioClipName == null) return null;
 
@@ -97,7 +97,7 @@ public class SpawnCandidate
         this.pixelsPerUnit = pixelsPerUnit;
     }
 
-    public SpawnCandidate(string locationKey, string textureAddress, int origIndex,int spriteWidth=200)
+    public SpawnCandidate(string locationKey, string textureAddress, int origIndex, int spriteWidth = 200)
     {
         LocationKey = locationKey;
         TextureAddress = textureAddress;

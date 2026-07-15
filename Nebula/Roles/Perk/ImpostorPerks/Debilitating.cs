@@ -9,7 +9,7 @@ public class Debilitating : Perk
     private void ResetPosition()
     {
         PosDic.Clear();
-        foreach(var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+        foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             PosDic[p.PlayerId] = p.transform.position;
         }
@@ -36,7 +36,7 @@ public class Debilitating : Perk
         else
         {
             float num = float.MaxValue;
-            Vector2 pos=Vector2.zero;
+            Vector2 pos = Vector2.zero;
             byte id = byte.MaxValue;
 
             foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
@@ -46,16 +46,16 @@ public class Debilitating : Perk
                 float d = p.transform.position.Distance(PosDic[p.PlayerId]);
                 if (num > d)
                 {
-                    pos=p.transform.position;
+                    pos = p.transform.position;
                     num = d;
                     id = p.PlayerId;
                 }
             }
 
-            if (num < 6f) Helpers.Ping(pos,false);
-            
+            if (num < 6f) Helpers.Ping(pos, false);
+
             ResetPosition();
-            perkData.DataAry[0] = IP(0,PerkPropertyType.Second);
+            perkData.DataAry[0] = IP(0, PerkPropertyType.Second);
         }
 
         perkData.Display.SetCool(perkData.DataAry[0] / IP(0, PerkPropertyType.Second));

@@ -1,5 +1,5 @@
-﻿using Nebula.Patches;
-using Nebula.Game;
+﻿using Nebula.Game;
+using Nebula.Patches;
 
 namespace Nebula.Roles.NeutralRoles;
 

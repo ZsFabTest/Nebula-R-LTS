@@ -33,12 +33,14 @@ public class Sheriff : Role
     private bool CanKill(PlayerControl target)
     {
         //Madmateなら確定で自殺する
-        if (PlayerControl.LocalPlayer.IsMadmate()){
-            if(madmateCanKillEveryoneOption.getBool()) return true;
+        if (PlayerControl.LocalPlayer.IsMadmate())
+        {
+            if (madmateCanKillEveryoneOption.getBool()) return true;
             return false;
         }
-        if (PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryJackal)){
-            if(jackalCanKillEveryoneOption.getBool()) return true;
+        if (PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryJackal))
+        {
+            if (jackalCanKillEveryoneOption.getBool()) return true;
             return false;
         }
 
@@ -70,8 +72,9 @@ public class Sheriff : Role
             () =>
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
-                if (!CanKill(target)){
-                    RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,PlayerControl.LocalPlayer.PlayerId,Game.PlayerData.PlayerStatus.Misfire.Id,true);
+                if (!CanKill(target))
+                {
+                    RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Misfire.Id, true);
                     return;
                 }
 
@@ -90,7 +93,7 @@ public class Sheriff : Role
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
             Module.NebulaInputManager.modKillInput.keyCode,
-            "button.label.kill",ImageNames.AdminMapButton
+            "button.label.kill", ImageNames.AdminMapButton
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
         killButton.SetButtonCoolDownOption(true);
         killButton.MaxTimer = killCooldownOption.getFloat();
@@ -130,9 +133,9 @@ public class Sheriff : Role
 
         numberOfShotsOption = CreateOption(Color.white, "numberOfShots", 3, 1, 15, 1);
 
-        madmateCanKillEveryoneOption = CreateOption(Color.white, "madmateCanKillEveryone",false);
+        madmateCanKillEveryoneOption = CreateOption(Color.white, "madmateCanKillEveryone", false);
 
-        jackalCanKillEveryoneOption = CreateOption(Color.white, "jackalCanKillEveryone",true);
+        jackalCanKillEveryoneOption = CreateOption(Color.white, "jackalCanKillEveryone", true);
     }
 
     public Sheriff()

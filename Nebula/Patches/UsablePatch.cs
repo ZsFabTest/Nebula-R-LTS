@@ -165,10 +165,10 @@ class MovingPlatformBehaviourMeetingCalledPatch
     }
 }
 
-[HarmonyPatch(typeof(MovingPlatformBehaviour), nameof(MovingPlatformBehaviour.InUse),MethodType.Getter)]
+[HarmonyPatch(typeof(MovingPlatformBehaviour), nameof(MovingPlatformBehaviour.InUse), MethodType.Getter)]
 class CanUseMovingPlayformPatch
 {
-    static bool Prefix(MovingPlatformBehaviour __instance,bool __result)
+    static bool Prefix(MovingPlatformBehaviour __instance, bool __result)
     {
         if (CustomOptionHolder.mapOptions.getBool() && CustomOptionHolder.oneWayMeetingRoomOption.getBool())
         {
@@ -197,9 +197,9 @@ class SystemConsoleStartPatch
 {
     static bool Prefix(SystemConsole __instance)
     {
-        if (__instance.FreeplayOnly && Game.GameData.data.GameMode!=Module.CustomGameMode.FreePlay)
+        if (__instance.FreeplayOnly && Game.GameData.data.GameMode != Module.CustomGameMode.FreePlay)
             UnityEngine.Object.Destroy(__instance.gameObject);
-        
+
         return false;
     }
 }

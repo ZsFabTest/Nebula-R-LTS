@@ -1,9 +1,5 @@
-﻿using AmongUs.GameOptions;
-using Cpp2IL.Core;
-using Cpp2IL.Core.Extensions;
-using Nebula.Language;
+﻿using Cpp2IL.Core.Extensions;
 using Nebula.Module;
-using TMPro;
 
 namespace Nebula;
 
@@ -410,7 +406,8 @@ public class CustomOptionHolder
                 return false;
             }
         });
-        useSpecialRoleExiledText = CustomOption.Create(Color.white, "option.useSpecialRoleExiledText", true, meetingOptions).AddCustomPrerequisite(() => {
+        useSpecialRoleExiledText = CustomOption.Create(Color.white, "option.useSpecialRoleExiledText", true, meetingOptions).AddCustomPrerequisite(() =>
+        {
             try
             {
                 return showRoleOfExiled.getBool() && GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor;
@@ -420,7 +417,8 @@ public class CustomOptionHolder
                 return false;
             }
         });
-        showExtraRoles = CustomOption.Create(Color.white, "option.showExtraRoles", true, meetingOptions).AddCustomPrerequisite(() => {
+        showExtraRoles = CustomOption.Create(Color.white, "option.showExtraRoles", true, meetingOptions).AddCustomPrerequisite(() =>
+        {
             try
             {
                 return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool() && showRoleOfExiled.getBool();

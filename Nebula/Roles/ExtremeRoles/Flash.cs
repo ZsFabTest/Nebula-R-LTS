@@ -1,4 +1,4 @@
-namespace Nebula.Roles.ExtraRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Flash : Template.StandardExtraRole
 {

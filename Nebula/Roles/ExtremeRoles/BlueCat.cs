@@ -1,4 +1,4 @@
-﻿namespace Nebula.Roles.NeutralRoles;
+﻿namespace Nebula.Roles.ExtremeRoles;
 
 public class BlueCat : Role
 {
@@ -26,7 +26,7 @@ public class BlueCat : Role
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
@@ -63,7 +63,7 @@ public class BlueCat : Role
         }
     }
 
-    public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.Jackal.EditDisplayNameColor(playerId,ref displayColor);
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.Jackal.EditDisplayNameColor(playerId, ref displayColor);
     /*
     {
         if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Jackal)

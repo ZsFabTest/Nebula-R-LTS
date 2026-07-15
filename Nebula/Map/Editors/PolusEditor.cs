@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Map.Editors;
+
 class PolusEditor : MapEditor
 {
     public PolusEditor() : base(2)
@@ -9,7 +10,7 @@ class PolusEditor : MapEditor
     public override void AddVents()
     {
         Vent v = CreateVent(SystemTypes.Specimens, "SpecimenVent", new UnityEngine.Vector2(-1f, -1.35f));
-        Vent RestroomVent = ShipStatus.Instance.AllVents.FirstOrDefault((vent) => { return Vector2.Distance(vent.transform.position,new Vector3(32.963f,-9.526f,2f)) <= 0.01f; });
+        Vent RestroomVent = ShipStatus.Instance.AllVents.FirstOrDefault((vent) => { return Vector2.Distance(vent.transform.position, new Vector3(32.963f, -9.526f, 2f)) <= 0.01f; });
         v.Left = RestroomVent;
         RestroomVent.Center = v;
     }

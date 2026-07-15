@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nebula.Roles.ImpostorRoles
+﻿namespace Nebula.Roles.ImpostorRoles
 {
     public class Banshee : Template.HasHologram
     {
@@ -13,7 +9,7 @@ namespace Nebula.Roles.ImpostorRoles
 
         private CustomButton bansheeButton;
         private CustomButton killButton;
-        private SpriteLoader bansheeSprite = new SpriteLoader("Nebula.Resources.BansheeButton.png",100f, "ui.button.banshee.weep");
+        private SpriteLoader bansheeSprite = new SpriteLoader("Nebula.Resources.BansheeButton.png", 100f, "ui.button.banshee.weep");
 
         public SpriteLoader bansheeArrowSprite = new SpriteLoader("Nebula.Resources.BansheeArrow.png", 200f);
 
@@ -67,7 +63,7 @@ namespace Nebula.Roles.ImpostorRoles
 
             foreach (PlayerControl p in PlayerControl.AllPlayerControls) PlayerIcons[p.PlayerId].gameObject.SetActive(false);
             int counter = 0;
-            foreach(var p in activePlayers)
+            foreach (var p in activePlayers)
             {
                 var icon = PlayerIcons[p.PlayerId];
                 icon.gameObject.SetActive(true);
@@ -118,14 +114,14 @@ namespace Nebula.Roles.ImpostorRoles
                 {
                     List<byte> targets = new List<byte>();
                     foreach (var p in activePlayers) if (!p.Data.IsDead) targets.Add(p.PlayerId);
-                    RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId,targets.ToArray(),Game.PlayerData.PlayerStatus.Withered.Id);
+                    RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, targets.ToArray(), Game.PlayerData.PlayerStatus.Withered.Id);
                     activePlayers.Clear();
-                    RPCEventInvoker.EmitSpeedFactor(PlayerControl.LocalPlayer, new Game.SpeedFactor(2,killRootTimeOption.getFloat(), 0f, false));
+                    RPCEventInvoker.EmitSpeedFactor(PlayerControl.LocalPlayer, new Game.SpeedFactor(2, killRootTimeOption.getFloat(), 0f, false));
                     killButton.Timer = killButton.MaxTimer;
 
                 },
                 () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-                () => { return PlayerControl.LocalPlayer.CanMove && activePlayers.Count>0; },
+                () => { return PlayerControl.LocalPlayer.CanMove && activePlayers.Count > 0; },
                 () => { killButton.Timer = killButton.MaxTimer; },
                 __instance.KillButton.graphic.sprite,
                 Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
@@ -173,7 +169,7 @@ namespace Nebula.Roles.ImpostorRoles
                         icon.gameObject.SetActive(true);
                         icon.setSemiTransparent(true);
                         icon.transform.localScale = Vector3.one * 0.25f;
-                        icon.transform.localPosition = new Vector3(-0.25f, -0.25f, 0) + Vector3.right * (activePlayers.Count+ semiActivePlayers.Count) * 0.3f;
+                        icon.transform.localPosition = new Vector3(-0.25f, -0.25f, 0) + Vector3.right * (activePlayers.Count + semiActivePlayers.Count) * 0.3f;
 
                         semiActivePlayers.Add(Game.GameData.data.myData.currentTarget);
                         bytePlayers.Add(Game.GameData.data.myData.currentTarget.PlayerId);

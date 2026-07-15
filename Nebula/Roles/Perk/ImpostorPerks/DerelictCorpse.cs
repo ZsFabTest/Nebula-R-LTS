@@ -1,6 +1,4 @@
-﻿using Nebula.Game;
-
-namespace Nebula.Roles.Perk.ImpostorPerks;
+﻿namespace Nebula.Roles.Perk.ImpostorPerks;
 
 public class DerelictCorpse : Perk
 {
@@ -10,17 +8,17 @@ public class DerelictCorpse : Perk
     {
         bool activeFlag = false;
         var pos = PlayerControl.LocalPlayer.transform.position;
-        foreach(var d in Helpers.AllDeadBodies())
+        foreach (var d in Helpers.AllDeadBodies())
         {
-            if (pos.Distance(d.transform.position) > IP(0,PerkPropertyType.Meter))
+            if (pos.Distance(d.transform.position) > IP(0, PerkPropertyType.Meter))
             {
-                activeFlag= true;
+                activeFlag = true;
                 break;
             }
         }
         if (activeFlag)
         {
-            ratio += IP(1,PerkPropertyType.Percentage);
+            ratio += IP(1, PerkPropertyType.Percentage);
         }
 
         perkData.Display?.SetCool(activeFlag ? 0f : 1f);

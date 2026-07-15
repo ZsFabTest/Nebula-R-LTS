@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
-namespace Nebula.Module.FileInput
+namespace Nebula.Module
 {
     public enum HookType : int
     {
@@ -387,7 +382,7 @@ namespace Nebula.Module.FileInput
         private static IntPtr mainWindow = IntPtr.Zero;
         private static IntPtr m_Hook;
         private static string m_ClassName = "UnityWndClass";
-        
+
         private static bool EnumCallback(IntPtr W, IntPtr _)
         {
             if (Window.IsWindowVisible(W) && (mainWindow == IntPtr.Zero || (m_ClassName != null && Window.GetClassName(W) == m_ClassName)))

@@ -10,9 +10,10 @@ static public class HackSystem
         Patches.AdminPatch.shouldChangeColor = true;
 
         PlayerControl.LocalPlayer.NetTransform.Halt();
-        FastDestroyableSingleton<HudManager>.Instance.ToggleMapVisible(new MapOptions { 
-            Mode=MapOptions.Modes.CountOverlay,
-            AllowMovementWhileMapOpen=false
+        FastDestroyableSingleton<HudManager>.Instance.ToggleMapVisible(new MapOptions
+        {
+            Mode = MapOptions.Modes.CountOverlay,
+            AllowMovementWhileMapOpen = false
         });
     }
 }

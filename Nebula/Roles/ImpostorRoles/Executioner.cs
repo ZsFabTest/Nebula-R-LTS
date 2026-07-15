@@ -8,7 +8,8 @@ public class Executioner : Role
     {
         killCoolDownOddsOnFailedOption = CreateOption(Color.white, "killCoolDownOddsOnFailed", 0.5f, 0.125f, 1f, 0.125f);
         killCoolDownOddsOnFailedOption.suffix = "cross";
-        killCoolDownOddsOnFailedOption.IntimateValueDecorator = (text, option) => {
+        killCoolDownOddsOnFailedOption.IntimateValueDecorator = (text, option) =>
+        {
             float t = GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown * option.getFloat();
             return string.Format(text + Helpers.cs(new Color(0.8f, 0.8f, 0.8f), " ({0:0.##}" + Language.Language.GetString("option.suffix.second") + ")"), t);
         };
@@ -18,7 +19,7 @@ public class Executioner : Role
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
         if (data.currentTarget != null) Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
-        data.currentTarget= null;
+        data.currentTarget = null;
     }
 
     public override Tuple<string, Action>[] helpButton => new Tuple<string, Action>[]
@@ -27,7 +28,7 @@ public class Executioner : Role
    };
 
     static private CustomButton killButton;
-    private bool killExecuted=false;
+    private bool killExecuted = false;
     public override void ButtonInitialize(HudManager __instance)
     {
         Game.GameData.data.myData.currentTarget = null;
@@ -51,7 +52,7 @@ public class Executioner : Role
                     {
                         if (p != null)
                         {
-                            RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
+                            RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence, PlayerControl.LocalPlayer.GetTruePosition());
                             Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, p, Game.PlayerData.PlayerStatus.Dead, false, true);
                         }
                         killExecuted = (p != null);
@@ -66,7 +67,8 @@ public class Executioner : Role
             Module.NebulaInputManager.modKillInput.keyCode,
             true,
         3.1f,
-        () => {
+        () =>
+        {
             killButton.Timer = killButton.MaxTimer;
             if (!killExecuted) killButton.Timer *= killCoolDownOddsOnFailedOption.getFloat();
         }

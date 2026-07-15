@@ -1,8 +1,10 @@
-﻿namespace Nebula.Roles.NeutralRoles;
+﻿using Nebula.Roles.NeutralRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class SchrodingersCat : Role
 {
-    public static List<Role> AllCat = new List<Role>() { Roles.SchrodingersCat,Roles.RedCat,Roles.BlueCat,Roles.WhiteCat,Roles.PavlovsCat,Roles.WerewolfsCat,Roles.OraclesCat };
+    public static List<Role> AllCat = new List<Role>() { Roles.SchrodingersCat, Roles.RedCat, Roles.BlueCat, Roles.WhiteCat, Roles.PavlovsCat, Roles.WerewolfsCat, Roles.OraclesCat };
 
     public static Color RoleColor = ChainShifter.RoleColor;
 
@@ -78,7 +80,7 @@ public class SchrodingersCat : Role
         killCooldownO = CreateOption(Roles.OracleN.Color, "killCooldownO", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonO);
         killCooldownO.suffix = "second";
         canChangeTeam = CreateOption(Color.white, "canAlwaysChangeTeam", true);
-        maxChangeCnt = CreateOption(Color.white, "maxChangeCnt",2f,1f,15f,1f).AddPrerequisite(canChangeTeam);
+        maxChangeCnt = CreateOption(Color.white, "maxChangeCnt", 2f, 1f, 15f, 1f).AddPrerequisite(canChangeTeam);
         //fixCameraOption = CreateOption(Color.white,"fixCamera",false);
     }
 
@@ -87,12 +89,14 @@ public class SchrodingersCat : Role
 
     public override void OnMurdered(byte murderId)
     {
-        if(changeId++ >= maxChangeCnt.getFloat()){
+        if (changeId++ >= maxChangeCnt.getFloat())
+        {
             CheckBattleMode();
             return;
         }
         Role checkrole = Helpers.playerById(murderId).GetModData().role;
-        if(PlayerControl.LocalPlayer.GetModData().role != Roles.SchrodingersCat && !canChangeTeam.getBool()){
+        if (PlayerControl.LocalPlayer.GetModData().role != Roles.SchrodingersCat && !canChangeTeam.getBool())
+        {
             CheckBattleMode();
             return;
         }
@@ -106,7 +110,7 @@ public class SchrodingersCat : Role
         }
         else if (checkrole.side == Side.Jackal && canBeJackal.getBool())
         {
-            changeRole(Roles.BlueCat);;
+            changeRole(Roles.BlueCat); ;
         }
         else if (checkrole.side == Side.Pavlov && Roles.SchrodingersCat.canBePavlovsCat.getBool())
         {
@@ -140,19 +144,23 @@ public class SchrodingersCat : Role
         */
     }
 
-    private void CheckBattleMode(){
-        if(Game.GameData.data.GameMode == Module.CustomGameMode.Battle){
+    private void CheckBattleMode()
+    {
+        if (Game.GameData.data.GameMode == Module.CustomGameMode.Battle)
+        {
             Game.GameData.data.myData.CanSeeEveryoneInfo = true;
         }
     }
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         changeId = 0;
     }
 
-    private void changeRole(Role targetRole){
+    private void changeRole(Role targetRole)
+    {
         RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
-        RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,targetRole);
+        RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, targetRole);
         //Events.LocalEvent.Activate(new Events.FixCam());
     }
 

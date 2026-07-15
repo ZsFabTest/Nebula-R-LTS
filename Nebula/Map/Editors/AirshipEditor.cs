@@ -1,4 +1,6 @@
-﻿namespace Nebula.Map.Editors;
+﻿using Nebula.Expansion;
+
+namespace Nebula.Map.Editors;
 
 public class AirshipEditor : MapEditor
 {
@@ -20,10 +22,10 @@ public class AirshipEditor : MapEditor
         v1.transform.localPosition += new Vector3(0, 0, 1);
         Vent v2 = CreateVent(SystemTypes.MeetingRoom, "MeetingVent", new UnityEngine.Vector2(-3.1f, -1.6f));
         v2.transform.localPosition += new Vector3(0, 0, 2);
-        Vent GapVent = ShipStatus.Instance.AllVents.FirstOrDefault((vent) => { return Vector2.Distance(vent.transform.position,new Vector3(3.6049998f,6.9230003f,0.1f)) <= 0.01f; });
+        Vent GapVent = ShipStatus.Instance.AllVents.FirstOrDefault((vent) => { return Vector2.Distance(vent.transform.position, new Vector3(3.6049998f, 6.9230003f, 0.1f)) <= 0.01f; });
         v2.Center = GapVent;
         GapVent.Center = v2;
-        Vent HallVent = ShipStatus.Instance.AllVents.FirstOrDefault((vent) => { return Vector2.Distance(vent.transform.position,new Vector3(7.0210004f,-3.7309995f,0.1f)) <= 0.01f; });;
+        Vent HallVent = ShipStatus.Instance.AllVents.FirstOrDefault((vent) => { return Vector2.Distance(vent.transform.position, new Vector3(7.0210004f, -3.7309995f, 0.1f)) <= 0.01f; }); ;
         v1.Left = HallVent;
         HallVent.Center = v1;
     }

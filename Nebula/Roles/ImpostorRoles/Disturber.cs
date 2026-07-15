@@ -64,7 +64,8 @@ public class Disturber : Role
             Module.NebulaInputManager.abilityInput.keyCode,
             false,
             disturbDurationOption.getFloat(),
-            () => {
+            () =>
+            {
                 foreach (var pole in Poles) RPCEventInvoker.ObjectUpdate(pole, 1);
             },
             "button.label.place"
@@ -81,7 +82,7 @@ public class Disturber : Role
 
     public override void MyUpdate()
     {
-        
+
     }
 
     public override void OnMeetingEnd()

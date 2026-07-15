@@ -1,7 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using Nebula.Expansion;
 using Nebula.Roles.Perk;
 using TMPro;
-using UnityEngine;
 
 namespace Nebula.Module;
 
@@ -12,7 +11,7 @@ public class PerksTab : InventoryTab
         ClassInjector.RegisterTypeInIl2Cpp<PerksTab>();
     }
 
-    private void OpenPerkDialog<P>(bool isCrewmate,Action<P?> adaptor,Predicate<P> duplicateChecker, IEnumerable<P> allPerks) where P : DisplayPerk
+    private void OpenPerkDialog<P>(bool isCrewmate, Action<P?> adaptor, Predicate<P> duplicateChecker, IEnumerable<P> allPerks) where P : DisplayPerk
     {
         var designer = MetaDialog.OpenDialog(new Vector2(8f, 4f), "");
         var parent = designer.screen.screen.transform;
@@ -88,7 +87,7 @@ public class PerksTab : InventoryTab
                 UpdatePerk();
                 MetaDialog.EraseDialogAll();
             }));
-        
+
 
             button.OnMouseOver.AddListener((Action)(() =>
             {
@@ -111,13 +110,13 @@ public class PerksTab : InventoryTab
 
     public void Start()
     {
-        var headerText = GameObject.Instantiate(PlayerCustomizationMenu.Instance.transform.GetChild(4).GetChild(0).gameObject.GetComponent<TMPro.TextMeshPro>(),transform);
+        var headerText = GameObject.Instantiate(PlayerCustomizationMenu.Instance.transform.GetChild(4).GetChild(0).gameObject.GetComponent<TMPro.TextMeshPro>(), transform);
         headerText.text = Language.Language.GetString("perks.perk");
         headerText.transform.localPosition = new Vector3(-2.65f, 1.77f, -55f);
         GameObject.Destroy(headerText.GetComponent<TextTranslatorTMP>());
 
-        PerkNameText = GameObject.Instantiate(headerText,transform);
-        PerkNameText.transform.localPosition = new Vector3(0f,0f,-10f);
+        PerkNameText = GameObject.Instantiate(headerText, transform);
+        PerkNameText.transform.localPosition = new Vector3(0f, 0f, -10f);
         PerkNameText.alignment = TextAlignmentOptions.Center;
         PerkNameText.rectTransform.pivot = new Vector2(0.5f, 0.5f);
         PerkNameText.text = "";
@@ -131,7 +130,8 @@ public class PerksTab : InventoryTab
 
         PassiveButton button;
 
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++)
+        {
             var obj = new GameObject("Perk");
             obj.transform.SetParent(gameObject.transform);
             obj.transform.localPosition = new Vector3(0.9f * (float)(i % 5 - 2), (i < 5 ? 0.9f : -2.3f) + (i % 2 == 1 ? 0f : 0.56f), 0f);
@@ -139,30 +139,33 @@ public class PerksTab : InventoryTab
             AbilityPerkDisplays[i] = obj.AddComponent<PerkDisplay>();
             button = AbilityPerkDisplays[i].SetUpButton(Color.yellow);
             int index = i;
-            button.OnClick.AddListener((Action)(() => OpenPerkDialog<Perk>(index < 5, (p) => {
+            button.OnClick.AddListener((Action)(() => OpenPerkDialog<Perk>(index < 5, (p) =>
+            {
                 PerkSaver.UnequipAbilityPerk(p);
                 PerkSaver.SetEquipedAbilityPerk(index % 5, index < 5, p);
-            }, 
-            (p)=>
+            },
+            (p) =>
             {
                 for (int i = 0; i < 5; i++) if (p == PerkSaver.GetEquipedAbilityPerk(i, index < 5)) return true;
                 return false;
             }, Perks.AllPerks.Values)));
 
-            button.OnMouseOver.AddListener((Action)(() => {
+            button.OnMouseOver.AddListener((Action)(() =>
+            {
                 Perk? p = PerkSaver.GetEquipedAbilityPerk(index % 5, index < 5);
                 if (p == null)
                 {
                     PerkNameText.text = Language.Language.GetString("perks.unselected.name");
                     PerkFlavor.text = Language.Language.GetString("perks.unselected.flavor");
                 }
-                else {
+                else
+                {
                     PerkNameText.text = p.DisplayName;
                     PerkFlavor.text = p.DisplayFlavor;
                 }
             }));
 
-            
+
             var maskObj = InvalidPerkMask[i] = new GameObject("Mask");
             maskObj.layer = LayerExpansion.GetUILayer();
             maskObj.transform.SetParent(obj.transform);
@@ -179,8 +182,9 @@ public class PerksTab : InventoryTab
         roleObj.transform.localScale = Vector3.one * 0.9f;
         RolePerkDisplay = roleObj.AddComponent<PerkDisplay>();
         button = RolePerkDisplay.SetUpButton(Color.yellow);
-        button.OnClick.AddListener((Action)(() => OpenPerkDialog<RolePerk>(false,(p)=> PerkSaver.SetEquipedRolePerk(0,false,p),(p)=>PerkSaver.GetEquipedRolePerk(0,false)==p,Perks.AllRolePerks.Values)));
-        button.OnMouseOver.AddListener((Action)(() => {
+        button.OnClick.AddListener((Action)(() => OpenPerkDialog<RolePerk>(false, (p) => PerkSaver.SetEquipedRolePerk(0, false, p), (p) => PerkSaver.GetEquipedRolePerk(0, false) == p, Perks.AllRolePerks.Values)));
+        button.OnMouseOver.AddListener((Action)(() =>
+        {
             RolePerk? p = PerkSaver.GetEquipedRolePerk(0, false);
             if (p == null)
             {
@@ -198,10 +202,12 @@ public class PerksTab : InventoryTab
         UpdatePerk();
     }
 
-    public override void OnEnable(){
+    public override void OnEnable()
+    {
         PlayerCustomizationMenu.Instance.PreviewArea.transform.parent.gameObject.SetActive(false);
     }
-    public override void OnDisable() {
+    public override void OnDisable()
+    {
         PlayerCustomizationMenu.Instance.PreviewArea.transform.parent.gameObject.SetActive(true);
     }
 
@@ -229,7 +235,7 @@ public class PerksTabPacth
     static GameObject PerksGroup;
     static GameObject PerksHeader;
 
-    
+
     [HarmonyPatch(typeof(PlayerCustomizationMenu), nameof(PlayerCustomizationMenu.Start))]
     class AddPerksTabPatch
     {
@@ -257,7 +263,7 @@ public class PerksTabPacth
             SpriteRenderer tabRenderer = PerksHeader.transform.FindChild("ColorButton").FindChild("Tab Background").gameObject.GetComponent<SpriteRenderer>();
             var tabButton = tabRenderer.gameObject.GetComponent<PassiveButton>();
             tabButton.OnClick.RemoveAllListeners();
-            tabButton.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>  __instance.OpenTab(PerksTab)));
+            tabButton.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => __instance.OpenTab(PerksTab)));
 
             iconRenderer.sprite = GetPerksTabSprite();
 
@@ -293,6 +299,6 @@ public class PerksTabPacth
 
         }
     }
-    
+
 
 }

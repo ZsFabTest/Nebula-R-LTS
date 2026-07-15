@@ -18,10 +18,11 @@ public class GeniusInStorage : Perk
 
         if ((!(perkData.DataAry[0] > 0f)) && shipRoom.roomArea.OverlapPoint(PlayerControl.LocalPlayer.GetTruePosition()))
         {
-            HnSModificator.ProceedTimer.Invoke(new HnSModificator.HnSTaskBonusMessage() { 
-                TimeDeduction= IP(0, PerkPropertyType.Second),
-                IsFinishTaskBonus=false,
-                CanProceedFinalTimer=true,
+            HnSModificator.ProceedTimer.Invoke(new HnSModificator.HnSTaskBonusMessage()
+            {
+                TimeDeduction = IP(0, PerkPropertyType.Second),
+                IsFinishTaskBonus = false,
+                CanProceedFinalTimer = true,
                 ContributorId = PlayerControl.LocalPlayer.PlayerId
             });
             perkData.DataAry[0] = IP(1, PerkPropertyType.Second);

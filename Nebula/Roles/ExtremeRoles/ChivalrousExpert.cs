@@ -1,7 +1,10 @@
-namespace Nebula.Roles.CrewmateRoles;
+using Nebula.Roles.CrewmateRoles;
 
-public class ChivalrousExpert : Role{
-    public static Color RoleColor = new Color(230f / 255f,213f / 255f,130f / 255f);
+namespace Nebula.Roles.ExtremeRoles;
+
+public class ChivalrousExpert : Role
+{
+    public static Color RoleColor = new Color(230f / 255f, 213f / 255f, 130f / 255f);
 
     public int ceId { get; private set; }
 
@@ -14,7 +17,7 @@ public class ChivalrousExpert : Role{
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
-        __instance.GetModData().SetRoleData(ceId,0);
+        __instance.GetModData().SetRoleData(ceId, 0);
     }
 
     private CustomButton killButton;
@@ -28,7 +31,7 @@ public class ChivalrousExpert : Role{
             () =>
             {
                 var r = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
-                if(r == Helpers.MurderAttemptResult.PerformKill) RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,ceId,1);
+                if (r == Helpers.MurderAttemptResult.PerformKill) RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, ceId, 1);
                 killButton.Timer = killButton.MaxTimer;
                 Game.GameData.data.myData.currentTarget = null;
                 killButton.UsesText.text = "0";
@@ -47,8 +50,10 @@ public class ChivalrousExpert : Role{
         killButton.UsesText.text = "1";
     }
 
-    public override void CleanUp(){
-        if(killButton != null){
+    public override void CleanUp()
+    {
+        if (killButton != null)
+        {
             killButton.Destroy();
             killButton = null;
         }
@@ -62,9 +67,10 @@ public class ChivalrousExpert : Role{
     }
 
     public ChivalrousExpert()
-         : base("ChivalrousExpert","chivalrousExpert",RoleColor,RoleCategory.Crewmate,Side.Crewmate,Side.Crewmate,
-                Crewmate.crewmateSideSet,Crewmate.crewmateSideSet,Crewmate.crewmateEndSet,
-                false,VentPermission.CanNotUse,false,false,false){
+         : base("ChivalrousExpert", "chivalrousExpert", RoleColor, RoleCategory.Crewmate, Side.Crewmate, Side.Crewmate,
+                Crewmate.crewmateSideSet, Crewmate.crewmateSideSet, Crewmate.crewmateEndSet,
+                false, VentPermission.CanNotUse, false, false, false)
+    {
         killButton = null;
         ceId = Game.GameData.RegisterRoleDataId("chivalrousexpert.ceid");
     }

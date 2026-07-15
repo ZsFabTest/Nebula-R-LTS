@@ -13,7 +13,7 @@ public static class CredentialsPatch
             RuntimePrefabs.TextPrefab = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(__instance.text);
             RuntimePrefabs.TextPrefab.enableAutoSizing = true;
             RuntimePrefabs.TextPrefab.text = "";
-            RuntimePrefabs.TextPrefab.gameObject.hideFlags= HideFlags.HideAndDontSave;
+            RuntimePrefabs.TextPrefab.gameObject.hideFlags = HideFlags.HideAndDontSave;
             GameObject.DontDestroyOnLoad(RuntimePrefabs.TextPrefab.gameObject);
         }
     }
@@ -26,7 +26,7 @@ public static class CredentialsPatch
             __instance.text.alignment = AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started ? TextAlignmentOptions.Top : TextAlignmentOptions.TopLeft;
             var position = __instance.GetComponent<AspectPosition>();
             position.Alignment = AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started ? AspectPosition.EdgeAlignments.Top : AspectPosition.EdgeAlignments.LeftTop;
-            __instance.text.text = $"<size=130%><color=#9579ce>Nebula</color></size> v{ NebulaPlugin.PluginVisualVersion }\n由<color=#F60000>四个憨批开发组</color>开发\n{ __instance.text.text }";
+            __instance.text.text = $"<size=130%><color=#9579ce>Nebula</color></size> v{NebulaPlugin.PluginVisualVersion}\n由<color=#F60000>四个憨批开发组</color>开发\n{__instance.text.text}";
             if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
             {
                 position.DistanceFromEdge = new Vector3(1.8f, 0.11f, 0);

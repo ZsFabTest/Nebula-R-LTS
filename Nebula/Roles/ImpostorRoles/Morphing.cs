@@ -17,7 +17,7 @@ public class Morphing : Role
             Helpers.GetModData(PlayerId).AddOutfit(outfit);
         }
 
-        public MorphEvent(byte playerId, Game.PlayerData.PlayerOutfitData outfit,float time = 0f) : base(time == 0f ? Roles.Morphing.morphDurationOption.getFloat() : time)
+        public MorphEvent(byte playerId, Game.PlayerData.PlayerOutfitData outfit, float time = 0f) : base(time == 0f ? Roles.Morphing.morphDurationOption.getFloat() : time)
         {
             PlayerId = playerId;
             this.outfit = outfit;
@@ -53,7 +53,7 @@ public class Morphing : Role
         morphDurationOption = CreateOption(Color.white, "morphDuration", 15f, 5f, 40f, 2.5f);
         morphDurationOption.suffix = "second";
 
-        canUseVent = CreateOption(Color.white,"canUseVent",false);
+        canUseVent = CreateOption(Color.white, "canUseVent", false);
     }
 
     public override void ButtonInitialize(HudManager __instance)

@@ -22,7 +22,7 @@ public class TypeWithImage : CustomObject.Type
 
 public class DelayedObject : TypeWithImage
 {
-    public DelayedObject(byte id, string objectName,ISpriteLoader sprite) : base(id, objectName,sprite)
+    public DelayedObject(byte id, string objectName, ISpriteLoader sprite) : base(id, objectName, sprite)
     {
     }
 

@@ -1,11 +1,5 @@
-﻿using Nebula.Module;
-using Nebula.Tasks;
-using Newtonsoft.Json.Bson;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using Nebula.Expansion;
+using Nebula.Module;
 
 namespace Nebula.Components;
 
@@ -22,9 +16,9 @@ public class TextInputField : MonoBehaviour
         if (Collider) Collider.size = Text.rectTransform.sizeDelta;
     }
 
-    public void SetTextProperty(Vector2 size,float fontSize,TMPro.TextAlignmentOptions alignmentOptions,TMPro.FontStyles fontStyle)
+    public void SetTextProperty(Vector2 size, float fontSize, TMPro.TextAlignmentOptions alignmentOptions, TMPro.FontStyles fontStyle)
     {
-        if(!Text)Text = GameObject.Instantiate(RuntimePrefabs.TextPrefab);
+        if (!Text) Text = GameObject.Instantiate(RuntimePrefabs.TextPrefab);
         Text.transform.SetParent(gameObject.transform);
         Text.transform.localScale = new Vector3(1f, 1f, 1f);
         Text.transform.localPosition = new Vector3(0f, 0f, -1f);
@@ -66,16 +60,19 @@ public class TextInputField : MonoBehaviour
 
         Button = gameObject.AddComponent<PassiveButton>();
         Button.OnClick.RemoveAllListeners();
-        Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => {
+        Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
             GetFocus();
         }));
 
         Button.OnMouseOver = new UnityEngine.Events.UnityEvent();
         Button.OnMouseOut = new UnityEngine.Events.UnityEvent();
-        Button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() => {
+        Button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
             if (ValidField != this) Background.color = Color.green;
         }));
-        Button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() => {
+        Button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() =>
+        {
             Background.color = Color.white;
         }));
 
@@ -177,8 +174,9 @@ public class TextInputField : MonoBehaviour
         Pipe.text = CaretFlag ? "|" : "";
 
         string firstHalf = (Cursor > 0 ? InputText.Substring(0, Cursor) : "") + Input.compositionString;
-        string latterHalf= InputText.Substring(Cursor);
-        if (InputText.Length > 0) {
+        string latterHalf = InputText.Substring(Cursor);
+        if (InputText.Length > 0)
+        {
             Text.text = firstHalf + latterHalf;
             Text.ForceMeshUpdate();
             float x = 0f;
@@ -214,8 +212,8 @@ public class TextInputField : MonoBehaviour
         ValidField = null;
         if (LoseFocusAction != null) LoseFocusAction.Invoke(InputText);
 
-        if(CandidatesShower != null) CandidatesShower.gameObject.SetActive(false);
-        
+        if (CandidatesShower != null) CandidatesShower.gameObject.SetActive(false);
+
     }
 
     public void GetFocus()
@@ -223,8 +221,8 @@ public class TextInputField : MonoBehaviour
         if (ValidField) ValidField!.LoseFocus();
         ValidField = this;
 
-        if(UseIME) Input.imeCompositionMode = IMECompositionMode.On;
-        Cursor= InputText.Length;
+        if (UseIME) Input.imeCompositionMode = IMECompositionMode.On;
+        Cursor = InputText.Length;
 
         lastFocusTime = 0.5f;
 
@@ -253,7 +251,7 @@ public class TextInputField : MonoBehaviour
 
     public void SetTextByCandidate(string text)
     {
-        if(CandidateIndex>=0)SetText(InputText.Substring(0, CandidateIndex) + text);
+        if (CandidateIndex >= 0) SetText(InputText.Substring(0, CandidateIndex) + text);
     }
 
     public void SetText(string text)
@@ -300,6 +298,6 @@ public class TextInputField : MonoBehaviour
     public Action<string>? LoseFocusAction = null;
 
     public static TextInputField? ValidField = null;
-    
-    
+
+
 }

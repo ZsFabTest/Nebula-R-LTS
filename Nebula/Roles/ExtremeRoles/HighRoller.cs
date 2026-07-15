@@ -1,22 +1,24 @@
 using Nebula.Roles.ComplexRoles;
-namespace Nebula.Roles.NeutralRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public class HighRoller : Role,Template.HasWinTrigger{
+public class HighRoller : Role, Template.HasWinTrigger
+{
     public bool WinTrigger { get; set; }
     public byte Winner { get; set; }
 
-    public static Color RoleColor = new(204f / 255f,166f / 255f,86f / 255f);
+    public static Color RoleColor = new(204f / 255f, 166f / 255f, 86f / 255f);
 
     private Module.CustomOption targetCnt;
     private Module.CustomOption dieIfGuessFailed;
     private Module.CustomOption canOracleOthers;
 
-    public override void LoadOptionData(){
+    public override void LoadOptionData()
+    {
         TopOption.tab = Module.CustomOptionTab.AdvancedSettings;
-        targetCnt = CreateOption(Color.white,"targetCnt",3f,1f,15f,1f);
-        dieIfGuessFailed = CreateOption(Color.white,"dieIfGuessFailed",false);
+        targetCnt = CreateOption(Color.white, "targetCnt", 3f, 1f, 15f, 1f);
+        dieIfGuessFailed = CreateOption(Color.white, "dieIfGuessFailed", false);
 
-        canOracleOthers = CreateOption(Color.white,"canOracleOthers",false);
+        canOracleOthers = CreateOption(Color.white, "canOracleOthers", false);
 
         OracleCooldownOption = CreateOption(Color.white, "divineCoolDown", 30f, 10f, 60f, 2.5f).AddPrerequisite(canOracleOthers);
         OracleCooldownOption.suffix = "second";
@@ -49,9 +51,10 @@ public class HighRoller : Role,Template.HasWinTrigger{
         RelatedRoles.Add(Roles.EvilAce);
     }
 
-    public override void MyPlayerControlUpdate(){
-        if(!dieIfGuessFailed.getBool() && PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.ProfessionalAssassin.id) <= 0) RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.ProfessionalAssassin.id, 1);
-        if(PlayerControl.LocalPlayer.GetModData().GetRoleData(GuesserSystem.guessId) >= targetCnt.getFloat()) RPCEventInvoker.WinTrigger(this);
+    public override void MyPlayerControlUpdate()
+    {
+        if (!dieIfGuessFailed.getBool() && PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.ProfessionalAssassin.id) <= 0) RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.ProfessionalAssassin.id, 1);
+        if (PlayerControl.LocalPlayer.GetModData().GetRoleData(GuesserSystem.guessId) >= targetCnt.getFloat()) RPCEventInvoker.WinTrigger(this);
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(1.5f);
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color.yellow);
@@ -70,7 +73,7 @@ public class HighRoller : Role,Template.HasWinTrigger{
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(!canOracleOthers.getBool()) return;
+        if (!canOracleOthers.getBool()) return;
         if (oracleButton != null)
         {
             oracleButton.Destroy();
@@ -100,7 +103,7 @@ public class HighRoller : Role,Template.HasWinTrigger{
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
 
-                    //まだ占っていなければ占う
+                //まだ占っていなければ占う
                 if (!divineResult.ContainsKey(target.PlayerId))
                 {
                     divineResult[target.PlayerId] = Divine(target);
@@ -124,7 +127,7 @@ public class HighRoller : Role,Template.HasWinTrigger{
                     index++;
                 }
                 target.GetModData().RoleInfo = roles.Replace("\n", "");
-                RPCEventInvoker.SendInfo(target.PlayerId,target.GetModData().RoleInfo);
+                RPCEventInvoker.SendInfo(target.PlayerId, target.GetModData().RoleInfo);
                 message = message.Replace("%ROLES%", roles);
                 message = message.Replace("%PLAYER%", target.name);
                 CustomMessage customMessage = CustomMessage.Create(target.transform.position, true, message, 5f, 0.5f, 2f, rate, Color.white);
@@ -139,12 +142,14 @@ public class HighRoller : Role,Template.HasWinTrigger{
         oracleButton.MaxTimer = OracleCooldownOption.getFloat();
     }
 
-    public override void CleanUp(){
-        if(oracleButton != null){
+    public override void CleanUp()
+    {
+        if (oracleButton != null)
+        {
             oracleButton.Destroy();
             oracleButton = null;
         }
-        RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId,Roles.ProfessionalAssassin.id,0);
+        RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.ProfessionalAssassin.id, 0);
     }
 
     private List<Role> Divine(PlayerControl target)
@@ -156,12 +161,14 @@ public class HighRoller : Role,Template.HasWinTrigger{
         result.Add(originalRole);
 
         List<Role> UsableRoles = new();
-        foreach(var r in Roles.AllRoles){
-            if(r.IsSpawnable() && r != originalRole) UsableRoles.Add(r);
+        foreach (var r in Roles.AllRoles)
+        {
+            if (r.IsSpawnable() && r != originalRole) UsableRoles.Add(r);
         }
 
         Debug.LogWarning(UsableRoles.Count);
-        if(UsableRoles.Count < CandidatesOption.getFloat()){
+        if (UsableRoles.Count < CandidatesOption.getFloat())
+        {
             UsableRoles.Add(originalRole);
             return UsableRoles.OrderBy(a => Guid.NewGuid()).ToList();
         }
@@ -177,11 +184,12 @@ public class HighRoller : Role,Template.HasWinTrigger{
         return result.OrderBy(a => Guid.NewGuid()).ToList();
     }
 
-    public override bool CheckAdditionalWin(PlayerControl player, Patches.EndCondition condition) => GuesserSystem.CheckAdditionalWin(player,condition);
+    public override bool CheckAdditionalWin(PlayerControl player, Patches.EndCondition condition) => GuesserSystem.CheckAdditionalWin(player, condition);
 
-    public HighRoller() : base("HighRoller","highRoller",RoleColor,RoleCategory.Neutral,Side.HighRoller,Side.HighRoller,
-         new HashSet<Side>() { Side.HighRoller },new HashSet<Side>() { Side.HighRoller },new HashSet<Patches.EndCondition>() { Patches.EndCondition.HighRollerWin },
-         true,VentPermission.CanNotUse,false,false,false){
+    public HighRoller() : base("HighRoller", "highRoller", RoleColor, RoleCategory.Neutral, Side.HighRoller, Side.HighRoller,
+         new HashSet<Side>() { Side.HighRoller }, new HashSet<Side>() { Side.HighRoller }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.HighRollerWin },
+         true, VentPermission.CanNotUse, false, false, false)
+    {
         Patches.EndCondition.HighRollerWin.TriggerRole = this;
         oracleButton = null;
     }

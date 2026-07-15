@@ -478,46 +478,53 @@ class RoleAssignmentPatch
             crewmates.RemoveAll((p) => p.PlayerId == PlayerControl.LocalPlayer.PlayerId);
         }
 
-        if (CustomOptionHolder.GetCustomGameMode() == Module.CustomGameMode.Battle){
+        if (CustomOptionHolder.GetCustomGameMode() == Module.CustomGameMode.Battle)
+        {
             var allPlayers = new List<byte>();
             foreach (var player in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
                 allPlayers.Add(player.PlayerId);
             }
 
-            if((allPlayers.Count & 1) == 1){
+            if ((allPlayers.Count & 1) == 1)
+            {
                 int idx = rnd.Next(allPlayers.Count);
-                assignMap.AssignRole(allPlayers[idx],Roles.Roles.SchrodingersCat.id);
+                assignMap.AssignRole(allPlayers[idx], Roles.Roles.SchrodingersCat.id);
                 allPlayers.RemoveAt(idx);
             }
 
             var array = Helpers.GetRandomArray(allPlayers.Count);
 
-            for(int tmp = 0;tmp < allPlayers.Count;tmp++){
-                if(array[tmp] % 2 == 0) assignMap.AssignRole(allPlayers[tmp],Roles.Roles.YellowTeam.id);
-                else assignMap.AssignRole(allPlayers[tmp],Roles.Roles.GreenTeam.id);
+            for (int tmp = 0; tmp < allPlayers.Count; tmp++)
+            {
+                if (array[tmp] % 2 == 0) assignMap.AssignRole(allPlayers[tmp], Roles.Roles.YellowTeam.id);
+                else assignMap.AssignRole(allPlayers[tmp], Roles.Roles.GreenTeam.id);
             }
 
             //if(!Module.AssetLoader.audioSource.isPlaying) Module.AssetLoader.audioSource.Play();
 
             return;
-        }else if(CustomOptionHolder.GetCustomGameMode() == Module.CustomGameMode.VirusCrisis){
+        }
+        else if (CustomOptionHolder.GetCustomGameMode() == Module.CustomGameMode.VirusCrisis)
+        {
             var allPlayers = new List<byte>();
             foreach (var player in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
                 allPlayers.Add(player.PlayerId);
             }
 
-            var impidx = NebulaPlugin.rnd.Next(0,allPlayers.Count);
-            assignMap.AssignRole(allPlayers[impidx],Roles.Roles.Infected.id);
+            var impidx = NebulaPlugin.rnd.Next(0, allPlayers.Count);
+            assignMap.AssignRole(allPlayers[impidx], Roles.Roles.Infected.id);
             allPlayers.RemoveAt(impidx);
-            for(int i = 0;i < Roles.Roles.Gunner.neutrallySpawnCount.getFloat();i++){
-                var idx = NebulaPlugin.rnd.Next(0,allPlayers.Count);
-                assignMap.AssignRole(allPlayers[idx],Roles.Roles.Gunner.id);
+            for (int i = 0; i < Roles.Roles.Gunner.neutrallySpawnCount.getFloat(); i++)
+            {
+                var idx = NebulaPlugin.rnd.Next(0, allPlayers.Count);
+                assignMap.AssignRole(allPlayers[idx], Roles.Roles.Gunner.id);
                 allPlayers.RemoveAt(idx);
             }
-            foreach(var pi in allPlayers){
-                assignMap.AssignRole(pi,Roles.Roles.Survival.id);
+            foreach (var pi in allPlayers)
+            {
+                assignMap.AssignRole(pi, Roles.Roles.Survival.id);
             }
             return;
         }
@@ -552,7 +559,7 @@ class RoleAssignmentPatch
         if (property.RequireImpostors)
         {
 
-                //メタ的にインポスターを要求する場合
+            //メタ的にインポスターを要求する場合
             foreach (var entry in metaAssignment)
             {
                 if (entry.Value.category != RoleCategory.Impostor) continue;
@@ -624,7 +631,7 @@ class RoleAssignmentPatch
             }
             else
             {
-                foreach(var p in crewmates)
+                foreach (var p in crewmates)
                 {
                     if (p.Data.Role.Role == RoleTypes.Impostor) impostors.Add(p);
                 }
@@ -789,7 +796,7 @@ class BlockGhostRoleAssignmentPatch
 [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SetRole))]
 class SetRolePatch
 {
-    static public bool Prefix(RoleManager __instance, [HarmonyArgument(0)]PlayerControl targetPlayer, [HarmonyArgument(1)]RoleTypes roleType)
+    static public bool Prefix(RoleManager __instance, [HarmonyArgument(0)] PlayerControl targetPlayer, [HarmonyArgument(1)] RoleTypes roleType)
     {
         if (!targetPlayer)
         {

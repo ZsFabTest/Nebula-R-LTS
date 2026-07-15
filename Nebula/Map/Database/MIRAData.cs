@@ -4,12 +4,12 @@ public class MIRAData : MapData
 {
     public override IEnumerable<Tuple<GameObject, float>> AllAdmins(ShipStatus shipStatus)
     {
-        yield return new(shipStatus.transform.GetChild(10).GetChild(3).GetChild(0).gameObject,0.5f);
+        yield return new(shipStatus.transform.GetChild(10).GetChild(3).GetChild(0).gameObject, 0.5f);
     }
 
     public override IEnumerable<Tuple<GameObject, float>> AllCameras(ShipStatus shipStatus)
     {
-        yield return new(shipStatus.transform.GetChild(13).GetChild(0).GetChild(0).gameObject,0.3f);
+        yield return new(shipStatus.transform.GetChild(13).GetChild(0).GetChild(0).gameObject, 0.3f);
     }
 
     public override void CreateOption()
@@ -18,7 +18,7 @@ public class MIRAData : MapData
         AdminNameMap.Add("AdminMapConsole", 0);
     }
 
-    public MIRAData() : base(1,"MiraShip")
+    public MIRAData() : base(1, "MiraShip")
     {
         SabotageMap[SystemTypes.Reactor] = new SabotageData(SystemTypes.Reactor, new Vector3(2.5f, 13f), true, true);
         SabotageMap[SystemTypes.LifeSupp] = new SabotageData(SystemTypes.LifeSupp, new Vector3(3.7f, -1f), false, true);

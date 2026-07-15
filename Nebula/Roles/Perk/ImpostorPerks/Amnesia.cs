@@ -16,7 +16,7 @@ public class Amnesia : Perk
     {
         if (perkData.DataAry[0] > 0f) perkData.DataAry[0] -= Time.deltaTime;
 
-        perkData.Display.SetCool(perkData.DataAry[0]/IP(1,PerkPropertyType.Second));
+        perkData.Display.SetCool(perkData.DataAry[0] / IP(1, PerkPropertyType.Second));
     }
 
     public override void Initialize(PerkHolder.PerkInstance perkData, byte playerId)

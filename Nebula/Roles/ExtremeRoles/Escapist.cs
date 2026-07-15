@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.ImpostorRoles;
+﻿using Nebula.Roles.ImpostorRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Escapist : Role
 {
@@ -25,14 +27,14 @@ public class Escapist : Role
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(escape != null)
+        if (escape != null)
         {
             escape.Destroy();
         }
         escape = new CustomButton(
             () =>
             {
-                if(mark)
+                if (mark)
                 {
                     mark = !mark;
                     pos = PlayerControl.LocalPlayer.transform.position;
@@ -40,7 +42,7 @@ public class Escapist : Role
                     return;
                 }
                 mark = !mark;
-                RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
+                RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence, PlayerControl.LocalPlayer.GetTruePosition());
                 PlayerControl.LocalPlayer.transform.position = pos;
                 escape.Timer = escape.MaxTimer;
                 escape.Sprite = MarkSprite.GetSprite();
@@ -59,7 +61,7 @@ public class Escapist : Role
 
     public override void CleanUp()
     {
-        if(escape != null)
+        if (escape != null)
         {
             escape.Destroy();
             escape = null;

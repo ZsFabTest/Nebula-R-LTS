@@ -6,7 +6,7 @@ static public class GridArrangeExpansion
     static public List<GameObject> leftSideContents = new List<GameObject>();
     static public List<GameObject> bottomContents = new List<GameObject>();
     static public List<GameObject> lineContents = new List<GameObject>();
-    static public List<GameObject> ignoredContent = new List<GameObject>(); 
+    static public List<GameObject> ignoredContent = new List<GameObject>();
     //存在を問わずキルボタンの位置を代替するコンテンツ
     static public GameObject AlternativeKillButtonContent;
 
@@ -68,7 +68,7 @@ static public class GridArrangeExpansion
         alwaysVisible.transform.localScale = HudManager.Instance.UseButton.transform.parent.localScale;
     }
 
-    private static bool ForcelyRefreshFlag=false;
+    private static bool ForcelyRefreshFlag = false;
 
     static public void OnMeetingEnd()
     {
@@ -78,7 +78,7 @@ static public class GridArrangeExpansion
     [HarmonyPatch(typeof(GridArrange), nameof(GridArrange.CheckCurrentChildren))]
     class CheckCurrentChildrenPatch
     {
-        static IEnumerator GetEnumerator(GameObject obj,Vector3 dest)
+        static IEnumerator GetEnumerator(GameObject obj, Vector3 dest)
         {
             float t = 0f;
             Vector3 pos = obj.transform.localPosition;
@@ -89,7 +89,7 @@ static public class GridArrangeExpansion
                 t += Time.deltaTime * 1.4f;
                 yield return null;
             }
-            if(obj)obj.transform.localPosition = dest;
+            if (obj) obj.transform.localPosition = dest;
         }
 
         static public bool Prefix(GridArrange __instance)
@@ -122,7 +122,7 @@ static public class GridArrangeExpansion
 
             //直前に存在していたボタン
             List<int> lastContents = new List<int>();
-            if (ForcelyRefreshFlag) foreach(var t in __instance.cells) if(t) lastContents.Add(t.gameObject.GetInstanceID());
+            if (ForcelyRefreshFlag) foreach (var t in __instance.cells) if (t) lastContents.Add(t.gameObject.GetInstanceID());
             ForcelyRefreshFlag = false;
 
             //cellsを更新
@@ -170,13 +170,13 @@ static public class GridArrangeExpansion
                     c.localPosition = new Vector3(posX, posY, c.localPosition.z);
                 else
                     __instance.StartCoroutine(GetEnumerator(c.gameObject, new Vector3(posX, posY, c.localPosition.z)).WrapToIl2Cpp());
-            
+
 
                 if (y == (float)((isLeftSide ? leftVec : rightVec).y))
                 {
                     if (isLeftSide)
                     {
-                        leftVec.x += lineContents.Any((c)=>c.GetInstanceID()==obj.GetInstanceID()) ? __instance.MaxColumns : 1f;
+                        leftVec.x += lineContents.Any((c) => c.GetInstanceID() == obj.GetInstanceID()) ? __instance.MaxColumns : 1f;
                         if ((int)leftVec.x >= __instance.MaxColumns)
                         {
                             leftVec.x = 0f;

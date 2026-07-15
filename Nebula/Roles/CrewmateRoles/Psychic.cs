@@ -96,7 +96,7 @@ public class Psychic : Role
 
     public override void MyPlayerControlUpdate()
     {
-        RoleSystem.TrackSystem.DeadBodySearch_MyControlUpdate(searchButton.isEffectActive && !PlayerControl.LocalPlayer.Data.IsDead, Arrows,arrowSprite);
+        RoleSystem.TrackSystem.DeadBodySearch_MyControlUpdate(searchButton.isEffectActive && !PlayerControl.LocalPlayer.Data.IsDead, Arrows, arrowSprite);
 
         deathMessageInterval -= Time.deltaTime;
         if (deathMessageInterval > 0) return;

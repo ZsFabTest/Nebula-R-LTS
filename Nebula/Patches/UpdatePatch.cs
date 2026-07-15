@@ -1,10 +1,10 @@
 ﻿using AmongUs.Data;
-using Nebula.Objects;
+using Nebula.Expansion;
 using Nebula.Roles;
 
 namespace Nebula.Patches;
 
-[HarmonyPatch(typeof (HudManager),nameof(HudManager.Start))]
+[HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]
 public static class CameraLayerPatch
 {
     static void Postfix(HudManager __instance)
@@ -159,7 +159,7 @@ public static class UpdatePatch
             if (player == PlayerControl.LocalPlayer)
             {
                 //自分自身ならロールの色にする
-                if(playerData.ShouldBeGhostRole)
+                if (playerData.ShouldBeGhostRole)
                     player.cosmetics.nameText.color = playerData.ghostRole.Color;
                 else
                     player.cosmetics.nameText.color = playerData.role.Color;
@@ -174,8 +174,8 @@ public static class UpdatePatch
             Helpers.RoleAction(player.PlayerId, (role) => { role.EditDisplayNameColor(player.PlayerId, ref color); });
             Helpers.RoleAction(PlayerControl.LocalPlayer.PlayerId, (role) => { role.EditOthersDisplayNameColor(player.PlayerId, ref color); });
             player.cosmetics.nameText.color = color;
-            if(Roles.Roles.Grenadier.flashedId.Contains(player.PlayerId))
-                if(PlayerControl.LocalPlayer.GetModData().role.side == Side.Impostor && (player.GetModData().role.side != Side.Impostor && player.GetModData().role != Roles.Roles.ZombieSidekick && player.GetModData().role != Roles.Roles.Spy))
+            if (Roles.Roles.Grenadier.flashedId.Contains(player.PlayerId))
+                if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Impostor && (player.GetModData().role.side != Side.Impostor && player.GetModData().role != Roles.Roles.ZombieSidekick && player.GetModData().role != Roles.Roles.Spy))
                     player.cosmetics.nameText.color = Color.black;
 
             bool showNameFlag = !CannotSeeNameTag(player);
@@ -207,7 +207,7 @@ public static class UpdatePatch
 
             player.cosmetics.nameText.enabled = showNameFlag;
             player.cosmetics.colorBlindText.gameObject.SetActive(showNameFlag && DataManager.Settings.Accessibility.ColorBlindMode);
-            
+
             if (player.cosmetics.colorBlindText.transform.localPosition.z > -2f)
             {
                 //色の表示をより手前に移動
@@ -368,7 +368,7 @@ public static class UpdatePatch
 
     public static void Postfix(HudManager __instance)
     {
-        Module.MetaDialog.Update(); 
+        Module.MetaDialog.Update();
         Objects.EffectCircle.Update();
 
 
@@ -521,7 +521,7 @@ public static class SetHudActivePatch
         __instance.UseButton.transform.parent.gameObject.SetActive(isActive);
         __instance.TaskPanel.gameObject.SetActive(isActive);
         __instance.roomTracker.gameObject.SetActive(isActive);
-        
+
         IVirtualJoystick virtualJoystick = __instance.joystick;
         if (virtualJoystick != null)
         {

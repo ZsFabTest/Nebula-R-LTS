@@ -1,15 +1,20 @@
-namespace Nebula.Roles.ImpostorRoles;
+using Nebula.Roles.ImpostorRoles;
 
-public class Heretic : Role{
-    public class HereticEvent : Events.LocalEvent{
+namespace Nebula.Roles.ExtremeRoles;
+
+public class Heretic : Role
+{
+    public class HereticEvent : Events.LocalEvent
+    {
         PlayerControl target;
         bool mode = false;
-        public HereticEvent(PlayerControl target,bool mode = false) : base(0.1f) { this.target = target; this.mode = mode; }
+        public HereticEvent(PlayerControl target, bool mode = false) : base(0.1f) { this.target = target; this.mode = mode; }
         public override void OnActivate()
         {
-            if(!mode) RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Madmate);
-            else{
-                if(target.GetModData().role.side == Side.Crewmate) RPCEventInvoker.AddExtraRole(target,Roles.SecondaryMadmate,0);
+            if (!mode) RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Madmate);
+            else
+            {
+                if (target.GetModData().role.side == Side.Crewmate) RPCEventInvoker.AddExtraRole(target, Roles.SecondaryMadmate, 0);
                 else
                 {
                     target.ShowFailedMurder();
@@ -24,14 +29,14 @@ public class Heretic : Role{
     private Module.CustomOption preachCooldownOption;
     private Module.CustomOption secondaryMadmateOption;
 
-    private SpriteLoader ButtonSprite = new SpriteLoader("Nebula.Resources.MadmateButton.png", 115f,"ui.button.heretic.preach");
+    private SpriteLoader ButtonSprite = new SpriteLoader("Nebula.Resources.MadmateButton.png", 115f, "ui.button.heretic.preach");
 
     public override void LoadOptionData()
     {
-        maxPreachCountOption = CreateOption(Color.white,"maxPreachCount",1f,1f,3f,1f);
-        preachCooldownOption = CreateOption(Color.white,"preachCooldown",20f,10f,30f,5f);
+        maxPreachCountOption = CreateOption(Color.white, "maxPreachCount", 1f, 1f, 3f, 1f);
+        preachCooldownOption = CreateOption(Color.white, "preachCooldown", 20f, 10f, 30f, 5f);
         preachCooldownOption.suffix = "second";
-        secondaryMadmateOption = CreateOption(Color.white,"secondaryMadmate",true);
+        secondaryMadmateOption = CreateOption(Color.white, "secondaryMadmate", true);
     }
 
     public static int leftMadmateDataId { get; set; } = 0;
@@ -46,13 +51,14 @@ public class Heretic : Role{
     private CustomButton preach;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(preach != null){
+        if (preach != null)
+        {
             preach.Destroy();
         }
         preach = new CustomButton(
             () =>
             {
-                Events.LocalEvent.Activate(new HereticEvent(Game.GameData.data.myData.currentTarget,secondaryMadmateOption.getBool()));
+                Events.LocalEvent.Activate(new HereticEvent(Game.GameData.data.myData.currentTarget, secondaryMadmateOption.getBool()));
                 hasLeftMadmate++;
                 Game.GameData.data.myData.currentTarget = null;
             },
@@ -72,7 +78,7 @@ public class Heretic : Role{
     {
         PlayerControl target = Helpers.playerById(playerId);
         if (target.GetModData().role == Roles.Madmate) displayColor = Palette.ImpostorRed;
-        else if(target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)) displayColor = Palette.ImpostorRed;
+        else if (target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)) displayColor = Palette.ImpostorRed;
     }
 
     public override void MyPlayerControlUpdate()
@@ -96,16 +102,18 @@ public class Heretic : Role{
     public override void CleanUp()
     {
         base.CleanUp();
-        if(preach != null){
+        if (preach != null)
+        {
             preach.Destroy();
             preach = null;
         }
     }
 
     public Heretic()
-        : base("Heretic","heretic",Palette.ImpostorRed,RoleCategory.Impostor,Side.Impostor,Side.Impostor,
-        Impostor.impostorSideSet,Impostor.impostorSideSet,Impostor.impostorEndSet,
-        true,VentPermission.CanUseUnlimittedVent,true,true,true){
+        : base("Heretic", "heretic", Palette.ImpostorRed, RoleCategory.Impostor, Side.Impostor, Side.Impostor,
+        Impostor.impostorSideSet, Impostor.impostorSideSet, Impostor.impostorEndSet,
+        true, VentPermission.CanUseUnlimittedVent, true, true, true)
+    {
         preach = null;
     }
 }

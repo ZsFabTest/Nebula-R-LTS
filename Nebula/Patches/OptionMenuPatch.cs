@@ -1,5 +1,4 @@
-﻿using BepInEx.Configuration;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Nebula.Patches;
 
@@ -216,7 +215,7 @@ public static class StartOptionMenuPatch
 
     static public void LoadOption()
     {
-        NebulaOption.configPictureDest = new Module.IntegerDataEntry("picutureDest",NebulaOption.configSaver, 0);
+        NebulaOption.configPictureDest = new Module.IntegerDataEntry("picutureDest", NebulaOption.configSaver, 0);
         NebulaOption.configProcessorAffinity = new Module.IntegerDataEntry("processorAffinity", NebulaOption.configSaver, 0);
         NebulaOption.configPrioritizeAmongUs = new Module.BooleanDataEntry("prioritizeAmongUs", NebulaOption.configSaver, false);
         NebulaOption.configTimeoutExtension = new Module.IntegerDataEntry("timeoutExtension", NebulaOption.configSaver, 0);
@@ -359,7 +358,7 @@ public static class StartOptionMenuPatch
         return result;
     }
 
-    private static ToggleButtonBehaviour AddButton(Vector2 pos,string name, Action onClicked, GameObject nebulaTab,GameObject toggleButtonTemplate)
+    private static ToggleButtonBehaviour AddButton(Vector2 pos, string name, Action onClicked, GameObject nebulaTab, GameObject toggleButtonTemplate)
     {
         var button = GameObject.Instantiate(toggleButtonTemplate, null);
         button.transform.SetParent(nebulaTab.transform);
@@ -396,11 +395,11 @@ public static class StartOptionMenuPatch
         GameObject toggleButtonTemplate = tabs[0].Content.transform.FindChild("MiscGroup").FindChild("StreamerModeButton").gameObject;
 
         //Snapshot
-        debugSnapshot = AddButton(new Vector2(0,0),"SnapshotButton", () =>
+        debugSnapshot = AddButton(new Vector2(0, 0), "SnapshotButton", () =>
         {
             debugSnapshot.UpdateToggleText(!debugSnapshot.onState, Language.Language.GetString("config.debug.snapshot"));
             NebulaOption.configSnapshot.Value = debugSnapshot.onState;
-        },nebulaTab,toggleButtonTemplate);
+        }, nebulaTab, toggleButtonTemplate);
 
         //OutputHash
         debugOutputHash = AddButton(new Vector2(1, 0), "OutputHashButton", () =>

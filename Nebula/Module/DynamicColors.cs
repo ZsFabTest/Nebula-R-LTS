@@ -1,10 +1,7 @@
 ﻿using BepInEx.Configuration;
+using Nebula.Expansion;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
-using System.Linq;
-using static Nebula.Module.DynamicColors;
-using static UnityEngine.UI.StencilMaterial;
-using Newtonsoft.Json.Bson;
 
 namespace Nebula.Module;
 
@@ -86,7 +83,7 @@ public static class DynamicColors
                 Color = GetColor(OriginalColor, EntryL.Value);
             }
 
-            public void SetColor(Color originalColor, float l,byte h,byte d)
+            public void SetColor(Color originalColor, float l, byte h, byte d)
             {
                 EntryR.SetValueWithoutSave(originalColor.r);
                 EntryG.SetValueWithoutSave(originalColor.g);
@@ -110,15 +107,15 @@ public static class DynamicColors
 
             public void Transcribe(CustomOriginalColor source)
             {
-                SetColor(source.OriginalColor, source.EntryL.Value,source.EntryH.Value,source.EntryD.Value);
+                SetColor(source.OriginalColor, source.EntryL.Value, source.EntryH.Value, source.EntryD.Value);
             }
 
-            public void Simulate(Color? originalColor,float? l, out Color color)
+            public void Simulate(Color? originalColor, float? l, out Color color)
             {
                 if (!originalColor.HasValue) originalColor = this.OriginalColor;
                 if (!l.HasValue) l = this.EntryL.Value;
 
-                color = GetColor(originalColor.Value,l.Value);
+                color = GetColor(originalColor.Value, l.Value);
             }
 
             static private Color GetColor(Color originalColor, float l)
@@ -152,7 +149,7 @@ public static class DynamicColors
         private ConfigEntry<byte> EntryPH;
         private ConfigEntry<byte> EntryPD;
 
-        public CustomColor(string saveCategory,float initialMul=0.6f)
+        public CustomColor(string saveCategory, float initialMul = 0.6f)
         {
             mainColor = new CustomOriginalColor(saveCategory, "main", initialMul > 0f ? 1f : 0f);
             shadowColor = new CustomOriginalColor(saveCategory, "shadow", initialMul);
@@ -167,7 +164,7 @@ public static class DynamicColors
 
         public void SetMainColor(Color originalColor, float luminosity, byte h, byte d)
         {
-            mainColor.SetColor(originalColor, luminosity,h,d);
+            mainColor.SetColor(originalColor, luminosity, h, d);
         }
 
         public void SetShadowColor(Color originalColor, float luminosity, byte h, byte d)
@@ -186,9 +183,9 @@ public static class DynamicColors
             EntryPD.Value = pd;
         }
 
-        public void Set(Color originalColor, byte ph,byte pd,float l, byte h, byte d, Color shadowColor, float sl, byte sh, byte sd, byte shadowType)
+        public void Set(Color originalColor, byte ph, byte pd, float l, byte h, byte d, Color shadowColor, float sl, byte sh, byte sd, byte shadowType)
         {
-            SetMainPosInfo(ph,pd);
+            SetMainPosInfo(ph, pd);
             SetMainColor(originalColor, l, h, d);
             SetShadowColor(shadowColor, sl, sh, sd);
             SetShadowType(shadowType);
@@ -203,11 +200,11 @@ public static class DynamicColors
             EntryPH.Value = source.EntryPH.Value;
         }
 
-        public void Simulate(Color? mainOriginalColor,float? mL,Color? shadowOriginalColor,float? sL,ref byte? h,ref byte? d,out Color mainColor,out Color shadowColor)
+        public void Simulate(Color? mainOriginalColor, float? mL, Color? shadowOriginalColor, float? sL, ref byte? h, ref byte? d, out Color mainColor, out Color shadowColor)
         {
             this.mainColor.Simulate(mainOriginalColor, mL, out mainColor);
             this.shadowColor.Simulate(shadowOriginalColor, sL, out shadowColor);
-            shadowColor = CustomShadow.allShadows[EntryS.Value].GetShadowColor(mainColor,shadowColor);
+            shadowColor = CustomShadow.allShadows[EntryS.Value].GetShadowColor(mainColor, shadowColor);
             if (!h.HasValue) h = GetMainHue();
             if (!d.HasValue) d = GetMainDistance();
         }
@@ -254,7 +251,7 @@ public static class DynamicColors
             new CustomShadow(true, (c) => c.RGBMultiplied(0.6f), 2);
         }
 
-        public Color GetShadowColor(Color mainColor,Color shadowColor)
+        public Color GetShadowColor(Color mainColor, Color shadowColor)
         {
             if (HasUniqueShadow) return shadowColor;
             return shadowColorGenerater(mainColor);
@@ -284,7 +281,7 @@ public static class DynamicColors
 
             PassiveButton.ClickSound = __instance.ColorChips[0].Button.ClickSound;
             PassiveButton.OnMouseOut = __instance.ColorChips[0].Button.OnMouseOut;
-            PassiveButton.OnClick=new Button.ButtonClickedEvent();
+            PassiveButton.OnClick = new Button.ButtonClickedEvent();
             PassiveButton.OnClick.AddListener((System.Action)(() =>
             {
                 relateButton.customColor.Transcribe(MyColor);
@@ -307,11 +304,11 @@ public static class DynamicColors
         Color mainColor, shadowColor;
         Color mainOrigColor, shadowOrigColor;
         byte h, d, sh, sd, ph, pd;
-        float l,sl;
+        float l, sl;
 
-        public void SetPosInfo(byte posHue,byte posDistance)
+        public void SetPosInfo(byte posHue, byte posDistance)
         {
-            if (customColor != null) customColor.SetMainPosInfo(posHue,posDistance);
+            if (customColor != null) customColor.SetMainPosInfo(posHue, posDistance);
             else
             {
                 ph = posHue;
@@ -352,11 +349,11 @@ public static class DynamicColors
                 {
                     Palette.PlayerColors[32] = mainColor;
                     Palette.ShadowColors[32] = shadowColor;
-                    PlayerCustomizationMenu.Instance.SetItemName(GetColorName(h,d));
+                    PlayerCustomizationMenu.Instance.SetItemName(GetColorName(h, d));
                 }
 
                 PlayerCustomizationMenu.Instance.PreviewArea.cosmetics.SetColor(32);
-                 
+
 
             }));
 
@@ -390,16 +387,16 @@ public static class DynamicColors
             SubObject.layer = LayerExpansion.GetUILayer();
         }
 
-        public ColorButton(PlayerTab __instance, GameObject layer, Vector3 position,  CustomColor? color = null)
+        public ColorButton(PlayerTab __instance, GameObject layer, Vector3 position, CustomColor? color = null)
         {
             customColor = color;
 
-            SetUp(__instance,layer,position,null);
+            SetUp(__instance, layer, position, null);
 
             Reflect();
         }
 
-        public ColorButton(PlayerTab __instance, GameObject layer, Vector3 position, System.Action? onClick, Color mainColor, Color shadowColor, Color mainOrigColor, Color shadowOrigColor, byte h, byte d, float l, byte sh,byte sd,float sl)
+        public ColorButton(PlayerTab __instance, GameObject layer, Vector3 position, System.Action? onClick, Color mainColor, Color shadowColor, Color mainOrigColor, Color shadowOrigColor, byte h, byte d, float l, byte sh, byte sd, float sl)
         {
             customColor = null;
 
@@ -434,7 +431,7 @@ public static class DynamicColors
             }
         }
 
-        public void Reflect(Color mainColor,Color shadowColor, Color mainOrigColor,Color shadowOrigColor,byte h, byte d, float l,byte sh, byte sd,float sl)
+        public void Reflect(Color mainColor, Color shadowColor, Color mainOrigColor, Color shadowOrigColor, byte h, byte d, float l, byte sh, byte sd, float sl)
         {
             BaseRenderer.color = mainColor;
             ShadowRenderer.color = shadowColor;
@@ -455,7 +452,7 @@ public static class DynamicColors
     }
 
     static public CustomColor MyColor;
-    static public Action? MyColorChangedAction=null;
+    static public Action? MyColorChangedAction = null;
     static private CustomColor[] SaveColor;
     static private CustomColor[] SharedColor;
     static private Tuple<Color, Color>[] VanillaColor;
@@ -483,7 +480,7 @@ public static class DynamicColors
         return Language.Language.GetString("color." + h + "." + d);
     }
 
-   
+
 
     static public void Load()
     {
@@ -501,7 +498,7 @@ public static class DynamicColors
         //Camo Color
         PlayerColors[31] = PlayerColors[6];
         //Preview Color
-//      PlayerColors[32]
+        //      PlayerColors[32]
 
         Palette.PlayerColors = PlayerColors.ToArray();
         Palette.ShadowColors = ShadowColors.ToArray();
@@ -524,7 +521,7 @@ public static class DynamicColors
     //他人の色座標を覚えておく
     static public Dictionary<int, Tuple<byte, byte>> ColorPosDic = new();
 
-    static public void SetOthersColor(byte hue, byte dis, byte posHue,byte posDis,Color color, Color shadowColor, byte playerId)
+    static public void SetOthersColor(byte hue, byte dis, byte posHue, byte posDis, Color color, Color shadowColor, byte playerId)
     {
         ColorNameDic[(int)playerId] = new Tuple<byte, byte>(hue, dis);
         ColorPosDic[(int)playerId] = new Tuple<byte, byte>(posHue, posDis);
@@ -557,7 +554,7 @@ public static class DynamicColors
     [HarmonyPatch(typeof(CosmeticsLayer), nameof(CosmeticsLayer.GetColorBlindText))]
     private class CosmeticsLayerColorStringPatch
     {
-        public static bool Prefix(CosmeticsLayer __instance,ref string __result)
+        public static bool Prefix(CosmeticsLayer __instance, ref string __result)
         {
             int color = __instance.bodyMatProperties.ColorId;
 
@@ -583,7 +580,7 @@ public static class DynamicColors
                     afterSpace = array[i] == ' ';
                 }
             }
-            
+
             __result = new string(array);
 
             return false;
@@ -594,7 +591,7 @@ public static class DynamicColors
     static private SpriteRenderer PaletteRenderer = null;
     static private CircleCollider2D PaletteCollider = null;
 
-    
+
 
     static private GameObject LPaletteObject = null;
     static private SpriteRenderer LPaletteRenderer = null;
@@ -602,7 +599,7 @@ public static class DynamicColors
 
     static private SpriteRenderer BrightnessRenderer = null;
 
-    private static void DetectColor(out Color? detectedColor,out byte? detectedH, out byte? detectedD, out float? detectedL)
+    private static void DetectColor(out Color? detectedColor, out byte? detectedH, out byte? detectedD, out float? detectedL)
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - PaletteObject.transform.position;
         float dis = Mathf.Sqrt(pos.x * pos.x + pos.y * pos.y);
@@ -666,9 +663,9 @@ public static class DynamicColors
                 Color? c;
                 byte? h, d;
                 float? l;
-                DetectColor(out c,out h,out d,out l);
+                DetectColor(out c, out h, out d, out l);
 
-                if(c.HasValue || l.HasValue)
+                if (c.HasValue || l.HasValue)
                 {
                     Color main, shadow;
                     MyColor.Simulate(EditMainColorFlag ? c : null, EditMainColorFlag ? l : null, EditMainColorFlag ? null : c, EditMainColorFlag ? null : l, ref h, ref d, out main, out shadow);
@@ -834,7 +831,7 @@ public static class DynamicColors
                     GameObject selectedObject = new GameObject("Selected");
                     selectedObject.layer = LayerExpansion.GetUILayer();
                     selectedObject.transform.SetParent(ShadowVariations[i].ButtonObject.transform);
-                    selectedObject.transform.localPosition = new Vector3(0,0,-2f);
+                    selectedObject.transform.localPosition = new Vector3(0, 0, -2f);
                     ShadowVariationsSelected[i] = selectedObject.AddComponent<SpriteRenderer>();
                     ShadowVariationsSelected[i].sprite = SelectedSprite[0].GetSprite();
                 }
@@ -883,7 +880,7 @@ public static class DynamicColors
                 {
                     int index = i;
                     SharedVariations[i] =
-                        new ColorButton(__instance, VanillaLayer, new Vector3(0.2f + (float)(i % 6) * 0.8f, -0.8f - 0.5f * (float)(i / 6), -75f),SharedColor[i]);
+                        new ColorButton(__instance, VanillaLayer, new Vector3(0.2f + (float)(i % 6) * 0.8f, -0.8f - 0.5f * (float)(i / 6), -75f), SharedColor[i]);
                     SharedVariations[i].ButtonObject.SetActive(false);
                 }
 
@@ -906,19 +903,19 @@ public static class DynamicColors
                     Color? c;
                     byte? h, d;
                     float? l;
-                    DetectColor(out c,out h,out d,out l);
+                    DetectColor(out c, out h, out d, out l);
                     if (!CustomShadow.allShadows[MyColor.GetShadowType()]!.HasUniqueShadow)
                     {
                         MyColor.SetMainColor(c!.Value, MyColor.GetMainLuminosity(), h!.Value, d!.Value);
-                        MyColor.SetShadowColor(CustomShadow.allShadows[MyColor.GetShadowType()]!.GetShadowColor(MyColor.GetMainColor(), MyColor.GetShadowColor()), 1f,0,0);
-                        MyColor.SetMainPosInfo(h!.Value,d!.Value);
+                        MyColor.SetShadowColor(CustomShadow.allShadows[MyColor.GetShadowType()]!.GetShadowColor(MyColor.GetMainColor(), MyColor.GetShadowColor()), 1f, 0, 0);
+                        MyColor.SetMainPosInfo(h!.Value, d!.Value);
                     }
                     else
                     {
                         if (EditMainColorFlag)
                         {
                             MyColor.SetMainColor(c!.Value, MyColor.GetMainLuminosity(), h!.Value, d!.Value);
-                            MyColor.SetMainPosInfo(h!.Value,d!.Value);
+                            MyColor.SetMainPosInfo(h!.Value, d!.Value);
                         }
                         else
                             MyColor.SetShadowColor(c!.Value, MyColor.GetShadowLuminosity(), h!.Value, d!.Value);
@@ -1006,10 +1003,10 @@ public static class DynamicColors
                     Palette.PlayerColors[AmongUs.Data.DataManager.Player.Customization.Color] = MyColor.GetMainColor();
                     Palette.ShadowColors[AmongUs.Data.DataManager.Player.Customization.Color] = MyColor.GetShadowColor();
 
-                    if (AmongUsClient.Instance.AmConnected)RPCEventInvoker.SetMyColor();
-                    
+                    if (AmongUsClient.Instance.AmConnected) RPCEventInvoker.SetMyColor();
 
-                    float l = (EditMainColorFlag ? MyColor.GetMainLuminosity(): MyColor.GetShadowLuminosity()) * 0.85f + 0.15f;
+
+                    float l = (EditMainColorFlag ? MyColor.GetMainLuminosity() : MyColor.GetShadowLuminosity()) * 0.85f + 0.15f;
                     PaletteRenderer.color = new Color(l, l, l);
 
                     LPaletteRenderer.color = EditMainColorFlag ? MyColor.GetMainOriginalColor() : MyColor.GetShadowOriginalColor();
@@ -1022,12 +1019,12 @@ public static class DynamicColors
                     l = ((EditMainColorFlag ? MyColor.GetMainLuminosity() : MyColor.GetShadowLuminosity()) - 0.5f) * 2f;
                     LTargetObject.transform.localPosition = new Vector3(0f, l * 1.35f, -200f);
 
-                    for(int i=0;i< ShadowVariations.Length; i++)
+                    for (int i = 0; i < ShadowVariations.Length; i++)
                     {
-                        ShadowVariations[i].Reflect(MyColor.GetMainColor(),CustomShadow.allShadows[i].GetShadowColor(MyColor.GetMainColor(),MyColor.GetShadowColor()),
-                            MyColor.GetMainOriginalColor(),MyColor.GetShadowOriginalColor(),
-                            MyColor.GetMainHue(),MyColor.GetMainDistance(), MyColor.GetMainLuminosity(), MyColor.GetShadowHue(), MyColor.GetShadowDistance(),MyColor.GetShadowLuminosity());
-                        
+                        ShadowVariations[i].Reflect(MyColor.GetMainColor(), CustomShadow.allShadows[i].GetShadowColor(MyColor.GetMainColor(), MyColor.GetShadowColor()),
+                            MyColor.GetMainOriginalColor(), MyColor.GetShadowOriginalColor(),
+                            MyColor.GetMainHue(), MyColor.GetMainDistance(), MyColor.GetMainLuminosity(), MyColor.GetShadowHue(), MyColor.GetShadowDistance(), MyColor.GetShadowLuminosity());
+
                         ShadowVariationsSelected[i].gameObject.SetActive(i == MyColor.GetShadowType());
                         if (i == MyColor.GetShadowType() && CustomShadow.allShadows[i].HasUniqueShadow)
                         {
@@ -1038,7 +1035,8 @@ public static class DynamicColors
                 MyColorChangedAction();
                 UpdateSharedColor();
 
-                if (AmongUsClient.Instance.AmConnected) {
+                if (AmongUsClient.Instance.AmConnected)
+                {
                     GameObject shareButton = GameObject.Instantiate(PlayerCustomizationMenu.Instance.equipButton);
                     shareButton.transform.SetParent(__instance.transform);
                     shareButton.transform.localPosition = new Vector3(6.069f, -1.92f, -1f);
@@ -1052,12 +1050,13 @@ public static class DynamicColors
                     shareIconRenderer.layer = LayerExpansion.GetUILayer();
                     shareIconRenderer.transform.SetParent(shareButton.transform);
                     shareIconRenderer.transform.localPosition = new Vector3(0, 0, -0.5f);
-                    shareIconRenderer.transform.localScale = new Vector3(0.85f,0.85f,1f);
+                    shareIconRenderer.transform.localScale = new Vector3(0.85f, 0.85f, 1f);
                     shareIconRenderer.AddComponent<SpriteRenderer>().sprite = ShareIconSprite.GetSprite();
 
                     var sButton = shareButton.GetComponent<PassiveButton>();
                     sButton.OnClick = new Button.ButtonClickedEvent();
-                    sButton.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => {
+                    sButton.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+                    {
                         RPCEventInvoker.ShareColor(MyColor);
                     }));
 
@@ -1072,9 +1071,9 @@ public static class DynamicColors
 
     static public void UpdateSharedColor()
     {
-        for(int i = 0; i < 6; i++) 
+        for (int i = 0; i < 6; i++)
         {
-            if(SharedColor[i].GetMainColor().r>0f|| SharedColor[i].GetMainColor().g > 0f|| SharedColor[i].GetMainColor().b > 0f)
+            if (SharedColor[i].GetMainColor().r > 0f || SharedColor[i].GetMainColor().g > 0f || SharedColor[i].GetMainColor().b > 0f)
             {
                 SharedVariations[i].ButtonObject.SetActive(true);
                 SharedVariations[i].Reflect();
@@ -1086,13 +1085,13 @@ public static class DynamicColors
         }
     }
 
-    static public void ReceiveSharedColor(byte shadowType,byte mainPosHue,byte mainPosDis,Color mainColor,float mainLum, byte mainHue,byte mainDis,Color shadowColor,float shadowLum,byte shadowHue,byte shadowDis)
+    static public void ReceiveSharedColor(byte shadowType, byte mainPosHue, byte mainPosDis, Color mainColor, float mainLum, byte mainHue, byte mainDis, Color shadowColor, float shadowLum, byte shadowHue, byte shadowDis)
     {
-        for(int i = 5; i >= 1; i--)
+        for (int i = 5; i >= 1; i--)
         {
             SharedColor[i].Transcribe(SharedColor[i - 1]);
         }
-        SharedColor[0].Set(mainColor, mainPosHue,mainPosDis,mainLum, mainHue, mainDis, shadowColor, shadowLum, shadowHue, shadowDis, shadowType);
+        SharedColor[0].Set(mainColor, mainPosHue, mainPosDis, mainLum, mainHue, mainDis, shadowColor, shadowLum, shadowHue, shadowDis, shadowType);
 
         if (PlayerCustomizationMenu.Instance)
         {

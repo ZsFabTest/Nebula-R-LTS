@@ -2,7 +2,7 @@ namespace Nebula.Roles.BattleRoles;
 
 public class YellowTeam : Role
 {
-    public static Color RoleColor = new(1f,242f / 255f,0f);
+    public static Color RoleColor = new(1f, 242f / 255f, 0f);
 
     private bool equipRifleFlag;
 
@@ -199,11 +199,13 @@ public class YellowTeam : Role
         }
     }
 
-    public override void EditOthersDisplayNameColor(byte playerId,ref Color displayColor){
-        if(Helpers.playerById(playerId).GetModData().role.side == Side.YellowTeam) displayColor = RoleColor;
+    public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        if (Helpers.playerById(playerId).GetModData().role.side == Side.YellowTeam) displayColor = RoleColor;
     }
 
-    public override void OnMurdered(byte murderId){
+    public override void OnMurdered(byte murderId)
+    {
         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
     }
 

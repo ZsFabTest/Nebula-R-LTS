@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Ghost;
+
 public enum NoiseDestination
 {
     SabotageMood,

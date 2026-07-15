@@ -1,6 +1,4 @@
-﻿using InnerNet;
-using Nebula.Module;
-using static Nebula.Tasks.OpportunistTask;
+﻿using Nebula.Module;
 
 namespace Nebula.Tasks
 {
@@ -31,7 +29,8 @@ namespace Nebula.Tasks
                     button.OnClick.RemoveAllListeners();
                     int index = i;
                     GameObject? nextObj = i != 0 ? f.transform.GetChild(i - 1).gameObject : null;
-                    button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>{
+                    button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+                    {
                         if (amClosing == CloseState.Closing) return;
 
                         SoundPlayer.PlaySound(AudioAsset.SpectreFried).pitch = 1.0f + (float)NebulaPlugin.rnd.NextDouble() * 0.3f;
@@ -65,10 +64,11 @@ namespace Nebula.Tasks
     }
 
 
-    public class SpectreFriedTask : NebulaPlayerTask { 
+    public class SpectreFriedTask : NebulaPlayerTask
+    {
 
         static Minigame? NebulaMinigamePrefab = null;
-    
+
         static SpectreFriedTask()
         {
             ClassInjector.RegisterTypeInIl2Cpp<SpectreFriedTask>();
@@ -84,7 +84,7 @@ namespace Nebula.Tasks
             }
             else if (taskStep > 0)
             {
-                sb.Append("<color=#FFFF00FF>"); 
+                sb.Append("<color=#FFFF00FF>");
                 flag = true;
             }
 
@@ -119,15 +119,16 @@ namespace Nebula.Tasks
 
         public override void __Initialize()
         {
-            
+
             taskStep = 0;
-            
+
             MaxStep = (int)Roles.Roles.Spectre.numOfTheFriedRequireToWinOption.getFloat();
 
             int count;
 
             count = 0;
-            Roles.Roles.Spectre.friedTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) => {
+            Roles.Roles.Spectre.friedTaskSetting.ForAllValidLoc(GameOptionsManager.Instance.currentNormalGameOptions.MapId, (data) =>
+            {
                 count++;
             });
             if (count < MaxStep) MaxStep = count;
@@ -135,16 +136,18 @@ namespace Nebula.Tasks
             LocationDirty = true;
             HasLocation = true;
 
-            if (NebulaMinigamePrefab == null) {
+            if (NebulaMinigamePrefab == null)
+            {
                 NebulaMinigamePrefab = AssetLoader.SpectreFriedMinigamePrefab.gameObject.AddComponent<SpectreFriedMinigame>();
 
             }
             MinigamePrefab = NebulaMinigamePrefab;
         }
 
-        public override bool __ValidConsole(Console console) {
+        public override bool __ValidConsole(Console console)
+        {
             if (PlayerControl.LocalPlayer.Data.IsDead) return false;
-            return console.gameObject.name.StartsWith("NoS-SpectreFried"); 
+            return console.gameObject.name.StartsWith("NoS-SpectreFried");
         }
 
         public override bool __IsCompleted()

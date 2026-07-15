@@ -1,5 +1,4 @@
 ﻿using Nebula.Module;
-using UnityEngine;
 
 namespace Nebula.Utilities;
 
@@ -24,7 +23,7 @@ public class CustumizableSpriteLoader : ISpriteLoader
         return originalLoader.GetSprite();
     }
 
-    public CustumizableSpriteLoader(ISpriteLoader original,IOptionalSpriteLoader optional)
+    public CustumizableSpriteLoader(ISpriteLoader original, IOptionalSpriteLoader optional)
     {
         originalLoader = original;
         optionalLoader = optional;
@@ -38,7 +37,7 @@ public class AssetSpriteLoader : ISpriteLoader
     string address;
     float pixelsPerUnit;
 
-    public AssetSpriteLoader(NebulaAssetBundle assetBundle,string address,float pixelsPerUnit=100f)
+    public AssetSpriteLoader(NebulaAssetBundle assetBundle, string address, float pixelsPerUnit = 100f)
     {
         this.assetBundle = assetBundle;
         this.address = address;
@@ -143,7 +142,7 @@ public class SpriteLoader : ISpriteLoader
         {
             if (textureId != null && (textureAsset != null || TexturePack.LoadAsset(textureId, null, ref textureAsset)))
                 sprite = textureAsset.staticSprite;
-            else if(address!=null)
+            else if (address != null)
                 sprite = Helpers.loadSpriteFromResources(address, pixelsPerUnit);
         }
         return sprite;
@@ -159,7 +158,7 @@ public class DividedSpriteLoader : ISpriteLoader
     int x, y;
     int sizeX, sizeY;
 
-    public DividedSpriteLoader(string address, float pixelsPerUnit,int x,int y)
+    public DividedSpriteLoader(string address, float pixelsPerUnit, int x, int y)
     {
         this.address = address;
         this.pixelsPerUnit = pixelsPerUnit;
@@ -172,7 +171,8 @@ public class DividedSpriteLoader : ISpriteLoader
 
     public Sprite GetSprite(int index)
     {
-        if (!texture) {
+        if (!texture)
+        {
             texture = Helpers.loadTextureFromResources(address);
             sizeX = texture.width / x;
             sizeY = texture.height / y;

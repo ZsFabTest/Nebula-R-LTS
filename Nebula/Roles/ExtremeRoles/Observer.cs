@@ -1,4 +1,6 @@
-﻿namespace Nebula.Roles.CrewmateRoles;
+﻿using Nebula.Roles.CrewmateRoles;
+
+namespace Nebula.Roles.ExtremeRoles;
 
 public class Observer : Role
 {
@@ -33,7 +35,7 @@ public class Observer : Role
 
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(hideButton != null)
+        if (hideButton != null)
         {
             hideButton.Destroy();
         }
@@ -73,15 +75,17 @@ public class Observer : Role
         cameraButton = new CustomButton(
             () =>
             {
-                if(watchingTarget == null){
+                if (watchingTarget == null)
+                {
                     watchingTarget = Game.GameData.data.myData.currentTarget;
                     watchingTarget.ShowFailedMurder();
                     cameraButton.Sprite = monitorButtonSprite.GetSprite();
                     cameraButton.SetLabel("button.label.monitor");
                     return;
                 }
-                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer){
-                    HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);                
+                if (HudManager.Instance.PlayerCam.Target != PlayerControl.LocalPlayer)
+                {
+                    HudManager.Instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
                     watchingTarget = null;
                     cameraButton.Sprite = MarkButtonSprite.GetSprite();
                     cameraButton.SetLabel("button.label.mark");
@@ -102,23 +106,25 @@ public class Observer : Role
 
     public override void CleanUp()
     {
-        if(hideButton != null)
+        if (hideButton != null)
         {
             hideButton.Destroy();
             hideButton = null;
         }
-        if(cameraButton != null)
+        if (cameraButton != null)
         {
             cameraButton.Destroy();
             cameraButton = null;
         }
     }
 
-    public override void MyPlayerControlUpdate(){
-        foreach(var p in PlayerControl.AllPlayerControls){
-            if(!p.Data.IsDead) Patches.PlayerControlPatch.SetPlayerOutline(p,RoleColor);
+    public override void MyPlayerControlUpdate()
+    {
+        foreach (var p in PlayerControl.AllPlayerControls)
+        {
+            if (!p.Data.IsDead) Patches.PlayerControlPatch.SetPlayerOutline(p, RoleColor);
         }
-        RPCEventInvoker.UpdatePlayerVisibility(PlayerControl.LocalPlayer.PlayerId,true);
+        RPCEventInvoker.UpdatePlayerVisibility(PlayerControl.LocalPlayer.PlayerId, true);
         Game.GameData.data.myData.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
     }
 

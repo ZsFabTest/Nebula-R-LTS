@@ -1,28 +1,32 @@
 namespace Nebula.Roles.VirusCrisisRoles;
 
-public class Gunner : Role{
+public class Gunner : Role
+{
     private Module.CustomOption killCooldown;
     public Module.CustomOption neutrallySpawnCount;
     public Module.CustomOption leftCount;
 
-    public override bool IsSpawnable(){
+    public override bool IsSpawnable()
+    {
         return CustomOptionHolder.gameModeNormal.getSelection() == 3;
     }
 
     private SpriteLoader killButtonSprite = new SpriteLoader("Nebula.Resources.SheriffKillButton.png", 115f, "ui.button.sheriff.kill");
 
-    public override void LoadOptionData(){
+    public override void LoadOptionData()
+    {
         TopOption.tab = Module.CustomOptionTab.CrewmateRoles;
         TopOption.AddCustomPrerequisite(() => { return CustomOptionHolder.gameModeNormal.getSelection() == 3; });
-        killCooldown = CreateOption(Color.white,"killcooldown",25f,2.5f,45f,2.5f);
+        killCooldown = CreateOption(Color.white, "killcooldown", 25f, 2.5f, 45f, 2.5f);
         killCooldown.suffix = "second";
-        neutrallySpawnCount = CreateOption(Color.white,"neutrallySpawnCount",1f,0f,15f,1f);
-        leftCount = CreateOption(Color.white,"leftCount",1f,1f,5f,1f);
+        neutrallySpawnCount = CreateOption(Color.white, "neutrallySpawnCount", 1f, 0f, 15f, 1f);
+        leftCount = CreateOption(Color.white, "leftCount", 1f, 1f, 5f, 1f);
     }
 
     private int left;
 
-    public override void Initialize(PlayerControl __instance){
+    public override void Initialize(PlayerControl __instance)
+    {
         left = (int)leftCount.getFloat();
     }
 
@@ -30,7 +34,7 @@ public class Gunner : Role{
     private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)
     {
-        if(killButton != null)
+        if (killButton != null)
         {
             killButton.Destroy();
         }
@@ -41,7 +45,7 @@ public class Gunner : Role{
                 killButton.Timer = killButton.MaxTimer;
                 left--;
                 killButton.UsesText.text = left.ToString();
-                RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer,Game.GameData.data.myData.currentTarget);
+                RPCEventInvoker.FakeKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget);
                 Game.GameData.data.myData.currentTarget = null;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && left > 0; },
@@ -58,15 +62,18 @@ public class Gunner : Role{
         killButton.UsesText.text = left.ToString();
     }
 
-    public override void CleanUp(){
-        if(killButton != null){
+    public override void CleanUp()
+    {
+        if (killButton != null)
+        {
             killButton.Destroy();
             killButton = null;
         }
         left = 0;
     }
 
-    public override void EditDisplayNameColor(byte playerId,ref Color displayColor){
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+    {
         displayColor = Color;
     }
 
@@ -77,13 +84,15 @@ public class Gunner : Role{
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
     }
 
-    public override void OnDied(){
+    public override void OnDied()
+    {
         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
     }
 
-    public Gunner() : base("Gunner","gunner",CrewmateRoles.Sheriff.RoleColor,RoleCategory.Neutral,Side.Survival,Side.Survival,
-         new HashSet<Side>() { Side.Survival },new HashSet<Side>() { Side.Survival },new HashSet<Patches.EndCondition>() { Patches.EndCondition.SurvivalWin },
-         true,VentPermission.CanNotUse,false,false,false){
+    public Gunner() : base("Gunner", "gunner", CrewmateRoles.Sheriff.RoleColor, RoleCategory.Neutral, Side.Survival, Side.Survival,
+         new HashSet<Side>() { Side.Survival }, new HashSet<Side>() { Side.Survival }, new HashSet<Patches.EndCondition>() { Patches.EndCondition.SurvivalWin },
+         true, VentPermission.CanNotUse, false, false, false)
+    {
         Allocation = AllocationType.None;
         ValidGamemode = Module.CustomGameMode.VirusCrisis;
         canReport = false;

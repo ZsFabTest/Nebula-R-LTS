@@ -8,9 +8,9 @@ public class Arrow
     private Vector3 oldTarget;
     private bool smallenNearArrow;
 
-    
+
     static private Sprite sprite;
-    
+
     public static Sprite getSprite()
     {
 
@@ -20,7 +20,7 @@ public class Arrow
     }
 
 
-    public Arrow(Color color,bool smallenNearArrow=true,Sprite? sprite=null)
+    public Arrow(Color color, bool smallenNearArrow = true, Sprite? sprite = null)
     {
         arrow = new GameObject("Arrow");
         arrow.layer = 5;

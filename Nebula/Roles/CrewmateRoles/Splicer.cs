@@ -1,9 +1,5 @@
 ﻿using Nebula.Map;
 using Nebula.Module;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
 
 namespace Nebula.Roles.CrewmateRoles;
 
@@ -35,7 +31,7 @@ public class Splicer : Role
     private void TryWarp()
     {
         float angle = PlayerControl.LocalPlayer.FlashlightAngle;
-        Vector2 vector=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle));
+        Vector2 vector = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         Vector2 truePos = PlayerControl.LocalPlayer.GetTruePosition();
 
         bool result = false;
@@ -53,7 +49,7 @@ public class Splicer : Role
 
         if (!result) return;
 
-        float d=minDistance;
+        float d = minDistance;
         var data = MapData.GetCurrentMapData();
         Vector2 tempVec;
         while (true)
@@ -82,7 +78,7 @@ public class Splicer : Role
         WarpButton = new CustomButton(
             () =>
             {
-                RPCEventInvoker.EmitSpeedFactor(PlayerControl.LocalPlayer,new Game.SpeedFactor(0,3f,0f,false));
+                RPCEventInvoker.EmitSpeedFactor(PlayerControl.LocalPlayer, new Game.SpeedFactor(0, 3f, 0f, false));
                 PlayerControl.LocalPlayer.lightSource.StartCoroutine(RoleSystem.WarpSystem.CoOrient(PlayerControl.LocalPlayer.lightSource, 0.6f, 2.4f,
                     (p) =>
                     {
@@ -100,7 +96,8 @@ public class Splicer : Role
             Module.NebulaInputManager.abilityInput.keyCode,
             true,
         3.1f,
-        () => {
+        () =>
+        {
             WarpButton.Timer = WarpButton.MaxTimer;
         }, "button.label.warp"
         ).SetTimer(CustomOptionHolder.InitialAbilityCoolDownOption.getFloat());

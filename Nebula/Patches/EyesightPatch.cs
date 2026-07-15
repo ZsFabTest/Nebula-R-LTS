@@ -1,6 +1,4 @@
-﻿using Hazel;
-
-namespace Nebula.Patches;
+﻿namespace Nebula.Patches;
 
 public static class BeginHubHelper
 {
@@ -123,7 +121,7 @@ class EyesightPatch
     {
         try
         {
-            if (Game.GameData.data != null && Game.GameData.data.myData.CanControlOtherPlayers && Objects.PlayerList.Instance!=null && Objects.PlayerList.Instance.IsOpen && ObserverTarget!=0)
+            if (Game.GameData.data != null && Game.GameData.data.myData.CanControlOtherPlayers && Objects.PlayerList.Instance != null && Objects.PlayerList.Instance.IsOpen && ObserverTarget != 0)
             {
                 var p = PlayerControl.AllPlayerControls[ObserverTarget];
                 p.MyPhysics.SetNormalizedVelocity(__instance.joystick.DeltaL);

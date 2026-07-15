@@ -1,4 +1,5 @@
-namespace Nebula.Roles.NeutralRoles{
+namespace Nebula.Roles.ExtremeRoles
+{
     public class OraclesCat : Role
     {
         private static CustomButton killButton;
@@ -25,7 +26,7 @@ namespace Nebula.Roles.NeutralRoles{
 
         public override void ButtonInitialize(HudManager __instance)
         {
-            if(killButton != null)
+            if (killButton != null)
             {
                 killButton.Destroy();
             }
@@ -62,7 +63,7 @@ namespace Nebula.Roles.NeutralRoles{
             }
         }
 
-        public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.OracleN.EditDisplayNameColor(playerId,ref displayColor);
+        public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.OracleN.EditDisplayNameColor(playerId, ref displayColor);
         /*
         {
             if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Jackal)

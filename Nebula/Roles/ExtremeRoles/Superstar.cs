@@ -1,11 +1,12 @@
-namespace Nebula.Roles.ExtraRoles;
+namespace Nebula.Roles.ExtremeRoles;
 
-public class Superstar : ExtraRole{
-    public static Color RoleColor = new Color(255f / 255f,242f / 255f,0f / 255f);
+public class Superstar : ExtraRole
+{
+    public static Color RoleColor = new Color(255f / 255f, 242f / 255f, 0f / 255f);
 
     public override void EditDisplayNameForcely(byte playerId, ref string displayName)
     {
-        displayName += Helpers.cs(RoleColor,"☆");
+        displayName += Helpers.cs(RoleColor, "☆");
     }
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
@@ -17,8 +18,9 @@ public class Superstar : ExtraRole{
         return option;
     }
 
-    public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag){
-        EditDisplayNameForcely(playerId,ref displayName);
+    public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
+    {
+        EditDisplayNameForcely(playerId, ref displayName);
     }
 
     private void _sub_Assignment(Patches.AssignMap assignMap, List<byte> players, int count)
@@ -69,6 +71,7 @@ public class Superstar : ExtraRole{
     }
 
     public Superstar()
-         : base("Superstar","superstar",RoleColor,0){
+         : base("Superstar", "superstar", RoleColor, 0)
+    {
     }
 }
