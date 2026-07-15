@@ -1886,7 +1886,7 @@ static class RPCEvents
         }
         if (Roles.Roles.Grenadier.flashedId.Count <= 0)
         {
-            LocalEvent.Activate(new Roles.ImpostorRoles.FlashEndEvent(duration));
+            LocalEvent.Activate(new FlashEndEvent(duration));
             Schedule.RegisterPreMeetingAction(() =>
             {
                 Roles.Roles.Grenadier.flashedId.Clear();

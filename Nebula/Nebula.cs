@@ -128,3 +128,21 @@ public static class IsBannedPatch
         __result = false;
     }
 }
+
+[HarmonyPatch(typeof(AuthManager._CoConnect_d__4), nameof(AuthManager._CoConnect_d__4.MoveNext))]
+public static class DoNothingInConnect
+{
+    public static bool Prefix(AuthManager __instance)
+    {
+        return false;
+    }
+}
+
+[HarmonyPatch(typeof(AuthManager._CoWaitForNonce_d__6), nameof(AuthManager._CoWaitForNonce_d__6.MoveNext))]
+public static class DontWaitForNonce
+{
+    public static bool Prefix(AuthManager __instance)
+    {
+        return false;
+    }
+}
