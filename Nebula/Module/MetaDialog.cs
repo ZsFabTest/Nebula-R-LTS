@@ -189,8 +189,8 @@ public class MetaDialog : MetaScreen
 
     static public MSDesigner OpenRolesDialog(Predicate<Roles.Role> roleCondition, int page, int rolesPerPage, Action<Roles.Role> onClick)
     {
-        var designer = Module.MetaDialog.OpenDialog(new Vector2(10.5f, 5.4f), "Roles");
-        var designers = designer.Split(6, 0.14f);
+        var designer = Module.MetaDialog.OpenDialog(new Vector2(9.2f, 5.4f), "Roles");
+        var designers = designer.Split(6, 0.10f);
 
         int skip = page * rolesPerPage;
         int index = 0;
@@ -199,19 +199,11 @@ public class MetaDialog : MetaScreen
         {
             if (!roleCondition(role)) continue;
 
-            if (skip > 0)
-            {
-                skip--;
-                continue;
-            }
-            if (index >= rolesPerPage)
-            {
-                hasNext = true;
-                break;
-            }
+            if (skip > 0) { skip--; continue; }
+            if (index >= rolesPerPage) { hasNext = true; break; }
 
             var r = role;
-            var button = designers[index % 6].AddButton(new Vector2(1.65f, 0.36f), role.Name, Helpers.cs(role.Color, Language.Language.GetString("role." + role.LocalizeName + ".name")));
+            var button = designers[index % 6].AddButton(new Vector2(1.4f, 0.36f), role.Name, Helpers.cs(role.Color, Language.Language.GetString("role." + role.LocalizeName + ".name")));
             button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => onClick(r)));
             var text = button.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshPro>();
             text.fontStyle = TMPro.FontStyles.Bold;
@@ -221,7 +213,6 @@ public class MetaDialog : MetaScreen
         }
 
         designer.CustomUse(designers[0].Used);
-
         designer.AddPageTopic(page, page > 0, hasNext, (p) =>
         {
             designer.screen.Close();
