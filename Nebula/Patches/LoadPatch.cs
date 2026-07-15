@@ -1,4 +1,5 @@
-﻿using Nebula.Rpc;
+﻿using Nebula.Module;
+using Nebula.Rpc;
 using UnityEngine.SceneManagement;
 
 namespace Nebula.Patches;
@@ -98,6 +99,11 @@ public class LoadPatch
             // Harmonyパッチ全てを適用する
             loadText.text = "Loading Harmony Patch";
             NebulaPlugin.Instance.Harmony.PatchAll();
+            yield return new WaitForSeconds(0.5f);
+
+            //检查模组更新情况
+            loadText.text = "Checking for NoS Update";
+            NebulaPlugin.Instance.AddComponent<ModUpdater>();
             yield return new WaitForSeconds(0.5f);
 
             //RPC情報を読み込む

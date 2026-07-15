@@ -1,10 +1,12 @@
-﻿using System.IO.Compression;
+﻿using System.Globalization;
+using System.IO.Compression;
 using System.Reflection;
 using System.Text;
 using Hazel;
 using InnerNet;
 using Nebula.Patches;
 using TMPro;
+using UnityEngine.Networking;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -1110,5 +1112,27 @@ public static class Helpers
     public static void Destroy(this UnityEngine.Object obj)
     {
         UnityEngine.Object.Destroy(obj);
+    }
+
+    public static bool isChinese()
+    {
+        try
+        {
+            var name = CultureInfo.CurrentUICulture.Name;
+            if (name.StartsWith("zh")) return true;
+            return false;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public static byte[] GetUnstrippedData(this DownloadHandler dh)
+    {
+        var nativeData = dh.GetNativeData();
+        if (nativeData.IsCreated)
+            return nativeData.ToArray();
+        return null;
     }
 }
