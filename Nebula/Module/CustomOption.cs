@@ -1023,7 +1023,7 @@ class GameOptionsMenuStartPatch
         return null;
     }
 
-    internal static void OpenConfigTopOptionScreen(GameObject leftTabScreen)
+    internal static void OpenConfigTopOptionScreen(GameObject leftTabScreen, int skip = 0)
     {
         var designer = MetaScreen.OpenScreen(leftTabScreen, new Vector2(5.4f, 6f), new Vector2(3.7f, 0f));
         var monitor = MetaScreen.OpenScreen(designer.screen.screen, new Vector2(3.2f, 6f), new Vector2(4.12f, 0f));
@@ -1033,6 +1033,18 @@ class GameOptionsMenuStartPatch
         var gamemode = CustomOptionHolder.GetCustomGameMode();
         List<MSButton> buttons = new List<MSButton>();
         List<CustomOption> options = new List<CustomOption>();
+
+        int leftSkip = skip;
+        bool canIncrease = false;
+
+        if (skip > 0)
+            designer.AddTopic(new MSButton(0.4f, 0.4f, "∧", TMPro.FontStyles.Bold, () =>
+            {
+                designer.screen.Close();
+                OpenConfigTopOptionScreen(leftTabScreen, skip - 1);
+            }));
+        else
+            designer.AddTopic(new MSMargin(0.4f));
 
         void SetUpButtons()
         {
@@ -1088,8 +1100,40 @@ class GameOptionsMenuStartPatch
             options.Clear();
         }
 
+        // 每页固定显示这么多行(每行最多3个职业)。之前用 designer.Used 高度阈值来判断
+        // 还能不能再放一行，但这个阈值是从详细设置页(OpenConfigSubOptionScreen)那边抄过来的，
+        // 两个页面实际可用的高度并不一样，导致翻页判断不准(表现为点一次“下一页”只掉了最上面一行，
+        // 而不是真正翻过一整页)。改成按固定行数分页，行为就完全可预测了。
+        // 如果翻页后底部留白明显、或者还是被多挤掉/漏掉一行，调整这个数字即可，不需要再改其他逻辑。
+        const int RowsPerPage = 7;
+        int shownRows = 0;
+
+        bool AddRow()
+        {
+            if (leftSkip > 0)
+            {
+                leftSkip--;
+                buttons.Clear();
+                options.Clear();
+                return true;
+            }
+            if (shownRows >= RowsPerPage)
+            {
+                canIncrease = true;
+                return false;
+            }
+
+            designer.AddTopic(buttons.ToArray());
+            designer.CustomUse(-0.05f);
+            SetUpButtons();
+            shownRows++;
+
+            return true;
+        }
+
         foreach (var option in CustomOption.TopOptions)
         {
+            if (canIncrease) break;
             if (option.IsHidden(gamemode)) continue;
 
             var myOption = option;
@@ -1099,23 +1143,29 @@ class GameOptionsMenuStartPatch
                 {
                     myOption.addSelection(1);
                     designer.screen.Close();
-                    OpenConfigTopOptionScreen(leftTabScreen);
+                    OpenConfigTopOptionScreen(leftTabScreen, skip);
                 }
             }, (myOption.selections.Length == 2 && myOption.getSelection() == 0) ? Palette.DisabledGrey : ((myOption.yellowCondition != null && myOption.yellowCondition(CustomOption.CurrentTab) ? UnityEngine.Color.yellow : UnityEngine.Color.white))));
             options.Add(option);
 
             if (buttons.Count == 3)
             {
-                designer.AddTopic(buttons.ToArray());
-                designer.CustomUse(-0.05f);
-                SetUpButtons();
+                AddRow();
             }
         }
-        if (buttons.Count > 0)
+        if (!canIncrease && buttons.Count > 0)
         {
-            designer.AddTopic(buttons.ToArray());
-            SetUpButtons();
+            AddRow();
         }
+
+        if (canIncrease)
+            designer.AddTopic(new MSButton(0.4f, 0.4f, "∨", TMPro.FontStyles.Bold, () =>
+            {
+                designer.screen.Close();
+                OpenConfigTopOptionScreen(leftTabScreen, skip + 1);
+            }));
+        else
+            designer.AddTopic(new MSMargin(0.4f));
     }
 
     internal static void OpenConfigScreen(GameObject setting)
