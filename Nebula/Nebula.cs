@@ -68,23 +68,43 @@ public class NebulaPlugin : BasePlugin
         file.Close();
     }
 
-    private void InitialModification()
+    public static void UpdateRegions()
     {
-        /*
-        Constants.ShadowMask = LayerMask.GetMask(new string[]
-           {
-                "Shadow",
-                "IlluminatedBlocking"
-           }) | (1 << LayerExpansion.GetShadowObjectsLayer());
-        Physics.IgnoreLayerCollision(LayerExpansion.GetShadowObjectsLayer(), LayerMask.NameToLayer("Ghost"), true);
-        */
+        ServerManager serverManager = FastDestroyableSingleton<ServerManager>.Instance;
+        var regions = new IRegionInfo[] {
+                new StaticHttpRegionInfo("<color=#9579ce>Nebula<color=#00ffff>BEIJING</color></color>", StringNames.NoTranslation, "imp.amongusclub.cn", new Il2CppReferenceArray<ServerInfo>([new ServerInfo("<color=#9579ce>Nebula<color=#00ffff>BEIJING</color></color>", "https://imp.amongusclub.cn", 443, false)])).CastFast<IRegionInfo>()
+            };
+
+        IRegionInfo currentRegion = serverManager.CurrentRegion;
+        Instance.Log.LogInfo($"Adding {regions.Length} regions");
+        foreach (IRegionInfo region in regions)
+        {
+            if (region == null)
+                Instance.Log.LogError("Could not add region");
+            else
+            {
+                if (currentRegion != null && region.Name.Equals(currentRegion.Name, StringComparison.OrdinalIgnoreCase))
+                    currentRegion = region;
+                serverManager.AddOrUpdateRegion(region);
+            }
+        }
+
+        // AU remembers the previous region that was set, so we need to restore it
+        if (currentRegion != null)
+        {
+            serverManager.SetRegion(currentRegion);
+        }
     }
+
     override public void Load()
     {
 
         Logger = new Logger.Logger(true);
 
         Instance = this;
+
+        ServerManager.DefaultRegions = new Il2CppReferenceArray<IRegionInfo>([]);
+        UpdateRegions();
 
         // 加载加载界面
         Harmony.PatchAll(typeof(LoadPatch));
