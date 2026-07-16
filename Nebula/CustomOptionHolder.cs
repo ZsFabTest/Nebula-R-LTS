@@ -825,7 +825,7 @@ public class CustomOptionHolder
         {
             exclusiveAssignmentList.Add(new Tuple<CustomOption, List<CustomOption>>(CustomOption.Create(new Color(180f / 255f, 180f / 255f, 0, 1f), "option.exclusiveAssignment" + (i + 1), false, exclusiveAssignmentParent, false), new List<CustomOption>()));
 
-            for (int r = 0; r < 3; r++)
+            for (int r = 0; r < 8; r++)
             {
                 exclusiveAssignmentList[exclusiveAssignmentList.Count - 1].Item2.Add(
                     CustomOption.Create(Color.white, "option.exclusiveAssignmentRole" + (r + 1), roleList, "option.exclusiveAssignmentRole.none", exclusiveAssignmentList[exclusiveAssignmentList.Count - 1].Item1, false)

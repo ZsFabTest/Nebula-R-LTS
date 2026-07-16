@@ -91,7 +91,7 @@ public class HasBilateralness : Role
                           numOfSecondarySide.addSelection(-1);
                       refresher();
                   }));
-            countOption.Add(new Module.MSString(0.65f, numOfSecondarySide.getString(), 2f, 0.6f, TMPro.TextAlignmentOptions.Center, TMPro.FontStyles.Bold, true, true));
+            countOption.Add(new Module.MSString(0.7f, numOfSecondarySide.getString(), 2f, 0.8f, TMPro.TextAlignmentOptions.Center, TMPro.FontStyles.Bold, true, true));
             countOption.Add(
                   new Module.MSButton(0.4f, 0.4f, ">>", TMPro.FontStyles.Bold, () =>
                   {
@@ -113,7 +113,7 @@ public class HasBilateralness : Role
                                 chanceToSpawnAsSecondarySide.addSelection(-1);
                                 refresher();
                             }),
-                        new Module.MSString(0.6f, chanceToSpawnAsSecondarySide.getString(), 2f, 0.6f, TMPro.TextAlignmentOptions.Center, TMPro.FontStyles.Bold, true, true),
+                        new Module.MSString(0.7f, chanceToSpawnAsSecondarySide.getString(), 2f, 0.8f, TMPro.TextAlignmentOptions.Center, TMPro.FontStyles.Bold, true, true),
                         new Module.MSButton(0.4f, 0.4f, ">>", TMPro.FontStyles.Bold, () =>
                             {
                                 chanceToSpawnAsSecondarySide.addSelection(1);

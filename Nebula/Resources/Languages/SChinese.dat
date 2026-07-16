@@ -193,6 +193,11 @@
 "option.exclusiveAssignmentRole1" : "限定职业 1"
 "option.exclusiveAssignmentRole2" : "限定职业 2"
 "option.exclusiveAssignmentRole3" : "限定职业 3"
+"option.exclusiveAssignmentRole4" : "限定职业 4"
+"option.exclusiveAssignmentRole5" : "限定职业 5"
+"option.exclusiveAssignmentRole6" : "限定职业 6"
+"option.exclusiveAssignmentRole7" : "限定职业 7"
+"option.exclusiveAssignmentRole8" : "限定职业 8"
 "option.exclusiveAssignmentRole.none" : "<color=#606060ff>无</color>"
 
 "option.coolDownOption" : "冷却设置"

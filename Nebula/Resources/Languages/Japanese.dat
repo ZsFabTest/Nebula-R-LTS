@@ -176,6 +176,11 @@
 "option.exclusiveAssignmentRole1" : "排他ロール 1"
 "option.exclusiveAssignmentRole2" : "排他ロール 2"
 "option.exclusiveAssignmentRole3" : "排他ロール 3"
+"option.exclusiveAssignmentRole4" : "排他ロール 4"
+"option.exclusiveAssignmentRole5" : "排他ロール 5"
+"option.exclusiveAssignmentRole6" : "排他ロール 6"
+"option.exclusiveAssignmentRole7" : "排他ロール 7"
+"option.exclusiveAssignmentRole8" : "排他ロール 8"
 "option.exclusiveAssignmentRole.none" : "<color=#606060ff>なし</color>"
 
 "option.coolDownOption" : "クールダウンオプション"
