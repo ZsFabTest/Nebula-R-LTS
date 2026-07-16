@@ -87,6 +87,12 @@ class EyesightPatch
             p.MyPhysics.SetNormalizedVelocity(Vector2.zero);
             p.Collider.enabled = true;
         }
+
+        // 如果不再控制其他玩家，恢复本地玩家移动能力
+        if (ObserverTarget == 0)
+        {
+            PlayerControl.LocalPlayer.moveable = true;
+        }
     }
 
 
@@ -126,6 +132,16 @@ class EyesightPatch
                 var p = PlayerControl.AllPlayerControls[ObserverTarget];
                 p.MyPhysics.SetNormalizedVelocity(__instance.joystick.DeltaL);
                 p.Collider.enabled = !Input.GetKey(Module.NebulaInputManager.metaControlInput.keyCode);
+
+                // 阻止本地玩家同时移动：清零速度并暂停网络同步
+                PlayerControl.LocalPlayer.moveable = false;
+                PlayerControl.LocalPlayer.MyPhysics.SetNormalizedVelocity(Vector2.zero);
+                PlayerControl.LocalPlayer.NetTransform.Halt();
+            }
+            else if (ObserverTarget == 0)
+            {
+                // 恢复本地玩家移动能力
+                PlayerControl.LocalPlayer.moveable = true;
             }
         }
         catch { }
@@ -144,7 +160,10 @@ class EyesightPatch
                     }
 
                     if (ObserverMode)
+                    {
                         __instance.PlayerCam.SetTargetWithLight(PlayerControl.LocalPlayer);
+                        PlayerControl.LocalPlayer.moveable = true;
+                    }
 
                     Objects.PlayerList.Instance.SelectPlayer(PlayerControl.LocalPlayer.PlayerId);
                 }
@@ -175,6 +194,8 @@ class EyesightPatch
                 Objects.PlayerList.Instance?.Close();
                 SuspendRemoteControl(ObserverTarget);
                 ObserverMode = false;
+                ObserverTarget = 0;
+                PlayerControl.LocalPlayer.moveable = true;
             }
             if (__instance.PlayerCam.Target != PlayerControl.LocalPlayer && __instance.PlayerCam.Target is PlayerControl && ((PlayerControl)__instance.PlayerCam.Target).Data.IsDead)
             {

@@ -213,6 +213,8 @@ public class CustomOptionHolder
     public static CustomOption SoloFreePlayOption;
     public static CustomOption CountOfDummiesOption;
 
+    public static CustomOption enableTaskTroll;
+
     public static CustomOption advanceRoleOptions;
 
     public static CustomOption exclusiveAssignmentParent;
@@ -668,6 +670,7 @@ public class CustomOptionHolder
 
         TasksOption = CustomOption.Create(Color.white, "option.tasksOption", false, null, true, false, "", CustomOptionTab.Settings).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
         CustomOption.RegisterTopOption(TasksOption);
+        enableTaskTroll = CustomOption.Create(Color.white, "option.enableTaskTroll", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
         additionalWirings = CustomOption.Create(Color.white, "option.additionalWirings", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
         RandomizedWiringOption = CustomOption.Create(Color.white, "option.randomizedWiring", false, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);
         StepsOfWiringOption = CustomOption.Create(Color.white, "option.stepsOfWiring", 3f, 1f, 10f, 1f, TasksOption).SetGameMode(CustomGameMode.All | CustomGameMode.Battle);

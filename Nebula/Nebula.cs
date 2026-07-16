@@ -18,6 +18,7 @@ using AmongUs.Data.Player;
 using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using Nebula.Patches;
+using Object = UnityEngine.Object;
 
 namespace Nebula;
 
@@ -155,6 +156,32 @@ public static class DoNothingInConnect
     public static bool Prefix(AuthManager __instance)
     {
         return false;
+    }
+}
+
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+public static class TrollTaskInitPatch
+{
+    private static bool _initialized = false;
+
+    public static void Postfix()
+    {
+        if (_initialized) return;
+        if (GameObject.Find("TrollGameData") != null)
+        {
+            _initialized = true;
+            return;
+        }
+
+        ClassInjector.RegisterTypeInIl2Cpp<Source.TrollTasks.TrollGameData>();
+        ClassInjector.RegisterTypeInIl2Cpp<Source.TrollTasks.UploadDataCustom>();
+        ClassInjector.RegisterTypeInIl2Cpp<Source.TrollTasks.WeaponsTroll.WeaponsCustom>();
+
+        GameObject trollObject = new("TrollGameData");
+        trollObject.AddComponent<Source.TrollTasks.TrollGameData>();
+        Object.DontDestroyOnLoad(trollObject);
+
+        _initialized = true;
     }
 }
 

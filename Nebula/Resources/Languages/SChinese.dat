@@ -249,6 +249,8 @@
 "option.devicesOption.limitedAdmin" : "有限管理权限"
 
 "option.tasksOption" : "任务难度设置"
+"option.enableTaskTroll" : "开启任务恶搞模式"
+"option.enableTaskTroll.info" : "开启后所有任务将被恶搞，变得极其困难或令人抓狂。"
 "option.randomizedWiring" : "接线任务顺序随机"
 "option.stepsOfWiring" : "接线任务次数"
 "option.meistersManifolds" : "难度提升：解锁歧管"

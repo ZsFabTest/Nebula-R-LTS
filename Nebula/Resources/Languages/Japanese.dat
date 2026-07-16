@@ -228,6 +228,8 @@
 "option.devicesOption.limitedAdmin" : "部屋ごとのアドミン制限"
 
 "option.tasksOption" : "タスクマイスタモード"
+"option.enableTaskTroll" : "タスク悪戯モード"
+"option.enableTaskTroll.info" : "有効にすると、全てのタスクが悪戯され非常に困難になります。"
 "option.randomizedWiring" : "配線順序のランダム化"
 "option.stepsOfWiring" : "配線タスクのステップ数"
 "option.meistersManifolds" : "難化：マニフォールド"

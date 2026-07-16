@@ -249,6 +249,8 @@
 "option.devicesOption.limitedAdmin" : "Limited Admin"
 
 "option.tasksOption" : "Meister's Task Option"
+"option.enableTaskTroll" : "Enable Task Troll Mode"
+"option.enableTaskTroll.info" : "When enabled, all tasks will become absurdly difficult or annoying."
 "option.randomizedWiring" : "Randomized Wiring"
 "option.stepsOfWiring" : "Steps Of Wiring"
 "option.meistersManifolds" : "Meister's Manifolds"
