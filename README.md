@@ -1,14 +1,14 @@
 # Nebula-Reactivated
-## This mod was developed base on [凛's Nebula-R-LTS](https://github.com/ZsFabTest/Nebula-R-LTS) and [Dolly's Nebula-OLD](https://github.com/Dolly1016/Nebula-OLD-)，We try to support it run on the latest Among Us version and deal the basical playing
+## This mod was developed based on [Lin’s Nebula-R-LTS](https://github.com/ZsFabTest/Nebula-R-LTS) and [Dolly’s Nebula-OLD](https://github.com/Dolly1016/Nebula-OLD-), We aim to ensure it runs on the latest version of Among Us and provides the basic gameplay experience
 
-# 多语言声明
+# Multilingual Statement
 <details>
-<summary> 展开 </summary>
+<summary> Expand </summary>
 
 ## SChinese
-这些模组不隶属于 Among Us 或 Innersloth LLC，其包含的内容也未得到 Innersloth LLC 的认可或以其他方式赞助。此处包含的部分材料是Innersloth LLC的财产。
+本模组不隶属于 Among Us 或 Innersloth LLC，其包含的内容也未得到 Innersloth LLC 的认可或以其他方式赞助。此处包含的部分材料是Innersloth LLC的财产。
 ## TChinese
-這些模組不隸屬於 Among Us 或 Innersloth LLC，其包含的內容也未得到 Innersloth LLC 的認可或以其他方式贊助。此處包含的部分材料是Innersloth LLC的財產。
+本模組不隸屬於 Among Us 或 Innersloth LLC，其包含的內容也未得到 Innersloth LLC 的認可或以其他方式贊助。此處包含的部分材料是Innersloth LLC的財產。
 ## English
 This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC.
 ## French
