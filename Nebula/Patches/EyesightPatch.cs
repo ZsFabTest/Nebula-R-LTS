@@ -125,26 +125,30 @@ class EyesightPatch
 
     public static void Postfix(HudManager __instance)
     {
-        try
+        // 游戏未开始时不处理移动状态，避免大厅中触发异常走路动画
+        if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
         {
-            if (Game.GameData.data != null && Game.GameData.data.myData.CanControlOtherPlayers && Objects.PlayerList.Instance != null && Objects.PlayerList.Instance.IsOpen && ObserverTarget != 0)
+            try
             {
-                var p = PlayerControl.AllPlayerControls[ObserverTarget];
-                p.MyPhysics.SetNormalizedVelocity(__instance.joystick.DeltaL);
-                p.Collider.enabled = !Input.GetKey(Module.NebulaInputManager.metaControlInput.keyCode);
+                if (Game.GameData.data != null && Game.GameData.data.myData.CanControlOtherPlayers && Objects.PlayerList.Instance != null && Objects.PlayerList.Instance.IsOpen && ObserverTarget != 0)
+                {
+                    var p = PlayerControl.AllPlayerControls[ObserverTarget];
+                    p.MyPhysics.SetNormalizedVelocity(__instance.joystick.DeltaL);
+                    p.Collider.enabled = !Input.GetKey(Module.NebulaInputManager.metaControlInput.keyCode);
 
-                // 阻止本地玩家同时移动：清零速度并暂停网络同步
-                PlayerControl.LocalPlayer.moveable = false;
-                PlayerControl.LocalPlayer.MyPhysics.SetNormalizedVelocity(Vector2.zero);
-                PlayerControl.LocalPlayer.NetTransform.Halt();
+                    // 阻止本地玩家同时移动：清零速度并暂停网络同步
+                    PlayerControl.LocalPlayer.moveable = false;
+                    PlayerControl.LocalPlayer.MyPhysics.SetNormalizedVelocity(Vector2.zero);
+                    PlayerControl.LocalPlayer.NetTransform.Halt();
+                }
+                else if (ObserverTarget == 0)
+                {
+                    // 恢复本地玩家移动能力
+                    PlayerControl.LocalPlayer.moveable = true;
+                }
             }
-            else if (ObserverTarget == 0)
-            {
-                // 恢复本地玩家移动能力
-                PlayerControl.LocalPlayer.moveable = true;
-            }
+            catch { }
         }
-        catch { }
 
         if ((Game.GameData.data != null && (Game.GameData.data.myData.CanSeeEveryoneInfo)) || AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Joined)
         {

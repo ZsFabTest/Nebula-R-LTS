@@ -153,6 +153,15 @@ class IntroCutsceneOnDestroyPatch
             actionMap = actionArray[0];
             Objects.CustomButton.SetKeyGuide(HudManager.Instance.ImpostorVentButton.gameObject, actionMap.keyCode);
         }
+
+        // 防止介绍动画结束后玩家保持走路状态：清零速度、确保可移动、重置动画
+        if (PlayerControl.LocalPlayer != null)
+        {
+            PlayerControl.LocalPlayer.moveable = true;
+            PlayerControl.LocalPlayer.MyPhysics.SetNormalizedVelocity(Vector2.zero);
+            PlayerControl.LocalPlayer.NetTransform.Halt();
+            PlayerControl.LocalPlayer.MyPhysics.Animations.PlayIdleAnimation();
+        }
     }
 }
 

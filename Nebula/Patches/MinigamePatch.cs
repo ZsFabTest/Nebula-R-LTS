@@ -40,7 +40,7 @@ public static class SystemConsoleCanUsePatch
     {
         canUse = couldUse = false;
 
-        if (Game.GameData.data.myData.getGlobalData().Property.UnderTheFloor) { __result = float.MaxValue; return false; }
+        if (Game.GameData.data?.myData?.getGlobalData()?.Property?.UnderTheFloor == true) { __result = float.MaxValue; return false; }
 
         return true;
     }
@@ -53,7 +53,7 @@ public static class MapConsoleCanUsePatch
     {
         canUse = couldUse = false;
 
-        if (Game.GameData.data.myData.getGlobalData().Property.UnderTheFloor) { __result = float.MaxValue; return false; }
+        if (Game.GameData.data?.myData?.getGlobalData()?.Property?.UnderTheFloor == true) { __result = float.MaxValue; return false; }
 
         return true;
     }

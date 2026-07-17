@@ -1038,11 +1038,17 @@ class GameOptionsMenuStartPatch
         bool canIncrease = false;
 
 
-        designer.AddTopic(new MSButton(0.4f, 0.4f, skip > 0 ? "∧" : "", TMPro.FontStyles.Bold, () =>
+        designer.AddTopic(new MSButton(0.4f, 0.4f, "∧", TMPro.FontStyles.Bold, () =>
         {
-            designer.screen.Close();
-            OpenConfigTopOptionScreen(leftTabScreen, skip - 3 > 0 ? skip - 3 : 0);
+            if (skip > 0)
+            {
+                designer.screen.Close();
+                OpenConfigTopOptionScreen(leftTabScreen, skip - 3 > 0 ? skip - 3 : 0);
+            }
         }));
+
+        // 预缓存悬停文字，避免每次鼠标悬停都重新生成字符串
+        Dictionary<CustomOption, string> hoverTextCache = new Dictionary<CustomOption, string>();
 
         void SetUpButtons()
         {
@@ -1053,18 +1059,25 @@ class GameOptionsMenuStartPatch
                 var option = options[index];
                 index++;
 
-                b.button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() =>
+                // 预缓存悬停文字
+                if (!hoverTextCache.ContainsKey(option))
                 {
                     if (option == CustomOptionHolder.roleCountOption)
                     {
                         var builder = new System.Text.StringBuilder();
                         GameOptionStringGenerator.GenerateRoleCountString(builder);
-                        textArea.text.text = builder.ToString();
+                        hoverTextCache[option] = builder.ToString();
                     }
                     else
                     {
-                        textArea.text.text = GameOptionStringGenerator.optionsToString(option);
+                        hoverTextCache[option] = GameOptionStringGenerator.optionsToString(option);
                     }
+                }
+
+                var cachedText = hoverTextCache[option];
+                b.button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() =>
+                {
+                    textArea.text.text = cachedText;
                 }));
 
 
@@ -1156,10 +1169,13 @@ class GameOptionsMenuStartPatch
             AddRow();
         }
 
-        designer.AddTopic(new MSButton(0.4f, 0.4f, canIncrease ? "∨" : "", TMPro.FontStyles.Bold, () =>
+        designer.AddTopic(new MSButton(0.4f, 0.4f, "∨", TMPro.FontStyles.Bold, () =>
         {
-            designer.screen.Close();
-            OpenConfigTopOptionScreen(leftTabScreen, canIncrease ? skip + 3 : skip);
+            if (canIncrease)
+            {
+                designer.screen.Close();
+                OpenConfigTopOptionScreen(leftTabScreen, skip + 3);
+            }
         }));
     }
 
