@@ -76,7 +76,7 @@
 "option.tab.impostorRoles" : "伪装者<color=#ffffffff>职业</color>"
 "option.tab.neutralRoles" : "独立<color=#ffffffff>职业</color>"
 "option.tab.ghostRoles" : "亡灵<color=#ffffffff>职业</color>"
-"option.tab.modifiers" : "附加职业"
+"option.tab.modifiers" : "附加<color=#ffffffff>职业</color>"
 "option.tab.escapeRoles" : "躲猫猫<color=#ffffffff>职业</color>"
 "option.tab.advancedSettings" : "进阶<color=#ffffffff>设置</color>"
 
@@ -1581,8 +1581,8 @@
 "option.exclusiveAssignment.EvilAceAndCovert" : "密命王牌 或 潜伏者"
 "option.exclusiveAssignment.ExecutionerAndAssassin" : "处刑者 或 刺客"
 
-"option.tab.ghostRoles" : "亡灵<color=#ffffffff>与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
-"option.tab.advancedSettings" : "进阶<color=#ffffffff>设置与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
+"option.tab.ghostRoles" : "亡灵<color=#ffffffff>职业</color>"
+"option.tab.advancedSettings" : "进阶<color=#ffffffff>设置</color>"
 
 "option.canBeSick" : "可以成为病人"
 "option.canBeBait" : "可以成为诱饵"

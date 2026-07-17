@@ -1,6 +1,5 @@
 ﻿using Nebula.Module;
 using Nebula.Patches;
-using Nebula.Roles.ExtremeRoles;
 
 namespace Nebula.Roles.ComplexRoles;
 
@@ -365,7 +364,7 @@ static public class GuesserSystem
                             actualRole == role ||
                             role.GetImplicateRoles().Contains(actualRole) ||
                             role.GetImplicateExtraRoles().Any((r) => focusedTargetData.HasExtraRole(r)) ||
-                            role == Roles.SchrodingersCat && (SchrodingersCat.AllCat.Any((ro) => ro.id == actualRole.id))
+                            role == Roles.SchrodingersCat && (NeutralRoles.SchrodingersCat.AllCat.Any((ro) => ro.id == actualRole.id))
                             )
                             ? focusedTarget : PlayerControl.LocalPlayer;
 

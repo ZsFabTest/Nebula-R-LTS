@@ -3,7 +3,6 @@ using Nebula.Game;
 using Nebula.Map;
 using Nebula.Module;
 using Nebula.Patches;
-using Nebula.Roles.ExtremeRoles;
 using Nebula.Tasks;
 
 namespace Nebula.Roles.NeutralRoles;

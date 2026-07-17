@@ -1037,14 +1037,12 @@ class GameOptionsMenuStartPatch
         int leftSkip = skip;
         bool canIncrease = false;
 
-        if (skip > 0)
-            designer.AddTopic(new MSButton(0.4f, 0.4f, "∧", TMPro.FontStyles.Bold, () =>
-            {
-                designer.screen.Close();
-                OpenConfigTopOptionScreen(leftTabScreen, skip - 1);
-            }));
-        else
-            designer.AddTopic(new MSMargin(0.4f));
+
+        designer.AddTopic(new MSButton(0.4f, 0.4f, skip > 0 ? "∧" : "", TMPro.FontStyles.Bold, () =>
+        {
+            designer.screen.Close();
+            OpenConfigTopOptionScreen(leftTabScreen, skip - 3 > 0 ? skip - 3 : 0);
+        }));
 
         void SetUpButtons()
         {
@@ -1158,14 +1156,11 @@ class GameOptionsMenuStartPatch
             AddRow();
         }
 
-        if (canIncrease)
-            designer.AddTopic(new MSButton(0.4f, 0.4f, "∨", TMPro.FontStyles.Bold, () =>
-            {
-                designer.screen.Close();
-                OpenConfigTopOptionScreen(leftTabScreen, skip + 1);
-            }));
-        else
-            designer.AddTopic(new MSMargin(0.4f));
+        designer.AddTopic(new MSButton(0.4f, 0.4f, canIncrease ? "∨" : "", TMPro.FontStyles.Bold, () =>
+        {
+            designer.screen.Close();
+            OpenConfigTopOptionScreen(leftTabScreen, canIncrease ? skip + 3 : skip);
+        }));
     }
 
     internal static void OpenConfigScreen(GameObject setting)

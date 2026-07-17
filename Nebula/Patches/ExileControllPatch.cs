@@ -1,6 +1,4 @@
-﻿using Nebula.Roles.ExtremeRoles;
-
-namespace Nebula.Patches;
+﻿namespace Nebula.Patches;
 
 [HarmonyPatch]
 class ExileControllerPatch
@@ -290,7 +288,7 @@ class ExileControllerPatch
                         }
                         else if (PlayerControl.AllPlayerControls.GetFastEnumerator().FirstOrDefault((p) => { return !p.Data.IsDead && p.GetModData().role == Roles.Roles.Cascrubinter; }) != null && player.PlayerId == Roles.Roles.Cascrubinter.target.PlayerId)
                         {
-                            __result = Helpers.cs(Cascrubinter.RoleColor, Language.Language.GetString("text.exile.cascrubinterAddition"));
+                            __result = Helpers.cs(Roles.NeutralRoles.Cascrubinter.RoleColor, Language.Language.GetString("text.exile.cascrubinterAddition"));
                             RPCEventInvoker.WinTrigger(Roles.Roles.Cascrubinter);
                         }
                     }

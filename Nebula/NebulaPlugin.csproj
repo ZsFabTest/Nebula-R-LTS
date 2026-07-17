@@ -7,7 +7,7 @@
 		<Win32Resource />
 		<RootNamespace>Nebula</RootNamespace>
 		<AssemblyName>Nebula</AssemblyName>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<Nullable>enable</Nullable>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>

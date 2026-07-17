@@ -6,7 +6,6 @@ using Nebula.Game;
 using Nebula.Module;
 using Nebula.Patches;
 using Nebula.Roles;
-using Nebula.Roles.ExtremeRoles;
 
 namespace Nebula;
 
@@ -1786,11 +1785,11 @@ static class RPCEvents
 
     public static void SetSwapTarget(byte playerId1, byte playerId2)
     {
-        SwapSystem.swapTargetf = playerId1;
-        SwapSystem.swapTargets = playerId2;
-        if (playerId1 != Byte.MaxValue && playerId2 != Byte.MaxValue) SwapSystem.isSwapped = true;
-        else SwapSystem.isSwapped = false;
-        Debug.Log(playerId1.ToString() + playerId2.ToString() + SwapSystem.isSwapped.ToString());
+        Roles.ComplexRoles.SwapSystem.swapTargetf = playerId1;
+        Roles.ComplexRoles.SwapSystem.swapTargets = playerId2;
+        if (playerId1 != Byte.MaxValue && playerId2 != Byte.MaxValue) Roles.ComplexRoles.SwapSystem.isSwapped = true;
+        else Roles.ComplexRoles.SwapSystem.isSwapped = false;
+        Debug.Log(playerId1.ToString() + playerId2.ToString() + Roles.ComplexRoles.SwapSystem.isSwapped.ToString());
     }
 
     public static void Teleport(byte targetId)
@@ -1886,7 +1885,7 @@ static class RPCEvents
         }
         if (Roles.Roles.Grenadier.flashedId.Count <= 0)
         {
-            LocalEvent.Activate(new FlashEndEvent(duration));
+            LocalEvent.Activate(new Roles.ImpostorRoles.FlashEndEvent(duration));
             Schedule.RegisterPreMeetingAction(() =>
             {
                 Roles.Roles.Grenadier.flashedId.Clear();

@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Nebula.Roles.ExtremeRoles;
 using UnityEngine.SceneManagement;
 
 namespace Nebula.Patches;
@@ -38,23 +37,23 @@ public class EndCondition
 
     public static EndCondition NoGame = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "noGame", 0, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
 
-    public static EndCondition PavlovWin = new EndCondition(128, Pavlov.RoleColor, "pavlov", 1, Module.CustomGameMode.Standard);
-    public static EndCondition MoriartyWin = new EndCondition(129, Moriarty.RoleColor, "moriarty", 1, Module.CustomGameMode.Standard);
-    public static EndCondition MoriartyWinByKillHolmes = new EndCondition(130, Moriarty.RoleColor, "holmesIsKilled", 1, Module.CustomGameMode.Standard);
-    public static EndCondition CascrubinterWin = new EndCondition(131, Cascrubinter.RoleColor, "cascrubinter", 1, Module.CustomGameMode.Standard);
+    public static EndCondition PavlovWin = new EndCondition(128, Roles.NeutralRoles.Pavlov.RoleColor, "pavlov", 1, Module.CustomGameMode.Standard);
+    public static EndCondition MoriartyWin = new EndCondition(129, Roles.NeutralRoles.Moriarty.RoleColor, "moriarty", 1, Module.CustomGameMode.Standard);
+    public static EndCondition MoriartyWinByKillHolmes = new EndCondition(130, Roles.NeutralRoles.Moriarty.RoleColor, "holmesIsKilled", 1, Module.CustomGameMode.Standard);
+    public static EndCondition CascrubinterWin = new EndCondition(131, Roles.NeutralRoles.Cascrubinter.RoleColor, "cascrubinter", 1, Module.CustomGameMode.Standard);
     public static EndCondition GuesserWin = new EndCondition(132, Roles.ComplexRoles.FGuesser.RoleColor, "guesser", 0, Module.CustomGameMode.Standard);
-    public static EndCondition YandereWin = new EndCondition(133, Yandere.RoleColor, "yandere", 1, Module.CustomGameMode.Standard);
-    public static EndCondition WerewolfWin = new EndCondition(134, Werewolf.RoleColor, "werewolf", 1, Module.CustomGameMode.Standard);
-    public static EndCondition ChallengerWin = new EndCondition(135, Challenger.RoleColor, "challenger", 1, Module.CustomGameMode.Standard);
-    public static EndCondition OracleWin = new EndCondition(136, Oracle.RoleColor, "oracle", 1, Module.CustomGameMode.Standard);
+    public static EndCondition YandereWin = new EndCondition(133, Roles.NeutralRoles.Yandere.RoleColor, "yandere", 1, Module.CustomGameMode.Standard);
+    public static EndCondition WerewolfWin = new EndCondition(134, Roles.NeutralRoles.Werewolf.RoleColor, "werewolf", 1, Module.CustomGameMode.Standard);
+    public static EndCondition ChallengerWin = new EndCondition(135, Roles.NeutralRoles.Challenger.RoleColor, "challenger", 1, Module.CustomGameMode.Standard);
+    public static EndCondition OracleWin = new EndCondition(136, Roles.NeutralRoles.Oracle.RoleColor, "oracle", 1, Module.CustomGameMode.Standard);
     public static EndCondition GhostWin = new EndCondition(137, new(1f, 1f, 1f), "ghost", 1, Module.CustomGameMode.Standard);
-    public static EndCondition PuppeteerWin = new EndCondition(138, Puppeteer.RoleColor, "puppeteer", 1, Module.CustomGameMode.Standard);
+    public static EndCondition PuppeteerWin = new EndCondition(138, Roles.NeutralRoles.Puppeteer.RoleColor, "puppeteer", 1, Module.CustomGameMode.Standard);
     public static EndCondition YellowTeamWin = new EndCondition(139, Roles.BattleRoles.YellowTeam.RoleColor, "yellowTeam", 1, Module.CustomGameMode.Battle);
     public static EndCondition GreenTeamWin = new EndCondition(140, Roles.BattleRoles.GreenTeam.RoleColor, "greenTeam", 1, Module.CustomGameMode.Battle);
     public static EndCondition InfectedWin = new EndCondition(141, Palette.ImpostorRed, "infected", 1, Module.CustomGameMode.VirusCrisis);
     public static EndCondition SurvivalWin = new EndCondition(142, Palette.CrewmateBlue, "survival", 1, Module.CustomGameMode.VirusCrisis);
-    public static EndCondition HighRollerWin = new EndCondition(143, HighRoller.RoleColor, "highRoller", 1, Module.CustomGameMode.Standard);
-    public static EndCondition UndeadMasterWin = new EndCondition(144, UndeadMaster.RoleColor, "undeadMaster", 1, Module.CustomGameMode.Standard);
+    public static EndCondition HighRollerWin = new EndCondition(143, Roles.NeutralRoles.HighRoller.RoleColor, "highRoller", 1, Module.CustomGameMode.Standard);
+    public static EndCondition UndeadMasterWin = new EndCondition(144, Roles.NeutralRoles.UndeadMaster.RoleColor, "undeadMaster", 1, Module.CustomGameMode.Standard);
     public static EndCondition RedTeamWin = new EndCondition(145, Color.red, "redTeam", 1, Module.CustomGameMode.Compete);
     public static EndCondition BlueTeamWin = new EndCondition(146, Color.blue, "blueTeam", 1, Module.CustomGameMode.Compete);
     public static EndCondition Tie = new EndCondition(147, new Color(72f / 255f, 78f / 255f, 84f / 255f), "tie", 32, Module.CustomGameMode.ActuallyAll).SetNoBodyWin(true);
